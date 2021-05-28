@@ -1,31 +1,31 @@
 package block7
 
 type BlockInfoMap struct {
-	mapBlockInfo map[int]*BlockInfo
+	MapBlockInfo map[int]*BlockInfo `json:"mapBlockInfo"`
 }
 
 func NewBlockInfoMap() *BlockInfoMap {
 	return &BlockInfoMap{
-		mapBlockInfo: make(map[int]*BlockInfo),
+		MapBlockInfo: make(map[int]*BlockInfo),
 	}
 }
 
 func (m *BlockInfoMap) AddBlockData(block *BlockData) {
-	_, isok := m.mapBlockInfo[block.Symbol]
+	_, isok := m.MapBlockInfo[block.Symbol]
 	if !isok {
-		m.mapBlockInfo[block.Symbol] = &BlockInfo{}
+		m.MapBlockInfo[block.Symbol] = &BlockInfo{}
 	}
 
-	m.mapBlockInfo[block.Symbol].L0List = append(m.mapBlockInfo[block.Symbol].L0List, block)
+	m.MapBlockInfo[block.Symbol].L0List = append(m.MapBlockInfo[block.Symbol].L0List, block)
 }
 
 func (m *BlockInfoMap) AddBlockDataEx(x, y, z int, s int) {
-	_, isok := m.mapBlockInfo[s]
+	_, isok := m.MapBlockInfo[s]
 	if !isok {
-		m.mapBlockInfo[s] = &BlockInfo{}
+		m.MapBlockInfo[s] = &BlockInfo{}
 	}
 
-	m.mapBlockInfo[s].L0List = append(m.mapBlockInfo[s].L0List, NewBlockData(x, y, z, s))
+	m.MapBlockInfo[s].L0List = append(m.MapBlockInfo[s].L0List, NewBlockData(x, y, z, s))
 }
 
 func (m *BlockInfoMap) OutputLog(msg string) {
