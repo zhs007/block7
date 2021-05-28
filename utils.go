@@ -1,6 +1,10 @@
 package block7
 
 func genSymbols(rng Rng, symbols []int, nums int) ([]int, error) {
+	if nums%BlockNums > 0 {
+		return nil, ErrInvalidSymbolsLength
+	}
+
 	sn := len(symbols)
 	sn1 := nums / BlockNums
 
@@ -49,4 +53,15 @@ func randSymbols(rng Rng, symbols []int) ([]int, int, error) {
 	symbols = append(symbols[:si], symbols[si+1:]...)
 
 	return symbols, c, nil
+}
+
+func countSymbols(symbols []int, symbol int) int {
+	n := 0
+	for _, v := range symbols {
+		if v == symbol {
+			n++
+		}
+	}
+
+	return n
 }

@@ -2,11 +2,10 @@ package block7
 
 // Scene - scene
 type Scene struct {
-	Width     int
-	Height    int
-	Layers    int
-	BlockNums int
-	Arr       [][][]int
+	Width  int
+	Height int
+	Layers int
+	Arr    [][][]int
 }
 
 // NewScene - new a scene
@@ -17,10 +16,9 @@ func NewScene(rng Rng, stage *Stage, symbols []int) (*Scene, error) {
 	}
 
 	scene := &Scene{
-		Width:     stage.Width,
-		Height:    stage.Height,
-		Layers:    len(stage.Layer),
-		BlockNums: stage.IconNums,
+		Width:  stage.Width,
+		Height: stage.Height,
+		Layers: len(stage.Layer),
 	}
 
 	for _, arrlayer := range stage.Layer {
@@ -48,4 +46,34 @@ func NewScene(rng Rng, stage *Stage, symbols []int) (*Scene, error) {
 	}
 
 	return scene, nil
+}
+
+func (scene *Scene) CountSymbols() int {
+	n := 0
+	for _, arrlayer := range scene.Arr {
+		for _, arrrow := range arrlayer {
+			for _, v := range arrrow {
+				if v > 0 {
+					n++
+				}
+			}
+		}
+	}
+
+	return n
+}
+
+func (scene *Scene) CountSymbol(symbol int) int {
+	n := 0
+	for _, arrlayer := range scene.Arr {
+		for _, arrrow := range arrlayer {
+			for _, v := range arrrow {
+				if v == symbol {
+					n++
+				}
+			}
+		}
+	}
+
+	return n
 }

@@ -31,3 +31,18 @@ func LoadStage(fn string) (*Stage, error) {
 
 	return stage, nil
 }
+
+func (stage *Stage) CountSymbols() int {
+	n := 0
+	for _, arrlayer := range stage.Layer {
+		for _, arrrow := range arrlayer {
+			for _, v := range arrrow {
+				if v > 0 {
+					n++
+				}
+			}
+		}
+	}
+
+	return n
+}
