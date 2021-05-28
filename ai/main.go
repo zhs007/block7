@@ -19,7 +19,7 @@ func main() {
 
 	rng := block7.NewRngNormal()
 
-	scene, err := block7.NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8})
+	scene, err := block7.NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8}, block7.DefaultMaxBlockNums)
 	if err != nil {
 		block7.Error("NewScene",
 			zap.Error(err))
@@ -27,7 +27,8 @@ func main() {
 		return
 	}
 
-	mapBI := scene.Analysis()
+	block7.AI1(scene)
+	// mapBI := scene.Analysis()
 
-	mapBI.OutputLog("first")
+	// mapBI.OutputLog("first")
 }

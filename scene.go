@@ -2,27 +2,30 @@ package block7
 
 // Scene - scene
 type Scene struct {
-	Width  int
-	Height int
-	Layers int
-	XOff   int
-	YOff   int
-	Arr    [][][]int
+	Width        int
+	Height       int
+	Layers       int
+	XOff         int
+	YOff         int
+	Arr          [][][]int
+	Block        []*BlockData
+	MaxBlockNums int
 }
 
 // NewScene - new a scene
-func NewScene(rng Rng, stage *Stage, symbols []int) (*Scene, error) {
+func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, error) {
 	ss, err := genSymbols(rng, symbols, stage.IconNums)
 	if err != nil {
 		return nil, err
 	}
 
 	scene := &Scene{
-		Width:  stage.Width,
-		Height: stage.Height,
-		Layers: len(stage.Layer),
-		XOff:   1,
-		YOff:   1,
+		Width:        stage.Width,
+		Height:       stage.Height,
+		Layers:       len(stage.Layer),
+		XOff:         1,
+		YOff:         1,
+		MaxBlockNums: blockNums,
 	}
 
 	for _, arrlayer := range stage.Layer {
@@ -141,4 +144,30 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 	}
 
 	return mapBI
+}
+
+// Click - return gamestate, isok
+func (scene *Scene) Click(x, y, z int) (int, bool) {
+	if !scene.CanClick(x, y, z) {
+		return GameStateRunning, false
+	}
+
+	if len(scene.Block) >= scene.MaxBlockNums {
+		return GameStateFail, false
+	}
+
+	b := NewBlockData(x, y, z, scene.Arr[z][y][x])
+	scene.Arr[z][y][x] = 0
+
+	scene.Block = insBlockDataAndProc(scene.Block, b)
+
+	if len(scene.Block) >= scene.MaxBlockNums {
+		return GameStateFail, true
+	}
+
+	if scene.CountSymbols() == 0 {
+		return GameStateSucess, true
+	}
+
+	return GameStateRunning, true
 }
