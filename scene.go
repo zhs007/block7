@@ -129,13 +129,13 @@ func (scene *Scene) GetMaxZ(x, y int) int {
 }
 
 func (scene *Scene) Analysis() *BlockInfoMap {
-	mapBI := NewBlockInfoMap()
+	mapBI := NewBlockInfoMap(DefaultMaxBlockLevel)
 
 	for x := 0; x < scene.Width; x++ {
 		for y := 0; y < scene.Height; y++ {
 			mz := scene.GetMaxZ(x, y)
 			if scene.CanClick(x, y, mz) {
-				mapBI.AddBlockDataEx(x, y, mz, scene.Arr[mz][y][x])
+				mapBI.AddBlockDataEx(x, y, mz, scene.Arr[mz][y][x], 0)
 			}
 		}
 	}

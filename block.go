@@ -6,7 +6,7 @@ type BlockData struct {
 }
 
 type BlockInfo struct {
-	L0List []*BlockData
+	LevelList [][]*BlockData
 }
 
 func NewBlockData(x, y, z int, s int) *BlockData {
@@ -16,4 +16,14 @@ func NewBlockData(x, y, z int, s int) *BlockData {
 		Z:      z,
 		Symbol: s,
 	}
+}
+
+func NewBlockInfo(maxlevel int) *BlockInfo {
+	bi := &BlockInfo{}
+
+	for i := 0; i < maxlevel; i++ {
+		bi.LevelList = append(bi.LevelList, nil)
+	}
+
+	return bi
 }
