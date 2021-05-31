@@ -1,43 +1,43 @@
 package block7
 
 type BlockInfoMap struct {
-	maxLevel     int
-	mapBlockInfo map[int]*BlockInfo
+	MaxLevel     int                `json:"maxLevel"`
+	MapBlockInfo map[int]*BlockInfo `json:"mapBlockInfo"`
 }
 
 func NewBlockInfoMap(maxlevel int) *BlockInfoMap {
 	return &BlockInfoMap{
-		maxLevel:     maxlevel,
-		mapBlockInfo: make(map[int]*BlockInfo),
+		MaxLevel:     maxlevel,
+		MapBlockInfo: make(map[int]*BlockInfo),
 	}
 }
 
 func (m *BlockInfoMap) AddBlockData(block *BlockData, level int) error {
-	if level < 0 || level >= m.maxLevel {
+	if level < 0 || level >= m.MaxLevel {
 		return ErrInvalidLevel
 	}
 
-	_, isok := m.mapBlockInfo[block.Symbol]
+	_, isok := m.MapBlockInfo[block.Symbol]
 	if !isok {
-		m.mapBlockInfo[block.Symbol] = NewBlockInfo(m.maxLevel)
+		m.MapBlockInfo[block.Symbol] = NewBlockInfo(m.MaxLevel)
 	}
 
-	m.mapBlockInfo[block.Symbol].LevelList[level] = append(m.mapBlockInfo[block.Symbol].LevelList[level], block)
+	m.MapBlockInfo[block.Symbol].LevelList[level] = append(m.MapBlockInfo[block.Symbol].LevelList[level], block)
 
 	return nil
 }
 
 func (m *BlockInfoMap) AddBlockDataEx(x, y, z int, s int, level int) error {
-	if level < 0 || level >= m.maxLevel {
+	if level < 0 || level >= m.MaxLevel {
 		return ErrInvalidLevel
 	}
 
-	_, isok := m.mapBlockInfo[s]
+	_, isok := m.MapBlockInfo[s]
 	if !isok {
-		m.mapBlockInfo[s] = NewBlockInfo(m.maxLevel)
+		m.MapBlockInfo[s] = NewBlockInfo(m.MaxLevel)
 	}
 
-	m.mapBlockInfo[s].LevelList[level] = append(m.mapBlockInfo[s].LevelList[level], NewBlockData(x, y, z, s))
+	m.MapBlockInfo[s].LevelList[level] = append(m.MapBlockInfo[s].LevelList[level], NewBlockData(x, y, z, s))
 
 	return nil
 }

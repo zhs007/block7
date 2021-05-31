@@ -1,12 +1,14 @@
 package block7
 
 type BlockData struct {
-	X, Y, Z int
-	Symbol  int
+	X      int `json:"x"`
+	Y      int `json:"y"`
+	Z      int `json:"z"`
+	Symbol int `json:"symbol"`
 }
 
 type BlockInfo struct {
-	LevelList [][]*BlockData
+	LevelList [][]*BlockData `json:"levellist"`
 }
 
 func NewBlockData(x, y, z int, s int) *BlockData {

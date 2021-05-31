@@ -65,3 +65,29 @@ func countSymbols(symbols []int, symbol int) int {
 
 	return n
 }
+
+func insBlockData(arr []*BlockData, b *BlockData) []*BlockData {
+	arr = append(arr, b)
+
+	return arr
+}
+
+func insBlockDataAndProc(arr []*BlockData, b *BlockData) []*BlockData {
+	iarr := []int{}
+	for i, v := range arr {
+		if v.Symbol == b.Symbol {
+			iarr = append(iarr, i)
+		}
+	}
+
+	if len(iarr) >= 2 {
+		arr = append(arr[:iarr[0]], arr[iarr[0]+1:]...)
+		arr = append(arr[:iarr[1]-1], arr[iarr[1]:]...)
+
+		return arr
+	}
+
+	arr = append(arr, b)
+
+	return arr
+}

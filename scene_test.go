@@ -12,7 +12,7 @@ func Test_NewScene(t *testing.T) {
 	stage, err := LoadStage("./cfg/level_0100.json")
 	assert.Nil(t, err)
 
-	scene, err := NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8})
+	scene, err := NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8}, DefaultMaxBlockNums)
 	assert.Nil(t, err)
 
 	assert.Equal(t, scene.CountSymbols(), 120)
