@@ -114,6 +114,51 @@ func (scene *Scene) CanClick(x, y, z int) bool {
 	return scene.Arr[z][y][x] > 0
 }
 
+func (scene *Scene) CanClickEx(x, y, z int, lst []*BlockData) bool {
+	if x < 0 || x >= scene.Width {
+		return false
+	}
+
+	if x < 0 || y >= scene.Height {
+		return false
+	}
+
+	if z < 0 || z >= len(scene.Arr) {
+		return false
+	}
+
+	if z == len(scene.Arr)-1 {
+		return scene.Arr[z][y][x] > 0
+	}
+
+	for zi := 1; z+zi < len(scene.Arr); zi++ {
+		if zi%1 == 1 {
+			if (scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi)) ||
+				(scene.Arr[z+zi][y][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y, z+zi)) ||
+				(scene.Arr[z+zi][y+scene.YOff][x] > 0 && !HasBlockData(lst, x, y+scene.YOff, z+zi)) ||
+				(scene.Arr[z+zi][y+scene.YOff][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y+scene.YOff, z+zi)) {
+				return false
+			}
+		} else {
+			if scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi) {
+				return false
+			}
+		}
+	}
+
+	return scene.Arr[z][y][x] > 0
+}
+
+func (scene *Scene) GetLevel1(x, y, z int) []*BlockData {
+	if z == 0 {
+		return nil
+	}
+
+	arr := []*BlockData{}
+
+	return arr
+}
+
 func (scene *Scene) GetMaxZ(x, y int) int {
 	if len(scene.Arr) == 1 {
 		return 0
@@ -135,7 +180,27 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 		for y := 0; y < scene.Height; y++ {
 			mz := scene.GetMaxZ(x, y)
 			if scene.CanClick(x, y, mz) {
-				mapBI.AddBlockDataEx(x, y, mz, scene.Arr[mz][y][x], 0)
+				arr := []*BlockData{NewBlockData(x, y, mz, scene.Arr[mz][y][x])}
+
+				mapBI.AddBlockData(arr[0], 0)
+
+				if mz > 0 {
+					if scene.CanClickEx(x, y, mz-1, arr) {
+						mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
+					}
+
+					if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) {
+						mapBI.AddBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 1)
+					}
+
+					if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) {
+						mapBI.AddBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 1)
+					}
+
+					if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) {
+						mapBI.AddBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 1)
+					}
+				}
 			}
 		}
 	}

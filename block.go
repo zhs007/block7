@@ -27,3 +27,13 @@ func NewBlockInfo(maxlevel int) *BlockInfo {
 
 	return bi
 }
+
+func HasBlockData(lst []*BlockData, x, y, z int) bool {
+	for _, v := range lst {
+		if v.X == x && v.Y == y && v.Z == z {
+			return true
+		}
+	}
+
+	return false
+}
