@@ -228,7 +228,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 
 				if mz > 0 {
 					if mz%1 == 0 {
-						if scene.CanClickEx(x, y, mz-1, arr) {
+						if scene.CanClickEx(x, y, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 0) {
+
 							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
@@ -243,7 +245,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x+scene.XOff, y, mz-1, arr) {
+						if scene.CanClickEx(x+scene.XOff, y, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x+scene.XOff, y, mz-1, scene.Arr[mz-1][y][x+scene.XOff], 0) {
+
 							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y, mz-1, scene.Arr[mz-1][y][x+scene.XOff], 1)
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
@@ -258,7 +262,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x, y+scene.YOff, mz-1, arr) {
+						if scene.CanClickEx(x, y+scene.YOff, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x], 0) {
+
 							cb, err := mapBI.AddBlockDataEx(x, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x], 1)
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
@@ -273,8 +279,10 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x+scene.XOff, y+scene.YOff, mz-1, arr) {
+						if scene.CanClickEx(x+scene.XOff, y+scene.YOff, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x+scene.XOff, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x+scene.XOff], 0) {
 							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x+scene.XOff], 1)
+
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
 									zap.Int("x", x+scene.XOff),
@@ -288,7 +296,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 					} else {
-						if scene.CanClickEx(x, y, mz-1, arr) {
+						if scene.CanClickEx(x, y, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 0) {
+
 							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
@@ -303,7 +313,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) {
+						if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 0) {
+
 							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 1)
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
@@ -318,7 +330,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) {
+						if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 0) {
+
 							cb, err := mapBI.AddBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 1)
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
@@ -333,7 +347,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) {
+						if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) &&
+							!mapBI.HasBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 0) {
+
 							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 1)
 							if err != nil {
 								Warn("Scene.Analysis:AddBlockDataEx",
@@ -352,6 +368,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 			}
 		}
 	}
+
+	mapBI.Format()
 
 	return mapBI
 }
@@ -384,4 +402,16 @@ func (scene *Scene) Click(x, y, z int) (int, bool) {
 	}
 
 	return GameStateRunning, true
+}
+
+// CountBlockSymbols - return gamestate, isok
+func (scene *Scene) CountBlockSymbols(symbol int) int {
+	n := 0
+	for _, v := range scene.Block {
+		if v.Symbol == symbol {
+			n++
+		}
+	}
+
+	return n
 }

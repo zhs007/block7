@@ -40,3 +40,13 @@ func HasBlockData(lst []*BlockData, x, y, z int) bool {
 
 	return false
 }
+
+func DelBlockData(lst []*BlockData, x, y, z int) []*BlockData {
+	for i, v := range lst {
+		if v.X == x && v.Y == y && v.Z == z {
+			return append(lst[0:i], lst[i+1:]...)
+		}
+	}
+
+	return lst
+}
