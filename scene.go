@@ -228,8 +228,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 
 				if mz > 0 {
 					if mz%1 == 0 {
-						if scene.CanClickEx(x, y, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 0) {
+						if scene.CanClickEx(x, y, mz-1, arr) {
 
 							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
 							if err != nil {
@@ -245,8 +244,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x+scene.XOff, y, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x+scene.XOff, y, mz-1, scene.Arr[mz-1][y][x+scene.XOff], 0) {
+						if scene.CanClickEx(x+scene.XOff, y, mz-1, arr) {
 
 							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y, mz-1, scene.Arr[mz-1][y][x+scene.XOff], 1)
 							if err != nil {
@@ -262,8 +260,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x, y+scene.YOff, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x], 0) {
+						if scene.CanClickEx(x, y+scene.YOff, mz-1, arr) {
 
 							cb, err := mapBI.AddBlockDataEx(x, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x], 1)
 							if err != nil {
@@ -279,8 +276,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x+scene.XOff, y+scene.YOff, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x+scene.XOff, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x+scene.XOff], 0) {
+						if scene.CanClickEx(x+scene.XOff, y+scene.YOff, mz-1, arr) {
 							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x+scene.XOff], 1)
 
 							if err != nil {
@@ -296,8 +292,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 					} else {
-						if scene.CanClickEx(x, y, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 0) {
+						if scene.CanClickEx(x, y, mz-1, arr) {
 
 							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
 							if err != nil {
@@ -313,8 +308,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 0) {
+						if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) {
 
 							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 1)
 							if err != nil {
@@ -330,8 +324,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 0) {
+						if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) {
 
 							cb, err := mapBI.AddBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 1)
 							if err != nil {
@@ -347,8 +340,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 						}
 
-						if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) &&
-							!mapBI.HasBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 0) {
+						if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) {
 
 							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 1)
 							if err != nil {
