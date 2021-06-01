@@ -1,5 +1,7 @@
 package block7
 
+import "go.uber.org/zap"
+
 // Scene - scene
 type Scene struct {
 	Width        int
@@ -102,14 +104,34 @@ func (scene *Scene) CanClick(x, y, z int) bool {
 		return scene.Arr[z][y][x] > 0
 	}
 
-	for zi := 1; z+zi < len(scene.Arr); zi++ {
-		if zi%1 == 1 {
-			if scene.Arr[z+zi][y][x] > 0 || scene.Arr[z+zi][y][x+scene.XOff] > 0 || scene.Arr[z+zi][y+scene.YOff][x] > 0 || scene.Arr[z+zi][y+scene.YOff][x+scene.XOff] > 0 {
-				return false
+	if z%1 == 0 {
+		for zi := 1; z+zi < len(scene.Arr); zi++ {
+			if zi%1 == 1 {
+				if scene.Arr[z+zi][y][x] > 0 ||
+					scene.Arr[z+zi][y][x+scene.XOff] > 0 ||
+					scene.Arr[z+zi][y+scene.YOff][x] > 0 ||
+					scene.Arr[z+zi][y+scene.YOff][x+scene.XOff] > 0 {
+					return false
+				}
+			} else {
+				if scene.Arr[z+zi][y][x] > 0 {
+					return false
+				}
 			}
-		} else {
-			if scene.Arr[z+zi][y][x] > 0 {
-				return false
+		}
+	} else {
+		for zi := 1; z+zi < len(scene.Arr); zi++ {
+			if zi%1 == 1 {
+				if scene.Arr[z+zi][y][x] > 0 ||
+					scene.Arr[z+zi][y][x-scene.XOff] > 0 ||
+					scene.Arr[z+zi][y-scene.YOff][x] > 0 ||
+					scene.Arr[z+zi][y-scene.YOff][x-scene.XOff] > 0 {
+					return false
+				}
+			} else {
+				if scene.Arr[z+zi][y][x] > 0 {
+					return false
+				}
 			}
 		}
 	}
@@ -134,17 +156,34 @@ func (scene *Scene) CanClickEx(x, y, z int, lst []*BlockData) bool {
 		return scene.Arr[z][y][x] > 0
 	}
 
-	for zi := 1; z+zi < len(scene.Arr); zi++ {
-		if zi%1 == 1 {
-			if (scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi)) ||
-				(scene.Arr[z+zi][y][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y, z+zi)) ||
-				(scene.Arr[z+zi][y+scene.YOff][x] > 0 && !HasBlockData(lst, x, y+scene.YOff, z+zi)) ||
-				(scene.Arr[z+zi][y+scene.YOff][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y+scene.YOff, z+zi)) {
-				return false
+	if z%2 == 0 {
+		for zi := 1; z+zi < len(scene.Arr); zi++ {
+			if zi%1 == 1 {
+				if (scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi)) ||
+					(scene.Arr[z+zi][y][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y, z+zi)) ||
+					(scene.Arr[z+zi][y+scene.YOff][x] > 0 && !HasBlockData(lst, x, y+scene.YOff, z+zi)) ||
+					(scene.Arr[z+zi][y+scene.YOff][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y+scene.YOff, z+zi)) {
+					return false
+				}
+			} else {
+				if scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi) {
+					return false
+				}
 			}
-		} else {
-			if scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi) {
-				return false
+		}
+	} else {
+		for zi := 1; z+zi < len(scene.Arr); zi++ {
+			if zi%1 == 1 {
+				if (scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi)) ||
+					(scene.Arr[z+zi][y][x-scene.XOff] > 0 && !HasBlockData(lst, x-scene.XOff, y, z+zi)) ||
+					(scene.Arr[z+zi][y-scene.YOff][x] > 0 && !HasBlockData(lst, x, y-scene.YOff, z+zi)) ||
+					(scene.Arr[z+zi][y-scene.YOff][x-scene.XOff] > 0 && !HasBlockData(lst, x-scene.XOff, y-scene.YOff, z+zi)) {
+					return false
+				}
+			} else {
+				if scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi) {
+					return false
+				}
 			}
 		}
 	}
@@ -188,20 +227,126 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 				mapBI.AddBlockData(arr[0], 0)
 
 				if mz > 0 {
-					if scene.CanClickEx(x, y, mz-1, arr) {
-						mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
-					}
+					if mz%1 == 0 {
+						if scene.CanClickEx(x, y, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x),
+									zap.Int("y", y),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
 
-					if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) {
-						mapBI.AddBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 1)
-					}
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
 
-					if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) {
-						mapBI.AddBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 1)
-					}
+						if scene.CanClickEx(x+scene.XOff, y, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y, mz-1, scene.Arr[mz-1][y][x+scene.XOff], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x+scene.XOff),
+									zap.Int("y", y),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
 
-					if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) {
-						mapBI.AddBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 1)
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
+
+						if scene.CanClickEx(x, y+scene.YOff, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x),
+									zap.Int("y", y+scene.YOff),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
+
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
+
+						if scene.CanClickEx(x+scene.XOff, y+scene.YOff, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x+scene.XOff], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x+scene.XOff),
+									zap.Int("y", y+scene.YOff),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
+
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
+					} else {
+						if scene.CanClickEx(x, y, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x),
+									zap.Int("y", y),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
+
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
+
+						if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x-scene.XOff),
+									zap.Int("y", y),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
+
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
+
+						if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x),
+									zap.Int("y", y-scene.YOff),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
+
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
+
+						if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) {
+							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 1)
+							if err != nil {
+								Warn("Scene.Analysis:AddBlockDataEx",
+									zap.Int("x", x-scene.XOff),
+									zap.Int("y", y-scene.YOff),
+									zap.Int("z", mz-1),
+									zap.Error(err))
+							}
+
+							if cb != nil {
+								cb.Parent = append(cb.Parent, arr[0])
+							}
+						}
 					}
 				}
 			}
@@ -219,6 +364,10 @@ func (scene *Scene) Click(x, y, z int) (int, bool) {
 
 	if len(scene.Block) >= scene.MaxBlockNums {
 		return GameStateFail, false
+	}
+
+	if HasBlockData(scene.Block, x, y, z) {
+		return GameStateRunning, false
 	}
 
 	b := NewBlockData(x, y, z, scene.Arr[z][y][x])

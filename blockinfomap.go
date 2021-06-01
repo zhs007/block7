@@ -27,9 +27,9 @@ func (m *BlockInfoMap) AddBlockData(block *BlockData, level int) error {
 	return nil
 }
 
-func (m *BlockInfoMap) AddBlockDataEx(x, y, z int, s int, level int) error {
+func (m *BlockInfoMap) AddBlockDataEx(x, y, z int, s int, level int) (*BlockData, error) {
 	if level < 0 || level >= m.MaxLevel {
-		return ErrInvalidLevel
+		return nil, ErrInvalidLevel
 	}
 
 	_, isok := m.MapBlockInfo[s]
@@ -37,9 +37,10 @@ func (m *BlockInfoMap) AddBlockDataEx(x, y, z int, s int, level int) error {
 		m.MapBlockInfo[s] = NewBlockInfo(m.MaxLevel)
 	}
 
-	m.MapBlockInfo[s].LevelList[level] = append(m.MapBlockInfo[s].LevelList[level], NewBlockData(x, y, z, s))
+	b := NewBlockData(x, y, z, s)
+	m.MapBlockInfo[s].LevelList[level] = append(m.MapBlockInfo[s].LevelList[level], b)
 
-	return nil
+	return b, nil
 }
 
 func (m *BlockInfoMap) OutputLog(msg string) {

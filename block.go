@@ -1,10 +1,11 @@
 package block7
 
 type BlockData struct {
-	X      int `json:"x"`
-	Y      int `json:"y"`
-	Z      int `json:"z"`
-	Symbol int `json:"symbol"`
+	X      int          `json:"x"`
+	Y      int          `json:"y"`
+	Z      int          `json:"z"`
+	Symbol int          `json:"symbol"`
+	Parent []*BlockData `json:"parent"`
 }
 
 type BlockInfo struct {
