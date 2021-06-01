@@ -3,6 +3,7 @@ package block7
 type BlockInfoMap struct {
 	MaxLevel     int                `json:"maxLevel"`
 	MapBlockInfo map[int]*BlockInfo `json:"mapBlockInfo"`
+	BlockSymbols []int              `json:"blockSymbols"`
 }
 
 func NewBlockInfoMap(maxlevel int) *BlockInfoMap {
@@ -80,6 +81,23 @@ func (m *BlockInfoMap) delSymbol(x, y, z int, symbol int, level int) {
 
 		}
 	}
+}
+
+func (m *BlockInfoMap) InsBlockSymbol(s int) {
+	for i, v := range m.BlockSymbols {
+		if v == s {
+			if i > 0 {
+				arr := []int{s}
+				arr = append(arr, m.BlockSymbols[:i]...)
+				arr = append(arr, m.BlockSymbols[i+1:]...)
+				m.BlockSymbols = arr
+			}
+
+			return
+		}
+	}
+
+	m.BlockSymbols = append(m.BlockSymbols, s)
 }
 
 func (m *BlockInfoMap) OutputLog(msg string) {

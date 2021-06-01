@@ -240,7 +240,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 
@@ -256,7 +257,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 
@@ -272,7 +274,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 
@@ -288,7 +291,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 					} else {
@@ -304,7 +308,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 
@@ -320,7 +325,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 
@@ -336,7 +342,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 
@@ -352,7 +359,8 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 							}
 
 							if cb != nil {
-								cb.Parent = append(cb.Parent, arr[0])
+								cb.AddParent(arr[0])
+								arr[0].AddChild(cb)
 							}
 						}
 					}
@@ -362,6 +370,9 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 	}
 
 	mapBI.Format()
+	for _, v := range scene.Block {
+		mapBI.InsBlockSymbol((v.Symbol))
+	}
 
 	return mapBI
 }

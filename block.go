@@ -1,11 +1,12 @@
 package block7
 
 type BlockData struct {
-	X      int          `json:"x"`
-	Y      int          `json:"y"`
-	Z      int          `json:"z"`
-	Symbol int          `json:"symbol"`
-	Parent []*BlockData `json:"parent"`
+	X        int          `json:"x"`
+	Y        int          `json:"y"`
+	Z        int          `json:"z"`
+	Symbol   int          `json:"symbol"`
+	Parent   []*BlockData `json:"parent"`
+	Children []*BlockData `json:"children"`
 }
 
 type BlockInfo struct {
@@ -19,6 +20,26 @@ func NewBlockData(x, y, z int, s int) *BlockData {
 		Z:      z,
 		Symbol: s,
 	}
+}
+
+func (bd *BlockData) AddParent(p *BlockData) bool {
+	if HasBlockData(bd.Parent, p.X, p.Y, p.Z) {
+		return false
+	}
+
+	bd.Parent = append(bd.Parent, p)
+
+	return true
+}
+
+func (bd *BlockData) AddChild(c *BlockData) bool {
+	if HasBlockData(bd.Children, c.X, c.Y, c.Z) {
+		return false
+	}
+
+	bd.Children = append(bd.Children, c)
+
+	return true
 }
 
 func NewBlockInfo(maxlevel int) *BlockInfo {
