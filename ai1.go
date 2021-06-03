@@ -320,14 +320,16 @@ func AI1(scene *Scene) {
 			Info("AI1:Turn",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
-				zap.Int("blocknums", scene.CountSymbols()))
+				zap.Int("blocknums", scene.CountSymbols()),
+				zap.Int("block", len(scene.Block)))
 		} else {
 			Info("AI1:Turn:fail",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
-				zap.Int("blocknums", scene.CountSymbols()))
+				zap.Int("blocknums", scene.CountSymbols()),
+				zap.Int("block", len(scene.Block)))
 
-			// break
+			break
 		}
 	}
 }

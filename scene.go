@@ -215,6 +215,168 @@ func (scene *Scene) GetMaxZ(x, y int) int {
 	return 0
 }
 
+func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, bd *BlockData, level int) error {
+	arr := []*BlockData{bd}
+
+	if bd.Z > 0 {
+		if bd.Z%1 == 0 {
+			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
+
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], level+1)
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X),
+						zap.Int("y", bd.Y),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+
+			if scene.CanClickEx(bd.X+scene.XOff, bd.Y, bd.Z-1, arr) {
+
+				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X+scene.XOff], level+1)
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X+scene.XOff),
+						zap.Int("y", bd.Y),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+
+			if scene.CanClickEx(bd.X, bd.Y+scene.YOff, bd.Z-1, arr) {
+
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X], level+1)
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X),
+						zap.Int("y", bd.Y+scene.YOff),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+
+			if scene.CanClickEx(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, arr) {
+				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X+scene.XOff], level+1)
+
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X+scene.XOff),
+						zap.Int("y", bd.Y+scene.YOff),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+		} else {
+			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
+
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], level+1)
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X),
+						zap.Int("y", bd.Y),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+
+			if scene.CanClickEx(bd.X-scene.XOff, bd.Y, bd.Z-1, arr) {
+
+				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X-scene.XOff], level+1)
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X-scene.XOff),
+						zap.Int("y", bd.Y),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+
+			if scene.CanClickEx(bd.X, bd.Y-scene.YOff, bd.Z-1, arr) {
+
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X], level+1)
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X),
+						zap.Int("y", bd.Y-scene.YOff),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+
+			if scene.CanClickEx(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, arr) {
+
+				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X-scene.XOff], level+1)
+				if err != nil {
+					Warn("Scene.analysisDepth:AddBlockDataEx",
+						zap.Int("x", bd.X-scene.XOff),
+						zap.Int("y", bd.Y-scene.YOff),
+						zap.Int("z", bd.Z-1),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					cb.AddParent(bd)
+					bd.AddChild(cb)
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
 func (scene *Scene) Analysis() *BlockInfoMap {
 	mapBI := NewBlockInfoMap(DefaultMaxBlockLevel)
 
@@ -222,149 +384,159 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 		for y := 0; y < scene.Height; y++ {
 			mz := scene.GetMaxZ(x, y)
 			if scene.CanClick(x, y, mz) {
-				arr := []*BlockData{NewBlockData(x, y, mz, scene.Arr[mz][y][x])}
+				bd := NewBlockData(x, y, mz, scene.Arr[mz][y][x])
+				mapBI.AddBlockData(bd, 0)
 
-				mapBI.AddBlockData(arr[0], 0)
+				err := scene.analysisDepth(mapBI, bd, 0)
+				if err != nil {
+					Warn("Scene.Analysis:analysisDepth",
+						zap.Int("x", bd.X),
+						zap.Int("y", bd.Y),
+						zap.Int("z", bd.Z),
+						zap.Error(err))
 
-				if mz > 0 {
-					if mz%1 == 0 {
-						if scene.CanClickEx(x, y, mz-1, arr) {
-
-							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x),
-									zap.Int("y", y),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-
-						if scene.CanClickEx(x+scene.XOff, y, mz-1, arr) {
-
-							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y, mz-1, scene.Arr[mz-1][y][x+scene.XOff], 1)
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x+scene.XOff),
-									zap.Int("y", y),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-
-						if scene.CanClickEx(x, y+scene.YOff, mz-1, arr) {
-
-							cb, err := mapBI.AddBlockDataEx(x, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x], 1)
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x),
-									zap.Int("y", y+scene.YOff),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-
-						if scene.CanClickEx(x+scene.XOff, y+scene.YOff, mz-1, arr) {
-							cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x+scene.XOff], 1)
-
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x+scene.XOff),
-									zap.Int("y", y+scene.YOff),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-					} else {
-						if scene.CanClickEx(x, y, mz-1, arr) {
-
-							cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x),
-									zap.Int("y", y),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-
-						if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) {
-
-							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 1)
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x-scene.XOff),
-									zap.Int("y", y),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-
-						if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) {
-
-							cb, err := mapBI.AddBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 1)
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x),
-									zap.Int("y", y-scene.YOff),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-
-						if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) {
-
-							cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 1)
-							if err != nil {
-								Warn("Scene.Analysis:AddBlockDataEx",
-									zap.Int("x", x-scene.XOff),
-									zap.Int("y", y-scene.YOff),
-									zap.Int("z", mz-1),
-									zap.Error(err))
-							}
-
-							if cb != nil {
-								cb.AddParent(arr[0])
-								arr[0].AddChild(cb)
-							}
-						}
-					}
+					return nil
 				}
+
+				// if mz > 0 {
+				// 	if mz%1 == 0 {
+				// 		if scene.CanClickEx(x, y, mz-1, arr) {
+
+				// 			cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x),
+				// 					zap.Int("y", y),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+
+				// 		if scene.CanClickEx(x+scene.XOff, y, mz-1, arr) {
+
+				// 			cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y, mz-1, scene.Arr[mz-1][y][x+scene.XOff], 1)
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x+scene.XOff),
+				// 					zap.Int("y", y),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+
+				// 		if scene.CanClickEx(x, y+scene.YOff, mz-1, arr) {
+
+				// 			cb, err := mapBI.AddBlockDataEx(x, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x], 1)
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x),
+				// 					zap.Int("y", y+scene.YOff),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+
+				// 		if scene.CanClickEx(x+scene.XOff, y+scene.YOff, mz-1, arr) {
+				// 			cb, err := mapBI.AddBlockDataEx(x+scene.XOff, y+scene.YOff, mz-1, scene.Arr[mz-1][y+scene.YOff][x+scene.XOff], 1)
+
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x+scene.XOff),
+				// 					zap.Int("y", y+scene.YOff),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+				// 	} else {
+				// 		if scene.CanClickEx(x, y, mz-1, arr) {
+
+				// 			cb, err := mapBI.AddBlockDataEx(x, y, mz-1, scene.Arr[mz-1][y][x], 1)
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x),
+				// 					zap.Int("y", y),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+
+				// 		if scene.CanClickEx(x-scene.XOff, y, mz-1, arr) {
+
+				// 			cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y, mz-1, scene.Arr[mz-1][y][x-scene.XOff], 1)
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x-scene.XOff),
+				// 					zap.Int("y", y),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+
+				// 		if scene.CanClickEx(x, y-scene.YOff, mz-1, arr) {
+
+				// 			cb, err := mapBI.AddBlockDataEx(x, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x], 1)
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x),
+				// 					zap.Int("y", y-scene.YOff),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+
+				// 		if scene.CanClickEx(x-scene.XOff, y-scene.YOff, mz-1, arr) {
+
+				// 			cb, err := mapBI.AddBlockDataEx(x-scene.XOff, y-scene.YOff, mz-1, scene.Arr[mz-1][y-scene.YOff][x-scene.XOff], 1)
+				// 			if err != nil {
+				// 				Warn("Scene.Analysis:AddBlockDataEx",
+				// 					zap.Int("x", x-scene.XOff),
+				// 					zap.Int("y", y-scene.YOff),
+				// 					zap.Int("z", mz-1),
+				// 					zap.Error(err))
+				// 			}
+
+				// 			if cb != nil {
+				// 				cb.AddParent(arr[0])
+				// 				arr[0].AddChild(cb)
+				// 			}
+				// 		}
+				// 	}
+				// }
 			}
 		}
 	}
