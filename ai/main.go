@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/zhs007/block7"
 	"go.uber.org/zap"
 )
@@ -19,15 +21,17 @@ func main() {
 
 	rng := block7.NewRngNormal()
 
-	scene, err := block7.NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, block7.DefaultMaxBlockNums)
-	if err != nil {
-		block7.Error("NewScene",
-			zap.Error(err))
+	for i := 0; i < 100; i++ {
+		scene, err := block7.NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, block7.DefaultMaxBlockNums)
+		if err != nil {
+			block7.Error("NewScene",
+				zap.Error(err))
 
-		return
+			return
+		}
+
+		block7.AI1(scene, fmt.Sprintf("%v", i))
 	}
-
-	block7.AI1(scene)
 	// mapBI := scene.Analysis()
 
 	// mapBI.OutputLog("first")

@@ -1,6 +1,11 @@
 package block7
 
-import "go.uber.org/zap"
+import (
+	"fmt"
+	"path"
+
+	"go.uber.org/zap"
+)
 
 func ai1L0(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	clicknums := 0
@@ -247,7 +252,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	return 0, false
 }
 
-func AI1(scene *Scene) {
+func AI1(scene *Scene, name string) {
 	iturn := 0
 	for {
 		iturn++
@@ -313,6 +318,9 @@ func AI1(scene *Scene) {
 		}
 
 		if scene.CountSymbols() == 0 {
+			fn := fmt.Sprintf("%v.%v.json", "ok", name)
+			scene.Save(path.Join("./ai1_output", fn))
+
 			break
 		}
 
@@ -328,6 +336,9 @@ func AI1(scene *Scene) {
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),
 				zap.Int("block", len(scene.Block)))
+
+			fn := fmt.Sprintf("%v.%v.json", "fail", name)
+			scene.Save(path.Join("./ai1_output", fn))
 
 			break
 		}

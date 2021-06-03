@@ -1,17 +1,25 @@
 package block7
 
-import "go.uber.org/zap"
+import (
+	"io/ioutil"
+
+	jsoniter "github.com/json-iterator/go"
+	"go.uber.org/zap"
+)
 
 // Scene - scene
 type Scene struct {
-	Width        int
-	Height       int
-	Layers       int
-	XOff         int
-	YOff         int
-	Arr          [][][]int
-	Block        []*BlockData
-	MaxBlockNums int
+	Width        int          `json:"width"`
+	Height       int          `json:"height"`
+	Layers       int          `json:"layers"`
+	XOff         int          `json:"xoff"`
+	YOff         int          `json:"yoff"`
+	Arr          [][][]int    `json:"-"`
+	Block        []*BlockData `json:"-"`
+	MaxBlockNums int          `json:"-"`
+	InitArr      [][][]int    `json:"layer"`
+	History      [][]int      `json:"history"`
+	ClickValues  int          `json:"clickValues"`
 }
 
 // NewScene - new a scene
@@ -54,6 +62,8 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 		scene.Arr = append(scene.Arr, arrslayer)
 	}
 
+	scene.InitArr = cloneArr3(scene.Arr)
+
 	return scene, nil
 }
 
@@ -85,6 +95,21 @@ func (scene *Scene) CountSymbol(symbol int) int {
 	}
 
 	return n
+}
+
+func (scene *Scene) IsValid() bool {
+	n := 0
+	for _, arrlayer := range scene.Arr {
+		for _, arrrow := range arrlayer {
+			for _, v := range arrrow {
+				if v > 0 {
+					n++
+				}
+			}
+		}
+	}
+
+	return (n+len(scene.Block))%3 == 0
 }
 
 func (scene *Scene) CanClick(x, y, z int) bool {
@@ -236,6 +261,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 
@@ -255,6 +294,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 
@@ -274,6 +327,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 
@@ -293,6 +360,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 		} else {
@@ -312,6 +393,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 
@@ -331,6 +426,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 
@@ -350,6 +459,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 
@@ -369,6 +492,20 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				if cb != nil {
 					cb.AddParent(bd)
 					bd.AddChild(cb)
+
+					if depth > 0 {
+						arr = append(arr, cb)
+						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisDepth:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
 				}
 			}
 		}
@@ -425,10 +562,19 @@ func (scene *Scene) Click(x, y, z int) (int, bool) {
 		return GameStateRunning, false
 	}
 
+	scene.ClickValues += len(scene.Block)
+	scene.History = append(scene.History, []int{x, y, z, len(scene.Block)})
+
 	b := NewBlockData(x, y, z, scene.Arr[z][y][x])
 	scene.Arr[z][y][x] = 0
 
 	scene.Block = insBlockDataAndProc(scene.Block, b)
+
+	if !scene.IsValid() {
+		Warn("Scene.Click:IsValid",
+			zap.Int("blocks", len(scene.Block)),
+			zap.Int("lastSymbols", scene.CountSymbols()))
+	}
 
 	if len(scene.Block) >= scene.MaxBlockNums {
 		return GameStateFail, true
@@ -451,4 +597,26 @@ func (scene *Scene) CountBlockSymbols(symbol int) int {
 	}
 
 	return n
+}
+
+func (scene *Scene) Save(fn string) error {
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
+
+	buf, err := json.Marshal(scene)
+	if err != nil {
+		Error("Scene.Save:Marshal",
+			zap.Error(err))
+
+		return err
+	}
+
+	err = ioutil.WriteFile(fn, buf, 0640)
+	if err != nil {
+		Error("Scene.Save:WriteFile",
+			zap.Error(err))
+
+		return err
+	}
+
+	return nil
 }
