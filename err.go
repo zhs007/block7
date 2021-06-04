@@ -8,4 +8,7 @@ var (
 
 	// ErrInvalidLevel - invalid level
 	ErrInvalidLevel = errors.New("invalid level")
+
+	// ErrInvalidParams - invalid params
+	ErrInvalidParams = errors.New("invalid params")
 )

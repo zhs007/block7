@@ -71,3 +71,23 @@ func DelBlockData(lst []*BlockData, x, y, z int) []*BlockData {
 
 	return lst
 }
+
+func RandBlockData(rng Rng, lst []*BlockData, nums int) ([]*BlockData, []*BlockData, error) {
+	if nums <= 0 {
+		return nil, nil, ErrInvalidParams
+	}
+
+	arr := []*BlockData{}
+
+	for i := 0; i < nums; i++ {
+		cr, err := rng.Rand(len(lst))
+		if err != nil {
+			return nil, nil, err
+		}
+
+		arr = append(arr, lst[cr])
+		lst = append(lst[0:cr], lst[cr+1:]...)
+	}
+
+	return lst, arr, nil
+}

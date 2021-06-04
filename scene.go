@@ -25,6 +25,24 @@ type Scene struct {
 	IsOutputScene bool         `json:"isOutputScene"`
 }
 
+// LoadScene - load a scene
+func LoadScene(rng Rng, fn string) (*Scene, error) {
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
+
+	data, err := ioutil.ReadFile(fn)
+	if err != nil {
+		return nil, err
+	}
+
+	scene := &Scene{}
+	err = json.Unmarshal(data, scene)
+	if err != nil {
+		return nil, err
+	}
+
+	return scene, nil
+}
+
 // NewScene - new a scene
 func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, error) {
 	ss, err := genSymbols(rng, symbols, stage.IconNums)
@@ -69,6 +87,13 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 	scene.InitArr = cloneArr3(scene.Arr)
 
 	return scene, nil
+}
+
+func (scene *Scene) Restart() {
+	scene.Arr = cloneArr3(scene.InitArr)
+	scene.History = nil
+	scene.ClickValues = 0
+	scene.Block = nil
 }
 
 func (scene *Scene) CountSymbols() int {
@@ -116,12 +141,28 @@ func (scene *Scene) IsValid() bool {
 	return (n+len(scene.Block))%3 == 0
 }
 
+func (scene *Scene) HasBlock(x, y, z int) bool {
+	if x < 0 || x >= scene.Width {
+		return false
+	}
+
+	if y < 0 || y >= scene.Height {
+		return false
+	}
+
+	if z < 0 || z >= len(scene.Arr) {
+		return false
+	}
+
+	return scene.Arr[z][y][x] > 0
+}
+
 func (scene *Scene) CanClick(x, y, z int) bool {
 	if x < 0 || x >= scene.Width {
 		return false
 	}
 
-	if x < 0 || y >= scene.Height {
+	if y < 0 || y >= scene.Height {
 		return false
 	}
 
@@ -133,32 +174,32 @@ func (scene *Scene) CanClick(x, y, z int) bool {
 		return scene.Arr[z][y][x] > 0
 	}
 
-	if z%1 == 0 {
+	if z%2 == 0 {
 		for zi := 1; z+zi < len(scene.Arr); zi++ {
-			if zi%1 == 1 {
-				if scene.Arr[z+zi][y][x] > 0 ||
-					scene.Arr[z+zi][y][x+scene.XOff] > 0 ||
-					scene.Arr[z+zi][y+scene.YOff][x] > 0 ||
-					scene.Arr[z+zi][y+scene.YOff][x+scene.XOff] > 0 {
+			if (z+zi)%2 == 1 {
+				if scene.HasBlock(x, y, z+zi) ||
+					scene.HasBlock(x+scene.XOff, y, z+zi) ||
+					scene.HasBlock(x, y+scene.YOff, z+zi) ||
+					scene.HasBlock(x+scene.XOff, y+scene.YOff, z+zi) {
 					return false
 				}
 			} else {
-				if scene.Arr[z+zi][y][x] > 0 {
+				if scene.HasBlock(x, y, z+zi) {
 					return false
 				}
 			}
 		}
 	} else {
 		for zi := 1; z+zi < len(scene.Arr); zi++ {
-			if zi%1 == 1 {
-				if scene.Arr[z+zi][y][x] > 0 ||
-					scene.Arr[z+zi][y][x-scene.XOff] > 0 ||
-					scene.Arr[z+zi][y-scene.YOff][x] > 0 ||
-					scene.Arr[z+zi][y-scene.YOff][x-scene.XOff] > 0 {
+			if (z+zi)%2 == 0 {
+				if scene.HasBlock(x, y, z+zi) ||
+					scene.HasBlock(x-scene.XOff, y, z+zi) ||
+					scene.HasBlock(x, y-scene.YOff, z+zi) ||
+					scene.HasBlock(x-scene.XOff, y-scene.YOff, z+zi) {
 					return false
 				}
 			} else {
-				if scene.Arr[z+zi][y][x] > 0 {
+				if scene.HasBlock(x, y, z+zi) {
 					return false
 				}
 			}
@@ -173,7 +214,7 @@ func (scene *Scene) CanClickEx(x, y, z int, lst []*BlockData) bool {
 		return false
 	}
 
-	if x < 0 || y >= scene.Height {
+	if y < 0 || y >= scene.Height {
 		return false
 	}
 
@@ -187,30 +228,30 @@ func (scene *Scene) CanClickEx(x, y, z int, lst []*BlockData) bool {
 
 	if z%2 == 0 {
 		for zi := 1; z+zi < len(scene.Arr); zi++ {
-			if zi%1 == 1 {
-				if (scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi)) ||
-					(scene.Arr[z+zi][y][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y, z+zi)) ||
-					(scene.Arr[z+zi][y+scene.YOff][x] > 0 && !HasBlockData(lst, x, y+scene.YOff, z+zi)) ||
-					(scene.Arr[z+zi][y+scene.YOff][x+scene.XOff] > 0 && !HasBlockData(lst, x+scene.XOff, y+scene.YOff, z+zi)) {
+			if (z+zi)%2 == 1 {
+				if (scene.HasBlock(x, y, z+zi) && !HasBlockData(lst, x, y, z+zi)) ||
+					(scene.HasBlock(x+scene.XOff, y, z+zi) && !HasBlockData(lst, x+scene.XOff, y, z+zi)) ||
+					(scene.HasBlock(x, y+scene.YOff, z+zi) && !HasBlockData(lst, x, y+scene.YOff, z+zi)) ||
+					(scene.HasBlock(x+scene.XOff, y+scene.YOff, z+zi) && !HasBlockData(lst, x+scene.XOff, y+scene.YOff, z+zi)) {
 					return false
 				}
 			} else {
-				if scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi) {
+				if scene.HasBlock(x, y, z+zi) && !HasBlockData(lst, x, y, z+zi) {
 					return false
 				}
 			}
 		}
 	} else {
 		for zi := 1; z+zi < len(scene.Arr); zi++ {
-			if zi%1 == 1 {
-				if (scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi)) ||
-					(scene.Arr[z+zi][y][x-scene.XOff] > 0 && !HasBlockData(lst, x-scene.XOff, y, z+zi)) ||
-					(scene.Arr[z+zi][y-scene.YOff][x] > 0 && !HasBlockData(lst, x, y-scene.YOff, z+zi)) ||
-					(scene.Arr[z+zi][y-scene.YOff][x-scene.XOff] > 0 && !HasBlockData(lst, x-scene.XOff, y-scene.YOff, z+zi)) {
+			if (z+zi)%2 == 0 {
+				if (scene.HasBlock(x, y, z+zi) && !HasBlockData(lst, x, y, z+zi)) ||
+					(scene.HasBlock(x-scene.XOff, y, z+zi) && !HasBlockData(lst, x-scene.XOff, y, z+zi)) ||
+					(scene.HasBlock(x, y-scene.YOff, z+zi) && !HasBlockData(lst, x, y-scene.YOff, z+zi)) ||
+					(scene.HasBlock(x-scene.XOff, y-scene.YOff, z+zi) && !HasBlockData(lst, x-scene.XOff, y-scene.YOff, z+zi)) {
 					return false
 				}
 			} else {
-				if scene.Arr[z+zi][y][x] > 0 && !HasBlockData(lst, x, y, z+zi) {
+				if scene.HasBlock(x, y, z+zi) && !HasBlockData(lst, x, y, z+zi) {
 					return false
 				}
 			}
@@ -248,7 +289,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 	// arr := []*BlockData{bd}
 
 	if bd.Z > 0 {
-		if bd.Z%1 == 0 {
+		if bd.Z%2 == 0 {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
 
 				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], level)

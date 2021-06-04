@@ -36,10 +36,10 @@ func LoadStage(fn string) (*Stage, error) {
 		arr := strings.Split(stage.Offset, ",")
 		if len(arr) == 3 {
 			if arr[0] == "0" {
-				stage.XOff = -1
+				stage.XOff = 1
 				stage.YOff = -1
 			} else {
-				stage.XOff = 1
+				stage.XOff = -1
 				stage.YOff = 1
 			}
 		}
