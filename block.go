@@ -72,6 +72,36 @@ func DelBlockData(lst []*BlockData, x, y, z int) []*BlockData {
 	return lst
 }
 
+func CountBlockData(lst []*BlockData, symbol int) int {
+	n := 0
+	for _, v := range lst {
+		if v.Symbol == symbol {
+			n++
+		}
+	}
+
+	return n
+}
+
+func RemoveBlockData(lst []*BlockData, symbol int, nums int) []*BlockData {
+	n := 0
+	for i := 0; i < len(lst); {
+		if lst[i].Symbol == symbol {
+			lst = append(lst[0:i], lst[i+1:]...)
+
+			n++
+
+			if n >= nums {
+				return lst
+			}
+		} else {
+			i++
+		}
+	}
+
+	return lst
+}
+
 func RandBlockData(rng Rng, lst []*BlockData, nums int) ([]*BlockData, []*BlockData, error) {
 	if nums <= 0 {
 		return nil, nil, ErrInvalidParams
@@ -84,6 +114,23 @@ func RandBlockData(rng Rng, lst []*BlockData, nums int) ([]*BlockData, []*BlockD
 		if err != nil {
 			return nil, nil, err
 		}
+
+		arr = append(arr, lst[cr])
+		lst = append(lst[0:cr], lst[cr+1:]...)
+	}
+
+	return lst, arr, nil
+}
+
+func GetBlockDataList(lst []*BlockData, nums int) ([]*BlockData, []*BlockData, error) {
+	if nums <= 0 {
+		return nil, nil, ErrInvalidParams
+	}
+
+	arr := []*BlockData{}
+
+	for i := 0; i < nums; i++ {
+		cr := 0
 
 		arr = append(arr, lst[cr])
 		lst = append(lst[0:cr], lst[cr+1:]...)

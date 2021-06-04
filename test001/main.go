@@ -22,8 +22,9 @@ func main() {
 	}
 
 	for i := 0; i < 1; i++ {
-		block7.AI1(scene, fmt.Sprintf("%v", i))
+		// block7.AI1(scene, fmt.Sprintf("%v", i))
 		// block7.AI2(rng, scene, fmt.Sprintf("%v", i), 1)
+		block7.AI3(scene, fmt.Sprintf("%v", i))
 	}
 	// mapBI := scene.Analysis()
 
