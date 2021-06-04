@@ -2,6 +2,7 @@ package block7
 
 import (
 	"io/ioutil"
+	"strings"
 
 	jsoniter "github.com/json-iterator/go"
 )
@@ -13,6 +14,8 @@ type Stage struct {
 	Offset   string    `json:"offset"`
 	Layer    [][][]int `json:"layer"`
 	IconNums int       `json:"iconnums"`
+	XOff     int       `json:"xoff"`
+	YOff     int       `json:"yoff"`
 }
 
 func LoadStage(fn string) (*Stage, error) {
@@ -27,6 +30,19 @@ func LoadStage(fn string) (*Stage, error) {
 	err = json.Unmarshal(data, stage)
 	if err != nil {
 		return nil, err
+	}
+
+	if len(stage.Offset) > 0 {
+		arr := strings.Split(stage.Offset, ",")
+		if len(arr) == 3 {
+			if arr[0] == "0" {
+				stage.XOff = -1
+				stage.YOff = -1
+			} else {
+				stage.XOff = 1
+				stage.YOff = 1
+			}
+		}
 	}
 
 	return stage, nil

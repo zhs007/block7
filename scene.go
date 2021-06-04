@@ -9,17 +9,20 @@ import (
 
 // Scene - scene
 type Scene struct {
-	Width        int          `json:"width"`
-	Height       int          `json:"height"`
-	Layers       int          `json:"layers"`
-	XOff         int          `json:"xoff"`
-	YOff         int          `json:"yoff"`
-	Arr          [][][]int    `json:"-"`
-	Block        []*BlockData `json:"-"`
-	MaxBlockNums int          `json:"-"`
-	InitArr      [][][]int    `json:"layer"`
-	History      [][]int      `json:"history"`
-	ClickValues  int          `json:"clickValues"`
+	Width         int          `json:"width"`
+	Height        int          `json:"height"`
+	Layers        int          `json:"layers"`
+	XOff          int          `json:"xoff"`
+	YOff          int          `json:"yoff"`
+	Arr           [][][]int    `json:"-"`
+	Block         []*BlockData `json:"-"`
+	MaxBlockNums  int          `json:"-"`
+	InitArr       [][][]int    `json:"layer"`
+	History       [][]int      `json:"history"`
+	ClickValues   int          `json:"clickValues"`
+	FinishedPer   float32      `json:"finishedPer"`
+	Offset        string       `json:"offset"`
+	IsOutputScene bool         `json:"isOutputScene"`
 }
 
 // NewScene - new a scene
@@ -33,9 +36,10 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 		Width:        stage.Width,
 		Height:       stage.Height,
 		Layers:       len(stage.Layer),
-		XOff:         1,
-		YOff:         1,
+		XOff:         stage.XOff,
+		YOff:         stage.YOff,
 		MaxBlockNums: blockNums,
+		Offset:       stage.Offset,
 	}
 
 	for _, arrlayer := range stage.Layer {
@@ -600,6 +604,8 @@ func (scene *Scene) CountBlockSymbols(symbol int) int {
 }
 
 func (scene *Scene) Save(fn string) error {
+	scene.IsOutputScene = true
+
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 
 	buf, err := json.Marshal(scene)
