@@ -314,6 +314,24 @@ func ai2(rng Rng, scene *Scene) bool {
 
 		clicknums := 0
 		mapbi := scene.Analysis()
+		if len(scene.Block) > 0 {
+			for _, b := range scene.Block {
+				cn, isbreak := ai2L0(rng, scene, mapbi, b.Symbol)
+				clicknums += cn
+				if isbreak {
+					break
+				}
+			}
+
+			for _, b := range scene.Block {
+				cn, isbreak := ai2L1(rng, scene, mapbi, b.Symbol)
+				clicknums += cn
+				if isbreak {
+					break
+				}
+			}
+		}
+
 		if len(mapbi.BlockSymbols) > 0 {
 			for _, v := range mapbi.BlockSymbols {
 				cn, isbreak := ai2L0(rng, scene, mapbi, v)

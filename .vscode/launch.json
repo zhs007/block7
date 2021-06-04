@@ -13,6 +13,16 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "env": {"PLUGIN":"basic"}
+        },
+        {
+            "name": "test001",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/test001/main.go",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {"PLUGIN":"basic"}
         }
     ]
 }

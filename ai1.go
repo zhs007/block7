@@ -259,7 +259,25 @@ func AI1(scene *Scene, name string) {
 
 		clicknums := 0
 		mapbi := scene.Analysis()
-		if len(mapbi.BlockSymbols) > 0 {
+		if len(scene.Block) > 0 {
+			for _, b := range scene.Block {
+				cn, isbreak := ai1L0(scene, mapbi, b.Symbol)
+				clicknums += cn
+				if isbreak {
+					break
+				}
+			}
+
+			for _, b := range scene.Block {
+				cn, isbreak := ai1L1(scene, mapbi, b.Symbol)
+				clicknums += cn
+				if isbreak {
+					break
+				}
+			}
+		}
+
+		if clicknums == 0 && len(mapbi.BlockSymbols) > 0 {
 			for _, v := range mapbi.BlockSymbols {
 				cn, isbreak := ai1L0(scene, mapbi, v)
 				clicknums += cn

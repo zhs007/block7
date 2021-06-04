@@ -16,6 +16,7 @@ type Scene struct {
 	YOff          int          `json:"yoff"`
 	Arr           [][][]int    `json:"-"`
 	Block         []*BlockData `json:"-"`
+	BlockEx       []*BlockData `json:"-"`
 	MaxBlockNums  int          `json:"-"`
 	InitArr       [][][]int    `json:"layer"`
 	History       [][]int      `json:"history"`
@@ -26,7 +27,7 @@ type Scene struct {
 }
 
 // LoadScene - load a scene
-func LoadScene(rng Rng, fn string) (*Scene, error) {
+func LoadScene(rng Rng, fn string, blockNums int) (*Scene, error) {
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 
 	data, err := ioutil.ReadFile(fn)
@@ -39,6 +40,10 @@ func LoadScene(rng Rng, fn string) (*Scene, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	scene.MaxBlockNums = blockNums
+
+	scene.Restart()
 
 	return scene, nil
 }

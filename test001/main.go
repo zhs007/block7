@@ -13,7 +13,7 @@ func main() {
 
 	rng := block7.NewRngNormal()
 
-	scene, err := block7.LoadScene(rng, "./cfg/level_0100.json")
+	scene, err := block7.LoadScene(rng, "./cfg/0.32-95.json", block7.DefaultMaxBlockNums)
 	if err != nil {
 		block7.Error("LoadStage",
 			zap.Error(err))
@@ -21,9 +21,9 @@ func main() {
 		return
 	}
 
-	for i := 0; i < 100; i++ {
-		// block7.AI1(scene, fmt.Sprintf("%v", i))
-		block7.AI2(rng, scene, fmt.Sprintf("%v", i), 100)
+	for i := 0; i < 1; i++ {
+		block7.AI1(scene, fmt.Sprintf("%v", i))
+		// block7.AI2(rng, scene, fmt.Sprintf("%v", i), 1)
 	}
 	// mapBI := scene.Analysis()
 
