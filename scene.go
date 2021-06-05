@@ -2,6 +2,7 @@ package block7
 
 import (
 	"io/ioutil"
+	"os"
 
 	jsoniter "github.com/json-iterator/go"
 	"go.uber.org/zap"
@@ -662,7 +663,7 @@ func (scene *Scene) Save(fn string) error {
 		return err
 	}
 
-	err = ioutil.WriteFile(fn, buf, 0640)
+	err = ioutil.WriteFile(fn, buf, os.ModePerm)
 	if err != nil {
 		Error("Scene.Save:WriteFile",
 			zap.Error(err))

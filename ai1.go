@@ -2,10 +2,13 @@ package block7
 
 import (
 	"fmt"
+	"os"
 	"path"
 
 	"go.uber.org/zap"
 )
+
+const AI1OutputPath = "./ai1_output"
 
 func ai1L0(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	clicknums := 0
@@ -253,6 +256,8 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 }
 
 func AI1(scene *Scene, name string) {
+	os.MkdirAll(AI1OutputPath, os.ModePerm)
+
 	iturn := 0
 	for {
 		iturn++
@@ -337,7 +342,7 @@ func AI1(scene *Scene, name string) {
 
 		if scene.CountSymbols() == 0 {
 			fn := fmt.Sprintf("%v.%v.json", "ok", name)
-			scene.Save(path.Join("./ai1_output", fn))
+			scene.Save(path.Join(AI1OutputPath, fn))
 
 			break
 		}
@@ -356,7 +361,7 @@ func AI1(scene *Scene, name string) {
 				zap.Int("block", len(scene.Block)))
 
 			fn := fmt.Sprintf("%v.%v.json", "fail", name)
-			scene.Save(path.Join("./ai1_output", fn))
+			scene.Save(path.Join(AI1OutputPath, fn))
 
 			break
 		}

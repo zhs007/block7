@@ -2,10 +2,13 @@ package block7
 
 import (
 	"fmt"
+	"os"
 	"path"
 
 	"go.uber.org/zap"
 )
+
+const AI2OutputPath = "./ai2_output"
 
 func ai2L0(rng Rng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	clicknums := 0
@@ -416,6 +419,8 @@ func ai2(rng Rng, scene *Scene) bool {
 }
 
 func AI2(rng Rng, scene *Scene, name string, totalnums int) {
+	os.MkdirAll(AI2OutputPath, os.ModePerm)
+
 	finishedNums := 0
 	for i := 0; i < totalnums; i++ {
 		if ai2(rng, scene) {
@@ -426,5 +431,5 @@ func AI2(rng Rng, scene *Scene, name string, totalnums int) {
 	scene.FinishedPer = float32(finishedNums) / float32(totalnums)
 
 	fn := fmt.Sprintf("%v-%v.json", scene.FinishedPer, name)
-	scene.Save(path.Join("./ai2_output", fn))
+	scene.Save(path.Join(AI2OutputPath, fn))
 }

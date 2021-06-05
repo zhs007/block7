@@ -14,3 +14,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 .DS_Store
+ai1_output
+ai2_output
+ai3_output
+ai4_output

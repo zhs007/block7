@@ -108,18 +108,19 @@ func RandBlockData(rng Rng, lst []*BlockData, nums int) ([]*BlockData, []*BlockD
 	}
 
 	arr := []*BlockData{}
+	dst := append([]*BlockData{}, lst...)
 
 	for i := 0; i < nums; i++ {
-		cr, err := rng.Rand(len(lst))
+		cr, err := rng.Rand(len(dst))
 		if err != nil {
 			return nil, nil, err
 		}
 
-		arr = append(arr, lst[cr])
-		lst = append(lst[0:cr], lst[cr+1:]...)
+		arr = append(arr, dst[cr])
+		dst = append(dst[0:cr], dst[cr+1:]...)
 	}
 
-	return lst, arr, nil
+	return dst, arr, nil
 }
 
 func GetBlockDataList(lst []*BlockData, nums int) ([]*BlockData, []*BlockData, error) {
@@ -128,13 +129,14 @@ func GetBlockDataList(lst []*BlockData, nums int) ([]*BlockData, []*BlockData, e
 	}
 
 	arr := []*BlockData{}
+	dst := append([]*BlockData{}, lst...)
 
 	for i := 0; i < nums; i++ {
 		cr := 0
 
-		arr = append(arr, lst[cr])
-		lst = append(lst[0:cr], lst[cr+1:]...)
+		arr = append(arr, dst[cr])
+		dst = append(dst[0:cr], dst[cr+1:]...)
 	}
 
-	return lst, arr, nil
+	return dst, arr, nil
 }
