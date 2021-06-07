@@ -11,7 +11,7 @@ func main() {
 	block7.InitLogger("block7.ai", block7.Version,
 		"debug", true, "./logs")
 
-	rng := block7.NewRngNormal()
+	rng := block7.NewRngZero()
 
 	scene, err := block7.LoadScene(rng, "./cfg/0.32-95.json", block7.DefaultMaxBlockNums)
 	if err != nil {
@@ -25,7 +25,7 @@ func main() {
 		// block7.AI1(scene, fmt.Sprintf("%v", i))
 		// block7.AI2(rng, scene, fmt.Sprintf("%v", i), 1)
 		// block7.AI3(scene, fmt.Sprintf("%v", i))
-		block7.AI4(scene, fmt.Sprintf("%v", i))
+		block7.AI4(rng, scene, fmt.Sprintf("%v", i), 1)
 	}
 	// mapBI := scene.Analysis()
 

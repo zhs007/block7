@@ -31,7 +31,7 @@ func main() {
 		}
 
 		// block7.AI1(scene, fmt.Sprintf("%v", i))
-		block7.AI2(rng, scene, fmt.Sprintf("%v", i), 100)
+		block7.AI4(rng, scene, fmt.Sprintf("%v", i), 100)
 	}
 	// mapBI := scene.Analysis()
 

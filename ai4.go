@@ -10,7 +10,7 @@ import (
 
 const AI4OutputPath = "./ai4_output"
 
-func ai4L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bool {
+func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bool {
 	if aiResult.HasSymbol(symbol) {
 		return false
 	}
@@ -22,9 +22,9 @@ func ai4L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		lsn := scene.CountBlockSymbols(symbol)
 		if lsn > 0 {
 			if len(v.LevelList[0]) >= BlockNums-lsn {
-				lst0, lst1, err := GetBlockDataList(v.LevelList[0], BlockNums-lsn)
+				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], BlockNums-lsn)
 				if err != nil {
-					Error("ai4L0:lsn:GetBlockDataList",
+					Error("ai4L0:lsn:RandBlockData",
 						zap.Int("lsn", lsn),
 						zap.Int("len", len(v.LevelList[0])),
 						zap.Error(err))
@@ -54,9 +54,9 @@ func ai4L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		}
 
 		if len(v.LevelList[0]) >= BlockNums {
-			lst0, lst1, err := GetBlockDataList(v.LevelList[0], len(v.LevelList[0])-len(v.LevelList[0])%BlockNums)
+			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], len(v.LevelList[0])-len(v.LevelList[0])%BlockNums)
 			if err != nil {
-				Error("ai4L0:GetBlockDataList",
+				Error("ai4L0:RandBlockData",
 					zap.Int("len", len(v.LevelList[0])),
 					zap.Error(err))
 
@@ -86,7 +86,7 @@ func ai4L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bo
 	return false
 }
 
-func ai4L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
+func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
 	var lstl0 []*BlockData
 	var lstl1 []*BlockData
 
@@ -116,9 +116,9 @@ func ai4L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			}
 
 			if ln0 > 0 {
-				lst0, lst1, err := GetBlockDataList(v.LevelList[0], ln0)
+				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 				if err != nil {
-					Error("ai4L1:lsn:ln0:GetBlockDataList",
+					Error("ai4L1:lsn:ln0:RandBlockData",
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
@@ -157,9 +157,9 @@ func ai4L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 				return false
 			}
 
-			lst0, lst1, err := GetBlockDataList(v.LevelList[1], ln1)
+			lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 			if err != nil {
-				Error("ai4L1:lsn:ln1:GetBlockDataList",
+				Error("ai4L1:lsn:ln1:RandBlockData",
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -207,9 +207,9 @@ func ai4L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		}
 
 		if ln0 > 0 {
-			lst0, lst1, err := GetBlockDataList(v.LevelList[0], ln0)
+			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 			if err != nil {
-				Error("ai4L1:ln0:GetBlockDataList",
+				Error("ai4L1:ln0:RandBlockData",
 					zap.Int("ln0", ln0),
 					zap.Error(err))
 
@@ -245,9 +245,9 @@ func ai4L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			return false
 		}
 
-		lst0, lst1, err := GetBlockDataList(v.LevelList[1], ln1)
+		lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 		if err != nil {
-			Error("ai4L1:ln1:GetBlockDataList",
+			Error("ai4L1:ln1:RandBlockData",
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Error(err))
@@ -281,7 +281,7 @@ func ai4L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 	return false
 }
 
-func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
+func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
 	var lstl0 []*BlockData
 	var lstl1 []*BlockData
 	var lstl2 []*BlockData
@@ -312,9 +312,9 @@ func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			}
 
 			if ln0 > 0 {
-				lst0, lst1, err := GetBlockDataList(v.LevelList[0], ln0)
+				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 				if err != nil {
-					Error("ai4L2:lsn:ln0:GetBlockDataList",
+					Error("ai4L2:lsn:ln0:RandBlockData",
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
@@ -353,9 +353,9 @@ func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			}
 
 			if ln1 > 0 {
-				lst0, lst1, err := GetBlockDataList(v.LevelList[1], ln1)
+				lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 				if err != nil {
-					Error("ai4L2:lsn:ln1:GetBlockDataList",
+					Error("ai4L2:lsn:ln1:RandBlockData",
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Int("ln1", ln1),
@@ -397,9 +397,9 @@ func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 				return false
 			}
 
-			lst0, lst1, err := GetBlockDataList(v.LevelList[2], ln2)
+			lst0, lst1, err := RandBlockData(rng, v.LevelList[2], ln2)
 			if err != nil {
-				Error("ai4L2:lsn:ln2:GetBlockDataList",
+				Error("ai4L2:lsn:ln2:RandBlockData",
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -450,9 +450,9 @@ func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		}
 
 		if ln0 > 0 {
-			lst0, lst1, err := GetBlockDataList(v.LevelList[0], ln0)
+			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 			if err != nil {
-				Error("ai4L2:ln0:GetBlockDataList",
+				Error("ai4L2:ln0:RandBlockData",
 					zap.Int("ln0", ln0),
 					zap.Error(err))
 
@@ -488,9 +488,9 @@ func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		}
 
 		if ln1 > 0 {
-			lst0, lst1, err := GetBlockDataList(v.LevelList[1], ln1)
+			lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 			if err != nil {
-				Error("ai4L2:ln1:GetBlockDataList",
+				Error("ai4L2:ln1:RandBlockData",
 					zap.Int("ln0", ln0),
 					zap.Error(err))
 
@@ -528,9 +528,9 @@ func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			return false
 		}
 
-		lst0, lst1, err := GetBlockDataList(v.LevelList[2], ln2)
+		lst0, lst1, err := RandBlockData(rng, v.LevelList[2], ln2)
 		if err != nil {
-			Error("ai4L2:ln2:GetBlockDataList",
+			Error("ai4L2:ln2:RandBlockData",
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Int("ln2", ln2),
@@ -567,16 +567,16 @@ func ai4L2(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 	return false
 }
 
-func ai4PreProc(scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
+func ai4PreProc(rng Rng, scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
 	aiResult := NewAIResult(scene, mapBI)
 
 	if len(mapBI.BlockSymbols) > 0 {
 		for _, v := range mapBI.BlockSymbols {
-			ai4L0(scene, mapBI, aiResult, v)
+			ai4L0(rng, scene, mapBI, aiResult, v)
 		}
 
 		for _, v := range mapBI.BlockSymbols {
-			ai4L1(scene, mapBI, aiResult, v)
+			ai4L1(rng, scene, mapBI, aiResult, v)
 		}
 
 		// for _, v := range mapBI.BlockSymbols {
@@ -585,11 +585,11 @@ func ai4PreProc(scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
 	}
 
 	for k := range mapBI.MapBlockInfo {
-		ai4L0(scene, mapBI, aiResult, k)
+		ai4L0(rng, scene, mapBI, aiResult, k)
 	}
 
 	for k := range mapBI.MapBlockInfo {
-		ai4L1(scene, mapBI, aiResult, k)
+		ai4L1(rng, scene, mapBI, aiResult, k)
 	}
 
 	// for k := range mapBI.MapBlockInfo {
@@ -599,21 +599,19 @@ func ai4PreProc(scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
 	return aiResult, nil
 }
 
-func AI4(scene *Scene, name string) error {
-	os.MkdirAll(AI4OutputPath, os.ModePerm)
-
+func procAI4(rng Rng, scene *Scene, name string) (bool, error) {
 	iturn := 0
 	for {
 		iturn++
 
 		clicknums := 0
 		mapbi := scene.Analysis()
-		aiResult, err := ai4PreProc(scene, mapbi)
+		aiResult, err := ai4PreProc(rng, scene, mapbi)
 		if err != nil {
 			Warn("AI4:ai4PreProc",
 				zap.Error(err))
 
-			return err
+			return false, err
 		}
 
 		cs := 0
@@ -675,10 +673,10 @@ func AI4(scene *Scene, name string) error {
 		}
 
 		if scene.CountSymbols() == 0 {
-			fn := fmt.Sprintf("%v.%v.json", "ok", name)
-			scene.Save(path.Join(AI4OutputPath, fn))
+			// fn := fmt.Sprintf("%v.%v.json", "ok", name)
+			// scene.Save(path.Join(AI4OutputPath, fn))
 
-			break
+			return true, nil
 		}
 
 		if clicknums > 0 {
@@ -694,11 +692,53 @@ func AI4(scene *Scene, name string) error {
 				zap.Int("blocknums", scene.CountSymbols()),
 				zap.Int("block", len(scene.Block)))
 
-			fn := fmt.Sprintf("%v.%v.json", "fail", name)
-			scene.Save(path.Join(AI4OutputPath, fn))
+			// fn := fmt.Sprintf("%v.%v.json", "fail", name)
+			// scene.Save(path.Join(AI4OutputPath, fn))
 
-			break
+			return false, nil
 		}
+	}
+
+	return false, nil
+}
+
+func AI4(rng Rng, scene *Scene, name string, totalnums int) error {
+	os.MkdirAll(AI4OutputPath, os.ModePerm)
+
+	if totalnums > 1 {
+		finishedNums := 0
+		for i := 0; i < totalnums; i++ {
+			isok, err := procAI4(rng, scene, name)
+			if err != nil {
+				Error("AI4:procAI4",
+					zap.Error(err))
+			}
+
+			if isok {
+				finishedNums++
+			}
+		}
+
+		scene.FinishedPer = float32(finishedNums) / float32(totalnums)
+
+		fn := fmt.Sprintf("%v-%v.json", scene.FinishedPer, name)
+		scene.Save(path.Join(AI4OutputPath, fn))
+
+		return nil
+	}
+
+	isok, err := procAI4(rng, scene, name)
+	if err != nil {
+		Error("AI4:procAI4",
+			zap.Error(err))
+	}
+
+	if isok {
+		fn := fmt.Sprintf("%v.%v.json", "ok", name)
+		scene.Save(path.Join(AI4OutputPath, fn))
+	} else {
+		fn := fmt.Sprintf("%v.%v.json", "fail", name)
+		scene.Save(path.Join(AI4OutputPath, fn))
 	}
 
 	return nil
