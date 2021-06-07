@@ -68,8 +68,7 @@ func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbo
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(symbol, scene, b) {
 					Error("ai4L0:ClickEx",
-						zap.Int("len", len(v.LevelList[0])),
-						zap.Error(err))
+						zap.Int("len", len(v.LevelList[0])))
 
 					aiResult.StopSymbol(symbol, -1)
 

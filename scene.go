@@ -346,7 +346,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 		if bd.Z%2 == 0 {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], len(bd.Parent)+1)
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
 						zap.Int("x", bd.X),
@@ -382,7 +382,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X+scene.XOff, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X+scene.XOff], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X+scene.XOff], len(bd.Parent)+1)
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
 						zap.Int("x", bd.X+scene.XOff),
@@ -418,7 +418,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X, bd.Y+scene.YOff, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X], len(bd.Parent)+1)
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
 						zap.Int("x", bd.X),
@@ -453,7 +453,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 			}
 
 			if scene.CanClickEx(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, arr) {
-				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X+scene.XOff], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X+scene.XOff], len(bd.Parent)+1)
 
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
@@ -490,7 +490,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 		} else {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], len(bd.Parent)+1)
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
 						zap.Int("x", bd.X),
@@ -526,7 +526,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X-scene.XOff, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X-scene.XOff], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X-scene.XOff], len(bd.Parent)+1)
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
 						zap.Int("x", bd.X-scene.XOff),
@@ -562,7 +562,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X, bd.Y-scene.YOff, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X], len(bd.Parent)+1)
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
 						zap.Int("x", bd.X),
@@ -598,7 +598,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X-scene.XOff], level)
+				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X-scene.XOff], len(bd.Parent)+1)
 				if err != nil {
 					Warn("Scene.analysisDepth:AddBlockDataEx",
 						zap.Int("x", bd.X-scene.XOff),
