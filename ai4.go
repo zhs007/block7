@@ -706,6 +706,8 @@ func AI4(rng Rng, scene *Scene, name string, totalnums int) error {
 	if totalnums > 1 {
 		finishedNums := 0
 		for i := 0; i < totalnums; i++ {
+			scene.Restart()
+
 			isok, err := procAI4(rng, scene, name)
 			if err != nil {
 				Error("AI4:procAI4",
