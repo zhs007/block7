@@ -25,6 +25,7 @@ func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbo
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], BlockNums-lsn)
 				if err != nil {
 					Error("ai4L0:lsn:RandBlockData",
+						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("len", len(v.LevelList[0])),
 						zap.Error(err))
@@ -37,6 +38,7 @@ func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbo
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(symbol, scene, b) {
 						Error("ai4L0:lsn:ClickEx",
+							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("len", len(v.LevelList[0])),
 							zap.Error(err))
@@ -57,6 +59,7 @@ func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbo
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], len(v.LevelList[0])-len(v.LevelList[0])%BlockNums)
 			if err != nil {
 				Error("ai4L0:RandBlockData",
+					zap.Int("symbol", symbol),
 					zap.Int("len", len(v.LevelList[0])),
 					zap.Error(err))
 
@@ -68,6 +71,7 @@ func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbo
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(symbol, scene, b) {
 					Error("ai4L0:ClickEx",
+						zap.Int("symbol", symbol),
 						zap.Int("len", len(v.LevelList[0])))
 
 					aiResult.StopSymbol(symbol, -1)
@@ -106,6 +110,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			ln0 := len(v.LevelList[0])
 			if ln0 >= BlockNums-lsn {
 				Error("ai4L1:lsn:ln0",
+					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0))
 
@@ -118,6 +123,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 				if err != nil {
 					Error("ai4L1:lsn:ln0:RandBlockData",
+						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
@@ -130,6 +136,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(symbol, scene, b) {
 						Error("ai4L1:lsn:ln0:ClickEx",
+							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("ln0", ln0),
 							zap.Error(err))
@@ -146,6 +153,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			ln1 := BlockNums - lsn - ln0
 			if ln1 <= 0 || ln1 > len(v.LevelList[1]) {
 				Error("ai4L1:lsn:ln1",
+					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -159,6 +167,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 			if err != nil {
 				Error("ai4L1:lsn:ln1:RandBlockData",
+					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -172,6 +181,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(symbol, scene, b) {
 					Error("ai4L1:lsn:ln1:ClickEx",
+						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Int("ln1", ln1),
@@ -198,6 +208,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		ln0 := len(v.LevelList[0])
 		if ln0 >= BlockNums {
 			Error("ai4L1:ln0",
+				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0))
 
 			aiResult.StopSymbol(symbol, -1)
@@ -209,6 +220,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 			if err != nil {
 				Error("ai4L1:ln0:RandBlockData",
+					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Error(err))
 
@@ -220,6 +232,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(symbol, scene, b) {
 					Error("ai4L1:ln0:ClickEx",
+						zap.Int("symbol", symbol),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
 
@@ -235,6 +248,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		ln1 := BlockNums - ln0
 		if ln1 <= 0 || ln1 > len(v.LevelList[1]) {
 			Error("ai4L1:ln1",
+				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Int("len1", len(v.LevelList[1])))
@@ -247,6 +261,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 		if err != nil {
 			Error("ai4L1:ln1:RandBlockData",
+				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Error(err))
@@ -259,6 +274,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		for _, b := range lst1 {
 			if !aiResult.ClickEx(symbol, scene, b) {
 				Error("ai4L1:ln1:ClickEx",
+					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
 					zap.Error(err))
@@ -302,6 +318,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			ln0 := len(v.LevelList[0])
 			if ln0 >= BlockNums-lsn {
 				Error("ai4L2:lsn:ln0",
+					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0))
 
@@ -314,6 +331,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 				if err != nil {
 					Error("ai4L2:lsn:ln0:RandBlockData",
+						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
@@ -326,6 +344,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(symbol, scene, b) {
 						Error("ai4L2:lsn:ln0:ClickEx",
+							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("ln0", ln0),
 							zap.Error(err))
@@ -342,6 +361,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			ln1 := len(v.LevelList[1])
 			if ln1+ln0 >= BlockNums-lsn {
 				Error("ai4L2:lsn:ln1",
+					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1))
@@ -355,6 +375,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 				if err != nil {
 					Error("ai4L2:lsn:ln1:RandBlockData",
+						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Int("ln1", ln1),
@@ -368,6 +389,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(symbol, scene, b) {
 						Error("ai4L2:lsn:ln1:ClickEx",
+							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("ln0", ln0),
 							zap.Int("ln1", ln1),
@@ -385,6 +407,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			ln2 := BlockNums - lsn - ln0 - ln1
 			if ln2 <= 0 || ln2 > len(v.LevelList[2]) {
 				Error("ai4L2:lsn:ln2",
+					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -399,6 +422,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[2], ln2)
 			if err != nil {
 				Error("ai4L2:lsn:ln2:RandBlockData",
+					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -413,6 +437,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(symbol, scene, b) {
 					Error("ai4L2:lsn:ln2:ClickEx",
+						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Int("ln1", ln1),
@@ -441,6 +466,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		ln0 := len(v.LevelList[0])
 		if ln0 >= BlockNums {
 			Error("ai4L2:ln0",
+				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0))
 
 			aiResult.StopSymbol(symbol, -1)
@@ -452,6 +478,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 			if err != nil {
 				Error("ai4L2:ln0:RandBlockData",
+					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Error(err))
 
@@ -463,6 +490,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(symbol, scene, b) {
 					Error("ai4L2:ln0:ClickEx",
+						zap.Int("symbol", symbol),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
 
@@ -478,6 +506,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		ln1 := len(v.LevelList[1])
 		if ln0+ln1 >= BlockNums {
 			Error("ai4L2:ln1",
+				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1))
 
@@ -490,6 +519,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 			if err != nil {
 				Error("ai4L2:ln1:RandBlockData",
+					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Error(err))
 
@@ -501,6 +531,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(symbol, scene, b) {
 					Error("ai4L2:ln0:ClickEx",
+						zap.Int("symbol", symbol),
 						zap.Int("ln0", ln0),
 						zap.Int("ln1", ln1),
 						zap.Error(err))
@@ -517,6 +548,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		ln2 := BlockNums - ln0 - ln1
 		if ln2 <= 0 || ln2 > len(v.LevelList[2]) {
 			Error("ai4L2:ln2",
+				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Int("ln2", ln2),
@@ -530,6 +562,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		lst0, lst1, err := RandBlockData(rng, v.LevelList[2], ln2)
 		if err != nil {
 			Error("ai4L2:ln2:RandBlockData",
+				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Int("ln2", ln2),
@@ -543,6 +576,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 		for _, b := range lst1 {
 			if !aiResult.ClickEx(symbol, scene, b) {
 				Error("ai4L2:ln2:ClickEx",
+					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
 					zap.Int("ln2", ln2),

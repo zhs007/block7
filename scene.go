@@ -299,9 +299,9 @@ func (scene *Scene) analysisNeighboring(mapBI *BlockInfoMap, arr []*BlockData, b
 			}
 
 			if scene.CanClickEx(bd.X+xoff, bd.Y+yoff, bd.Z, arr) {
-				cb, err := mapBI.AddBlockDataEx(bd.X+xoff, bd.Y+yoff, bd.Z, scene.Arr[bd.Z][bd.Y+yoff][bd.X+xoff], level)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+xoff, bd.Y+yoff, bd.Z, scene.Arr[bd.Z][bd.Y+yoff][bd.X+xoff], arr)
 				if err != nil {
-					Warn("Scene.analysisNeighboring:AddBlockDataEx",
+					Warn("Scene.analysisNeighboring:AddBlockDataEx2",
 						zap.Int("x", bd.X+xoff),
 						zap.Int("y", bd.Y+yoff),
 						zap.Int("z", bd.Z),
@@ -338,11 +338,11 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 	// arr := []*BlockData{bd}
 
 	if bd.Z > 0 {
-		// err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
-		// if err != nil {
-		// 	Warn("Scene.analysisDepth:analysisNeighboring",
-		// 		zap.Error(err))
-		// }
+		err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
+		if err != nil {
+			Warn("Scene.analysisDepth:analysisNeighboring",
+				zap.Error(err))
+		}
 
 		if bd.Z%2 == 0 {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
