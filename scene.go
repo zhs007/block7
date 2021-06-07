@@ -338,10 +338,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 	// arr := []*BlockData{bd}
 
 	if bd.Z > 0 {
-		err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
-		if err != nil {
+		// err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
+		// if err != nil {
 
-		}
+		// }
 
 		if bd.Z%2 == 0 {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
@@ -752,14 +752,14 @@ func (scene *Scene) IsParent(bd *BlockData, pbd *BlockData) bool {
 			if (pbd.X == bd.X && pbd.Y == bd.Y) ||
 				(pbd.X == bd.X+scene.XOff && pbd.Y == bd.Y) ||
 				(pbd.X == bd.X && pbd.Y == bd.Y+scene.YOff) ||
-				(pbd.X == bd.X+scene.XOff && pbd.Y == bd.Y+scene.XOff) {
+				(pbd.X == bd.X+scene.XOff && pbd.Y == bd.Y+scene.YOff) {
 				return true
 			}
 		} else {
 			if (pbd.X == bd.X && pbd.Y == bd.Y) ||
 				(pbd.X == bd.X-scene.XOff && pbd.Y == bd.Y) ||
 				(pbd.X == bd.X && pbd.Y == bd.Y-scene.YOff) ||
-				(pbd.X == bd.X-scene.XOff && pbd.Y == bd.Y-scene.XOff) {
+				(pbd.X == bd.X-scene.XOff && pbd.Y == bd.Y-scene.YOff) {
 				return true
 			}
 		}
@@ -769,7 +769,7 @@ func (scene *Scene) IsParent(bd *BlockData, pbd *BlockData) bool {
 }
 
 func (scene *Scene) IsParentEx(bd *BlockData, pbd *BlockData) bool {
-	return scene.IsParent(bd, pbd) && HasBlockData(bd.Parent, pbd.X, pbd.Y, pbd.Z)
+	return scene.IsParent(bd, pbd) && !HasBlockData(bd.Parent, pbd.X, pbd.Y, pbd.Z)
 }
 
 func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {

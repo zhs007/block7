@@ -9,7 +9,7 @@ import (
 
 func main() {
 	block7.InitLogger("block7.ai", block7.Version,
-		"debug", true, "./logs")
+		"info", true, "./logs")
 
 	rng := block7.NewRngNormal()
 
