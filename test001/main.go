@@ -11,9 +11,9 @@ func main() {
 	block7.InitLogger("block7.ai", block7.Version,
 		"debug", true, "./logs")
 
-	rng := block7.NewRngZero()
+	rng := block7.NewRngNormal()
 
-	scene, err := block7.LoadScene(rng, "./cfg/0-15.json", block7.DefaultMaxBlockNums)
+	scene, err := block7.LoadScene(rng, "./cfg/0.09-96.json", block7.DefaultMaxBlockNums)
 	if err != nil {
 		block7.Error("LoadStage",
 			zap.Error(err))
