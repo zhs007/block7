@@ -291,10 +291,58 @@ func (scene *Scene) GetMaxZ(x, y int) int {
 	return 0
 }
 
+func (scene *Scene) analysisNeighboring(mapBI *BlockInfoMap, arr []*BlockData, bd *BlockData, level int, depth int) error {
+	for xoff := -1; xoff <= 1; xoff++ {
+		for yoff := -1; yoff <= 1; yoff++ {
+			if xoff == 0 && yoff == 0 {
+				continue
+			}
+
+			if scene.CanClickEx(bd.X+xoff, bd.Y+yoff, bd.Z, arr) {
+				cb, err := mapBI.AddBlockDataEx(bd.X+xoff, bd.Y+yoff, bd.Z, scene.Arr[bd.Z][bd.Y+yoff][bd.X+xoff], level)
+				if err != nil {
+					Warn("Scene.analysisNeighboring:AddBlockDataEx",
+						zap.Int("x", bd.X+xoff),
+						zap.Int("y", bd.Y+yoff),
+						zap.Int("z", bd.Z),
+						zap.Error(err))
+
+					return err
+				}
+
+				if cb != nil {
+					if depth > 0 {
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
+						if err != nil {
+							Warn("Scene.analysisNeighboring:analysisDepth",
+								zap.Int("x", cb.X),
+								zap.Int("y", cb.Y),
+								zap.Int("z", cb.Z),
+								zap.Error(err))
+
+							return err
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
 func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *BlockData, level int, depth int) error {
 	// arr := []*BlockData{bd}
 
 	if bd.Z > 0 {
+		err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
+		if err != nil {
+
+		}
+
 		if bd.Z%2 == 0 {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
 
@@ -310,8 +358,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -345,8 +394,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -380,8 +430,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -415,8 +466,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -450,8 +502,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -485,8 +538,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -520,8 +574,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -555,8 +610,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					cb.AddParent(bd)
-					bd.AddChild(cb)
+					scene.ProcParent(cb, arr)
+					// cb.AddParent(bd)
+					// bd.AddChild(cb)
 
 					if depth > 0 {
 						arr1 := append([]*BlockData{}, arr...)
@@ -688,4 +744,39 @@ func (scene *Scene) Save(fn string) error {
 	}
 
 	return nil
+}
+
+func (scene *Scene) IsParent(bd *BlockData, pbd *BlockData) bool {
+	if pbd.Z == bd.Z+1 {
+		if bd.Z%2 == 0 {
+			if (pbd.X == bd.X && pbd.Y == bd.Y) ||
+				(pbd.X == bd.X+scene.XOff && pbd.Y == bd.Y) ||
+				(pbd.X == bd.X && pbd.Y == bd.Y+scene.YOff) ||
+				(pbd.X == bd.X+scene.XOff && pbd.Y == bd.Y+scene.XOff) {
+				return true
+			}
+		} else {
+			if (pbd.X == bd.X && pbd.Y == bd.Y) ||
+				(pbd.X == bd.X-scene.XOff && pbd.Y == bd.Y) ||
+				(pbd.X == bd.X && pbd.Y == bd.Y-scene.YOff) ||
+				(pbd.X == bd.X-scene.XOff && pbd.Y == bd.Y-scene.XOff) {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+func (scene *Scene) IsParentEx(bd *BlockData, pbd *BlockData) bool {
+	return scene.IsParent(bd, pbd) && HasBlockData(bd.Parent, pbd.X, pbd.Y, pbd.Z)
+}
+
+func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
+	for _, v := range arr {
+		if scene.IsParentEx(bd, v) {
+			bd.AddParent(v)
+			v.AddChild(bd)
+		}
+	}
 }
