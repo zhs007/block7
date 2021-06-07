@@ -340,15 +340,16 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 	if bd.Z > 0 {
 		// err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
 		// if err != nil {
-
+		// 	Warn("Scene.analysisDepth:analysisNeighboring",
+		// 		zap.Error(err))
 		// }
 
 		if bd.Z%2 == 0 {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -358,7 +359,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					scene.ProcParent(cb, arr)
+					// scene.ProcParent(cb, arr)
 					// cb.AddParent(bd)
 					// bd.AddChild(cb)
 
@@ -382,9 +383,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X+scene.XOff, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X+scene.XOff], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X+scene.XOff], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X+scene.XOff),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -394,7 +395,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					scene.ProcParent(cb, arr)
+					// scene.ProcParent(cb, arr)
 					// cb.AddParent(bd)
 					// bd.AddChild(cb)
 
@@ -418,9 +419,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X, bd.Y+scene.YOff, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y+scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -430,7 +431,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					scene.ProcParent(cb, arr)
+					// scene.ProcParent(cb, arr)
 					// cb.AddParent(bd)
 					// bd.AddChild(cb)
 
@@ -453,10 +454,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 			}
 
 			if scene.CanClickEx(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, arr) {
-				cb, err := mapBI.AddBlockDataEx(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X+scene.XOff], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X+scene.XOff], arr)
 
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X+scene.XOff),
 						zap.Int("y", bd.Y+scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -466,7 +467,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					scene.ProcParent(cb, arr)
+					// scene.ProcParent(cb, arr)
 					// cb.AddParent(bd)
 					// bd.AddChild(cb)
 
@@ -490,9 +491,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 		} else {
 			if scene.CanClickEx(bd.X, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -502,7 +503,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				}
 
 				if cb != nil {
-					scene.ProcParent(cb, arr)
+					// scene.ProcParent(cb, arr)
 					// cb.AddParent(bd)
 					// bd.AddChild(cb)
 
@@ -526,9 +527,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X-scene.XOff, bd.Y, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X-scene.XOff], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X-scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X-scene.XOff], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X-scene.XOff),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -562,9 +563,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X, bd.Y-scene.YOff, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y-scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -598,9 +599,9 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 			if scene.CanClickEx(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, arr) {
 
-				cb, err := mapBI.AddBlockDataEx(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X-scene.XOff], len(bd.Parent)+1)
+				cb, err := mapBI.AddBlockDataEx2(scene, bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X-scene.XOff], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx",
+					Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X-scene.XOff),
 						zap.Int("y", bd.Y-scene.YOff),
 						zap.Int("z", bd.Z-1),

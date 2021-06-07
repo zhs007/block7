@@ -44,6 +44,22 @@ func (m *BlockInfoMap) AddBlockDataEx(x, y, z int, s int, level int) (*BlockData
 	return b, nil
 }
 
+func (m *BlockInfoMap) AddBlockDataEx2(scene *Scene, x, y, z int, s int, arr []*BlockData) (*BlockData, error) {
+	_, isok := m.MapBlockInfo[s]
+	if !isok {
+		m.MapBlockInfo[s] = NewBlockInfo(m.MaxLevel)
+	}
+
+	b := NewBlockData(x, y, z, s)
+
+	scene.ProcParent(b, arr)
+	level := len(b.Parent)
+
+	m.MapBlockInfo[s].LevelList[level] = append(m.MapBlockInfo[s].LevelList[level], b)
+
+	return b, nil
+}
+
 func (m *BlockInfoMap) HasBlockDataEx(x, y, z int, s int, level int) bool {
 	if level < 0 || level >= m.MaxLevel {
 		return false
