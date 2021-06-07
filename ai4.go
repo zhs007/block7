@@ -698,8 +698,6 @@ func procAI4(rng Rng, scene *Scene, name string) (bool, error) {
 			return false, nil
 		}
 	}
-
-	return false, nil
 }
 
 func AI4(rng Rng, scene *Scene, name string, totalnums int) error {
