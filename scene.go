@@ -314,8 +314,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
@@ -347,8 +349,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
@@ -380,8 +384,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
@@ -413,8 +419,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
@@ -446,8 +454,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
@@ -479,8 +489,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
@@ -512,8 +524,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
@@ -545,8 +559,10 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 					bd.AddChild(cb)
 
 					if depth > 0 {
-						arr = append(arr, cb)
-						err = scene.analysisDepth(mapBI, arr, cb, level+1, depth-1)
+						arr1 := append([]*BlockData{}, arr...)
+						arr1 = append(arr1, cb)
+
+						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
 							Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),

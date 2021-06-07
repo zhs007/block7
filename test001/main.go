@@ -13,7 +13,7 @@ func main() {
 
 	rng := block7.NewRngZero()
 
-	scene, err := block7.LoadScene(rng, "./cfg/0.32-95.json", block7.DefaultMaxBlockNums)
+	scene, err := block7.LoadScene(rng, "./cfg/0-15.json", block7.DefaultMaxBlockNums)
 	if err != nil {
 		block7.Error("LoadStage",
 			zap.Error(err))

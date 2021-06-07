@@ -579,9 +579,9 @@ func ai4PreProc(rng Rng, scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
 			ai4L1(rng, scene, mapBI, aiResult, v)
 		}
 
-		// for _, v := range mapBI.BlockSymbols {
-		// 	ai4L2(scene, mapBI, aiResult, v)
-		// }
+		for _, v := range mapBI.BlockSymbols {
+			ai4L2(rng, scene, mapBI, aiResult, v)
+		}
 	}
 
 	for k := range mapBI.MapBlockInfo {
@@ -592,9 +592,9 @@ func ai4PreProc(rng Rng, scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
 		ai4L1(rng, scene, mapBI, aiResult, k)
 	}
 
-	// for k := range mapBI.MapBlockInfo {
-	// 	ai4L2(scene, mapBI, aiResult, k)
-	// }
+	for k := range mapBI.MapBlockInfo {
+		ai4L2(rng, scene, mapBI, aiResult, k)
+	}
 
 	return aiResult, nil
 }
