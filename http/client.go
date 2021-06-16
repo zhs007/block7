@@ -19,10 +19,8 @@ func HTTPGet(url string, header map[string]string) (int, []byte, error) {
 		return -1, nil, err
 	}
 
-	if header != nil {
-		for k, v := range header {
-			req.Header.Set(k, v)
-		}
+	for k, v := range header {
+		req.Header.Set(k, v)
 	}
 
 	resp, err := client.Do(req)
@@ -66,10 +64,8 @@ func HTTPPost(url string, header map[string]string, bodyObj interface{}) (int, [
 		}
 	}
 
-	if header != nil {
-		for k, v := range header {
-			req.Header.Set(k, v)
-		}
+	for k, v := range header {
+		req.Header.Set(k, v)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -105,10 +101,8 @@ func HTTPPostEx(url string, header map[string]string, body []byte) (int, []byte,
 		}
 	}
 
-	if header != nil {
-		for k, v := range header {
-			req.Header.Set(k, v)
-		}
+	for k, v := range header {
+		req.Header.Set(k, v)
 	}
 
 	req.Header.Set("Content-Type", "application/json")

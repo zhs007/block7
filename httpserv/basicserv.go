@@ -33,6 +33,8 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
+	scene.IsOutputScene = true
+
 	return &MissionResult{
 		Scene: scene,
 	}, nil
