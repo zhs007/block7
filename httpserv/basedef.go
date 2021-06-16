@@ -21,3 +21,13 @@ type MissionDataParams struct {
 type MissionDataResult struct {
 	UserLevel int `json:"userLevel"`
 }
+
+// VersionParams - version parameters
+type VersionParams struct {
+	History [][]int `json:"history"`
+}
+
+// VersionResult - version result
+type VersionResult struct {
+	UserLevel int `json:"userLevel"`
+}

@@ -82,6 +82,9 @@ func (s *Serv) Start() error {
 
 // SetResponse - set a response
 func (s *Serv) SetResponse(ctx *fasthttp.RequestCtx, jsonObj interface{}) {
+	ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+
 	if jsonObj == nil {
 		ctx.SetContentType("application/json;charset=UTF-8")
 		ctx.SetStatusCode(fasthttp.StatusOK)

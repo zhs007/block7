@@ -27,7 +27,7 @@ func NewServ(service IService, cfg *Config) *Serv {
 		cfg,
 	}
 
-	s.RegHandle(block7.AppendString(BasicURL, "/mission"),
+	s.RegHandle(block7.AppendString(BasicURL, "mission"),
 		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
 			if !ctx.Request.Header.IsGet() {
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -48,7 +48,7 @@ func NewServ(service IService, cfg *Config) *Serv {
 				}
 			})
 
-			if params.MissionID > 0 {
+			if params.MissionID <= 0 {
 				block7.Warn("block7serv.Serv.mission:ParseBody",
 					zap.Int("missionid", params.MissionID))
 
