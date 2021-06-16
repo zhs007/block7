@@ -1,0 +1,1 @@
+docker build -f ./Dockerfile.serv -t block7serv .
