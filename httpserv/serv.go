@@ -78,10 +78,10 @@ func NewServ(service IService, cfg *Config) *Serv {
 				return
 			}
 
-			params := &MissionParams{}
+			params := &MissionDataParams{}
 			err := s.ParseBody(ctx, params)
 			if err != nil {
-				block7.Warn("block7serv.Serv.mission:ParseBody",
+				block7.Warn("block7serv.Serv.missiondata:ParseBody",
 					zap.Error(err))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -89,9 +89,9 @@ func NewServ(service IService, cfg *Config) *Serv {
 				return
 			}
 
-			ret, err := s.Service.Mission(params)
+			ret, err := s.Service.MissionData(params)
 			if err != nil {
-				block7.Warn("block7serv.Serv.mission:Mission",
+				block7.Warn("block7serv.Serv.missiondata:MissionData",
 					zap.Error(err))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
