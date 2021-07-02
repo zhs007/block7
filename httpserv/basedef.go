@@ -9,12 +9,14 @@ type MissionParams struct {
 
 // MissionResult - mission result
 type MissionResult struct {
-	Scene *block7.Scene `json:"scene"`
+	Scene       *block7.Scene `json:"scene"`
+	MissionHash string        `json:"mission"`
 }
 
 // MissionDataParams - missionData parameters
 type MissionDataParams struct {
-	History [][]int `json:"history"`
+	MissionHash string  `json:"mission"`
+	History     [][]int `json:"history"`
 }
 
 // MissionDataResult - missionData result

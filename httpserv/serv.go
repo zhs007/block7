@@ -48,6 +48,9 @@ func NewServ(service IService, cfg *Config) *Serv {
 				}
 			})
 
+			block7.Debug("block7serv.Serv.mission:ParseBody",
+				block7.JSON("params", params))
+
 			if params.MissionID <= 0 {
 				block7.Warn("block7serv.Serv.mission:ParseBody",
 					zap.Int("missionid", params.MissionID))
@@ -70,7 +73,7 @@ func NewServ(service IService, cfg *Config) *Serv {
 			s.SetResponse(ctx, ret)
 		})
 
-	s.RegHandle(block7.AppendString(BasicURL, "/missiondata"),
+	s.RegHandle(block7.AppendString(BasicURL, "missiondata"),
 		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
 			if !ctx.Request.Header.IsPost() {
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -88,6 +91,9 @@ func NewServ(service IService, cfg *Config) *Serv {
 
 				return
 			}
+
+			block7.Debug("block7serv.Serv.missiondata:ParseBody",
+				block7.JSON("params", params))
 
 			ret, err := s.Service.MissionData(params)
 			if err != nil {

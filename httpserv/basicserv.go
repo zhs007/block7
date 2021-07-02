@@ -36,7 +36,8 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	scene.IsOutputScene = true
 
 	return &MissionResult{
-		Scene: scene,
+		Scene:       scene,
+		MissionHash: block7.GenHashCode(16),
 	}, nil
 }
 
