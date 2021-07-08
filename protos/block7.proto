@@ -1,0 +1,59 @@
+syntax = "proto3";
+package block7pb;
+option go_package = "github.com/zhs007/block7/block7pb";
+
+// Column
+message Column {
+    repeated int32 values = 1;
+}
+
+// SceneLayer - scene layer
+message SceneLayer {
+	repeated Column values = 2;
+}
+
+// Scene - scene
+message Scene {
+	int32 Width = 1;        			// width
+	int32 Height = 2;       			// height
+	int32 Layers = 3;       			// layers
+	int32 XOff = 4;         			// x offset
+	int32 YOff = 5;         			// y offset
+	repeated SceneLayer InitArr = 6;	// initial data
+	repeated Column History = 7;		// history
+	int32 ClickValues = 8;				// ClickValues
+	float FinishedPer = 9;				// FinishedPer
+	string Offset = 10;					// Offset
+	bool IsOutputScene = 11;			// IsOutputScene
+}
+
+// MissionParams
+message MissionParams {
+    int32 MissionID = 1;				    // mission id
+}
+
+// MissionResult
+message MissionResult {
+    int32 MissionID = 1;				    // mission id	
+	string MissionHash = 2;					// mission hash
+	Scene Scene = 3;						// scene
+}
+
+// LoginParams
+message LoginParams {
+    string UserHash = 1;				// user hash
+	string Game = 2;					// game code
+	string Platform = 3;				// ios or android
+	string ADID = 4;					// ad id
+	string GUID = 5;					// guid
+	string PlatformInfo = 6;			// platform infomation
+	string GameVersion = 7;				// game version
+	string ResourceVersion = 8;			// game resource version
+	string DeviceInfo = 9;				// device infomation
+}
+
+// LoginResult
+message LoginResult {
+	string UserHash = 1;				// user hash
+	int64 UserID = 2;					// user id
+}
