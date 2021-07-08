@@ -14,17 +14,22 @@ message SceneLayer {
 
 // Scene - scene
 message Scene {
-	int32 Width = 1;        			// width
-	int32 Height = 2;       			// height
-	int32 Layers = 3;       			// layers
-	int32 XOff = 4;         			// x offset
-	int32 YOff = 5;         			// y offset
-	repeated SceneLayer InitArr = 6;	// initial data
-	repeated Column History = 7;		// history
-	int32 ClickValues = 8;				// ClickValues
-	float FinishedPer = 9;				// FinishedPer
-	string Offset = 10;					// Offset
-	bool IsOutputScene = 11;			// IsOutputScene
+	int32 Width = 1;        						// width
+	int32 Height = 2;       						// height
+	int32 Layers = 3;       						// layers
+	int32 XOff = 4;         						// x offset
+	int32 YOff = 5;         						// y offset
+	repeated SceneLayer InitArr = 6;				// initial data
+	repeated Column History = 7;					// history
+	int32 ClickValues = 8 [deprecated = true];		// ClickValues
+	float FinishedPer = 9 [deprecated = true];		// FinishedPer
+	string Offset = 10;								// Offset
+	bool IsOutputScene = 11 [deprecated = true];	// IsOutputScene
+	int32 StageID = 12;								// stage
+	string MapID = 13;								// map
+	int32 Version = 14;								// version
+	int64 sceneID = 15;								// id
+	int64 userID = 16;								// userid
 }
 
 // MissionParams

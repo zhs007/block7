@@ -5,11 +5,17 @@ import (
 	"os"
 
 	jsoniter "github.com/json-iterator/go"
+	"github.com/zhs007/block7/block7pb"
 	"go.uber.org/zap"
 )
 
 // Scene - scene
 type Scene struct {
+	StageID       int          `json:"stageid"`
+	MapID         string       `json:"mapid"`
+	Version       int          `json:"version"`
+	SceneID       int64        `json:"sceneid"`
+	UserID        int64        `json:"userid"`
 	Width         int          `json:"width"`
 	Height        int          `json:"height"`
 	Layers        int          `json:"layers"`
@@ -780,4 +786,59 @@ func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 			v.AddChild(bd)
 		}
 	}
+}
+
+func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
+	pbScene := &block7pb.Scene{
+		StageID: int32(scene.SceneID),
+		MapID:   scene.MapID,
+		Version: int32(scene.Version),
+		SceneID: scene.SceneID,
+		Width:   int32(scene.Width),
+		Height:  int32(scene.Height),
+		Layers:  int32(scene.Layers),
+		XOff:    int32(scene.XOff),
+		YOff:    int32(scene.YOff),
+		Offset:  scene.Offset,
+	}
+
+	for _, arr2 := range scene.InitArr {
+		pblayer := &block7pb.SceneLayer{}
+
+		for _, arr1 := range arr2 {
+			pbcolumn := &block7pb.Column{}
+
+			for _, s := range arr1 {
+				pbcolumn.Values = append(pbcolumn.Values, int32(s))
+			}
+
+			pblayer.Values = append(pblayer.Values, pbcolumn)
+		}
+
+		pbScene.InitArr = append(pbScene.InitArr, pblayer)
+	}
+
+	return pbScene, nil
+}
+
+func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
+	pbScene := &block7pb.Scene{
+		StageID: int32(scene.SceneID),
+		MapID:   scene.MapID,
+		Version: int32(scene.Version),
+		SceneID: scene.SceneID,
+		UserID:  scene.UserID,
+	}
+
+	for _, arr := range scene.History {
+		pbcolumn := &block7pb.Column{}
+
+		for _, s := range arr {
+			pbcolumn.Values = append(pbcolumn.Values, int32(s))
+		}
+
+		pbScene.History = append(pbScene.History, pbcolumn)
+	}
+
+	return pbScene, nil
 }
