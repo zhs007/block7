@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/binary"
+	"fmt"
 	"sync"
 
 	ankadb "github.com/zhs007/ankadb"
@@ -13,11 +14,10 @@ import (
 )
 
 const stagedbname = "stagedb"
-const stageKeyPrefix = "s:"
 const sceneIDKey = "cursceneid"
 
 func makeStageDBKey(sceneid int64) string {
-	return AppendString(stageKeyPrefix)
+	return fmt.Sprintf("u:%v", sceneid)
 }
 
 // StageDB - database
