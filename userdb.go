@@ -144,7 +144,7 @@ func (db *UserDB) UpdUser(ctx context.Context, user *block7pb.UserInfo) error {
 }
 
 // GetUser - get user
-func (db *StageDB) GetUser(ctx context.Context, userid int64) (*block7pb.UserInfo, error) {
+func (db *UserDB) GetUser(ctx context.Context, userid int64) (*block7pb.UserInfo, error) {
 	db.mutexDB.Lock()
 	buf, err := db.AnkaDB.Get(ctx, userdbname, makeUserDBKey(userid))
 	db.mutexDB.Unlock()
@@ -173,7 +173,7 @@ func (db *StageDB) GetUser(ctx context.Context, userid int64) (*block7pb.UserInf
 }
 
 // HasUserHash - has userhash
-func (db *StageDB) HasUserHash(ctx context.Context, userhash string) (bool, error) {
+func (db *UserDB) HasUserHash(ctx context.Context, userhash string) (bool, error) {
 	db.mutexDB.Lock()
 	_, err := db.AnkaDB.Get(ctx, userdbname, makeUserHashDBKey(userhash))
 	db.mutexDB.Unlock()
@@ -192,7 +192,7 @@ func (db *StageDB) HasUserHash(ctx context.Context, userhash string) (bool, erro
 }
 
 // UpdUserHash - update userhash
-func (db *StageDB) UpdUserHash(ctx context.Context, userhash string, userid int64) error {
+func (db *UserDB) UpdUserHash(ctx context.Context, userhash string, userid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, userid)
 	if err != nil {
@@ -213,9 +213,9 @@ func (db *StageDB) UpdUserHash(ctx context.Context, userhash string, userid int6
 }
 
 // GetUserID - get userID
-func (db *StageDB) GetUserID(ctx context.Context, userhash string) (int64, error) {
+func (db *UserDB) GetUserID(ctx context.Context, userhash string) (int64, error) {
 	db.mutexDB.Lock()
-	buf, err := db.AnkaDB.Get(ctx, userdbname, userIDKey)
+	buf, err := db.AnkaDB.Get(ctx, userdbname, makeUserHashDBKey(userhash))
 	db.mutexDB.Unlock()
 	if err != nil {
 		if err == ankadb.ErrNotFoundKey {
@@ -239,4 +239,72 @@ func (db *StageDB) GetUserID(ctx context.Context, userhash string) (int64, error
 	}
 
 	return userid, nil
+}
+
+// DelUserHash - del userhash
+func (db *UserDB) DelUserHash(ctx context.Context, userhash string) error {
+	db.mutexDB.Lock()
+	err := db.AnkaDB.Delete(ctx, userdbname, makeUserHashDBKey(userhash))
+	db.mutexDB.Unlock()
+	if err != nil {
+		if err == ankadb.ErrNotFoundKey {
+			return nil
+		}
+
+		Warn("UserDB.DelUserHash:Get",
+			zap.Error(err))
+
+		return err
+	}
+
+	return nil
+}
+
+// genUserHash - generator a user hash
+func (db *UserDB) genUserHash(ctx context.Context) (string, error) {
+	for {
+		userhash := GenHashCode(16)
+		hasuh, err := db.HasUserHash(ctx, userhash)
+		if err != nil {
+			Error("UserDB.genUserHash:HasUserHash",
+				zap.Error(err))
+
+			return "", err
+		}
+
+		if !hasuh {
+			return userhash, nil
+		}
+	}
+}
+
+// GetUserID - get userID
+func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*block7pb.UserInfo, error) {
+	if udi.UserHash != "" {
+		db.DelUserHash(ctx, udi.UserHash)
+	}
+
+	uid, err := db.GetCurUserID(ctx)
+	if err != nil {
+		Error("UserDB.NewUser:GetCurUserID",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	ui := &block7pb.UserInfo{
+		UserID: uid,
+	}
+
+	userhash, err := db.genUserHash(ctx)
+	if err != nil {
+		Error("UserDB.NewUser:genUserHash",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	udi.UserHash = userhash
+
+	return ui, nil
 }

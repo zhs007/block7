@@ -13,6 +13,11 @@ func NewBasicServ() *BasicServ {
 	return &BasicServ{}
 }
 
+// Login - login
+func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
+	return nil, nil
+}
+
 // Mission - get mission
 func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	stage, err := block7.LoadStage("./cfg/level_0100.json")

@@ -24,12 +24,20 @@ type MissionDataResult struct {
 	UserLevel int `json:"userLevel"`
 }
 
-// VersionParams - version parameters
-type VersionParams struct {
-	History [][]int `json:"history"`
+// LoginParams - login parameters
+type LoginParams struct {
+	UserHash        string `json:"userHash"`
+	Game            string `json:"game"`
+	Platform        string `json:"platform"`
+	ADID            string `json:"adid"`
+	GUID            string `json:"guid"`
+	PlatformInfo    string `json:"platformInfo"`
+	GameVersion     string `json:"gameVersion"`
+	ResourceVersion string `json:"resVersion"`
+	DeviceInfo      string `json:"deviceInfo"`
 }
 
-// VersionResult - version result
-type VersionResult struct {
-	UserLevel int `json:"userLevel"`
+// LoginResult - login result
+type LoginResult struct {
+	UserID int64 `json:"uid"`
 }
