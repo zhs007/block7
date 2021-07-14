@@ -39,5 +39,6 @@ type LoginParams struct {
 
 // LoginResult - login result
 type LoginResult struct {
-	UserID int64 `json:"uid"`
+	UserID   int64  `json:"uid"`
+	UserHash string `json:"userHash"`
 }

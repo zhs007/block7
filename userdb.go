@@ -278,7 +278,7 @@ func (db *UserDB) genUserHash(ctx context.Context) (string, error) {
 	}
 }
 
-// GetUserID - get userID
+// NewUser - new a userinfo
 func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*block7pb.UserInfo, error) {
 	if udi.UserHash != "" {
 		db.DelUserHash(ctx, udi.UserHash)
@@ -305,6 +305,84 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 	}
 
 	udi.UserHash = userhash
+	udi.CreateTs = GetCurTimestamp()
+	udi.LastLoginTs = udi.CreateTs
+	udi.LoginTimes++
+	ui.Data = append(ui.Data, udi)
+
+	err = db.UpdUser(ctx, ui)
+	if err != nil {
+		Error("UserDB.NewUser:UpdUser",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return ui, nil
+}
+
+// UpdUserDeviceInfo - Update userinfo with userdeviceinfo
+func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDeviceInfo) (*block7pb.UserInfo, error) {
+	if udi.UserHash == "" {
+		return db.NewUser(ctx, udi)
+	}
+
+	uid, err := db.GetUserID(ctx, udi.UserHash)
+	if err != nil {
+		Error("UserDB.UpdUserDeviceInfo:GetUserID",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	if uid <= 0 {
+		return db.NewUser(ctx, udi)
+	}
+
+	ui, err := db.GetUser(ctx, uid)
+	if err != nil {
+		Error("UserDB.UpdUserDeviceInfo:GetUser",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	for _, cudi := range ui.Data {
+		if cudi.UserHash == udi.UserHash {
+			cudi.ADID = udi.ADID
+			cudi.GUID = udi.GUID
+			cudi.PlatformInfo = udi.PlatformInfo
+			cudi.GameVersion = udi.GameVersion
+			cudi.ResourceVersion = udi.ResourceVersion
+			cudi.DeviceInfo = udi.DeviceInfo
+
+			cudi.LastLoginTs = GetCurTimestamp()
+			cudi.LoginTimes++
+
+			err = db.UpdUser(ctx, ui)
+			if err != nil {
+				Error("UserDB.UpdUserDeviceInfo:UpdUser",
+					zap.Error(err))
+
+				return nil, err
+			}
+
+			return ui, nil
+		}
+	}
+
+	udi.LastLoginTs = GetCurTimestamp()
+	udi.LoginTimes++
+
+	ui.Data = append(ui.Data, udi)
+
+	err = db.UpdUser(ctx, ui)
+	if err != nil {
+		Error("UserDB.UpdUserDeviceInfo:UpdUser",
+			zap.Error(err))
+
+		return nil, err
+	}
 
 	return ui, nil
 }

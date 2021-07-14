@@ -1,22 +1,34 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/zhs007/block7"
 	block7serv "github.com/zhs007/block7/httpserv"
 	"go.uber.org/zap"
 )
 
 func main() {
-	block7.InitLogger("block7.serv", block7.Version,
-		"debug", true, "./logs")
+	cfg, err := block7serv.LoadConfig("./cfg/config.yaml")
+	if err != nil {
+		fmt.Printf("LoadConfig error! %v", err)
 
-	cfg := &block7serv.Config{
-		BindAddr:    "0.0.0.0:3723",
-		IsDebugMode: false,
+		return
 	}
 
-	service := block7serv.NewBasicServ()
-	serv := block7serv.NewServ(service, cfg)
+	block7.InitLogger("block7.serv", block7.Version,
+		cfg.LogLevel, true, cfg.LogPath)
+
+	service, err := block7serv.NewBasicServ(cfg)
+	if err != nil {
+		block7.Info("NewBasicServ",
+			zap.String("addr", cfg.BindAddr),
+			zap.Error(err))
+
+		return
+	}
+
+	serv := block7serv.NewServ(service)
 
 	block7.Info("init serv ...",
 		zap.String("addr", cfg.BindAddr))

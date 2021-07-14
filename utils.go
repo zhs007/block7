@@ -1,5 +1,7 @@
 package block7
 
+import "time"
+
 func genSymbols(rng Rng, symbols []int, nums int) ([]int, error) {
 	if nums%BlockNums > 0 {
 		return nil, ErrInvalidSymbolsLength
@@ -97,4 +99,8 @@ func cloneArr3(src [][][]int) [][][]int {
 	}
 
 	return arr
+}
+
+func GetCurTimestamp() int64 {
+	return time.Now().Unix()
 }

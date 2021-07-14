@@ -7,10 +7,38 @@ import (
 
 // BasicServ - basic server
 type BasicServ struct {
+	UserDB  *block7.UserDB
+	StageDB *block7.StageDB
+	cfg     *Config
 }
 
-func NewBasicServ() *BasicServ {
-	return &BasicServ{}
+func NewBasicServ(cfg *Config) (*BasicServ, error) {
+	userdb, err := block7.NewUserDB(cfg.DBPath, "", cfg.DBEngine)
+	if err != nil {
+		block7.Error("NewBasicServ:NewUserDB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	stagedb, err := block7.NewStageDB(cfg.DBPath, "", cfg.DBEngine)
+	if err != nil {
+		block7.Error("NewBasicServ:NewStageDB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return &BasicServ{
+		UserDB:  userdb,
+		StageDB: stagedb,
+		cfg:     cfg,
+	}, nil
+}
+
+// GetConfig - get configuation
+func (serv *BasicServ) GetConfig() *Config {
+	return serv.cfg
 }
 
 // Login - login

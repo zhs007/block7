@@ -16,15 +16,15 @@ const BasicURL = "/v1/games/"
 type Serv struct {
 	*block7http.Serv
 	Service IService
-	cfg     *Config
 }
 
 // NewServ - new a serv
-func NewServ(service IService, cfg *Config) *Serv {
+func NewServ(service IService) *Serv {
+	cfg := service.GetConfig()
+
 	s := &Serv{
 		block7http.NewServ(cfg.BindAddr, cfg.IsDebugMode),
 		service,
-		cfg,
 	}
 
 	s.RegHandle(block7.AppendString(BasicURL, "mission"),

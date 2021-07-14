@@ -18,3 +18,6 @@ ai1_output
 ai2_output
 ai3_output
 ai4_output
+cfg/config.yaml
+logs
+data
