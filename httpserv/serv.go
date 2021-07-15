@@ -27,6 +27,53 @@ func NewServ(service IService) *Serv {
 		service,
 	}
 
+	s.RegHandle(block7.AppendString(BasicURL, "login"),
+		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
+			if !ctx.Request.Header.IsGet() {
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			params := &LoginParams{}
+			ctx.QueryArgs().VisitAll(func(k []byte, v []byte) {
+				if string(k) == "userHash" {
+					params.UserHash = string(v)
+				} else if string(k) == "game" {
+					params.Game = string(v)
+				} else if string(k) == "platform" {
+					params.Platform = string(v)
+				} else if string(k) == "adid" {
+					params.ADID = string(v)
+				} else if string(k) == "guid" {
+					params.GUID = string(v)
+				} else if string(k) == "platformInfo" {
+					params.PlatformInfo = string(v)
+				} else if string(k) == "gameVersion" {
+					params.GameVersion = string(v)
+				} else if string(k) == "resVersion" {
+					params.ResourceVersion = string(v)
+				} else if string(k) == "deviceInfo" {
+					params.DeviceInfo = string(v)
+				}
+			})
+
+			block7.Debug("block7serv.Serv.login:ParseBody",
+				block7.JSON("params", params))
+
+			ret, err := s.Service.Login(params)
+			if err != nil {
+				block7.Warn("block7serv.Serv.login:Login",
+					zap.Error(err))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
+
+				return
+			}
+
+			s.SetResponse(ctx, ret)
+		})
+
 	s.RegHandle(block7.AppendString(BasicURL, "mission"),
 		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
 			if !ctx.Request.Header.IsGet() {

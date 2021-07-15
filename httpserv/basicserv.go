@@ -1,6 +1,8 @@
 package block7serv
 
 import (
+	"context"
+
 	"github.com/zhs007/block7"
 	"go.uber.org/zap"
 )
@@ -43,7 +45,34 @@ func (serv *BasicServ) GetConfig() *Config {
 
 // Login - login
 func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
-	return nil, nil
+	udi := LoginParams2PB(params)
+	if udi.UserHash == "" {
+		ui, err := serv.UserDB.NewUser(context.Background(), udi)
+		if err != nil {
+			block7.Error("BasicServ.Login:NewUser",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		return &LoginResult{
+			UserID:   ui.UserID,
+			UserHash: udi.UserHash,
+		}, nil
+	}
+
+	ui, err := serv.UserDB.UpdUserDeviceInfo(context.Background(), udi)
+	if err != nil {
+		block7.Error("BasicServ.Login:UpdUserDeviceInfo",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return &LoginResult{
+		UserID:   ui.UserID,
+		UserHash: udi.UserHash,
+	}, nil
 }
 
 // Mission - get mission
