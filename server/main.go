@@ -31,7 +31,8 @@ func main() {
 	serv := block7serv.NewServ(service)
 
 	block7.Info("init serv ...",
-		zap.String("addr", cfg.BindAddr))
+		zap.String("addr", cfg.BindAddr),
+		zap.String("version", block7.Version))
 
 	serv.Start()
 

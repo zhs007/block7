@@ -318,6 +318,14 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 		return nil, err
 	}
 
+	err = db.UpdUserHash(ctx, udi.UserHash, ui.UserID)
+	if err != nil {
+		Error("UserDB.NewUser:UpdUserHash",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	return ui, nil
 }
 

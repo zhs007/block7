@@ -71,6 +71,11 @@ func NewServ(service IService) *Serv {
 				return
 			}
 
+			if cfg.IsDebugMode {
+				block7.Debug("block7serv.Serv.login",
+					block7.JSON("result", ret))
+			}
+
 			s.SetResponse(ctx, ret)
 		})
 
@@ -84,7 +89,9 @@ func NewServ(service IService) *Serv {
 
 			params := &MissionParams{}
 			ctx.QueryArgs().VisitAll(func(k []byte, v []byte) {
-				if string(k) == "missionid" {
+				if string(k) == "userHash" {
+					params.UserHash = string(v)
+				} else if string(k) == "missionid" {
 					i, err := strconv.Atoi(string(v))
 					if err != nil {
 						block7.Warn("block7serv.Serv.mission:VisitAll:missionid",
@@ -115,6 +122,11 @@ func NewServ(service IService) *Serv {
 				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
 
 				return
+			}
+
+			if cfg.IsDebugMode {
+				block7.Debug("block7serv.Serv.mission",
+					block7.JSON("result", ret))
 			}
 
 			s.SetResponse(ctx, ret)
@@ -150,6 +162,11 @@ func NewServ(service IService) *Serv {
 				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
 
 				return
+			}
+
+			if cfg.IsDebugMode {
+				block7.Debug("block7serv.Serv.missiondata",
+					block7.JSON("result", ret))
 			}
 
 			s.SetResponse(ctx, ret)

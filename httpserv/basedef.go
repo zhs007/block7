@@ -4,7 +4,8 @@ import "github.com/zhs007/block7"
 
 // MissionParams - mission parameters
 type MissionParams struct {
-	MissionID int `json:"missionid"`
+	UserHash  string `json:"userHash"`
+	MissionID int    `json:"missionid"`
 }
 
 // MissionResult - mission result
@@ -15,6 +16,7 @@ type MissionResult struct {
 
 // MissionDataParams - missionData parameters
 type MissionDataParams struct {
+	UserHash    string  `json:"userHash"`
 	MissionHash string  `json:"mission"`
 	History     [][]int `json:"history"`
 }
