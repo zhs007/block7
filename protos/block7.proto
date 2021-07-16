@@ -30,6 +30,7 @@ message Scene {
 	int32 Version = 14;								// version
 	int64 sceneID = 15;								// id
 	int64 userID = 16;								// userid
+	int64 historyID = 17;							// historyid
 }
 
 // MissionParams

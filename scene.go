@@ -11,10 +11,10 @@ import (
 
 // Scene - scene
 type Scene struct {
-	StageID       int          `json:"stageid"`
-	MapID         string       `json:"mapid"`
+	StageID       int          `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
+	MapID         string       `json:"mapid"`   // 实际的mapid，有对比价值
 	Version       int          `json:"version"`
-	SceneID       int64        `json:"sceneid"`
+	SceneID       int64        `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
 	UserID        int64        `json:"userid"`
 	Width         int          `json:"width"`
 	Height        int          `json:"height"`

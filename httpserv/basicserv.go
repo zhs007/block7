@@ -9,9 +9,10 @@ import (
 
 // BasicServ - basic server
 type BasicServ struct {
-	UserDB  *block7.UserDB
-	StageDB *block7.StageDB
-	cfg     *Config
+	UserDB    *block7.UserDB
+	StageDB   *block7.StageDB
+	HistoryDB *block7.HistoryDB
+	cfg       *Config
 }
 
 func NewBasicServ(cfg *Config) (*BasicServ, error) {
@@ -31,10 +32,19 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 		return nil, err
 	}
 
+	historydb, err := block7.NewHistoryDB(cfg.DBPath, "", cfg.DBEngine)
+	if err != nil {
+		block7.Error("NewBasicServ:NewHistoryDB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	return &BasicServ{
-		UserDB:  userdb,
-		StageDB: stagedb,
-		cfg:     cfg,
+		UserDB:    userdb,
+		StageDB:   stagedb,
+		HistoryDB: historydb,
+		cfg:       cfg,
 	}, nil
 }
 
@@ -77,6 +87,30 @@ func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 
 // Mission - get mission
 func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
+	if params.UserHash == "" {
+		block7.Error("BasicServ.Mission",
+			zap.Error(ErrInvalidUserHash))
+
+		return nil, ErrInvalidUserHash
+	}
+
+	uid, err := serv.UserDB.GetUserID(context.Background(), params.UserHash)
+	if err != nil {
+		block7.Error("BasicServ.Mission:GetUserID",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	if uid <= 0 {
+		block7.Error("BasicServ.Mission:GetUserID",
+			zap.Int64("uid", uid),
+			zap.String("userhash", params.UserHash),
+			zap.Error(ErrInvalidUserHash))
+
+		return nil, err
+	}
+
 	stage, err := block7.LoadStage("./cfg/level_0100.json")
 	if err != nil {
 		block7.Error("BasicServ.Mission:LoadStage",
@@ -95,6 +129,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
+	scene.MapID = "0100"
 	scene.IsOutputScene = true
 
 	pbScene, err := serv.StageDB.SaveStage(context.Background(), scene)
@@ -114,5 +149,29 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 // MissionData - upload mission data
 func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResult, error) {
+	if params.UserHash == "" {
+		block7.Error("BasicServ.MissionData",
+			zap.Error(ErrInvalidUserHash))
+
+		return nil, ErrInvalidUserHash
+	}
+
+	uid, err := serv.UserDB.GetUserID(context.Background(), params.UserHash)
+	if err != nil {
+		block7.Error("BasicServ.MissionData:GetUserID",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	if uid <= 0 {
+		block7.Error("BasicServ.MissionData:GetUserID",
+			zap.Int64("uid", uid),
+			zap.String("userhash", params.UserHash),
+			zap.Error(ErrInvalidUserHash))
+
+		return nil, err
+	}
+
 	return &MissionDataResult{UserLevel: 100}, nil
 }
