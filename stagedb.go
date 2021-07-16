@@ -17,7 +17,7 @@ const stagedbname = "stagedb"
 const sceneIDKey = "cursceneid"
 
 func makeStageDBKey(sceneid int64) string {
-	return fmt.Sprintf("u:%v", sceneid)
+	return fmt.Sprintf("s:%v", sceneid)
 }
 
 // StageDB - database
@@ -159,4 +159,35 @@ func (db *StageDB) GetStage(ctx context.Context, sceneid int64) (*block7pb.Scene
 	}
 
 	return stage, nil
+}
+
+// SaveStage - save stage
+func (db *StageDB) SaveStage(ctx context.Context, scene *Scene) (*block7pb.Scene, error) {
+	sid, err := db.GetCurSceneID(ctx)
+	if err != nil {
+		Warn("StageDB.SaveStage:GetCurSceneID",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	pbscene, err := scene.ToScenePB()
+	if err != nil {
+		Warn("StageDB.SaveStage:ToScenePB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	pbscene.SceneID = sid
+
+	err = db.UpdStage(ctx, pbscene)
+	if err != nil {
+		Warn("StageDB.SaveStage:UpdStage",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return pbscene, nil
 }

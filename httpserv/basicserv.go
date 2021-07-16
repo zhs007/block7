@@ -79,7 +79,7 @@ func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	stage, err := block7.LoadStage("./cfg/level_0100.json")
 	if err != nil {
-		block7.Error("LoadStage",
+		block7.Error("BasicServ.Mission:LoadStage",
 			zap.Error(err))
 
 		return nil, err
@@ -89,7 +89,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	scene, err := block7.NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, block7.DefaultMaxBlockNums)
 	if err != nil {
-		block7.Error("NewScene",
+		block7.Error("BasicServ.Mission:NewScene",
 			zap.Error(err))
 
 		return nil, err
@@ -97,9 +97,18 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	scene.IsOutputScene = true
 
+	pbScene, err := serv.StageDB.SaveStage(context.Background(), scene)
+	if err != nil {
+		block7.Error("BasicServ.Mission:SaveStage",
+			zap.Error(err))
+
+		return nil, err
+	}
+	// mhash :=
+
 	return &MissionResult{
-		Scene:       scene,
-		MissionHash: block7.GenHashCode(16),
+		Scene:     scene,
+		MissionID: pbScene.SceneID,
 	}, nil
 }
 
