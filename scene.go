@@ -101,6 +101,39 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 	return scene, nil
 }
 
+// NewSceneFromPB - new a scene
+func NewSceneFromPB(pbscene *block7pb.Scene) *Scene {
+	scene := &Scene{
+		MapID:   pbscene.MapID,
+		Version: int(pbscene.Version),
+		SceneID: pbscene.SceneID,
+		Width:   int(pbscene.Width),
+		Height:  int(pbscene.Height),
+		Layers:  int(pbscene.Layers),
+		XOff:    int(pbscene.XOff),
+		YOff:    int(pbscene.YOff),
+		Offset:  pbscene.Offset,
+	}
+
+	for _, arrlayer := range pbscene.InitArr {
+		arrslayer := [][]int{}
+		for _, arrrow := range arrlayer.Values {
+			arrsrow := []int{}
+			for _, v := range arrrow.Values {
+				arrsrow = append(arrsrow, int(v))
+			}
+
+			arrslayer = append(arrslayer, arrsrow)
+		}
+
+		scene.Arr = append(scene.Arr, arrslayer)
+	}
+
+	scene.InitArr = cloneArr3(scene.Arr)
+
+	return scene
+}
+
 func (scene *Scene) Restart() {
 	scene.Arr = cloneArr3(scene.InitArr)
 	scene.History = nil

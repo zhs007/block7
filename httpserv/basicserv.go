@@ -142,8 +142,8 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	// mhash :=
 
 	return &MissionResult{
-		Scene:     scene,
-		MissionID: pbScene.SceneID,
+		Scene:   scene,
+		SceneID: pbScene.SceneID,
 	}, nil
 }
 
@@ -171,6 +171,30 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 			zap.Error(ErrInvalidUserHash))
 
 		return nil, err
+	}
+
+	pbscene, err := serv.StageDB.GetStage(context.Background(), params.SceneID)
+	if err != nil {
+		block7.Error("BasicServ.MissionData:GetStage",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	scene := block7.NewSceneFromPB(pbscene)
+	MissionDataParams2Scene(scene, params)
+
+	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), scene)
+	if err != nil {
+		block7.Error("BasicServ.MissionData:SaveHistory",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	if serv.cfg.IsDebugMode {
+		block7.Debug("BasicServ.MissionData",
+			block7.JSON("history", pbscene1))
 	}
 
 	return &MissionDataResult{UserLevel: 100}, nil
