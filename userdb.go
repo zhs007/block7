@@ -66,9 +66,9 @@ func (db *UserDB) setCurUserID(ctx context.Context, userid int64) error {
 		return err
 	}
 
-	db.mutexDB.Lock()
+	// db.mutexDB.Lock()
 	err = db.AnkaDB.Set(ctx, userdbname, userIDKey, buf.Bytes())
-	db.mutexDB.Unlock()
+	// db.mutexDB.Unlock()
 	if err != nil {
 		return err
 	}

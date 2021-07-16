@@ -61,9 +61,9 @@ func (db *StageDB) setCurSceneID(ctx context.Context, sceneid int64) error {
 		return err
 	}
 
-	db.mutexDB.Lock()
+	// db.mutexDB.Lock()
 	err = db.AnkaDB.Set(ctx, stagedbname, sceneIDKey, buf.Bytes())
-	db.mutexDB.Unlock()
+	// db.mutexDB.Unlock()
 	if err != nil {
 		return err
 	}
