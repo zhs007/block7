@@ -1,6 +1,9 @@
 package block7
 
-import "go.uber.org/zap"
+import (
+	block7utils "github.com/zhs007/block7/utils"
+	"go.uber.org/zap"
+)
 
 type AIBlockResult struct {
 	Symbol     int
@@ -71,13 +74,13 @@ func (aiResult *AIResult) Click(symbol int, scene *Scene, bd *BlockData) bool {
 						return false
 					}
 				} else {
-					Warn("AIResult.Click:CanClickEx",
+					block7utils.Warn("AIResult.Click:CanClickEx",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z))
 				}
 			} else {
-				Warn("AIResult.Click:HasBlock",
+				block7utils.Warn("AIResult.Click:HasBlock",
 					zap.Int("x", bd.X),
 					zap.Int("y", bd.Y),
 					zap.Int("z", bd.Z))

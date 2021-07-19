@@ -1,5 +1,9 @@
 package block7
 
+import (
+	block7utils "github.com/zhs007/block7/utils"
+)
+
 type BlockInfoMap struct {
 	MaxLevel     int                `json:"maxLevel"`
 	MapBlockInfo map[int]*BlockInfo `json:"mapBlockInfo"`
@@ -135,6 +139,6 @@ func (m *BlockInfoMap) InsBlockSymbol(s int) {
 }
 
 func (m *BlockInfoMap) OutputLog(msg string) {
-	Info(msg,
-		JSON("BlockInfoMap", m))
+	block7utils.Info(msg,
+		block7utils.JSON("BlockInfoMap", m))
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/zhs007/block7"
 	block7serv "github.com/zhs007/block7/httpserv"
+	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 )
 
@@ -16,12 +17,12 @@ func main() {
 		return
 	}
 
-	block7.InitLogger("block7.serv", block7.Version,
+	block7utils.InitLogger("block7.serv", block7.Version,
 		cfg.LogLevel, true, cfg.LogPath)
 
 	service, err := block7serv.NewBasicServ(cfg)
 	if err != nil {
-		block7.Info("NewBasicServ",
+		block7utils.Info("NewBasicServ",
 			zap.String("addr", cfg.BindAddr),
 			zap.Error(err))
 
@@ -30,11 +31,11 @@ func main() {
 
 	serv := block7serv.NewServ(service)
 
-	block7.Info("init serv ...",
+	block7utils.Info("init serv ...",
 		zap.String("addr", cfg.BindAddr),
 		zap.String("version", block7.Version))
 
 	serv.Start()
 
-	block7.Info("serv end.")
+	block7utils.Info("serv end.")
 }
