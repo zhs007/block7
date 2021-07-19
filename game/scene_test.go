@@ -9,7 +9,7 @@ import (
 func Test_NewScene(t *testing.T) {
 	rng := NewRngNormal()
 
-	stage, err := LoadStage("./cfg/level_0100.json")
+	stage, err := LoadStage("../cfg/level_0100.json")
 	assert.Nil(t, err)
 
 	scene, err := NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8}, DefaultMaxBlockNums, nil)
