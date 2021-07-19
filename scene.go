@@ -13,7 +13,7 @@ import (
 // Scene - scene
 type Scene struct {
 	StageID       int          `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
-	MapID         string       `json:"mapid"`   // 实际的mapid，有对比价值
+	MapID         int          `json:"mapid"`   // 实际的mapid，有对比价值
 	Version       int          `json:"version"`
 	SceneID       int64        `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
 	UserID        int64        `json:"userid"`
@@ -105,7 +105,7 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 // NewSceneFromPB - new a scene
 func NewSceneFromPB(pbscene *block7pb.Scene) *Scene {
 	scene := &Scene{
-		MapID:   pbscene.MapID,
+		MapID:   int(pbscene.MapID2),
 		Version: int(pbscene.Version),
 		SceneID: pbscene.SceneID,
 		Width:   int(pbscene.Width),
@@ -825,7 +825,7 @@ func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
 		StageID: int32(scene.SceneID),
-		MapID:   scene.MapID,
+		MapID2:  int32(scene.MapID),
 		Version: int32(scene.Version),
 		SceneID: scene.SceneID,
 		Width:   int32(scene.Width),
@@ -858,7 +858,7 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
 		StageID: int32(scene.SceneID),
-		MapID:   scene.MapID,
+		MapID2:  int32(scene.MapID),
 		Version: int32(scene.Version),
 		SceneID: scene.SceneID,
 		UserID:  scene.UserID,
