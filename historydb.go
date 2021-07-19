@@ -21,11 +21,11 @@ func makeHistoryDBKey(historyid int64) string {
 	return fmt.Sprintf("h:%v", historyid)
 }
 
-func makeUserHistoryDBKey(mapid string, userid int64, sceneid int64, historyid int64) string {
+func makeUserHistoryDBKey(mapid int32, userid int64, sceneid int64, historyid int64) string {
 	return fmt.Sprintf("u:%v:%v:%v:%v", userid, mapid, sceneid, historyid)
 }
 
-func makeSceneHistoryDBKey(mapid string, userid int64, sceneid int64, historyid int64) string {
+func makeSceneHistoryDBKey(mapid int32, userid int64, sceneid int64, historyid int64) string {
 	return fmt.Sprintf("s:%v:%v:%v:%v", mapid, sceneid, userid, historyid)
 }
 
@@ -200,13 +200,13 @@ func (db *HistoryDB) SaveHistory(ctx context.Context, scene *Scene) (*block7pb.S
 		return nil, err
 	}
 
-	db.setHistoryID(ctx, pbhistory.MapID, pbhistory.UserID, pbhistory.SceneID, pbhistory.HistoryID)
+	db.setHistoryID(ctx, pbhistory.MapID2, pbhistory.UserID, pbhistory.SceneID, pbhistory.HistoryID)
 
 	return pbhistory, nil
 }
 
 // setHistoryID - set historyID
-func (db *HistoryDB) setHistoryID(ctx context.Context, mapid string, userid int64, sceneid int64, historyid int64) error {
+func (db *HistoryDB) setHistoryID(ctx context.Context, mapid int32, userid int64, sceneid int64, historyid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, historyid)
 	if err != nil {
