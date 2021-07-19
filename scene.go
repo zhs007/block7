@@ -6,6 +6,7 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/zhs007/block7/block7pb"
+	block7game "github.com/zhs007/block7/game"
 	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 )
@@ -57,10 +58,32 @@ func LoadScene(rng Rng, fn string, blockNums int) (*Scene, error) {
 }
 
 // NewScene - new a scene
-func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, error) {
-	ss, err := genSymbols(rng, symbols, stage.IconNums)
+func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int, ld2 *block7game.LevelData2) (*Scene, error) {
+	ss, err := block7game.MgrSpecial.GenSymbols(ld2)
 	if err != nil {
+		block7utils.Warn("NewScene:MgrSpecial.GenSymbols",
+			zap.Error(err))
+
 		return nil, err
+	}
+
+	if len(ss) > stage.IconNums {
+		block7utils.Warn("NewScene:IconNums",
+			zap.Error(ErrInvalidSpecialNums))
+
+		return nil, ErrInvalidSpecialNums
+	}
+
+	if len(ss) < stage.IconNums {
+		ss1, err := genSymbols(rng, symbols, stage.IconNums-len(ss))
+		if err != nil {
+			block7utils.Warn("NewScene:genSymbols",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		ss = append(ss, ss1...)
 	}
 
 	// block7utils.Debug("NewScene",

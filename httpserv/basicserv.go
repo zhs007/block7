@@ -145,7 +145,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	rng := block7.NewRngNormal()
 
-	scene, err := block7.NewScene(rng, stage, ld2.GenSymbols(), block7.DefaultMaxBlockNums)
+	scene, err := block7.NewScene(rng, stage, ld2.GenSymbols(), block7.DefaultMaxBlockNums, ld2)
 	if err != nil {
 		block7utils.Error("BasicServ.Mission:NewScene",
 			zap.Error(err))

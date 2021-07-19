@@ -11,4 +11,7 @@ var (
 
 	// ErrInvalidParams - invalid params
 	ErrInvalidParams = errors.New("invalid params")
+
+	// ErrInvalidSpecialNums - invalid special nums
+	ErrInvalidSpecialNums = errors.New("invalid special nums")
 )
