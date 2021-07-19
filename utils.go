@@ -1,6 +1,10 @@
 package block7
 
-import "time"
+import (
+	"time"
+
+	block7game "github.com/zhs007/block7/game"
+)
 
 func genSymbols(rng Rng, symbols []int, nums int) ([]int, error) {
 	if nums%BlockNums > 0 {
@@ -9,6 +13,10 @@ func genSymbols(rng Rng, symbols []int, nums int) ([]int, error) {
 
 	sn := len(symbols)
 	sn1 := nums / BlockNums
+	if sn1 < sn {
+		sn = sn1
+		symbols = block7game.GenSymbols(sn1)
+	}
 
 	arr := []int{}
 

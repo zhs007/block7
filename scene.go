@@ -63,6 +63,9 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 		return nil, err
 	}
 
+	// block7utils.Debug("NewScene",
+	// 	block7utils.JSON("symbols", ss))
+
 	scene := &Scene{
 		Width:        stage.Width,
 		Height:       stage.Height,

@@ -45,6 +45,8 @@ func LoadStage(fn string) (*Stage, error) {
 		}
 	}
 
+	stage.IconNums = stage.CountSymbols()
+
 	return stage, nil
 }
 
