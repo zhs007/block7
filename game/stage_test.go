@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	"testing"

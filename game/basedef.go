@@ -1,5 +1,25 @@
 package block7game
 
+// BlockNums - 3
+const BlockNums = 3
+
+// DefaultMaxBlockLevel - 7
+const DefaultMaxBlockLevel = 7
+
+// DefaultMaxBlockNums - 7
+const DefaultMaxBlockNums = 7
+
+// DefaultVersion - 1
+const DefaultVersion = 1
+
+const (
+	GameStateRunning = 1
+
+	GameStateSucess = 2
+
+	GameStateFail = 3
+)
+
 // 001 冰块 覆盖层1 需要点击周围的一个其他的块，冰块才能消失
 // 002 蛋糕 特殊方块 场景中增加一个蛋糕和三个铲子 点击铲子则铲子消失 蛋糕减少一块 点击三个铲子 蛋糕消失
 // 003 问号 覆盖层0 点亮的问号 同时只有一个问号方块可以看到其中的内容

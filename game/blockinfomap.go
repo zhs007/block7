@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	block7utils "github.com/zhs007/block7/utils"
