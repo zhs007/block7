@@ -1,11 +1,11 @@
-package block7
+package block7game
 
 // RngZero -
 type RngZero struct {
 }
 
 // NewRngZero - new RngZero
-func NewRngZero() Rng {
+func NewRngZero() IRng {
 	return &RngZero{}
 }
 

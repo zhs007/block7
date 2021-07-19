@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 )
 
 func Test_LoadStage(t *testing.T) {
-	stage, err := LoadStage("./cfg/level_0100.json")
+	stage, err := LoadStage("../cfg/level_0100.json")
 	assert.Nil(t, err)
 
 	assert.Equal(t, stage.Width, 9)

@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 
 const AI2OutputPath = "./ai2_output"
 
-func ai2L0(rng Rng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
+func ai2L0(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	clicknums := 0
 	v, isok := mapbi.MapBlockInfo[symbol]
 	if isok {
@@ -92,7 +92,7 @@ func ai2L0(rng Rng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	return clicknums, false
 }
 
-func ai2L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
+func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	clicknums := 0
 	v, isok := mapbi.MapBlockInfo[symbol]
 	if !isok {
@@ -309,7 +309,7 @@ func ai2L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 	return 0, false
 }
 
-func ai2(rng Rng, scene *Scene) bool {
+func ai2(rng IRng, scene *Scene) bool {
 	scene.Restart()
 
 	iturn := 0
@@ -419,7 +419,7 @@ func ai2(rng Rng, scene *Scene) bool {
 	}
 }
 
-func AI2(rng Rng, scene *Scene, name string, totalnums int) {
+func AI2(rng IRng, scene *Scene, name string, totalnums int) {
 	os.MkdirAll(AI2OutputPath, os.ModePerm)
 
 	finishedNums := 0

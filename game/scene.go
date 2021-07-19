@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	"io/ioutil"
@@ -13,7 +13,7 @@ import (
 // Scene - scene
 type Scene struct {
 	StageID       int          `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
-	MapID         string       `json:"mapid"`   // 实际的mapid，有对比价值
+	MapID         int          `json:"mapid"`   // 实际的mapid，有对比价值
 	Version       int          `json:"version"`
 	SceneID       int64        `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
 	UserID        int64        `json:"userid"`
@@ -35,7 +35,7 @@ type Scene struct {
 }
 
 // LoadScene - load a scene
-func LoadScene(rng Rng, fn string, blockNums int) (*Scene, error) {
+func LoadScene(rng IRng, fn string, blockNums int) (*Scene, error) {
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 
 	data, err := ioutil.ReadFile(fn)
@@ -57,11 +57,36 @@ func LoadScene(rng Rng, fn string, blockNums int) (*Scene, error) {
 }
 
 // NewScene - new a scene
-func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, error) {
-	ss, err := genSymbols(rng, symbols, stage.IconNums)
+func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelData2) (*Scene, error) {
+	ss, err := MgrSpecial.GenSymbols(ld2)
 	if err != nil {
+		block7utils.Warn("NewScene:MgrSpecial.GenSymbols",
+			zap.Error(err))
+
 		return nil, err
 	}
+
+	if len(ss) > stage.IconNums {
+		block7utils.Warn("NewScene:IconNums",
+			zap.Error(ErrInvalidSpecialNums))
+
+		return nil, ErrInvalidSpecialNums
+	}
+
+	if len(ss) < stage.IconNums {
+		ss1, err := genSymbols(rng, symbols, stage.IconNums-len(ss))
+		if err != nil {
+			block7utils.Warn("NewScene:genSymbols",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		ss = append(ss, ss1...)
+	}
+
+	// block7utils.Debug("NewScene",
+	// 	block7utils.JSON("symbols", ss))
 
 	scene := &Scene{
 		Width:        stage.Width,
@@ -105,7 +130,7 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 // NewSceneFromPB - new a scene
 func NewSceneFromPB(pbscene *block7pb.Scene) *Scene {
 	scene := &Scene{
-		MapID:   pbscene.MapID,
+		MapID:   int(pbscene.MapID2),
 		Version: int(pbscene.Version),
 		SceneID: pbscene.SceneID,
 		Width:   int(pbscene.Width),
@@ -825,7 +850,7 @@ func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
 		StageID: int32(scene.SceneID),
-		MapID:   scene.MapID,
+		MapID2:  int32(scene.MapID),
 		Version: int32(scene.Version),
 		SceneID: scene.SceneID,
 		Width:   int32(scene.Width),
@@ -858,7 +883,7 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
 		StageID: int32(scene.SceneID),
-		MapID:   scene.MapID,
+		MapID2:  int32(scene.MapID),
 		Version: int32(scene.Version),
 		SceneID: scene.SceneID,
 		UserID:  scene.UserID,

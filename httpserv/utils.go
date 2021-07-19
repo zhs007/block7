@@ -1,10 +1,8 @@
 package block7serv
 
-import (
-	"github.com/zhs007/block7"
-)
+import block7game "github.com/zhs007/block7/game"
 
-func MissionDataParams2Scene(scene *block7.Scene, params *MissionDataParams) {
+func MissionDataParams2Scene(scene *block7game.Scene, params *MissionDataParams) {
 	for _, arr := range params.History {
 		scene.History = append(scene.History, append([]int{}, arr...))
 	}

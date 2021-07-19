@@ -9,6 +9,7 @@ import (
 
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
+	block7game "github.com/zhs007/block7/game"
 	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
@@ -165,7 +166,7 @@ func (db *StageDB) GetStage(ctx context.Context, sceneid int64) (*block7pb.Scene
 }
 
 // SaveStage - save stage
-func (db *StageDB) SaveStage(ctx context.Context, scene *Scene) (*block7pb.Scene, error) {
+func (db *StageDB) SaveStage(ctx context.Context, scene *block7game.Scene) (*block7pb.Scene, error) {
 	sid, err := db.GetCurSceneID(ctx)
 	if err != nil {
 		block7utils.Warn("StageDB.SaveStage:GetCurSceneID",

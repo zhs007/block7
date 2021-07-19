@@ -17,9 +17,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -o block7serv ./server \
     && mkdir /app/block7serv/cfg \
     && mkdir /app/block7serv/logs \
     && mkdir /app/block7serv/data \
+    && mkdir /app/block7serv/gamedata \
     && cp ./block7serv /app/block7serv/ \
     && cp ./VERSION /app/block7serv/ \
-    && cp -r ./cfg /app/block7serv/
+    && cp -r ./cfg /app/block7serv/ \
+    && cp -r ./gamedata /app/block7serv/
 
 FROM alpine
 RUN apk upgrade && apk add --no-cache tzdata ca-certificates

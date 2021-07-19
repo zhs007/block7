@@ -1,106 +1,110 @@
 package block7
 
-import "time"
+// import (
+// 	"time"
 
-func genSymbols(rng Rng, symbols []int, nums int) ([]int, error) {
-	if nums%BlockNums > 0 {
-		return nil, ErrInvalidSymbolsLength
-	}
+// 	block7game "github.com/zhs007/block7/game"
+// )
 
-	sn := len(symbols)
-	sn1 := nums / BlockNums
+// func genSymbols(rng Rng, symbols []int, nums int) ([]int, error) {
+// 	if nums%BlockNums > 0 {
+// 		return nil, ErrInvalidSymbolsLength
+// 	}
 
-	arr := []int{}
+// 	sn := len(symbols)
+// 	sn1 := nums / BlockNums
+// 	if sn1 < sn {
+// 		sn = sn1
+// 		symbols = block7game.GenSymbols(sn1)
+// 	}
 
-	sn2 := sn1 / sn
-	sn3 := sn1 - sn*sn2
+// 	arr := []int{}
 
-	for i := 0; i < sn2; i++ {
-		for j := 0; j < sn; j++ {
-			for k := 0; k < BlockNums; k++ {
-				arr = append(arr, symbols[j])
-			}
-		}
-	}
+// 	sn2 := sn1 / sn
+// 	sn3 := sn1 - sn*sn2
 
-	if sn3 >= 0 {
-		for i := 0; i < sn3; i++ {
-			j, err := rng.Rand(len(symbols))
-			if err != nil {
-				return nil, err
-			}
+// 	for i := 0; i < sn2; i++ {
+// 		for j := 0; j < sn; j++ {
+// 			for k := 0; k < BlockNums; k++ {
+// 				arr = append(arr, symbols[j])
+// 			}
+// 		}
+// 	}
 
-			for k := 0; k < BlockNums; k++ {
-				arr = append(arr, symbols[j])
-			}
+// 	if sn3 >= 0 {
+// 		for i := 0; i < sn3; i++ {
+// 			j, err := rng.Rand(len(symbols))
+// 			if err != nil {
+// 				return nil, err
+// 			}
 
-			symbols = append(symbols[:j], symbols[j+1:]...)
-		}
-	}
+// 			for k := 0; k < BlockNums; k++ {
+// 				arr = append(arr, symbols[j])
+// 			}
 
-	return arr, nil
-}
+// 			symbols = append(symbols[:j], symbols[j+1:]...)
+// 		}
+// 	}
 
-func randSymbols(rng Rng, symbols []int) ([]int, int, error) {
-	if len(symbols) <= 0 {
-		return nil, 0, ErrInvalidSymbolsLength
-	}
+// 	return arr, nil
+// }
 
-	si, err := rng.Rand(len(symbols))
-	if err != nil {
-		return nil, 0, err
-	}
+// func randSymbols(rng Rng, symbols []int) ([]int, int, error) {
+// 	if len(symbols) <= 0 {
+// 		return nil, 0, ErrInvalidSymbolsLength
+// 	}
 
-	c := symbols[si]
-	symbols = append(symbols[:si], symbols[si+1:]...)
+// 	si, err := rng.Rand(len(symbols))
+// 	if err != nil {
+// 		return nil, 0, err
+// 	}
 
-	return symbols, c, nil
-}
+// 	c := symbols[si]
+// 	symbols = append(symbols[:si], symbols[si+1:]...)
 
-func countSymbols(symbols []int, symbol int) int {
-	n := 0
-	for _, v := range symbols {
-		if v == symbol {
-			n++
-		}
-	}
+// 	return symbols, c, nil
+// }
 
-	return n
-}
+// func countSymbols(symbols []int, symbol int) int {
+// 	n := 0
+// 	for _, v := range symbols {
+// 		if v == symbol {
+// 			n++
+// 		}
+// 	}
 
-func insBlockData(arr []*BlockData, b *BlockData) []*BlockData {
-	arr = append(arr, b)
+// 	return n
+// }
 
-	return arr
-}
+// func insBlockData(arr []*BlockData, b *BlockData) []*BlockData {
+// 	arr = append(arr, b)
 
-func insBlockDataAndProc(arr []*BlockData, b *BlockData) []*BlockData {
-	arr = append(arr, b)
-	cn := CountBlockData(arr, b.Symbol)
-	if cn >= BlockNums {
-		arr = RemoveBlockData(arr, b.Symbol, BlockNums*cn/BlockNums)
-	}
+// 	return arr
+// }
 
-	return arr
-}
+// func insBlockDataAndProc(arr []*BlockData, b *BlockData) []*BlockData {
+// 	arr = append(arr, b)
+// 	cn := CountBlockData(arr, b.Symbol)
+// 	if cn >= BlockNums {
+// 		arr = RemoveBlockData(arr, b.Symbol, BlockNums*cn/BlockNums)
+// 	}
 
-func cloneArr3(src [][][]int) [][][]int {
-	arr := [][][]int{}
+// 	return arr
+// }
 
-	for _, src2 := range src {
-		arr2 := [][]int{}
+// func cloneArr3(src [][][]int) [][][]int {
+// 	arr := [][][]int{}
 
-		for _, src1 := range src2 {
-			arr1 := append([]int{}, src1[0:]...)
-			arr2 = append(arr2, arr1)
-		}
+// 	for _, src2 := range src {
+// 		arr2 := [][]int{}
 
-		arr = append(arr, arr2)
-	}
+// 		for _, src1 := range src2 {
+// 			arr1 := append([]int{}, src1[0:]...)
+// 			arr2 = append(arr2, arr1)
+// 		}
 
-	return arr
-}
+// 		arr = append(arr, arr2)
+// 	}
 
-func GetCurTimestamp() int64 {
-	return time.Now().Unix()
-}
+// 	return arr
+// }

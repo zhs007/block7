@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 
 const AI4OutputPath = "./ai4_output"
 
-func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bool {
+func ai4L0(rng IRng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bool {
 	if aiResult.HasSymbol(symbol) {
 		return false
 	}
@@ -90,7 +90,7 @@ func ai4L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbo
 	return false
 }
 
-func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
+func ai4L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
 	var lstl0 []*BlockData
 	var lstl1 []*BlockData
 
@@ -297,7 +297,7 @@ func ai4L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 	return false
 }
 
-func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
+func ai4L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bool {
 	var lstl0 []*BlockData
 	var lstl1 []*BlockData
 	var lstl2 []*BlockData
@@ -601,7 +601,7 @@ func ai4L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbo
 	return false
 }
 
-func ai4PreProc(rng Rng, scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
+func ai4PreProc(rng IRng, scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
 	aiResult := NewAIResult(scene, mapBI)
 
 	if len(mapBI.BlockSymbols) > 0 {
@@ -633,7 +633,7 @@ func ai4PreProc(rng Rng, scene *Scene, mapBI *BlockInfoMap) (*AIResult, error) {
 	return aiResult, nil
 }
 
-func procAI4(rng Rng, scene *Scene, name string) (bool, error) {
+func procAI4(rng IRng, scene *Scene, name string) (bool, error) {
 	iturn := 0
 	for {
 		iturn++
@@ -734,7 +734,7 @@ func procAI4(rng Rng, scene *Scene, name string) (bool, error) {
 	}
 }
 
-func AI4(rng Rng, scene *Scene, name string, totalnums int) error {
+func AI4(rng IRng, scene *Scene, name string, totalnums int) error {
 	os.MkdirAll(AI4OutputPath, os.ModePerm)
 
 	if totalnums > 1 {

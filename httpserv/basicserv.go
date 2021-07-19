@@ -2,8 +2,10 @@ package block7serv
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/zhs007/block7"
+	block7game "github.com/zhs007/block7/game"
 	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 )
@@ -13,6 +15,7 @@ type BasicServ struct {
 	UserDB    *block7.UserDB
 	StageDB   *block7.StageDB
 	HistoryDB *block7.HistoryDB
+	LevelMgr  *block7game.LevelMgr
 	cfg       *Config
 }
 
@@ -41,10 +44,20 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 		return nil, err
 	}
 
+	levelmgr := block7game.NewLevelMgr()
+	err = levelmgr.LoadLevel("./gamedata/level.json")
+	if err != nil {
+		block7utils.Error("NewBasicServ:LoadLevel",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	return &BasicServ{
 		UserDB:    userdb,
 		StageDB:   stagedb,
 		HistoryDB: historydb,
+		LevelMgr:  levelmgr,
 		cfg:       cfg,
 	}, nil
 }
@@ -109,10 +122,20 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 			zap.String("userhash", params.UserHash),
 			zap.Error(ErrInvalidUserHash))
 
-		return nil, err
+		return nil, ErrInvalidUserHash
 	}
 
-	stage, err := block7.LoadStage("./cfg/level_0100.json")
+	ld2, isok := serv.LevelMgr.MapLevel[params.MissionID+30000]
+	if !isok {
+		block7utils.Error("BasicServ.Mission:GetUserID",
+			zap.Int64("uid", uid),
+			zap.Int("missionid", params.MissionID),
+			zap.Error(ErrInvalidMissionID))
+
+		return nil, ErrInvalidMissionID
+	}
+
+	stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
 	if err != nil {
 		block7utils.Error("BasicServ.Mission:LoadStage",
 			zap.Error(err))
@@ -120,9 +143,9 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
-	rng := block7.NewRngNormal()
+	rng := block7game.NewRngNormal()
 
-	scene, err := block7.NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, block7.DefaultMaxBlockNums)
+	scene, err := block7game.NewScene(rng, stage, ld2.GenSymbols(), block7game.DefaultMaxBlockNums, ld2)
 	if err != nil {
 		block7utils.Error("BasicServ.Mission:NewScene",
 			zap.Error(err))
@@ -130,7 +153,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
-	scene.MapID = "0100"
+	scene.MapID = ld2.MapID
 	scene.IsOutputScene = true
 
 	pbScene, err := serv.StageDB.SaveStage(context.Background(), scene)
@@ -182,7 +205,7 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 		return nil, err
 	}
 
-	scene := block7.NewSceneFromPB(pbscene)
+	scene := block7game.NewSceneFromPB(pbscene)
 	MissionDataParams2Scene(scene, params)
 
 	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), scene)

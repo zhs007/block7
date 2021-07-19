@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	"math/rand"
@@ -12,7 +12,7 @@ type RngNormal struct {
 }
 
 // NewRngNormal - new RngNormal
-func NewRngNormal() Rng {
+func NewRngNormal() IRng {
 	if !isBasicPluginInited {
 		rand.Seed(time.Now().UnixNano())
 

@@ -26,11 +26,12 @@ message Scene {
 	string Offset = 10;								// Offset
 	bool IsOutputScene = 11 [deprecated = true];	// IsOutputScene
 	int32 StageID = 12;								// stage
-	string MapID = 13;								// map
+	string MapID = 13 [deprecated = true];			// map
 	int32 Version = 14;								// version
 	int64 sceneID = 15;								// id
 	int64 userID = 16;								// userid
 	int64 historyID = 17;							// historyid
+	int32 MapID2 = 18;								// map
 }
 
 // MissionParams
