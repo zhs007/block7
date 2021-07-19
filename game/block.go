@@ -102,7 +102,7 @@ func RemoveBlockData(lst []*BlockData, symbol int, nums int) []*BlockData {
 	return lst
 }
 
-func RandBlockData(rng Rng, lst []*BlockData, nums int) ([]*BlockData, []*BlockData, error) {
+func RandBlockData(rng IRng, lst []*BlockData, nums int) ([]*BlockData, []*BlockData, error) {
 	if nums <= 0 {
 		return nil, nil, ErrInvalidParams
 	}

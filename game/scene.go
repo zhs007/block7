@@ -6,7 +6,6 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/zhs007/block7/block7pb"
-	block7game "github.com/zhs007/block7/game"
 	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 )
@@ -36,7 +35,7 @@ type Scene struct {
 }
 
 // LoadScene - load a scene
-func LoadScene(rng Rng, fn string, blockNums int) (*Scene, error) {
+func LoadScene(rng IRng, fn string, blockNums int) (*Scene, error) {
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 
 	data, err := ioutil.ReadFile(fn)
@@ -58,8 +57,8 @@ func LoadScene(rng Rng, fn string, blockNums int) (*Scene, error) {
 }
 
 // NewScene - new a scene
-func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int, ld2 *block7game.LevelData2) (*Scene, error) {
-	ss, err := block7game.MgrSpecial.GenSymbols(ld2)
+func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelData2) (*Scene, error) {
+	ss, err := MgrSpecial.GenSymbols(ld2)
 	if err != nil {
 		block7utils.Warn("NewScene:MgrSpecial.GenSymbols",
 			zap.Error(err))

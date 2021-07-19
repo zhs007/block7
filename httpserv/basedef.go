@@ -1,6 +1,6 @@
 package block7serv
 
-import "github.com/zhs007/block7"
+import block7game "github.com/zhs007/block7/game"
 
 // MissionParams - mission parameters
 type MissionParams struct {
@@ -10,8 +10,8 @@ type MissionParams struct {
 
 // MissionResult - mission result
 type MissionResult struct {
-	Scene   *block7.Scene `json:"scene"`
-	SceneID int64         `json:"mission"`
+	Scene   *block7game.Scene `json:"scene"`
+	SceneID int64             `json:"mission"`
 }
 
 // MissionDataParams - missionData parameters

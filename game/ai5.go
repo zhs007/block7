@@ -1,4 +1,4 @@
-package block7
+package block7game
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 
 const AI5OutputPath = "./ai5_output"
 
-func ai5L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult2, symbol int) bool {
+func ai5L0(rng IRng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult2, symbol int) bool {
 	level := 0
 	if aiResult.HasSymbol(level, symbol) {
 		return false
@@ -91,7 +91,7 @@ func ai5L0(rng Rng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult2, symb
 	return false
 }
 
-func ai5L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, symbol int) bool {
+func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, symbol int) bool {
 	level := 1
 	var lstl0 []*BlockData
 	var lstl1 []*BlockData
@@ -299,7 +299,7 @@ func ai5L1(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, symb
 	return false
 }
 
-func ai5L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, symbol int) bool {
+func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, symbol int) bool {
 	level := 2
 	var lstl0 []*BlockData
 	var lstl1 []*BlockData
@@ -604,7 +604,7 @@ func ai5L2(rng Rng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, symb
 	return false
 }
 
-func ai5PreProc(rng Rng, scene *Scene, mapBI *BlockInfoMap) (*AIResult2, error) {
+func ai5PreProc(rng IRng, scene *Scene, mapBI *BlockInfoMap) (*AIResult2, error) {
 	aiResult := NewAIResult2(scene, mapBI)
 
 	if len(mapBI.BlockSymbols) > 0 {
@@ -636,7 +636,7 @@ func ai5PreProc(rng Rng, scene *Scene, mapBI *BlockInfoMap) (*AIResult2, error) 
 	return aiResult, nil
 }
 
-func procAI5(rng Rng, scene *Scene, name string) (bool, error) {
+func procAI5(rng IRng, scene *Scene, name string) (bool, error) {
 	iturn := 0
 	for {
 		iturn++
@@ -737,7 +737,7 @@ func procAI5(rng Rng, scene *Scene, name string) (bool, error) {
 	}
 }
 
-func AI5(rng Rng, scene *Scene, name string, totalnums int) error {
+func AI5(rng IRng, scene *Scene, name string, totalnums int) error {
 	os.MkdirAll(AI5OutputPath, os.ModePerm)
 
 	if totalnums > 1 {

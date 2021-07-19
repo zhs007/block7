@@ -53,7 +53,7 @@ func genSymbols(rng IRng, symbols []int, nums int) ([]int, error) {
 	return arr, nil
 }
 
-func randSymbols(rng Rng, symbols []int) ([]int, int, error) {
+func randSymbols(rng IRng, symbols []int) ([]int, int, error) {
 	if len(symbols) <= 0 {
 		return nil, 0, ErrInvalidSymbolsLength
 	}

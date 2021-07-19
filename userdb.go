@@ -308,7 +308,7 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 	}
 
 	udi.UserHash = userhash
-	udi.CreateTs = GetCurTimestamp()
+	udi.CreateTs = block7utils.GetCurTimestamp()
 	udi.LastLoginTs = udi.CreateTs
 	udi.LoginTimes++
 	ui.Data = append(ui.Data, udi)
@@ -367,7 +367,7 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 			cudi.ResourceVersion = udi.ResourceVersion
 			cudi.DeviceInfo = udi.DeviceInfo
 
-			cudi.LastLoginTs = GetCurTimestamp()
+			cudi.LastLoginTs = block7utils.GetCurTimestamp()
 			cudi.LoginTimes++
 
 			err = db.UpdUser(ctx, ui)
@@ -382,7 +382,7 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 		}
 	}
 
-	udi.LastLoginTs = GetCurTimestamp()
+	udi.LastLoginTs = block7utils.GetCurTimestamp()
 	udi.LoginTimes++
 
 	ui.Data = append(ui.Data, udi)

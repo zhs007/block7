@@ -9,6 +9,7 @@ import (
 
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
+	block7game "github.com/zhs007/block7/game"
 	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
@@ -173,7 +174,7 @@ func (db *HistoryDB) GetHistory(ctx context.Context, historyid int64) (*block7pb
 }
 
 // SaveHistory - save history
-func (db *HistoryDB) SaveHistory(ctx context.Context, scene *Scene) (*block7pb.Scene, error) {
+func (db *HistoryDB) SaveHistory(ctx context.Context, scene *block7game.Scene) (*block7pb.Scene, error) {
 	hid, err := db.GetCurHistoryID(ctx)
 	if err != nil {
 		block7utils.Warn("HistoryDB.SaveHistory:GetCurHistoryID",

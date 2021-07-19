@@ -135,7 +135,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, ErrInvalidMissionID
 	}
 
-	stage, err := block7.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
+	stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
 	if err != nil {
 		block7utils.Error("BasicServ.Mission:LoadStage",
 			zap.Error(err))
@@ -143,9 +143,9 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
-	rng := block7.NewRngNormal()
+	rng := block7game.NewRngNormal()
 
-	scene, err := block7.NewScene(rng, stage, ld2.GenSymbols(), block7.DefaultMaxBlockNums, ld2)
+	scene, err := block7game.NewScene(rng, stage, ld2.GenSymbols(), block7game.DefaultMaxBlockNums, ld2)
 	if err != nil {
 		block7utils.Error("BasicServ.Mission:NewScene",
 			zap.Error(err))
@@ -205,7 +205,7 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 		return nil, err
 	}
 
-	scene := block7.NewSceneFromPB(pbscene)
+	scene := block7game.NewSceneFromPB(pbscene)
 	MissionDataParams2Scene(scene, params)
 
 	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), scene)
