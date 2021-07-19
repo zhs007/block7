@@ -27,3 +27,9 @@ func (rng *RngNormal) Rand(r int) (int, error) {
 	ci := rand.Int()
 	return ci % r, nil
 }
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+
+	isBasicPluginInited = true
+}

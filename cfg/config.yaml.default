@@ -1,0 +1,12 @@
+# dbpath - db path
+dbpath: ./data
+# dbengine - db engine
+dbengine: leveldb
+# bindaddr - grpc server bind address
+bindaddr: 0.0.0.0:3723
+# loglevel - log level
+loglevel: debug
+# logpath - log path
+logpath: ./logs
+# is debug mode
+isdebugmode: true

@@ -5,11 +5,17 @@ import (
 	"os"
 
 	jsoniter "github.com/json-iterator/go"
+	"github.com/zhs007/block7/block7pb"
 	"go.uber.org/zap"
 )
 
 // Scene - scene
 type Scene struct {
+	StageID       int          `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
+	MapID         string       `json:"mapid"`   // 实际的mapid，有对比价值
+	Version       int          `json:"version"`
+	SceneID       int64        `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
+	UserID        int64        `json:"userid"`
 	Width         int          `json:"width"`
 	Height        int          `json:"height"`
 	Layers        int          `json:"layers"`
@@ -93,6 +99,39 @@ func NewScene(rng Rng, stage *Stage, symbols []int, blockNums int) (*Scene, erro
 	scene.InitArr = cloneArr3(scene.Arr)
 
 	return scene, nil
+}
+
+// NewSceneFromPB - new a scene
+func NewSceneFromPB(pbscene *block7pb.Scene) *Scene {
+	scene := &Scene{
+		MapID:   pbscene.MapID,
+		Version: int(pbscene.Version),
+		SceneID: pbscene.SceneID,
+		Width:   int(pbscene.Width),
+		Height:  int(pbscene.Height),
+		Layers:  int(pbscene.Layers),
+		XOff:    int(pbscene.XOff),
+		YOff:    int(pbscene.YOff),
+		Offset:  pbscene.Offset,
+	}
+
+	for _, arrlayer := range pbscene.InitArr {
+		arrslayer := [][]int{}
+		for _, arrrow := range arrlayer.Values {
+			arrsrow := []int{}
+			for _, v := range arrrow.Values {
+				arrsrow = append(arrsrow, int(v))
+			}
+
+			arrslayer = append(arrslayer, arrsrow)
+		}
+
+		scene.Arr = append(scene.Arr, arrslayer)
+	}
+
+	scene.InitArr = cloneArr3(scene.Arr)
+
+	return scene
 }
 
 func (scene *Scene) Restart() {
@@ -780,4 +819,59 @@ func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 			v.AddChild(bd)
 		}
 	}
+}
+
+func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
+	pbScene := &block7pb.Scene{
+		StageID: int32(scene.SceneID),
+		MapID:   scene.MapID,
+		Version: int32(scene.Version),
+		SceneID: scene.SceneID,
+		Width:   int32(scene.Width),
+		Height:  int32(scene.Height),
+		Layers:  int32(scene.Layers),
+		XOff:    int32(scene.XOff),
+		YOff:    int32(scene.YOff),
+		Offset:  scene.Offset,
+	}
+
+	for _, arr2 := range scene.InitArr {
+		pblayer := &block7pb.SceneLayer{}
+
+		for _, arr1 := range arr2 {
+			pbcolumn := &block7pb.Column{}
+
+			for _, s := range arr1 {
+				pbcolumn.Values = append(pbcolumn.Values, int32(s))
+			}
+
+			pblayer.Values = append(pblayer.Values, pbcolumn)
+		}
+
+		pbScene.InitArr = append(pbScene.InitArr, pblayer)
+	}
+
+	return pbScene, nil
+}
+
+func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
+	pbScene := &block7pb.Scene{
+		StageID: int32(scene.SceneID),
+		MapID:   scene.MapID,
+		Version: int32(scene.Version),
+		SceneID: scene.SceneID,
+		UserID:  scene.UserID,
+	}
+
+	for _, arr := range scene.History {
+		pbcolumn := &block7pb.Column{}
+
+		for _, s := range arr {
+			pbcolumn.Values = append(pbcolumn.Values, int32(s))
+		}
+
+		pbScene.History = append(pbScene.History, pbcolumn)
+	}
+
+	return pbScene, nil
 }

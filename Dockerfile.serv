@@ -1,0 +1,28 @@
+# zerro "zerrozhao@gmail.com"
+FROM golang:1.16 as builder
+
+ENV GOPROXY https://goproxy.io
+
+WORKDIR /src/block7serv
+
+COPY ./go.* /src/block7serv/
+
+RUN go mod download
+
+COPY . /src/block7serv
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o block7serv ./server \
+    && mkdir /app \
+    && mkdir /app/block7serv \
+    && mkdir /app/block7serv/cfg \
+    && mkdir /app/block7serv/logs \
+    && mkdir /app/block7serv/data \
+    && cp ./block7serv /app/block7serv/ \
+    && cp ./VERSION /app/block7serv/ \
+    && cp -r ./cfg /app/block7serv/
+
+FROM alpine
+RUN apk upgrade && apk add --no-cache tzdata ca-certificates
+WORKDIR /app/block7serv
+COPY --from=builder /app/block7serv /app/block7serv
+CMD ["./block7serv"]
