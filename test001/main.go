@@ -4,18 +4,19 @@ import (
 	"fmt"
 
 	"github.com/zhs007/block7"
+	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 )
 
 func main() {
-	block7.InitLogger("block7.ai", block7.Version,
+	block7utils.InitLogger("block7.ai", block7.Version,
 		"info", true, "./logs")
 
 	rng := block7.NewRngNormal()
 
 	scene, err := block7.LoadScene(rng, "./cfg/0-15.json", block7.DefaultMaxBlockNums)
 	if err != nil {
-		block7.Error("LoadStage",
+		block7utils.Error("LoadStage",
 			zap.Error(err))
 
 		return

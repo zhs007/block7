@@ -2,7 +2,7 @@
 // Source: ./utils/time.go
 
 // Package sgc7utils is a generated GoMock package.
-package block7
+package block7utils
 
 import (
 	reflect "reflect"

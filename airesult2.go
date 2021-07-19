@@ -3,6 +3,7 @@ package block7
 import (
 	"fmt"
 
+	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 )
 
@@ -76,13 +77,13 @@ func (aiResult *AIResult2) Click(level int, symbol int, scene *Scene, bd *BlockD
 						return false
 					}
 				} else {
-					Warn("AIResult2.Click:CanClickEx",
+					block7utils.Warn("AIResult2.Click:CanClickEx",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z))
 				}
 			} else {
-				Warn("AIResult2.Click:HasBlock",
+				block7utils.Warn("AIResult2.Click:HasBlock",
 					zap.Int("x", bd.X),
 					zap.Int("y", bd.Y),
 					zap.Int("z", bd.Z))

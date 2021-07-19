@@ -6,6 +6,7 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/zhs007/block7/block7pb"
+	block7utils "github.com/zhs007/block7/utils"
 	"go.uber.org/zap"
 )
 
@@ -340,7 +341,7 @@ func (scene *Scene) analysisNeighboring(mapBI *BlockInfoMap, arr []*BlockData, b
 			if scene.CanClickEx(bd.X+xoff, bd.Y+yoff, bd.Z, arr) {
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+xoff, bd.Y+yoff, bd.Z, scene.Arr[bd.Z][bd.Y+yoff][bd.X+xoff], arr)
 				if err != nil {
-					Warn("Scene.analysisNeighboring:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisNeighboring:AddBlockDataEx2",
 						zap.Int("x", bd.X+xoff),
 						zap.Int("y", bd.Y+yoff),
 						zap.Int("z", bd.Z),
@@ -356,7 +357,7 @@ func (scene *Scene) analysisNeighboring(mapBI *BlockInfoMap, arr []*BlockData, b
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisNeighboring:analysisDepth",
+							block7utils.Warn("Scene.analysisNeighboring:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -379,7 +380,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 	if bd.Z > 0 {
 		err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
 		if err != nil {
-			Warn("Scene.analysisDepth:analysisNeighboring",
+			block7utils.Warn("Scene.analysisDepth:analysisNeighboring",
 				zap.Error(err))
 		}
 
@@ -388,7 +389,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -408,7 +409,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -424,7 +425,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X+scene.XOff], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X+scene.XOff),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -444,7 +445,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -460,7 +461,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y+scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -480,7 +481,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -496,7 +497,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X+scene.XOff], arr)
 
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X+scene.XOff),
 						zap.Int("y", bd.Y+scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -516,7 +517,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -532,7 +533,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -552,7 +553,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -568,7 +569,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X-scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X-scene.XOff], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X-scene.XOff),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -588,7 +589,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -604,7 +605,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y-scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -624,7 +625,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -640,7 +641,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X-scene.XOff], arr)
 				if err != nil {
-					Warn("Scene.analysisDepth:AddBlockDataEx2",
+					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X-scene.XOff),
 						zap.Int("y", bd.Y-scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -660,7 +661,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							Warn("Scene.analysisDepth:analysisDepth",
+							block7utils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -691,7 +692,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 
 				err := scene.analysisDepth(mapBI, arr, bd, 1, 1)
 				if err != nil {
-					Warn("Scene.Analysis:analysisDepth",
+					block7utils.Warn("Scene.Analysis:analysisDepth",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z),
@@ -734,7 +735,7 @@ func (scene *Scene) Click(x, y, z int) (int, bool) {
 	scene.Block = insBlockDataAndProc(scene.Block, b)
 
 	if !scene.IsValid() {
-		Warn("Scene.Click:IsValid",
+		block7utils.Warn("Scene.Click:IsValid",
 			zap.Int("blocks", len(scene.Block)),
 			zap.Int("lastSymbols", scene.CountSymbols()))
 	}
@@ -769,7 +770,7 @@ func (scene *Scene) Save(fn string) error {
 
 	buf, err := json.Marshal(scene)
 	if err != nil {
-		Error("Scene.Save:Marshal",
+		block7utils.Error("Scene.Save:Marshal",
 			zap.Error(err))
 
 		return err
@@ -777,7 +778,7 @@ func (scene *Scene) Save(fn string) error {
 
 	err = ioutil.WriteFile(fn, buf, os.ModePerm)
 	if err != nil {
-		Error("Scene.Save:WriteFile",
+		block7utils.Error("Scene.Save:WriteFile",
 			zap.Error(err))
 
 		return err
