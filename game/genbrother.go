@@ -62,9 +62,18 @@ func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBloc
 		cy := lstpos[cr*3+1]
 		cz := lstpos[cr*3+2]
 
-		if !funcCanAdd(cx, cy, cz) {
-			lstpos = append(lstpos[0:cr*3], lstpos[(cr+1)*3:]...)
+		lstpos = append(lstpos[0:cr*3], lstpos[(cr+1)*3:]...)
+		if len(lstpos)/3 < nums {
+			block7utils.Error("GenBrotherBlocks",
+				zap.Int("validpos", len(lstpos)/3),
+				zap.Int("nums", nums),
+				zap.Int("i", i),
+				zap.Error(ErrInvalidGenBrotherBlocksNums))
 
+			return nil, ErrInvalidGenBrotherBlocksNums
+		}
+
+		if !funcCanAdd(cx, cy, cz) {
 			i--
 
 			continue

@@ -10,15 +10,13 @@ type SpecialQuestion struct {
 	specialID   int
 	specialType int
 	layer       int
-	brother     int
 }
 
-func NewQuestion(specialid int, iceid int, brother int) *SpecialIce {
+func NewQuestion(specialid int, question int) *SpecialIce {
 	return &SpecialIce{
 		specialID:   specialid,
-		specialType: iceid,
-		layer:       1,
-		brother:     brother,
+		specialType: question,
+		layer:       0,
 	}
 }
 
@@ -45,7 +43,7 @@ func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 		Special:   question,
 	}
 
-	lst, err := GenBrotherBlocks(rng, scene, question.brother, std.Nums, func(x, y, z int) bool {
+	lst, err := GenBlocks(rng, scene, std.Nums, func(x, y, z int) bool {
 		if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
 			return false
 		}
@@ -56,10 +54,10 @@ func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 			return false
 		}
 
-		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403
+		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, question.layer)
 	})
 	if err != nil {
-		block7utils.Error("SpecialIce.OnGenSymbolLayers:GenBrotherBlocks",
+		block7utils.Error("SpecialQuestion.OnGenSymbolLayers:GenBlocks",
 			block7utils.JSON("SpecialTypeData", std),
 			zap.Error(err))
 
