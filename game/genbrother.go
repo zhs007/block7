@@ -72,22 +72,22 @@ func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBloc
 
 		ci := block7utils.FindInt3(lstpos, cx+1, cy, cz)
 		if ci >= 0 {
-			lstpos = append(lstpos[0:ci*3], lstpos[(ci+1)*3:]...)
+			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
 		ci = block7utils.FindInt3(lstpos, cx-1, cy, cz)
 		if ci >= 0 {
-			lstpos = append(lstpos[0:ci*3], lstpos[(ci+1)*3:]...)
+			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
 		ci = block7utils.FindInt3(lstpos, cx, cy-1, cz)
 		if ci >= 0 {
-			lstpos = append(lstpos[0:ci*3], lstpos[(ci+1)*3:]...)
+			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
 		ci = block7utils.FindInt3(lstpos, cx, cy+1, cz)
 		if ci >= 0 {
-			lstpos = append(lstpos[0:ci*3], lstpos[(ci+1)*3:]...)
+			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
 		if len(lstpos)/3 < nums {
