@@ -124,6 +124,14 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 
 	scene.InitArr = cloneArr3(scene.Arr)
 
+	err = MgrSpecial.OnFixScene(ld2, scene)
+	if err != nil {
+		block7utils.Warn("NewScene:OnFixScene",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	return scene, nil
 }
 

@@ -31,6 +31,11 @@ func (bomb *SpecialBomb) OnGenSymbolBlocks(std SpecialTypeData, arr []int) ([]in
 	return arr, nil
 }
 
+// OnFixScene - OnFixScene
+func (bomb *SpecialBomb) OnFixScene(scene *Scene) error {
+	return nil
+}
+
 // // OnGenSymbolLayers - OnGenSymbolLayers
 // func (bomb *SpecialBomb) OnGenSymbolLayers(std SpecialTypeData, arr []int) ([]int, error) {
 

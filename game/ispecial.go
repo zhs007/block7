@@ -6,8 +6,8 @@ type ISpecial interface {
 	GetSpecialID() int
 	// OnGenSymbolBlocks - OnGenSymbolBlocks
 	OnGenSymbolBlocks(std SpecialTypeData, arr []int) ([]int, error)
-	// // OnFixScene - OnFixScene
-	// OnFixScene() ([]int, error)
+	// OnFixScene - OnFixScene
+	OnFixScene(scene *Scene) error
 	// // OnGenSymbolLayers - OnGenSymbolLayers
 	// OnGenSymbolLayers(std SpecialTypeData, arr []int) ([]int, error)
 }
