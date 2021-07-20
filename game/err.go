@@ -17,4 +17,10 @@ var (
 	ErrInvalidSpecialNums = errors.New("invalid special nums")
 	// ErrInvalidSymbolsLength - invalid symbols length
 	ErrInvalidSymbolsLength = errors.New("invalid symbols length")
+	// ErrInvalidGenBrotherBlocksNums - invalid GenBrotherBlocks nums
+	ErrInvalidGenBrotherBlocksNums = errors.New("invalid GenBrotherBlocks nums")
+	// ErrInvalidSceneWHL - invalid scene width or height or layers
+	ErrInvalidSceneWHL = errors.New("invalid scene width or height or layers")
+	// ErrInvalidHistoryWidth - invalid history width
+	ErrInvalidHistoryWidth = errors.New("invalid history width")
 )

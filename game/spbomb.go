@@ -19,7 +19,7 @@ func (bomb *SpecialBomb) GetSpecialID() int {
 }
 
 // OnGenSymbolBlocks - OnGenSymbolBlocks
-func (bomb *SpecialBomb) OnGenSymbolBlocks(std SpecialTypeData, arr []int) ([]int, error) {
+func (bomb *SpecialBomb) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
 	if std.Nums%3 > 0 {
 		return nil, ErrInvalidBombNums
 	}
@@ -36,7 +36,12 @@ func (bomb *SpecialBomb) OnFixScene(scene *Scene) error {
 	return nil
 }
 
-// // OnGenSymbolLayers - OnGenSymbolLayers
-// func (bomb *SpecialBomb) OnGenSymbolLayers(std SpecialTypeData, arr []int) ([]int, error) {
+// OnGenSymbolLayer - OnGenSymbolLayer
+func (bomb *SpecialBomb) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
+	return nil, nil
+}
 
-// }
+// GetSpecialLayerType - GetSpecialLayerType
+func (bomb *SpecialBomb) GetSpecialLayerType() int {
+	return 0
+}

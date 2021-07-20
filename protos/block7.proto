@@ -12,26 +12,37 @@ message SceneLayer {
 	repeated Column values = 2;
 }
 
+// SpecialLayer - special layer
+message SpecialLayer {
+	int32 special = 1;			// specialType
+	int32 layer = 2;			// layer
+	int32 layerType = 3;		// layerType
+	repeated int32 values = 4;	// pos, it like [x0,y0,z0,x1,y1,z1]
+}
+
 // Scene - scene
 message Scene {
-	int32 Width = 1;        						// width
-	int32 Height = 2;       						// height
-	int32 Layers = 3;       						// layers
-	int32 XOff = 4;         						// x offset
-	int32 YOff = 5;         						// y offset
-	repeated SceneLayer InitArr = 6;				// initial data
-	repeated Column History = 7;					// history
-	int32 ClickValues = 8 [deprecated = true];		// ClickValues
-	float FinishedPer = 9 [deprecated = true];		// FinishedPer
-	string Offset = 10;								// Offset
-	bool IsOutputScene = 11 [deprecated = true];	// IsOutputScene
-	int32 StageID = 12;								// stage
-	string MapID = 13 [deprecated = true];			// map
-	int32 Version = 14;								// version
-	int64 sceneID = 15;								// id
-	int64 userID = 16;								// userid
-	int64 historyID = 17;							// historyid
-	int32 MapID2 = 18;								// map
+	int32 Width = 1;        								// width
+	int32 Height = 2;       								// height
+	int32 Layers = 3;       								// layers
+	int32 XOff = 4;         								// x offset
+	int32 YOff = 5;         								// y offset
+	repeated SceneLayer InitArr = 6 [deprecated = true];	// initial data
+	repeated Column History = 7  [deprecated = true];		// history
+	int32 ClickValues = 8 [deprecated = true];				// ClickValues
+	float FinishedPer = 9 [deprecated = true];				// FinishedPer
+	string Offset = 10;										// Offset
+	bool IsOutputScene = 11 [deprecated = true];			// IsOutputScene
+	int32 StageID = 12;										// stage
+	string MapID = 13 [deprecated = true];					// map
+	int32 Version = 14;										// version
+	int64 sceneID = 15;										// id
+	int64 userID = 16;										// userid
+	int64 historyID = 17;									// historyid
+	int32 MapID2 = 18;										// map
+	repeated SpecialLayer specialLayer = 19;				// SpecialLayer
+	repeated int32 InitArr2 = 20;							// initial data
+	repeated int32 History2 = 21;							// history
 }
 
 // MissionParams

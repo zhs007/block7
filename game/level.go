@@ -25,11 +25,11 @@ type SpecialTypeData struct {
 }
 
 type LevelData2 struct {
-	ID          int               `json:"id"`
-	MapID       int               `json:"map"`
-	MinType     int               `json:"minType"`
-	MaxType     int               `json:"maxType"`
-	SpecialType []SpecialTypeData `json:"specialType"`
+	ID          int                `json:"id"`
+	MapID       int                `json:"map"`
+	MinType     int                `json:"minType"`
+	MaxType     int                `json:"maxType"`
+	SpecialType []*SpecialTypeData `json:"specialType"`
 }
 
 func (ld2 *LevelData2) GenSymbols() []int {
@@ -148,7 +148,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 			}
 
 			for j := 0; j < len(arrstr)/2; j++ {
-				std := SpecialTypeData{}
+				std := &SpecialTypeData{}
 
 				sid, err := strconv.Atoi(arrstr[j*2])
 				if err != nil {

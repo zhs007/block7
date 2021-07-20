@@ -163,6 +163,8 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 		return nil, err
 	}
+
+	scene.ReadyToClient()
 	// mhash :=
 
 	return &MissionResult{
@@ -205,7 +207,14 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 		return nil, err
 	}
 
-	scene := block7game.NewSceneFromPB(pbscene)
+	scene, err := block7game.NewSceneFromPB(pbscene)
+	if err != nil {
+		block7utils.Error("BasicServ.MissionData:NewSceneFromPB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	MissionDataParams2Scene(scene, params)
 
 	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), scene)
