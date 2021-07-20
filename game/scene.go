@@ -846,6 +846,113 @@ func (scene *Scene) IsParentEx(bd *BlockData, pbd *BlockData) bool {
 	return scene.IsParent(bd, pbd) && !HasBlockData(bd.Parent, pbd.X, pbd.Y, pbd.Z)
 }
 
+// 判断是否可能是parent的parent
+func (scene *Scene) IsParent2(bd *BlockData, pbd *BlockData, funcHasBlock FuncHasBlock) bool {
+	if pbd.Z == bd.Z+1 {
+		return scene.IsParent(bd, pbd)
+	} else if pbd.Z > bd.Z+1 {
+		if bd.Z%2 == 0 {
+			if funcHasBlock(bd.X, bd.Y, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X,
+					Y: bd.Y,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+
+			if funcHasBlock(bd.X+scene.XOff, bd.Y, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X + scene.XOff,
+					Y: bd.Y,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+
+			if funcHasBlock(bd.X, bd.Y+scene.YOff, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X,
+					Y: bd.Y + scene.YOff,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+
+			if funcHasBlock(bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X + scene.XOff,
+					Y: bd.Y + scene.YOff,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+		} else {
+			if funcHasBlock(bd.X, bd.Y, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X,
+					Y: bd.Y,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+
+			if funcHasBlock(bd.X-scene.XOff, bd.Y, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X - scene.XOff,
+					Y: bd.Y,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+
+			if funcHasBlock(bd.X, bd.Y-scene.YOff, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X,
+					Y: bd.Y - scene.YOff,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+
+			if funcHasBlock(bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z+1) {
+				isp2 := scene.IsParent2(&BlockData{
+					X: bd.X - scene.XOff,
+					Y: bd.Y - scene.YOff,
+					Z: bd.Z + 1,
+				}, pbd, funcHasBlock)
+
+				if isp2 {
+					return true
+				}
+			}
+		}
+	}
+
+	return false
+}
+
 func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 	for _, v := range arr {
 		if scene.IsParentEx(bd, v) {

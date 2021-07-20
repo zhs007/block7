@@ -1,5 +1,7 @@
 package block7game
 
+import block7utils "github.com/zhs007/block7/utils"
+
 // SpecialCake - cake
 type SpecialCake struct {
 	specialID int
@@ -48,7 +50,13 @@ func (cake *SpecialCake) OnFixScene(scene *Scene) error {
 func (cake *SpecialCake) fixScene(scene *Scene, lst [][]*BlockData) {
 	for _, fv := range lst[1] {
 		for _, cv := range lst[0] {
-			if scene.IsParent(fv, cv) {
+			if scene.IsParent2(fv, cv, func(x, y, z int) bool {
+				return scene.InitArr[z][y][x] > 0
+			}) {
+				block7utils.Debug("SpecialCake.fixScene",
+					block7utils.JSON("cake", cv),
+					block7utils.JSON("fork", fv))
+
 				scene.InitArr[fv.Z][fv.Y][fv.X] = cake.cakeID
 				scene.InitArr[cv.Z][cv.Y][cv.X] = cake.forkID
 
