@@ -34,6 +34,42 @@ func (cake *SpecialCake) OnGenSymbolBlocks(std SpecialTypeData, arr []int) ([]in
 	return arr, nil
 }
 
+// OnFixScene - OnFixScene
+func (cake *SpecialCake) OnFixScene(scene *Scene) error {
+	lst := FindAllSymbolsEx(scene.InitArr, []int{cake.cakeID, cake.forkID})
+	if len(lst[0]) > 0 && len(lst[1]) > 0 {
+		cake.fixScene(scene, lst)
+	}
+
+	return nil
+}
+
+// fixScene - fixScene
+func (cake *SpecialCake) fixScene(scene *Scene, lst [][]*BlockData) {
+	for _, fv := range lst[1] {
+		for _, cv := range lst[0] {
+			if scene.IsParent(fv, cv) {
+				scene.InitArr[fv.Z][fv.Y][fv.X] = cake.cakeID
+				scene.InitArr[cv.Z][cv.Y][cv.X] = cake.forkID
+
+				tx := fv.X
+				fv.X = cv.X
+				cv.X = tx
+
+				ty := fv.Y
+				fv.Y = cv.Y
+				cv.Y = ty
+
+				tz := fv.Z
+				fv.Z = cv.Z
+				cv.Z = tz
+
+				cake.fixScene(scene, lst)
+			}
+		}
+	}
+}
+
 // // OnGenSymbolLayers - OnGenSymbolLayers
 // func (bomb *SpecialBomb) OnGenSymbolLayers(std SpecialTypeData, arr []int) ([]int, error) {
 
