@@ -5,7 +5,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBlock FuncHasBlock) ([][]int, error) {
+func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBlock FuncHasBlock, funcCanAdd FuncHasBlock) ([][]int, error) {
 	lst := [][]int{}
 	lstpos := []int{}
 
@@ -62,7 +62,13 @@ func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBloc
 		cy := lstpos[cr*3+1]
 		cz := lstpos[cr*3+2]
 
-		lstpos = append(lstpos[0:cr*3], lstpos[(cr+1)*3:]...)
+		if !funcCanAdd(cx, cy, cz) {
+			lstpos = append(lstpos[0:cr*3], lstpos[(cr+1)*3:]...)
+
+			i--
+
+			continue
+		}
 
 		lst = append(lst, []int{
 			cx,
