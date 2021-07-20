@@ -5,42 +5,42 @@ import (
 	"go.uber.org/zap"
 )
 
-// SpecialQuestion - question
-type SpecialQuestion struct {
+// SpecialCurtain - curtain
+type SpecialCurtain struct {
 	specialID   int
 	specialType int
 	layer       int
 }
 
-func NewQuestion(specialid int, question int) *SpecialQuestion {
-	return &SpecialQuestion{
+func NewSpecialCurtain(specialid int, curtain int) *SpecialCurtain {
+	return &SpecialCurtain{
 		specialID:   specialid,
-		specialType: question,
-		layer:       0,
+		specialType: curtain,
+		layer:       2,
 	}
 }
 
 // GetSpecialID - GetSpecialID
-func (question *SpecialQuestion) GetSpecialID() int {
-	return question.specialID
+func (curtain *SpecialCurtain) GetSpecialID() int {
+	return curtain.specialID
 }
 
 // OnGenSymbolBlocks - OnGenSymbolBlocks
-func (question *SpecialQuestion) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
+func (curtain *SpecialCurtain) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
 	return arr, nil
 }
 
 // OnFixScene - OnFixScene
-func (question *SpecialQuestion) OnFixScene(scene *Scene) error {
+func (curtain *SpecialCurtain) OnFixScene(scene *Scene) error {
 	return nil
 }
 
 // OnGenSymbolLayer - OnGenSymbolLayer
-func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
+func (curtain *SpecialCurtain) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
 	sl := &SpecialLayer{
-		Layer:     question.layer,
-		LayerType: question.specialType,
-		Special:   question,
+		Layer:     curtain.layer,
+		LayerType: curtain.specialType,
+		Special:   curtain,
 	}
 
 	lst, err := GenBlocks(rng, scene, std.Nums, func(x, y, z int) bool {
@@ -54,10 +54,10 @@ func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 			return false
 		}
 
-		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, question.layer)
+		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, curtain.layer)
 	})
 	if err != nil {
-		block7utils.Error("SpecialQuestion.OnGenSymbolLayers:GenBlocks",
+		block7utils.Error("SpecialCurtain.OnGenSymbolLayers:GenBlocks",
 			block7utils.JSON("SpecialTypeData", std),
 			zap.Error(err))
 
@@ -70,6 +70,6 @@ func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 }
 
 // GetSpecialLayerType - GetSpecialLayerType
-func (question *SpecialQuestion) GetSpecialLayerType() int {
-	return question.specialType
+func (curtain *SpecialCurtain) GetSpecialLayerType() int {
+	return curtain.specialType
 }
