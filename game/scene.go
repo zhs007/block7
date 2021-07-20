@@ -159,21 +159,45 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 		Offset:  pbscene.Offset,
 	}
 
-	for _, arrlayer := range pbscene.InitArr {
-		arrslayer := [][]int{}
-		for _, arrrow := range arrlayer.Values {
-			arrsrow := []int{}
-			for _, v := range arrrow.Values {
-				arrsrow = append(arrsrow, int(v))
-			}
+	if pbscene.InitArr2 != nil {
+		arr, err := block7utils.Int32ArrToIntArr3(pbscene.InitArr2, scene.Width, scene.Height, scene.Layers)
+		if err != nil {
+			block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr3:InitArr2",
+				zap.Error(err))
 
-			arrslayer = append(arrslayer, arrsrow)
+			return nil, err
 		}
 
-		scene.Arr = append(scene.Arr, arrslayer)
+		scene.Arr = arr
+	} else {
+		for _, arrlayer := range pbscene.InitArr {
+			arrslayer := [][]int{}
+			for _, arrrow := range arrlayer.Values {
+				arrsrow := []int{}
+				for _, v := range arrrow.Values {
+					arrsrow = append(arrsrow, int(v))
+				}
+
+				arrslayer = append(arrslayer, arrsrow)
+			}
+
+			scene.Arr = append(scene.Arr, arrslayer)
+		}
 	}
 
 	scene.InitArr = cloneArr3(scene.Arr)
+
+	if len(pbscene.History2) > 0 {
+		arr, err := block7utils.Int32ArrToIntArr2(pbscene.History2, 4, len(pbscene.History2)/4)
+		if err != nil {
+			block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr2:History2",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		scene.History = arr
+	}
 
 	for _, pbsl := range pbscene.SpecialLayer {
 		cs, isok := MgrSpecial.MapSpecial[int(pbsl.Special)]
@@ -186,7 +210,7 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 
 			arr, err := block7utils.Int32ArrToIntArr2(pbsl.Values, 3, len(pbsl.Values)/3)
 			if err != nil {
-				block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr2",
+				block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr2:SpecialLayer",
 					zap.Error(err))
 
 				return nil, err
@@ -1008,21 +1032,34 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 		Offset:  scene.Offset,
 	}
 
-	for _, arr2 := range scene.InitArr {
-		pblayer := &block7pb.SceneLayer{}
+	arr, x, y, z := block7utils.IntArr3ToInt32Arr(scene.InitArr)
+	if x != scene.Width || y != scene.Height || z != scene.Layers {
+		block7utils.Error("Scene.ToScenePB:IntArr3ToInt32Arr",
+			zap.Int("x", x),
+			zap.Int("y", y),
+			zap.Int("z", z),
+			zap.Error(ErrInvalidSceneWHL))
 
-		for _, arr1 := range arr2 {
-			pbcolumn := &block7pb.Column{}
-
-			for _, s := range arr1 {
-				pbcolumn.Values = append(pbcolumn.Values, int32(s))
-			}
-
-			pblayer.Values = append(pblayer.Values, pbcolumn)
-		}
-
-		pbScene.InitArr = append(pbScene.InitArr, pblayer)
+		return nil, ErrInvalidSceneWHL
 	}
+
+	pbScene.InitArr2 = arr
+
+	// for _, arr2 := range scene.InitArr {
+	// 	pblayer := &block7pb.SceneLayer{}
+
+	// 	for _, arr1 := range arr2 {
+	// 		pbcolumn := &block7pb.Column{}
+
+	// 		for _, s := range arr1 {
+	// 			pbcolumn.Values = append(pbcolumn.Values, int32(s))
+	// 		}
+
+	// 		pblayer.Values = append(pblayer.Values, pbcolumn)
+	// 	}
+
+	// 	pbScene.InitArr = append(pbScene.InitArr, pblayer)
+	// }
 
 	for _, sl := range scene.SpecialLayers {
 		pbsl := &block7pb.SpecialLayer{
@@ -1049,15 +1086,26 @@ func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 		UserID:  scene.UserID,
 	}
 
-	for _, arr := range scene.History {
-		pbcolumn := &block7pb.Column{}
+	arr, x, _ := block7utils.IntArr2ToInt32Arr(scene.History)
+	if x != 4 {
+		block7utils.Error("Scene.ToHistoryPB:IntArr2ToInt32Arr",
+			zap.Int("x", x),
+			zap.Error(ErrInvalidHistoryWidth))
 
-		for _, s := range arr {
-			pbcolumn.Values = append(pbcolumn.Values, int32(s))
-		}
-
-		pbScene.History = append(pbScene.History, pbcolumn)
+		return nil, ErrInvalidHistoryWidth
 	}
+
+	pbScene.History2 = arr
+
+	// for _, arr := range scene.History {
+	// 	pbcolumn := &block7pb.Column{}
+
+	// 	for _, s := range arr {
+	// 		pbcolumn.Values = append(pbcolumn.Values, int32(s))
+	// 	}
+
+	// 	pbScene.History = append(pbScene.History, pbcolumn)
+	// }
 
 	return pbScene, nil
 }
