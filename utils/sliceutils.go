@@ -23,3 +23,24 @@ func FindInt3(arr []int, x, y, z int) int {
 
 	return -1
 }
+
+// FindIntArr - find a int array into [][]int
+func FindIntArr(arr [][]int, vals []int) int {
+	for i, arr1 := range arr {
+		if len(arr1) == len(vals) {
+			isok := true
+			for j, av := range arr1 {
+				if av != vals[j] {
+					isok = false
+					break
+				}
+			}
+
+			if isok {
+				return i
+			}
+		}
+	}
+
+	return -1
+}

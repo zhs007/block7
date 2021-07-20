@@ -5,15 +5,15 @@ import (
 	"go.uber.org/zap"
 )
 
-// SpecialIce - ice
-type SpecialIce struct {
+// SpecialQuestion - question
+type SpecialQuestion struct {
 	specialID   int
 	specialType int
 	layer       int
 	brother     int
 }
 
-func NewIce(specialid int, iceid int, brother int) *SpecialIce {
+func NewQuestion(specialid int, iceid int, brother int) *SpecialIce {
 	return &SpecialIce{
 		specialID:   specialid,
 		specialType: iceid,
@@ -23,29 +23,29 @@ func NewIce(specialid int, iceid int, brother int) *SpecialIce {
 }
 
 // GetSpecialID - GetSpecialID
-func (ice *SpecialIce) GetSpecialID() int {
-	return ice.specialID
+func (question *SpecialQuestion) GetSpecialID() int {
+	return question.specialID
 }
 
 // OnGenSymbolBlocks - OnGenSymbolBlocks
-func (ice *SpecialIce) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
+func (question *SpecialQuestion) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
 	return arr, nil
 }
 
 // OnFixScene - OnFixScene
-func (ice *SpecialIce) OnFixScene(scene *Scene) error {
+func (question *SpecialQuestion) OnFixScene(scene *Scene) error {
 	return nil
 }
 
 // OnGenSymbolLayer - OnGenSymbolLayer
-func (ice *SpecialIce) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
+func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
 	sl := &SpecialLayer{
-		Layer:     ice.layer,
-		LayerType: ice.specialType,
-		Special:   ice,
+		Layer:     question.layer,
+		LayerType: question.specialType,
+		Special:   question,
 	}
 
-	lst, err := GenBrotherBlocks(rng, scene, ice.brother, std.Nums, func(x, y, z int) bool {
+	lst, err := GenBrotherBlocks(rng, scene, question.brother, std.Nums, func(x, y, z int) bool {
 		if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
 			return false
 		}
@@ -56,7 +56,7 @@ func (ice *SpecialIce) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *
 			return false
 		}
 
-		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, ice.layer)
+		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403
 	})
 	if err != nil {
 		block7utils.Error("SpecialIce.OnGenSymbolLayers:GenBrotherBlocks",
@@ -72,6 +72,6 @@ func (ice *SpecialIce) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *
 }
 
 // GetSpecialLayerType - GetSpecialLayerType
-func (ice *SpecialIce) GetSpecialLayerType() int {
-	return ice.specialType
+func (question *SpecialQuestion) GetSpecialLayerType() int {
+	return question.specialType
 }

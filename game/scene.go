@@ -1122,3 +1122,15 @@ func (scene *Scene) ReadyToClient() {
 	// 	scene.SpecialLayersData = append(scene.SpecialLayersData, arr)
 	// }
 }
+
+func (scene *Scene) HasSpecialLayer(x, y, z int, layer int) bool {
+	for _, v := range scene.SpecialLayers {
+		if v.Layer == layer {
+			if block7utils.FindIntArr(v.Pos, []int{x, y, z}) >= 0 {
+				return true
+			}
+		}
+	}
+
+	return false
+}
