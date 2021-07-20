@@ -5,42 +5,42 @@ import (
 	"go.uber.org/zap"
 )
 
-// SpecialCurtain - curtain
-type SpecialCurtain struct {
+// SpecialWeeds - weeds
+type SpecialWeeds struct {
 	specialID   int
 	specialType int
 	layer       int
 }
 
-func NewCurtain(specialid int, curtain int) *SpecialCurtain {
-	return &SpecialCurtain{
+func NewWeeds(specialid int, iceid int) *SpecialWeeds {
+	return &SpecialWeeds{
 		specialID:   specialid,
-		specialType: curtain,
-		layer:       2,
+		specialType: iceid,
+		layer:       1,
 	}
 }
 
 // GetSpecialID - GetSpecialID
-func (curtain *SpecialCurtain) GetSpecialID() int {
-	return curtain.specialID
+func (weeds *SpecialWeeds) GetSpecialID() int {
+	return weeds.specialID
 }
 
 // OnGenSymbolBlocks - OnGenSymbolBlocks
-func (curtain *SpecialCurtain) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
+func (weeds *SpecialWeeds) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
 	return arr, nil
 }
 
 // OnFixScene - OnFixScene
-func (curtain *SpecialCurtain) OnFixScene(scene *Scene) error {
+func (weeds *SpecialWeeds) OnFixScene(scene *Scene) error {
 	return nil
 }
 
 // OnGenSymbolLayer - OnGenSymbolLayer
-func (curtain *SpecialCurtain) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
+func (weeds *SpecialWeeds) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
 	sl := &SpecialLayer{
-		Layer:     curtain.layer,
-		LayerType: curtain.specialType,
-		Special:   curtain,
+		Layer:     weeds.layer,
+		LayerType: weeds.specialType,
+		Special:   weeds,
 	}
 
 	lst, err := GenBlocks(rng, scene, std.Nums, func(x, y, z int) bool {
@@ -54,10 +54,10 @@ func (curtain *SpecialCurtain) OnGenSymbolLayers(rng IRng, std *SpecialTypeData,
 			return false
 		}
 
-		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, curtain.layer)
+		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, weeds.layer)
 	})
 	if err != nil {
-		block7utils.Error("SpecialCurtain.OnGenSymbolLayers:GenBlocks",
+		block7utils.Error("SpecialWeeds.OnGenSymbolLayers:GenBlocks",
 			block7utils.JSON("SpecialTypeData", std),
 			zap.Error(err))
 
@@ -70,6 +70,6 @@ func (curtain *SpecialCurtain) OnGenSymbolLayers(rng IRng, std *SpecialTypeData,
 }
 
 // GetSpecialLayerType - GetSpecialLayerType
-func (curtain *SpecialCurtain) GetSpecialLayerType() int {
-	return curtain.specialType
+func (weeds *SpecialWeeds) GetSpecialLayerType() int {
+	return weeds.specialType
 }

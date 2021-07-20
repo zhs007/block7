@@ -89,7 +89,9 @@ func (mgr *SpecialMgr) GenSymbolLayers(rng IRng, ld2 *LevelData2, scene *Scene) 
 				return err
 			}
 
-			scene.SpecialLayers = append(scene.SpecialLayers, layer)
+			if layer != nil {
+				scene.SpecialLayers = append(scene.SpecialLayers, layer)
+			}
 		}
 	}
 

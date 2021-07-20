@@ -13,7 +13,7 @@ type SpecialLadybug struct {
 	brother     int
 }
 
-func NewSpecialLadybug(specialid int, ladybug int, brother int) *SpecialLadybug {
+func NewLadybug(specialid int, ladybug int, brother int) *SpecialLadybug {
 	return &SpecialLadybug{
 		specialID:   specialid,
 		specialType: ladybug,
