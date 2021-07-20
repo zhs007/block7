@@ -12,28 +12,28 @@ import (
 
 // Scene - scene
 type Scene struct {
-	StageID           int             `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
-	MapID             int             `json:"mapid"`   // 实际的mapid，有对比价值
-	Version           int             `json:"version"`
-	SceneID           int64           `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
-	UserID            int64           `json:"userid"`
-	Width             int             `json:"width"`
-	Height            int             `json:"height"`
-	Layers            int             `json:"layers"`
-	XOff              int             `json:"xoff"`
-	YOff              int             `json:"yoff"`
-	Arr               [][][]int       `json:"-"`
-	Block             []*BlockData    `json:"-"`
-	BlockEx           []*BlockData    `json:"-"`
-	MaxBlockNums      int             `json:"-"`
-	InitArr           [][][]int       `json:"layer"`
-	History           [][]int         `json:"history"`
-	ClickValues       int             `json:"clickValues"`
-	FinishedPer       float32         `json:"finishedPer"`
-	Offset            string          `json:"offset"`
-	IsOutputScene     bool            `json:"isOutputScene"`
-	SpecialLayers     []*SpecialLayer `json:"specialLayers"`     // 这个是自己用的
-	SpecialLayersData [][]int         `json:"specialLayersData"` // 这个给前端用的
+	StageID       int             `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
+	MapID         int             `json:"mapid"`   // 实际的mapid，有对比价值
+	Version       int             `json:"version"`
+	SceneID       int64           `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
+	UserID        int64           `json:"userid"`
+	Width         int             `json:"width"`
+	Height        int             `json:"height"`
+	Layers        int             `json:"layers"`
+	XOff          int             `json:"xoff"`
+	YOff          int             `json:"yoff"`
+	Arr           [][][]int       `json:"-"`
+	Block         []*BlockData    `json:"-"`
+	BlockEx       []*BlockData    `json:"-"`
+	MaxBlockNums  int             `json:"-"`
+	InitArr       [][][]int       `json:"layer"`
+	History       [][]int         `json:"history"`
+	ClickValues   int             `json:"clickValues"`
+	FinishedPer   float32         `json:"finishedPer"`
+	Offset        string          `json:"offset"`
+	IsOutputScene bool            `json:"isOutputScene"`
+	SpecialLayers []*SpecialLayer `json:"specialLayers"` // 这个是自己用的
+	// SpecialLayersData [][]int         `json:"specialLayersData"` // 这个给前端用的
 }
 
 // LoadScene - load a scene
@@ -146,7 +146,7 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 }
 
 // NewSceneFromPB - new a scene
-func NewSceneFromPB(pbscene *block7pb.Scene) *Scene {
+func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 	scene := &Scene{
 		MapID:   int(pbscene.MapID2),
 		Version: int(pbscene.Version),
@@ -175,7 +175,29 @@ func NewSceneFromPB(pbscene *block7pb.Scene) *Scene {
 
 	scene.InitArr = cloneArr3(scene.Arr)
 
-	return scene
+	for _, pbsl := range pbscene.SpecialLayer {
+		cs, isok := MgrSpecial.MapSpecial[int(pbsl.Special)]
+		if isok {
+			sl := &SpecialLayer{
+				Layer:     int(pbsl.Layer),
+				LayerType: int(pbsl.LayerType),
+				Special:   cs,
+			}
+
+			arr, err := block7utils.Int32ArrToIntArr2(pbsl.Values, 3, len(pbsl.Values)/3)
+			if err != nil {
+				block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr2",
+					zap.Error(err))
+
+				return nil, err
+			}
+			sl.Pos = arr
+
+			scene.SpecialLayers = append(scene.SpecialLayers, sl)
+		}
+	}
+
+	return scene, nil
 }
 
 func (scene *Scene) Restart() {
@@ -1002,6 +1024,19 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 		pbScene.InitArr = append(pbScene.InitArr, pblayer)
 	}
 
+	for _, sl := range scene.SpecialLayers {
+		pbsl := &block7pb.SpecialLayer{
+			Special:   int32(sl.Special.GetSpecialID()),
+			Layer:     int32(sl.Layer),
+			LayerType: int32(sl.LayerType),
+		}
+
+		vals, _, _ := block7utils.IntArr2ToInt32Arr(sl.Pos)
+		pbsl.Values = vals
+
+		pbScene.SpecialLayer = append(pbScene.SpecialLayer, pbsl)
+	}
+
 	return pbScene, nil
 }
 
@@ -1028,14 +1063,14 @@ func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 }
 
 func (scene *Scene) ReadyToClient() {
-	scene.SpecialLayersData = nil
-	for _, v := range scene.SpecialLayers {
-		arr := []int{v.LayerType}
+	// scene.SpecialLayersData = nil
+	// for _, v := range scene.SpecialLayers {
+	// 	arr := []int{v.LayerType}
 
-		for _, ca := range v.Pos {
-			arr = append(arr, ca...)
-		}
+	// 	for _, ca := range v.Pos {
+	// 		arr = append(arr, ca...)
+	// 	}
 
-		scene.SpecialLayersData = append(scene.SpecialLayersData, arr)
-	}
+	// 	scene.SpecialLayersData = append(scene.SpecialLayersData, arr)
+	// }
 }
