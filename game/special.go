@@ -11,6 +11,8 @@ func GenSpecialSymbols(lststd []SpecialTypeData) []int {
 func init() {
 	MgrSpecial = NewSpecialMgr()
 
+	MgrSpecial.RegSpecial(5, NewSpecialLadybug(5, 10503, 3))
+
 	MgrSpecial.RegSpecial(4, NewQuestion(4, 10400))
 
 	MgrSpecial.RegSpecial(3, NewQuestion(3, 10300))
