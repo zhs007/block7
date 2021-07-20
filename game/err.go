@@ -17,4 +17,6 @@ var (
 	ErrInvalidSpecialNums = errors.New("invalid special nums")
 	// ErrInvalidSymbolsLength - invalid symbols length
 	ErrInvalidSymbolsLength = errors.New("invalid symbols length")
+	// ErrInvalidGenBrotherBlocksNums - invalid GenBrotherBlocks nums
+	ErrInvalidGenBrotherBlocksNums = errors.New("invalid GenBrotherBlocks nums")
 )

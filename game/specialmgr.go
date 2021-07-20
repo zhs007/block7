@@ -69,3 +69,29 @@ func (mgr *SpecialMgr) OnFixScene(ld2 *LevelData2, scene *Scene) error {
 
 	return nil
 }
+
+// GenSymbolLayers - GenSymbolLayers
+func (mgr *SpecialMgr) GenSymbolLayers(rng IRng, ld2 *LevelData2, scene *Scene) error {
+	if ld2 == nil {
+		return nil
+	}
+
+	for _, v := range ld2.SpecialType {
+		sp, isok := mgr.MapSpecial[v.SpecialID]
+		if isok {
+			layer, err := sp.OnGenSymbolLayers(rng, v, scene)
+			if err != nil {
+				block7utils.Error("SpecialMgr.GenSymbolLayers:OnGenSymbolLayers",
+					zap.Int("SpecialID", v.SpecialID),
+					block7utils.JSON("SpecialTypeData", v),
+					zap.Error(err))
+
+				return err
+			}
+
+			scene.SpecialLayers = append(scene.SpecialLayers, layer)
+		}
+	}
+
+	return nil
+}

@@ -163,6 +163,8 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 		return nil, err
 	}
+
+	scene.ReadyToClient()
 	// mhash :=
 
 	return &MissionResult{

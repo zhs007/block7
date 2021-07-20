@@ -4,10 +4,12 @@ package block7game
 type ISpecial interface {
 	// GetSpecialID - GetSpecialID
 	GetSpecialID() int
+	// GetSpecialLayerType - GetSpecialLayerType
+	GetSpecialLayerType() int
 	// OnGenSymbolBlocks - OnGenSymbolBlocks
-	OnGenSymbolBlocks(std SpecialTypeData, arr []int) ([]int, error)
+	OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error)
 	// OnFixScene - OnFixScene
 	OnFixScene(scene *Scene) error
-	// // OnGenSymbolLayers - OnGenSymbolLayers
-	// OnGenSymbolLayers(std SpecialTypeData, arr []int) ([]int, error)
+	// OnGenSymbolLayer - OnGenSymbolLayer
+	OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error)
 }
