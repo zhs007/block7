@@ -46,7 +46,7 @@ func (ice *SpecialIce) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *
 	}
 
 	lst, err := GenBrotherBlocks(rng, scene, ice.brother, std.Nums, func(x, y, z int) bool {
-		if x < 0 || y < 0 || z < 0 {
+		if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
 			return false
 		}
 
