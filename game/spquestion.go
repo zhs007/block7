@@ -31,7 +31,7 @@ func (question *SpecialQuestion) OnGenSymbolBlocks(std *SpecialTypeData, arr []i
 }
 
 // OnFixScene - OnFixScene
-func (question *SpecialQuestion) OnFixScene(scene *Scene) error {
+func (question *SpecialQuestion) OnFixScene(std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

@@ -31,7 +31,7 @@ func (weeds *SpecialWeeds) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([
 }
 
 // OnFixScene - OnFixScene
-func (weeds *SpecialWeeds) OnFixScene(scene *Scene) error {
+func (weeds *SpecialWeeds) OnFixScene(std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

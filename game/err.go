@@ -23,4 +23,6 @@ var (
 	ErrInvalidSceneWHL = errors.New("invalid scene width or height or layers")
 	// ErrInvalidHistoryWidth - invalid history width
 	ErrInvalidHistoryWidth = errors.New("invalid history width")
+	// ErrInvalidPositionList - invalid position list
+	ErrInvalidPositionList = errors.New("invalid position list")
 )

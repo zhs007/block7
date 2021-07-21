@@ -20,8 +20,9 @@ type LevelData struct {
 }
 
 type SpecialTypeData struct {
-	SpecialID int `json:"special"`
-	Nums      int `json:"nums"`
+	SpecialID int         `json:"special"`
+	Nums      int         `json:"nums"`
+	Data      interface{} `json:"-"`
 }
 
 type LevelData2 struct {

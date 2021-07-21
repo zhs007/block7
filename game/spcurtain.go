@@ -31,7 +31,7 @@ func (curtain *SpecialCurtain) OnGenSymbolBlocks(std *SpecialTypeData, arr []int
 }
 
 // OnFixScene - OnFixScene
-func (curtain *SpecialCurtain) OnFixScene(scene *Scene) error {
+func (curtain *SpecialCurtain) OnFixScene(std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

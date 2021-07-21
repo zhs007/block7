@@ -31,7 +31,7 @@ func (reverse *SpecialReverse) OnGenSymbolBlocks(std *SpecialTypeData, arr []int
 }
 
 // OnFixScene - OnFixScene
-func (reverse *SpecialReverse) OnFixScene(scene *Scene) error {
+func (reverse *SpecialReverse) OnFixScene(std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

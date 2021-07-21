@@ -23,6 +23,15 @@ const (
 // FuncHasBlock - has block
 type FuncHasBlock func(x, y, z int) bool
 
+// FuncHasBlockEx - has block
+type FuncHasBlockEx func(x, y, z int, w, h int) bool
+
+// FuncIsLess - is less
+type FuncIsLess func(i, j int) bool
+
+// FuncCountBlockValue - count value
+type FuncCountBlockValue func(x, y, z int) int
+
 // 001 冰块 覆盖层1 需要点击周围的一个其他的块，冰块才能消失
 // 002 蛋糕 特殊方块 场景中增加一个蛋糕和三个铲子 点击铲子则铲子消失 蛋糕减少一块 点击三个铲子 蛋糕消失
 // 003 问号 覆盖层0 点亮的问号 同时只有一个问号方块可以看到其中的内容

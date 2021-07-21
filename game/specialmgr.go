@@ -55,7 +55,7 @@ func (mgr *SpecialMgr) OnFixScene(ld2 *LevelData2, scene *Scene) error {
 	for _, v := range ld2.SpecialType {
 		sp, isok := mgr.MapSpecial[v.SpecialID]
 		if isok {
-			err := sp.OnFixScene(scene)
+			err := sp.OnFixScene(v, scene)
 			if err != nil {
 				block7utils.Error("SpecialMgr.OnFixScene:OnFixScene",
 					zap.Int("SpecialID", v.SpecialID),

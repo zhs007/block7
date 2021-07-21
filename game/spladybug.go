@@ -33,7 +33,7 @@ func (ladybug *SpecialLadybug) OnGenSymbolBlocks(std *SpecialTypeData, arr []int
 }
 
 // OnFixScene - OnFixScene
-func (ladybug *SpecialLadybug) OnFixScene(scene *Scene) error {
+func (ladybug *SpecialLadybug) OnFixScene(std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

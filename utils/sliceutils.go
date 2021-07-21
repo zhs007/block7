@@ -44,3 +44,36 @@ func FindIntArr(arr [][]int, vals []int) int {
 
 	return -1
 }
+
+// Int3Arr2ToInt4Arr2 - []int{x,y,z} -> []int{x,y,z,v}
+func Int3Arr2ToInt4Arr2(arr [][]int, val int) [][]int {
+	narr := [][]int{}
+	for _, arr1 := range arr {
+		carr1 := append(arr1, val)
+
+		narr = append(narr, carr1)
+	}
+
+	return narr
+}
+
+// IsSameIntArr2 -
+func IsSameIntArr2(arr0 [][]int, arr1 [][]int) bool {
+	if len(arr0) == len(arr1) {
+		for i := 0; i < len(arr0); i++ {
+			if len(arr0[i]) != len(arr1[i]) {
+				return false
+			}
+
+			for j := 0; j < len(arr0[i]); j++ {
+				if arr0[i][j] != arr1[i][j] {
+					return false
+				}
+			}
+		}
+
+		return true
+	}
+
+	return false
+}
