@@ -146,8 +146,9 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 			return nil, err
 		}
 
+		scene.IsOutputScene = true
+
 		scene.ReadyToClient()
-		// mhash :=
 
 		return &MissionResult{
 			Scene:   scene,
