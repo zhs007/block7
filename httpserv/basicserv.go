@@ -125,6 +125,36 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, ErrInvalidUserHash
 	}
 
+	if params.HistoryID > 0 {
+	}
+
+	if params.SceneID > 0 {
+		pbscene, err := serv.StageDB.GetStage(context.Background(), params.SceneID)
+		if err != nil {
+			block7utils.Error("BasicServ.Mission:StageDB.GetStage",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		scene, err := block7game.NewSceneFromPB(pbscene)
+		if err != nil {
+			block7utils.Error("BasicServ.Mission:NewSceneFromPB",
+				block7utils.JSON("pbscene", pbscene),
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		scene.ReadyToClient()
+		// mhash :=
+
+		return &MissionResult{
+			Scene:   scene,
+			SceneID: pbscene.SceneID,
+		}, nil
+	}
+
 	ld2, isok := serv.LevelMgr.MapLevel[params.MissionID+30000]
 	if !isok {
 		block7utils.Error("BasicServ.Mission:GetUserID",
@@ -230,5 +260,7 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 			block7utils.JSON("history", pbscene1))
 	}
 
-	return &MissionDataResult{UserLevel: 100}, nil
+	return &MissionDataResult{
+		UserLevel: 100,
+		HistoryID: pbscene1.HistoryID}, nil
 }

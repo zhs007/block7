@@ -6,6 +6,8 @@ import block7game "github.com/zhs007/block7/game"
 type MissionParams struct {
 	UserHash  string `json:"userHash"`
 	MissionID int    `json:"missionid"`
+	SceneID   int64  `json:"mission"`
+	HistoryID int64  `json:"history"`
 }
 
 // MissionResult - mission result
@@ -23,7 +25,8 @@ type MissionDataParams struct {
 
 // MissionDataResult - missionData result
 type MissionDataResult struct {
-	UserLevel int `json:"userLevel"`
+	UserLevel int   `json:"userLevel"`
+	HistoryID int64 `json:"history"`
 }
 
 // LoginParams - login parameters

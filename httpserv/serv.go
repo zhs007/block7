@@ -99,6 +99,22 @@ func NewServ(service IService) *Serv {
 					} else {
 						params.MissionID = i
 					}
+				} else if string(k) == "mission" {
+					i64, err := strconv.ParseInt(string(v), 10, 64)
+					if err != nil {
+						block7utils.Warn("block7serv.Serv.mission:VisitAll:mission",
+							zap.Error(err))
+					} else {
+						params.SceneID = i64
+					}
+				} else if string(k) == "history" {
+					i64, err := strconv.ParseInt(string(v), 10, 64)
+					if err != nil {
+						block7utils.Warn("block7serv.Serv.mission:VisitAll:history",
+							zap.Error(err))
+					} else {
+						params.HistoryID = i64
+					}
 				}
 			})
 
