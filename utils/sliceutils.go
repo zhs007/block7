@@ -78,6 +78,27 @@ func IsSameIntArr2(arr0 [][]int, arr1 [][]int) bool {
 	return false
 }
 
+// IsSameIntArr2Ex - 只比较前x个
+func IsSameIntArr2Ex2(arr0 [][]int, arr1 [][]int, x int) bool {
+	if len(arr0) == len(arr1) {
+		for i := 0; i < len(arr0); i++ {
+			if len(arr0[i]) != len(arr1[i]) {
+				return false
+			}
+
+			for j := 0; j < len(arr0[i]) && j < x; j++ {
+				if arr0[i][j] != arr1[i][j] {
+					return false
+				}
+			}
+		}
+
+		return true
+	}
+
+	return false
+}
+
 // CloneArr3 - clone a [][][]int
 func CloneArr3(src [][][]int) [][][]int {
 	arr := [][][]int{}
