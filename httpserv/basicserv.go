@@ -126,6 +126,41 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	}
 
 	if params.HistoryID > 0 {
+		pbscene, err := serv.HistoryDB.GetHistory(context.Background(), params.HistoryID)
+		if err != nil {
+			block7utils.Error("BasicServ.Mission:StageDB.GetHistory",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		pbscene1, err := serv.StageDB.GetStage(context.Background(), pbscene.SceneID)
+		if err != nil {
+			block7utils.Error("BasicServ.Mission:StageDB.GetStage",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		pbscene1.History2 = pbscene.History2
+
+		scene, err := block7game.NewSceneFromPB(pbscene1)
+		if err != nil {
+			block7utils.Error("BasicServ.Mission:NewSceneFromPB",
+				block7utils.JSON("pbscene", pbscene1),
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		scene.IsOutputScene = true
+
+		scene.ReadyToClient()
+
+		return &MissionResult{
+			Scene:   scene,
+			SceneID: pbscene1.SceneID,
+		}, nil
 	}
 
 	if params.SceneID > 0 {
