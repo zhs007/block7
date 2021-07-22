@@ -33,7 +33,7 @@ func (ice *SpecialIce) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int
 }
 
 // OnFixScene - OnFixScene
-func (ice *SpecialIce) OnFixScene(scene *Scene) error {
+func (ice *SpecialIce) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 
@@ -51,6 +51,12 @@ func (ice *SpecialIce) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *
 		}
 
 		return scene.InitArr[z][y][x] > 0
+	}, func(x, y, z int) bool {
+		if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
+			return false
+		}
+
+		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, ice.layer)
 	})
 	if err != nil {
 		block7utils.Error("SpecialIce.OnGenSymbolLayers:GenBrotherBlocks",

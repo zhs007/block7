@@ -9,7 +9,7 @@ type ISpecial interface {
 	// OnGenSymbolBlocks - OnGenSymbolBlocks
 	OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error)
 	// OnFixScene - OnFixScene
-	OnFixScene(scene *Scene) error
+	OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error
 	// OnGenSymbolLayer - OnGenSymbolLayer
 	OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error)
 }

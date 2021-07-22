@@ -37,7 +37,7 @@ func (cake *SpecialCake) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]i
 }
 
 // OnFixScene - OnFixScene
-func (cake *SpecialCake) OnFixScene(scene *Scene) error {
+func (cake *SpecialCake) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error {
 	lst := FindAllSymbolsEx(scene.InitArr, []int{cake.cakeID, cake.forkID})
 	if len(lst[0]) > 0 && len(lst[1]) > 0 {
 		cake.fixScene(scene, lst)

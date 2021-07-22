@@ -33,6 +33,7 @@ type Scene struct {
 	Offset        string          `json:"offset"`
 	IsOutputScene bool            `json:"isOutputScene"`
 	SpecialLayers []*SpecialLayer `json:"specialLayers"` // 这个是自己用的
+	BlockNums     int             `json:"-"`             // 初始化block数量
 	// SpecialLayersData [][]int         `json:"specialLayersData"` // 这个给前端用的
 }
 
@@ -100,6 +101,7 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		Offset:       stage.Offset,
 	}
 
+	nums := 0
 	for _, arrlayer := range stage.Layer {
 		arrslayer := [][]int{}
 		for _, arrrow := range arrlayer {
@@ -115,6 +117,8 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 
 					arrsrow = append(arrsrow, cs)
 					ss = nss
+
+					nums++
 				}
 			}
 
@@ -124,9 +128,10 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		scene.Arr = append(scene.Arr, arrslayer)
 	}
 
-	scene.InitArr = cloneArr3(scene.Arr)
+	scene.InitArr = block7utils.CloneArr3(scene.Arr)
+	scene.BlockNums = nums
 
-	err = MgrSpecial.OnFixScene(ld2, scene)
+	err = MgrSpecial.OnFixScene(rng, ld2, scene)
 	if err != nil {
 		block7utils.Warn("NewScene:OnFixScene",
 			zap.Error(err))
@@ -185,7 +190,10 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 		}
 	}
 
-	scene.InitArr = cloneArr3(scene.Arr)
+	scene.InitArr = block7utils.CloneArr3(scene.Arr)
+	scene.BlockNums = scene.CountNums(func(x, y, z int) bool {
+		return scene.InitArr[z][y][x] > 0
+	})
 
 	if len(pbscene.History2) > 0 {
 		arr, err := block7utils.Int32ArrToIntArr2(pbscene.History2, 4, len(pbscene.History2)/4)
@@ -225,7 +233,7 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 }
 
 func (scene *Scene) Restart() {
-	scene.Arr = cloneArr3(scene.InitArr)
+	scene.Arr = block7utils.CloneArr3(scene.InitArr)
 	scene.History = nil
 	scene.ClickValues = 0
 	scene.Block = nil
@@ -1009,6 +1017,70 @@ func (scene *Scene) IsParent2(bd *BlockData, pbd *BlockData, funcHasBlock FuncHa
 	return false
 }
 
+// 统计子节点数量
+func (scene *Scene) GetChildren(lst []int, x, y, z int, funcHasBlock FuncHasBlock) []int {
+	if z == 0 {
+		return lst
+	}
+
+	if block7utils.FindInt3(lst, x, y, z) >= 0 {
+		return lst
+	}
+
+	if z%2 == 0 {
+		lst = scene.GetChildren(lst, x, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x-scene.XOff, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x, y-scene.YOff, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x-scene.XOff, y-scene.YOff, z-1, funcHasBlock)
+	} else {
+		lst = scene.GetChildren(lst, x, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x+scene.XOff, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x, y+scene.YOff, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x+scene.XOff, y+scene.YOff, z-1, funcHasBlock)
+	}
+
+	return lst
+}
+
+// 统计子节点数量
+func (scene *Scene) CountChildrenNums(x, y, z int, funcHasBlock FuncHasBlock) int {
+	lst := []int{}
+
+	lst = scene.GetChildren(lst, x, y, z, funcHasBlock)
+
+	return len(lst) / 3
+}
+
+// 统计子节点数量
+func (scene *Scene) CountChildrenNumsEx(x, y, z int, w, h int, funcHasBlock FuncHasBlock) int {
+	lst := []int{}
+
+	for ox := 0; ox < w; ox++ {
+		for oy := 0; oy < h; oy++ {
+			lst = scene.GetChildren(lst, x+ox, y+oy, z, funcHasBlock)
+		}
+	}
+
+	return len(lst) / 3
+}
+
+// 统计子节点数量
+func (scene *Scene) CountNums(funcHasBlock FuncHasBlock) int {
+	nums := 0
+
+	for z, arr2 := range scene.InitArr {
+		for y, arr1 := range arr2 {
+			for x := range arr1 {
+				if funcHasBlock(x, y, z) {
+					nums++
+				}
+			}
+		}
+	}
+
+	return nums
+}
+
 func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 	for _, v := range arr {
 		if scene.IsParentEx(bd, v) {
@@ -1121,4 +1193,16 @@ func (scene *Scene) ReadyToClient() {
 
 	// 	scene.SpecialLayersData = append(scene.SpecialLayersData, arr)
 	// }
+}
+
+func (scene *Scene) HasSpecialLayer(x, y, z int, layer int) bool {
+	for _, v := range scene.SpecialLayers {
+		if v.Layer == layer {
+			if block7utils.FindIntArr(v.Pos, []int{x, y, z}) >= 0 {
+				return true
+			}
+		}
+	}
+
+	return false
 }
