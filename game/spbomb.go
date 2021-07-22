@@ -32,7 +32,7 @@ func (bomb *SpecialBomb) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]i
 }
 
 // OnFixScene - OnFixScene
-func (bomb *SpecialBomb) OnFixScene(std *SpecialTypeData, scene *Scene) error {
+func (bomb *SpecialBomb) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

@@ -128,10 +128,10 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		scene.Arr = append(scene.Arr, arrslayer)
 	}
 
-	scene.InitArr = cloneArr3(scene.Arr)
+	scene.InitArr = block7utils.CloneArr3(scene.Arr)
 	scene.BlockNums = nums
 
-	err = MgrSpecial.OnFixScene(ld2, scene)
+	err = MgrSpecial.OnFixScene(rng, ld2, scene)
 	if err != nil {
 		block7utils.Warn("NewScene:OnFixScene",
 			zap.Error(err))
@@ -190,7 +190,7 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 		}
 	}
 
-	scene.InitArr = cloneArr3(scene.Arr)
+	scene.InitArr = block7utils.CloneArr3(scene.Arr)
 	scene.BlockNums = scene.CountNums(func(x, y, z int) bool {
 		return scene.InitArr[z][y][x] > 0
 	})
@@ -233,7 +233,7 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 }
 
 func (scene *Scene) Restart() {
-	scene.Arr = cloneArr3(scene.InitArr)
+	scene.Arr = block7utils.CloneArr3(scene.InitArr)
 	scene.History = nil
 	scene.ClickValues = 0
 	scene.Block = nil
@@ -1018,7 +1018,7 @@ func (scene *Scene) IsParent2(bd *BlockData, pbd *BlockData, funcHasBlock FuncHa
 }
 
 // 统计子节点数量
-func (scene *Scene) getChildren(lst []int, x, y, z int, funcHasBlock FuncHasBlock) []int {
+func (scene *Scene) GetChildren(lst []int, x, y, z int, funcHasBlock FuncHasBlock) []int {
 	if z == 0 {
 		return lst
 	}
@@ -1028,15 +1028,15 @@ func (scene *Scene) getChildren(lst []int, x, y, z int, funcHasBlock FuncHasBloc
 	}
 
 	if z%2 == 0 {
-		lst = scene.getChildren(lst, x, y, z-1, funcHasBlock)
-		lst = scene.getChildren(lst, x-scene.XOff, y, z-1, funcHasBlock)
-		lst = scene.getChildren(lst, x, y-scene.YOff, z-1, funcHasBlock)
-		lst = scene.getChildren(lst, x-scene.XOff, y-scene.YOff, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x-scene.XOff, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x, y-scene.YOff, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x-scene.XOff, y-scene.YOff, z-1, funcHasBlock)
 	} else {
-		lst = scene.getChildren(lst, x, y, z-1, funcHasBlock)
-		lst = scene.getChildren(lst, x+scene.XOff, y, z-1, funcHasBlock)
-		lst = scene.getChildren(lst, x, y+scene.YOff, z-1, funcHasBlock)
-		lst = scene.getChildren(lst, x+scene.XOff, y+scene.YOff, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x+scene.XOff, y, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x, y+scene.YOff, z-1, funcHasBlock)
+		lst = scene.GetChildren(lst, x+scene.XOff, y+scene.YOff, z-1, funcHasBlock)
 	}
 
 	return lst
@@ -1046,7 +1046,7 @@ func (scene *Scene) getChildren(lst []int, x, y, z int, funcHasBlock FuncHasBloc
 func (scene *Scene) CountChildrenNums(x, y, z int, funcHasBlock FuncHasBlock) int {
 	lst := []int{}
 
-	lst = scene.getChildren(lst, x, y, z, funcHasBlock)
+	lst = scene.GetChildren(lst, x, y, z, funcHasBlock)
 
 	return len(lst) / 3
 }
@@ -1057,7 +1057,7 @@ func (scene *Scene) CountChildrenNumsEx(x, y, z int, w, h int, funcHasBlock Func
 
 	for ox := 0; ox < w; ox++ {
 		for oy := 0; oy < h; oy++ {
-			lst = scene.getChildren(lst, x+ox, y+oy, z, funcHasBlock)
+			lst = scene.GetChildren(lst, x+ox, y+oy, z, funcHasBlock)
 		}
 	}
 

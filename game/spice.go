@@ -33,7 +33,7 @@ func (ice *SpecialIce) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int
 }
 
 // OnFixScene - OnFixScene
-func (ice *SpecialIce) OnFixScene(std *SpecialTypeData, scene *Scene) error {
+func (ice *SpecialIce) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

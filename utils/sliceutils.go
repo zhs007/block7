@@ -77,3 +77,21 @@ func IsSameIntArr2(arr0 [][]int, arr1 [][]int) bool {
 
 	return false
 }
+
+// CloneArr3 - clone a [][][]int
+func CloneArr3(src [][][]int) [][][]int {
+	arr := [][][]int{}
+
+	for _, src2 := range src {
+		arr2 := [][]int{}
+
+		for _, src1 := range src2 {
+			arr1 := append([]int{}, src1[0:]...)
+			arr2 = append(arr2, arr1)
+		}
+
+		arr = append(arr, arr2)
+	}
+
+	return arr
+}

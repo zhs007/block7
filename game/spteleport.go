@@ -32,7 +32,7 @@ func (teleport *SpecialTeleport) OnGenSymbolBlocks(std *SpecialTypeData, arr []i
 }
 
 // OnFixScene - OnFixScene
-func (teleport *SpecialTeleport) OnFixScene(std *SpecialTypeData, scene *Scene) error {
+func (teleport *SpecialTeleport) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

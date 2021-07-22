@@ -25,4 +25,6 @@ var (
 	ErrInvalidHistoryWidth = errors.New("invalid history width")
 	// ErrInvalidPositionList - invalid position list
 	ErrInvalidPositionList = errors.New("invalid position list")
+	// ErrInvalidSafeList - invalid safe list
+	ErrInvalidSafeList = errors.New("invalid safe list")
 )

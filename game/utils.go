@@ -80,11 +80,11 @@ func countSymbols(symbols []int, symbol int) int {
 	return n
 }
 
-func insBlockData(arr []*BlockData, b *BlockData) []*BlockData {
-	arr = append(arr, b)
+// func insBlockData(arr []*BlockData, b *BlockData) []*BlockData {
+// 	arr = append(arr, b)
 
-	return arr
-}
+// 	return arr
+// }
 
 func insBlockDataAndProc(arr []*BlockData, b *BlockData) []*BlockData {
 	arr = append(arr, b)
@@ -96,19 +96,50 @@ func insBlockDataAndProc(arr []*BlockData, b *BlockData) []*BlockData {
 	return arr
 }
 
-func cloneArr3(src [][][]int) [][][]int {
-	arr := [][][]int{}
+func CheckScene(scene *Scene, isMyBlock FuncHasBlock) [][]int {
+	lst := [][]int{}
 
-	for _, src2 := range src {
-		arr2 := [][]int{}
-
-		for _, src1 := range src2 {
-			arr1 := append([]int{}, src1[0:]...)
-			arr2 = append(arr2, arr1)
+	for z, arr2 := range scene.InitArr {
+		for y, arr1 := range arr2 {
+			for x := range arr1 {
+				if isMyBlock(x, y, z) {
+					lst = append(lst, []int{x, y, z})
+				}
+			}
 		}
-
-		arr = append(arr, arr2)
 	}
 
-	return arr
+	return lst
 }
+
+// GetChildrenEx - 统计子节点数量，pos 是 []int{x,y,z} 的数组
+func GetChildrenEx(scene *Scene, pos [][]int, w, h int, funcHasBlock FuncHasBlock) []int {
+	lst := []int{}
+
+	for _, cp := range pos {
+		for ox := 0; ox < w; ox++ {
+			for oy := 0; oy < h; oy++ {
+				lst = scene.GetChildren(lst, cp[0]+ox, cp[1]+oy, cp[2], funcHasBlock)
+			}
+		}
+	}
+
+	return lst
+}
+
+// func cloneArr3(src [][][]int) [][][]int {
+// 	arr := [][][]int{}
+
+// 	for _, src2 := range src {
+// 		arr2 := [][]int{}
+
+// 		for _, src1 := range src2 {
+// 			arr1 := append([]int{}, src1[0:]...)
+// 			arr2 = append(arr2, arr1)
+// 		}
+
+// 		arr = append(arr, arr2)
+// 	}
+
+// 	return arr
+// }

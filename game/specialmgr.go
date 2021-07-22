@@ -47,7 +47,7 @@ func (mgr *SpecialMgr) GenSymbols(ld2 *LevelData2) ([]int, error) {
 }
 
 // OnFixScene - OnFixScene
-func (mgr *SpecialMgr) OnFixScene(ld2 *LevelData2, scene *Scene) error {
+func (mgr *SpecialMgr) OnFixScene(rng IRng, ld2 *LevelData2, scene *Scene) error {
 	if ld2 == nil {
 		return nil
 	}
@@ -55,7 +55,7 @@ func (mgr *SpecialMgr) OnFixScene(ld2 *LevelData2, scene *Scene) error {
 	for _, v := range ld2.SpecialType {
 		sp, isok := mgr.MapSpecial[v.SpecialID]
 		if isok {
-			err := sp.OnFixScene(v, scene)
+			err := sp.OnFixScene(rng, v, scene)
 			if err != nil {
 				block7utils.Error("SpecialMgr.OnFixScene:OnFixScene",
 					zap.Int("SpecialID", v.SpecialID),

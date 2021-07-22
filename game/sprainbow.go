@@ -32,7 +32,7 @@ func (rainbow *SpecialRainbow) OnGenSymbolBlocks(std *SpecialTypeData, arr []int
 }
 
 // OnFixScene - OnFixScene
-func (rainbow *SpecialRainbow) OnFixScene(std *SpecialTypeData, scene *Scene) error {
+func (rainbow *SpecialRainbow) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error {
 	return nil
 }
 

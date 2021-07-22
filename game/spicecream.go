@@ -11,22 +11,22 @@ type icecreamData struct {
 
 // SpecialIceCream - icecream
 type SpecialIceCream struct {
-	specialID  int
-	icecreamID int
-	spoonID    int
-	layer      int
-	w          int
-	h          int
+	specialID   int
+	specialType int
+	spoonID     int
+	layer       int
+	w           int
+	h           int
 }
 
 func NewIceCream(specialid int, icecreamid int, spoonid int, w, h int) *SpecialIceCream {
 	return &SpecialIceCream{
-		specialID:  specialid,
-		icecreamID: icecreamid,
-		spoonID:    spoonid,
-		layer:      2,
-		w:          w,
-		h:          h,
+		specialID:   specialid,
+		specialType: icecreamid,
+		spoonID:     spoonid,
+		layer:       2,
+		w:           w,
+		h:           h,
 	}
 }
 
@@ -45,30 +45,49 @@ func (icecream *SpecialIceCream) OnGenSymbolBlocks(std *SpecialTypeData, arr []i
 }
 
 // OnFixScene - OnFixScene
-func (icecream *SpecialIceCream) OnFixScene(std *SpecialTypeData, scene *Scene) error {
-	_, err := GetAllBlocksEx(scene, icecream.w, icecream.h, func(x, y, z int) bool {
-		if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
-			return false
-		}
+func (icecream *SpecialIceCream) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error {
+	// lst, err := GetAllBlocksEx(scene, icecream.w, icecream.h, func(x, y, z int) bool {
+	// 	if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
+	// 		return false
+	// 	}
 
-		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, icecream.layer)
-	}, func(x, y, z int, w, h int) bool {
-		nums := scene.CountChildrenNumsEx(x, y, z, w, h, func(x, y, z int) bool {
-			if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
-				return false
-			}
+	// 	return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, icecream.layer)
+	// }, func(x, y, z int, w, h int) bool {
+	// 	nums := scene.CountChildrenNumsEx(x, y, z, w, h, func(x, y, z int) bool {
+	// 		if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
+	// 			return false
+	// 		}
 
-			return scene.InitArr[z][y][x] > 0
-		})
+	// 		return scene.InitArr[z][y][x] > 0
+	// 	})
 
-		return scene.BlockNums-nums >= std.Nums*3
-	})
-	if err != nil {
-		block7utils.Error("SpecialIceCream.OnFixScene:GetAllBlocksEx",
-			zap.Error(err))
+	// 	return scene.BlockNums-nums >= std.Nums*3
+	// })
+	// if err != nil {
+	// 	block7utils.Error("SpecialIceCream.OnFixScene:GetAllBlocksEx",
+	// 		zap.Error(err))
 
-		return err
-	}
+	// 	return err
+	// }
+
+	// stddata := &icecreamData{}
+
+	// for i := 0; i < std.Nums; i++ {
+	// 	cr, err := rng.Rand(len(lst))
+	// 	if err != nil {
+	// 		block7utils.Error("SpecialIceCream.OnFixScene:GetAllBlocksEx",
+	// 			zap.Int("i", i),
+	// 			zap.Error(err))
+
+	// 		return err
+	// 	}
+
+	// 	stddata.pos = append(stddata.pos, lst[cr])
+
+	// 	lst = append(lst[:cr], lst[:cr+1]...)
+	// }
+
+	// std.Data = stddata
 
 	// lstSpooon, err := GetAllBlocks(scene, func(x, y, z int) bool {
 	// 	if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
@@ -120,44 +139,122 @@ func (icecream *SpecialIceCream) OnFixScene(std *SpecialTypeData, scene *Scene) 
 	return nil
 }
 
-// // fixScene - fixScene
-// func (icecream *SpecialIceCream) fixScene(scene *Scene, lst [][]*BlockData) {
-// 	for _, fv := range lst[1] {
-// 		for _, cv := range lst[0] {
-// 			if scene.IsParent2(fv, cv, func(x, y, z int) bool {
-// 				return scene.InitArr[z][y][x] > 0
-// 			}) {
-// 				block7utils.Debug("SpecialCake.fixScene",
-// 					block7utils.JSON("icecream", cv),
-// 					block7utils.JSON("spoon", fv))
+// fixScene - fixScene
+func (icecream *SpecialIceCream) fixSpoon(rng IRng, scene *Scene, lstchild []int) error {
+	lstValid := CheckScene(scene, func(x, y, z int) bool {
+		ci := block7utils.FindInt3(lstchild, x, y, z)
+		if ci < 0 {
+			if scene.InitArr[z][y][x] != icecream.spoonID {
+				return true
+			}
+		}
 
-// 				scene.InitArr[fv.Z][fv.Y][fv.X] = icecream.icecreamID
-// 				scene.InitArr[cv.Z][cv.Y][cv.X] = icecream.spoonID
+		return false
+	})
 
-// 				tx := fv.X
-// 				fv.X = cv.X
-// 				cv.X = tx
+	for i := 0; i < len(lstchild)/3; i++ {
+		if scene.InitArr[lstchild[i*3+2]][lstchild[i*3+1]][lstchild[i*3]] == icecream.spoonID {
+			if len(lstValid) <= 0 {
+				block7utils.Error("SpecialIceCream.fixSpoon:",
+					zap.Error(ErrInvalidSafeList))
 
-// 				ty := fv.Y
-// 				fv.Y = cv.Y
-// 				cv.Y = ty
+				return ErrInvalidSafeList
+			}
 
-// 				tz := fv.Z
-// 				fv.Z = cv.Z
-// 				cv.Z = tz
+			cr, err := rng.Rand(len(lstValid))
+			if err != nil {
+				block7utils.Error("SpecialIceCream.fixSpoon:Rand",
+					zap.Error(err))
 
-// 				icecream.fixScene(scene, lst)
-// 			}
-// 		}
-// 	}
-// }
+				return err
+			}
+
+			scene.InitArr[lstchild[i*3+2]][lstchild[i*3+1]][lstchild[i*3]] = scene.InitArr[lstValid[cr][2]][lstValid[cr][1]][lstValid[cr][0]]
+			scene.InitArr[lstValid[cr][2]][lstValid[cr][1]][lstValid[cr][0]] = icecream.spoonID
+
+			scene.Arr[lstchild[i*3+2]][lstchild[i*3+1]][lstchild[i*3]] = scene.Arr[lstValid[cr][2]][lstValid[cr][1]][lstValid[cr][0]]
+			scene.Arr[lstValid[cr][2]][lstValid[cr][1]][lstValid[cr][0]] = icecream.spoonID
+
+			lstValid = append(lstValid[:cr], lstValid[cr+1:]...)
+		}
+	}
+
+	return nil
+}
 
 // OnGenSymbolLayer - OnGenSymbolLayer
 func (icecream *SpecialIceCream) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {
-	return nil, nil
+	sl := &SpecialLayer{
+		Layer:     icecream.layer,
+		LayerType: icecream.specialType,
+		Special:   icecream,
+	}
+
+	lst, err := GetAllBlocksEx(scene, icecream.w, icecream.h, func(x, y, z int) bool {
+		if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
+			return false
+		}
+
+		return scene.InitArr[z][y][x] > 0 &&
+			scene.InitArr[z][y][x] != 403 &&
+			scene.InitArr[z][y][x] != icecream.spoonID &&
+			!scene.HasSpecialLayer(x, y, z, icecream.layer)
+	}, func(x, y, z int, w, h int) bool {
+		nums := scene.CountChildrenNumsEx(x, y, z, w, h, func(x, y, z int) bool {
+			if x < 0 || y < 0 || z < 0 || x >= scene.Width || y >= scene.Height || z >= scene.Layers {
+				return false
+			}
+
+			return scene.InitArr[z][y][x] > 0
+		})
+
+		return scene.BlockNums-nums >= std.Nums*3
+	})
+	if err != nil {
+		block7utils.Error("SpecialIceCream.OnGenSymbolLayers:GetAllBlocksEx",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	stddata := &icecreamData{}
+
+	for i := 0; i < std.Nums; i++ {
+		cr, err := rng.Rand(len(lst))
+		if err != nil {
+			block7utils.Error("SpecialIceCream.OnGenSymbolLayers:GetAllBlocksEx",
+				zap.Int("i", i),
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		stddata.pos = append(stddata.pos, lst[cr])
+
+		lst = append(lst[:cr], lst[cr+1:]...)
+	}
+
+	// stddata, isok := std.Data.(*icecreamData)
+	// if isok {
+	sl.Pos = stddata.pos
+	// }
+
+	lstchild := GetChildrenEx(scene, sl.Pos, icecream.w, icecream.h, func(x, y, z int) bool {
+		return scene.InitArr[z][y][x] > 0
+	})
+
+	err = icecream.fixSpoon(rng, scene, lstchild)
+	if err != nil {
+		block7utils.Error("SpecialIceCream.OnGenSymbolLayers:fixSpoon",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return sl, nil
 }
 
 // GetSpecialLayerType - GetSpecialLayerType
 func (icecream *SpecialIceCream) GetSpecialLayerType() int {
-	return 0
+	return icecream.specialType
 }
