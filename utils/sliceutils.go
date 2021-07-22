@@ -95,3 +95,24 @@ func CloneArr3(src [][][]int) [][][]int {
 
 	return arr
 }
+
+// IsSameIntArr2Ex -
+func IsSameIntArr2Ex(arr0 [][]int, arr1 [][]int32) bool {
+	if len(arr0) == len(arr1) {
+		for i := 0; i < len(arr0); i++ {
+			if len(arr0[i]) != len(arr1[i]) {
+				return false
+			}
+
+			for j := 0; j < len(arr0[i]); j++ {
+				if arr0[i][j] != int(arr1[i][j]) {
+					return false
+				}
+			}
+		}
+
+		return true
+	}
+
+	return false
+}

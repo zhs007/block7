@@ -18,9 +18,10 @@ type MissionResult struct {
 
 // MissionDataParams - missionData parameters
 type MissionDataParams struct {
-	UserHash string  `json:"userHash"`
-	SceneID  int64   `json:"mission"`
-	History  [][]int `json:"history"`
+	UserHash  string  `json:"userHash"`
+	SceneID   int64   `json:"mission"`
+	History   [][]int `json:"history"`
+	HistoryID int64   `json:"srcHistory"`
 }
 
 // MissionDataResult - missionData result
