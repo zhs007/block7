@@ -2,8 +2,6 @@ package block7utils
 
 import (
 	"bytes"
-	"strconv"
-	"strings"
 
 	"github.com/buger/jsonparser"
 )
@@ -17,25 +15,26 @@ func GetJsonString(data []byte, keys ...string) (val string, err error) {
 	}
 
 	if t == jsonparser.Number {
-		if strings.Contains(string(v), ".") {
-			nf, err := jsonparser.ParseFloat(v)
-			if err != nil {
-				return "", err
-			}
+		return string(v), nil
+		// if strings.Contains(string(v), ".") {
+		// 	nf, err := jsonparser.ParseFloat(v)
+		// 	if err != nil {
+		// 		return "", err
+		// 	}
 
-			str := strconv.FormatFloat(nf, 'E', -1, 64)
+		// 	str := strconv.FormatFloat(nf, 'E', -1, 64)
 
-			return str, nil
-		}
+		// 	return str, nil
+		// }
 
-		iv, err := jsonparser.ParseInt(v)
-		if err != nil {
-			return "", err
-		}
+		// iv, err := jsonparser.ParseInt(v)
+		// if err != nil {
+		// 	return "", err
+		// }
 
-		str := strconv.FormatInt(iv, 10)
+		// str := strconv.FormatInt(iv, 10)
 
-		return str, nil
+		// return str, nil
 	}
 
 	if t != jsonparser.String {
