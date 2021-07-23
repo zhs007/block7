@@ -41,3 +41,23 @@ func Test_GetJsonInt(t *testing.T) {
 
 	t.Logf("Test_GetJsonInt OK")
 }
+
+func Test_GetJsonFloat(t *testing.T) {
+	f64, err := GetJsonFloat([]byte(`{"abc":"123"}`), "abc")
+	assert.NoError(t, err)
+	assert.Equal(t, f64, float64(123))
+
+	f64, err = GetJsonFloat([]byte(`{"abc":123}`), "abc")
+	assert.NoError(t, err)
+	assert.Equal(t, f64, float64(123))
+
+	f64, err = GetJsonFloat([]byte(`{"abc":123.456}`), "abc")
+	assert.NoError(t, err)
+	assert.Equal(t, f64, float64(123.456))
+
+	f64, err = GetJsonFloat([]byte(`{"abc":"123.456"}`), "abc")
+	assert.NoError(t, err)
+	assert.Equal(t, f64, float64(123.456))
+
+	t.Logf("Test_GetJsonFloat OK")
+}
