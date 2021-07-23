@@ -156,16 +156,26 @@ func NewServ(service IService) *Serv {
 				return
 			}
 
-			params := &MissionDataParams{}
-			err := s.ParseBody(ctx, params)
+			params, err := parseMissionDataParams(ctx.PostBody())
 			if err != nil {
-				block7utils.Warn("block7serv.Serv.missiondata:ParseBody",
+				block7utils.Warn("block7serv.Serv.missiondata:parseMissionDataParams",
 					zap.Error(err))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
 
 				return
 			}
+
+			// params := &MissionDataParams{}
+			// err := s.ParseBody(ctx, params)
+			// if err != nil {
+			// 	block7utils.Warn("block7serv.Serv.missiondata:ParseBody",
+			// 		zap.Error(err))
+
+			// 	s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+			// 	return
+			// }
 
 			block7utils.Debug("block7serv.Serv.missiondata:ParseBody",
 				block7utils.JSON("params", params))
