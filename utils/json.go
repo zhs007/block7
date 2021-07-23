@@ -11,7 +11,11 @@ func GetJsonString(data []byte, keys ...string) (val string, err error) {
 	v, t, _, e := jsonparser.Get(data, keys...)
 
 	if e != nil {
-		return "", e
+		if e != jsonparser.KeyPathNotFoundError {
+			return "", e
+		}
+
+		return "", nil
 	}
 
 	if t == jsonparser.Number {
@@ -53,10 +57,18 @@ func GetJsonInt(data []byte, keys ...string) (val int64, err error) {
 	v, t, _, e := jsonparser.Get(data, keys...)
 
 	if e != nil {
-		return 0, e
+		if e != jsonparser.KeyPathNotFoundError {
+			return 0, e
+		}
+
+		return 0, nil
 	}
 
 	if t == jsonparser.String {
+		if len(v) == 0 {
+			return 0, nil
+		}
+
 		// If no escapes return raw content
 		if bytes.IndexByte(v, '\\') == -1 {
 			n, err := String2Int64(string(v))
@@ -91,10 +103,18 @@ func GetJsonFloat(data []byte, keys ...string) (val float64, err error) {
 	v, t, _, e := jsonparser.Get(data, keys...)
 
 	if e != nil {
-		return 0, e
+		if e != jsonparser.KeyPathNotFoundError {
+			return 0, e
+		}
+
+		return 0, nil
 	}
 
 	if t == jsonparser.String {
+		if len(v) == 0 {
+			return 0, nil
+		}
+
 		// If no escapes return raw content
 		if bytes.IndexByte(v, '\\') == -1 {
 			n, err := String2Float64(string(v))

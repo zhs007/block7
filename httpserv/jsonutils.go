@@ -9,12 +9,10 @@ import (
 func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 	userHash, err := block7utils.GetJsonString(data, "userHash")
 	if err != nil {
-		if err != jsonparser.KeyPathNotFoundError {
-			block7utils.Error("parseMissionDataParams:userHash",
-				zap.Error(err))
+		block7utils.Error("parseMissionDataParams:userHash",
+			zap.Error(err))
 
-			return nil, err
-		}
+		return nil, err
 	}
 
 	sceneID, err := block7utils.GetJsonInt(data, "mission")
@@ -23,6 +21,13 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 			zap.Error(err))
 
 		return nil, err
+	}
+
+	if sceneID <= 0 {
+		block7utils.Error("parseMissionDataParams",
+			zap.Error(ErrInvalidSceneID))
+
+		return nil, ErrInvalidSceneID
 	}
 
 	history := [][]int{}
@@ -92,14 +97,12 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 		return nil, err
 	}
 
-	historyID, err := jsonparser.GetInt(data, "srcHistory")
+	historyID, err := block7utils.GetJsonInt(data, "srcHistory")
 	if err != nil {
-		if err != jsonparser.KeyPathNotFoundError {
-			block7utils.Error("parseMissionDataParams:srcHistory",
-				zap.Error(err))
+		block7utils.Error("parseMissionDataParams:srcHistory",
+			zap.Error(err))
 
-			return nil, err
-		}
+		return nil, err
 	}
 
 	return &MissionDataParams{
