@@ -36,3 +36,21 @@ func String2Int64(str string) (int64, error) {
 
 	return iv, nil
 }
+
+func String2Float64(str string) (float64, error) {
+	// if strings.Contains(str, ".") {
+	nf, err := strconv.ParseFloat(str, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return nf, nil
+	// }
+
+	// iv, err := strconv.ParseInt(str, 10, 64)
+	// if err != nil {
+	// 	return 0, err
+	// }
+
+	// return , nil
+}
