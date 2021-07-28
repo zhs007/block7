@@ -18,6 +18,10 @@ func GetJsonString(data []byte, keys ...string) (val string, err error) {
 		return "", nil
 	}
 
+	if t == jsonparser.Null {
+		return "", nil
+	}
+
 	if t == jsonparser.Number {
 		return string(v), nil
 		// if strings.Contains(string(v), ".") {
@@ -64,6 +68,10 @@ func GetJsonInt(data []byte, keys ...string) (val int64, err error) {
 		return 0, nil
 	}
 
+	if t == jsonparser.Null {
+		return 0, nil
+	}
+
 	if t == jsonparser.String {
 		if len(v) == 0 {
 			return 0, nil
@@ -107,6 +115,10 @@ func GetJsonFloat(data []byte, keys ...string) (val float64, err error) {
 			return 0, e
 		}
 
+		return 0, nil
+	}
+
+	if t == jsonparser.Null {
 		return 0, nil
 	}
 
