@@ -43,6 +43,8 @@ message Scene {
 	repeated SpecialLayer specialLayer = 19;				// SpecialLayer
 	repeated int32 InitArr2 = 20;							// initial data
 	repeated int32 History2 = 21;							// history
+	repeated int64 RngData = 22;							// rngdata
+	int32 GameState = 23;									// gamestate
 }
 
 // MissionParams

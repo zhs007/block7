@@ -22,6 +22,8 @@ type MissionDataParams struct {
 	SceneID   int64   `json:"mission"`
 	History   [][]int `json:"history"`
 	HistoryID int64   `json:"srcHistory"`
+	RngData   []int64 `json:"rngdata"`
+	GameState int32   `json:"gamestate"`
 }
 
 // MissionDataResult - missionData result
