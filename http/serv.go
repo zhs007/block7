@@ -82,8 +82,8 @@ func (s *Serv) Start() error {
 
 // SetResponse - set a response
 func (s *Serv) SetResponse(ctx *fasthttp.RequestCtx, jsonObj interface{}) {
-	ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
-	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+	// ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+	// ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
 
 	if jsonObj == nil {
 		ctx.SetContentType("application/json;charset=UTF-8")
@@ -116,8 +116,8 @@ func (s *Serv) SetResponse(ctx *fasthttp.RequestCtx, jsonObj interface{}) {
 
 // SetStringResponse - set a response with string
 func (s *Serv) SetStringResponse(ctx *fasthttp.RequestCtx, str string) {
-	ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
-	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+	// ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+	// ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
 
 	ctx.SetContentType("application/json;charset=UTF-8")
 	ctx.SetStatusCode(fasthttp.StatusOK)
@@ -130,8 +130,8 @@ func (s *Serv) SetStringResponse(ctx *fasthttp.RequestCtx, str string) {
 
 // SetHTTPStatus - set a response with status
 func (s *Serv) SetHTTPStatus(ctx *fasthttp.RequestCtx, statusCode int) {
-	ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
-	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+	// ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+	// ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
 
 	ctx.SetStatusCode(statusCode)
 
