@@ -116,6 +116,9 @@ func (s *Serv) SetResponse(ctx *fasthttp.RequestCtx, jsonObj interface{}) {
 
 // SetStringResponse - set a response with string
 func (s *Serv) SetStringResponse(ctx *fasthttp.RequestCtx, str string) {
+	ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+
 	ctx.SetContentType("application/json;charset=UTF-8")
 	ctx.SetStatusCode(fasthttp.StatusOK)
 	ctx.SetBody([]byte(str))
@@ -127,6 +130,9 @@ func (s *Serv) SetStringResponse(ctx *fasthttp.RequestCtx, str string) {
 
 // SetHTTPStatus - set a response with status
 func (s *Serv) SetHTTPStatus(ctx *fasthttp.RequestCtx, statusCode int) {
+	ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
+	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+
 	ctx.SetStatusCode(statusCode)
 
 	sgc7utils.Debug("block7http.Serv.SetHTTPStatus",
