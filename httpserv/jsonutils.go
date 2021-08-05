@@ -53,8 +53,8 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 					return
 				}
 
-				if dataType == jsonparser.Number {
-					cv, err5 := jsonparser.GetInt(value)
+				if dataType2 == jsonparser.Number {
+					cv, err5 := jsonparser.GetInt(value2)
 					if err != nil {
 						block7utils.Error("parseMissionDataParams:ArrayEach:func2:GetInt",
 							zap.Int("offset", offset2),

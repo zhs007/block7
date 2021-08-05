@@ -9,10 +9,10 @@
             "type": "go",
             "request": "launch",
             "mode": "test",
-            "program": "${workspaceFolder}/utils/json_test.go",
+            "program": "${workspaceFolder}/httpserv/jsonutils_test.go",
             "args": [
                 "-test.run",
-                "Test_GetJsonString"
+                "Test_parseMissionDataParams"
             ]
         },
         {
