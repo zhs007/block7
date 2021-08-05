@@ -7,4 +7,6 @@ var (
 	ErrInvalidUserHash = errors.New("invalid userhash")
 	// ErrInvalidMissionID - invalid MissionID
 	ErrInvalidMissionID = errors.New("invalid MissionID")
+	// ErrInvalidSceneID - invalid SceneID
+	ErrInvalidSceneID = errors.New("invalid SceneID")
 )

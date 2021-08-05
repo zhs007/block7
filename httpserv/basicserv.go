@@ -289,7 +289,7 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 				return nil, err
 			}
 
-			if pbscene2.SceneID == params.SceneID && block7utils.IsSameIntArr2(params.History, arr2) {
+			if pbscene2.SceneID == params.SceneID && block7utils.IsSameIntArr2Ex2(params.History, arr2, 3) {
 				if serv.cfg.IsDebugMode {
 					block7utils.Debug("BasicServ.MissionData",
 						block7utils.JSON("history", pbscene2))
@@ -298,6 +298,12 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 				return &MissionDataResult{
 					UserLevel: 100,
 					HistoryID: pbscene2.HistoryID}, nil
+			}
+
+			if serv.cfg.IsDebugMode {
+				block7utils.Debug("BasicServ.MissionData:cmp",
+					zap.Int64("sceneID", pbscene2.SceneID),
+					block7utils.JSON("arr2", arr2))
 			}
 		}
 	}

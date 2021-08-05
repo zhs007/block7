@@ -34,6 +34,8 @@ type Scene struct {
 	IsOutputScene bool            `json:"isOutputScene"`
 	SpecialLayers []*SpecialLayer `json:"specialLayers"` // 这个是自己用的
 	BlockNums     int             `json:"-"`             // 初始化block数量
+	RngData       []int64         `json:"rngdata"`       // 前端rng数据
+	GameState     int32           `json:"gamestate"`     // 前端gamestate
 	// SpecialLayersData [][]int         `json:"specialLayersData"` // 这个给前端用的
 }
 
@@ -1151,11 +1153,13 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 
 func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
-		StageID: int32(scene.SceneID),
-		MapID2:  int32(scene.MapID),
-		Version: int32(scene.Version),
-		SceneID: scene.SceneID,
-		UserID:  scene.UserID,
+		StageID:   int32(scene.SceneID),
+		MapID2:    int32(scene.MapID),
+		Version:   int32(scene.Version),
+		SceneID:   scene.SceneID,
+		UserID:    scene.UserID,
+		RngData:   scene.RngData,
+		GameState: scene.GameState,
 	}
 
 	arr, x, _ := block7utils.IntArr2ToInt32Arr(scene.History)
