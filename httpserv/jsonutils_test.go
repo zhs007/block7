@@ -49,5 +49,11 @@ func Test_parseMissionDataParams(t *testing.T) {
 	assert.NotNil(t, p)
 	assert.Equal(t, p.SceneID, int64(80))
 
+	p, err = parseMissionDataParams([]byte(`{"history":[[5,7,0,1],[5,6,0,1],[5,4,0,2],[3,3,0,2],[3,4,0,2],[3,5,0,3],[4,5,0,3],[5,5,0,3],[4,4,0,4],[4,3,0,4],[5,3,0,4],[4,6,0,5],[4,7,0,5],[3,7,0,6],[3,6,0,7]],"mission":7,"userHash":"lCduWE5rUoiQAqJi"}`))
+	assert.NoError(t, err)
+	assert.NotNil(t, p)
+	assert.Equal(t, p.SceneID, int64(7))
+	assert.Equal(t, len(p.History[0]), 4)
+
 	t.Logf("Test_parseMissionDataParams OK")
 }
