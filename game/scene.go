@@ -1162,6 +1162,10 @@ func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 		GameState: scene.GameState,
 	}
 
+	if len(scene.History) == 0 {
+		return pbScene, nil
+	}
+
 	arr, x, _ := block7utils.IntArr2ToInt32Arr(scene.History)
 	if x != 4 {
 		block7utils.Error("Scene.ToHistoryPB:IntArr2ToInt32Arr",
