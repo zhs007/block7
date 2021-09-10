@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -38,7 +38,7 @@ func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBloc
 	}
 
 	if len(lstpos)/3 < nums {
-		block7utils.Error("GenBrotherBlocks",
+		goutils.Error("GenBrotherBlocks",
 			zap.Int("validpos", len(lstpos)/3),
 			zap.Int("nums", nums),
 			zap.Error(ErrInvalidGenBrotherBlocksNums))
@@ -49,7 +49,7 @@ func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBloc
 	for i := 0; i < nums; i++ {
 		cr, err := rng.Rand(len(lstpos) / 3)
 		if err != nil {
-			block7utils.Error("GenBrotherBlocks",
+			goutils.Error("GenBrotherBlocks",
 				zap.Int("validpos", len(lstpos)/3),
 				zap.Int("nums", nums),
 				zap.Int("i", i),
@@ -64,7 +64,7 @@ func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBloc
 
 		lstpos = append(lstpos[0:cr*3], lstpos[(cr+1)*3:]...)
 		if len(lstpos)/3 < nums {
-			block7utils.Error("GenBrotherBlocks",
+			goutils.Error("GenBrotherBlocks",
 				zap.Int("validpos", len(lstpos)/3),
 				zap.Int("nums", nums),
 				zap.Int("i", i),
@@ -85,28 +85,28 @@ func GenBrotherBlocks(rng IRng, scene *Scene, brother int, nums int, funcHasBloc
 			cz,
 		})
 
-		ci := block7utils.FindInt3(lstpos, cx+1, cy, cz)
+		ci := goutils.FindInt3(lstpos, cx+1, cy, cz)
 		if ci >= 0 {
 			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
-		ci = block7utils.FindInt3(lstpos, cx-1, cy, cz)
+		ci = goutils.FindInt3(lstpos, cx-1, cy, cz)
 		if ci >= 0 {
 			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
-		ci = block7utils.FindInt3(lstpos, cx, cy-1, cz)
+		ci = goutils.FindInt3(lstpos, cx, cy-1, cz)
 		if ci >= 0 {
 			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
-		ci = block7utils.FindInt3(lstpos, cx, cy+1, cz)
+		ci = goutils.FindInt3(lstpos, cx, cy+1, cz)
 		if ci >= 0 {
 			lstpos = append(lstpos[0:ci], lstpos[ci+3:]...)
 		}
 
 		if len(lstpos)/3 < nums {
-			block7utils.Error("GenBrotherBlocks",
+			goutils.Error("GenBrotherBlocks",
 				zap.Int("validpos", len(lstpos)/3),
 				zap.Int("nums", nums),
 				zap.Int("i", i),

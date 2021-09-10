@@ -9,7 +9,7 @@ import (
 
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 )
@@ -23,7 +23,7 @@ func makeUserDBKey(userid int64) string {
 }
 
 func makeUserHashDBKey(uasehash string) string {
-	return block7utils.AppendString(userHashKeyPrefix, uasehash)
+	return goutils.AppendString(userHashKeyPrefix, uasehash)
 }
 
 // UserDB - database
@@ -61,7 +61,7 @@ func (db *UserDB) setCurUserID(ctx context.Context, userid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, userid)
 	if err != nil {
-		block7utils.Error("UserDB.setCurUserID:binary.Write",
+		goutils.Error("UserDB.setCurUserID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -87,7 +87,7 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 		if err == ankadb.ErrNotFoundKey {
 			err = db.setCurUserID(ctx, 1)
 			if err != nil {
-				block7utils.Error("UserDB.GetCurUserID:setCurUserID",
+				goutils.Error("UserDB.GetCurUserID:setCurUserID",
 					zap.Error(err))
 
 				return 0, err
@@ -96,7 +96,7 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 			return 1, nil
 		}
 
-		block7utils.Warn("UserDB.GetCurUserID:Get",
+		goutils.Warn("UserDB.GetCurUserID:Get",
 			zap.Error(err))
 
 		return 0, err
@@ -106,7 +106,7 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 	reader := bytes.NewReader(buf)
 	err = binary.Read(reader, binary.LittleEndian, &userid)
 	if err != nil {
-		block7utils.Error("UserDB.GetCurUserID:binary.Read",
+		goutils.Error("UserDB.GetCurUserID:binary.Read",
 			zap.Error(err))
 
 		return 0, err
@@ -114,7 +114,7 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 
 	err = db.setCurUserID(ctx, userid+1)
 	if err != nil {
-		block7utils.Error("UserDB.GetCurSceneID:setCurSceneID",
+		goutils.Error("UserDB.GetCurSceneID:setCurSceneID",
 			zap.Error(err))
 
 		return 0, err
@@ -127,7 +127,7 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 func (db *UserDB) UpdUser(ctx context.Context, user *block7pb.UserInfo) error {
 	buf, err := proto.Marshal(user)
 	if err != nil {
-		block7utils.Warn("UserDB.UpdUser:Marshal",
+		goutils.Warn("UserDB.UpdUser:Marshal",
 			zap.Error(err))
 
 		return err
@@ -137,7 +137,7 @@ func (db *UserDB) UpdUser(ctx context.Context, user *block7pb.UserInfo) error {
 	err = db.AnkaDB.Set(ctx, userdbname, makeUserDBKey(user.UserID), buf)
 	db.mutexDB.Unlock()
 	if err != nil {
-		block7utils.Warn("UserDB.UpdUser:Set",
+		goutils.Warn("UserDB.UpdUser:Set",
 			zap.Error(err))
 
 		return err
@@ -156,7 +156,7 @@ func (db *UserDB) GetUser(ctx context.Context, userid int64) (*block7pb.UserInfo
 			return nil, nil
 		}
 
-		block7utils.Warn("UserDB.GetUser:Get",
+		goutils.Warn("UserDB.GetUser:Get",
 			zap.Error(err))
 
 		return nil, err
@@ -166,7 +166,7 @@ func (db *UserDB) GetUser(ctx context.Context, userid int64) (*block7pb.UserInfo
 
 	err = proto.Unmarshal(buf, user)
 	if err != nil {
-		block7utils.Warn("UserDB.GetUser:Unmarshal",
+		goutils.Warn("UserDB.GetUser:Unmarshal",
 			zap.Error(err))
 
 		return nil, err
@@ -185,7 +185,7 @@ func (db *UserDB) HasUserHash(ctx context.Context, userhash string) (bool, error
 			return false, nil
 		}
 
-		block7utils.Warn("UserDB.HasUserHash:Get",
+		goutils.Warn("UserDB.HasUserHash:Get",
 			zap.Error(err))
 
 		return false, err
@@ -199,7 +199,7 @@ func (db *UserDB) UpdUserHash(ctx context.Context, userhash string, userid int64
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, userid)
 	if err != nil {
-		block7utils.Error("UserDB.UpdUserHash:binary.Write",
+		goutils.Error("UserDB.UpdUserHash:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -225,7 +225,7 @@ func (db *UserDB) GetUserID(ctx context.Context, userhash string) (int64, error)
 			return 0, nil
 		}
 
-		block7utils.Warn("UserDB.GetUserID:Get",
+		goutils.Warn("UserDB.GetUserID:Get",
 			zap.Error(err))
 
 		return 0, err
@@ -235,7 +235,7 @@ func (db *UserDB) GetUserID(ctx context.Context, userhash string) (int64, error)
 	reader := bytes.NewReader(buf)
 	err = binary.Read(reader, binary.LittleEndian, &userid)
 	if err != nil {
-		block7utils.Error("UserDB.GetUserID:binary.Read",
+		goutils.Error("UserDB.GetUserID:binary.Read",
 			zap.Error(err))
 
 		return 0, err
@@ -254,7 +254,7 @@ func (db *UserDB) DelUserHash(ctx context.Context, userhash string) error {
 			return nil
 		}
 
-		block7utils.Warn("UserDB.DelUserHash:Get",
+		goutils.Warn("UserDB.DelUserHash:Get",
 			zap.Error(err))
 
 		return err
@@ -266,10 +266,10 @@ func (db *UserDB) DelUserHash(ctx context.Context, userhash string) error {
 // genUserHash - generator a user hash
 func (db *UserDB) genUserHash(ctx context.Context) (string, error) {
 	for {
-		userhash := block7utils.GenHashCode(16)
+		userhash := goutils.GenHashCode(16)
 		hasuh, err := db.HasUserHash(ctx, userhash)
 		if err != nil {
-			block7utils.Error("UserDB.genUserHash:HasUserHash",
+			goutils.Error("UserDB.genUserHash:HasUserHash",
 				zap.Error(err))
 
 			return "", err
@@ -289,7 +289,7 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 
 	uid, err := db.GetCurUserID(ctx)
 	if err != nil {
-		block7utils.Error("UserDB.NewUser:GetCurUserID",
+		goutils.Error("UserDB.NewUser:GetCurUserID",
 			zap.Error(err))
 
 		return nil, err
@@ -301,21 +301,21 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 
 	userhash, err := db.genUserHash(ctx)
 	if err != nil {
-		block7utils.Error("UserDB.NewUser:genUserHash",
+		goutils.Error("UserDB.NewUser:genUserHash",
 			zap.Error(err))
 
 		return nil, err
 	}
 
 	udi.UserHash = userhash
-	udi.CreateTs = block7utils.GetCurTimestamp()
+	udi.CreateTs = goutils.GetCurTimestamp()
 	udi.LastLoginTs = udi.CreateTs
 	udi.LoginTimes++
 	ui.Data = append(ui.Data, udi)
 
 	err = db.UpdUser(ctx, ui)
 	if err != nil {
-		block7utils.Error("UserDB.NewUser:UpdUser",
+		goutils.Error("UserDB.NewUser:UpdUser",
 			zap.Error(err))
 
 		return nil, err
@@ -323,7 +323,7 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 
 	err = db.UpdUserHash(ctx, udi.UserHash, ui.UserID)
 	if err != nil {
-		block7utils.Error("UserDB.NewUser:UpdUserHash",
+		goutils.Error("UserDB.NewUser:UpdUserHash",
 			zap.Error(err))
 
 		return nil, err
@@ -340,7 +340,7 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 
 	uid, err := db.GetUserID(ctx, udi.UserHash)
 	if err != nil {
-		block7utils.Error("UserDB.UpdUserDeviceInfo:GetUserID",
+		goutils.Error("UserDB.UpdUserDeviceInfo:GetUserID",
 			zap.Error(err))
 
 		return nil, err
@@ -352,7 +352,7 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 
 	ui, err := db.GetUser(ctx, uid)
 	if err != nil {
-		block7utils.Error("UserDB.UpdUserDeviceInfo:GetUser",
+		goutils.Error("UserDB.UpdUserDeviceInfo:GetUser",
 			zap.Error(err))
 
 		return nil, err
@@ -367,12 +367,12 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 			cudi.ResourceVersion = udi.ResourceVersion
 			cudi.DeviceInfo = udi.DeviceInfo
 
-			cudi.LastLoginTs = block7utils.GetCurTimestamp()
+			cudi.LastLoginTs = goutils.GetCurTimestamp()
 			cudi.LoginTimes++
 
 			err = db.UpdUser(ctx, ui)
 			if err != nil {
-				block7utils.Error("UserDB.UpdUserDeviceInfo:UpdUser",
+				goutils.Error("UserDB.UpdUserDeviceInfo:UpdUser",
 					zap.Error(err))
 
 				return nil, err
@@ -382,14 +382,14 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 		}
 	}
 
-	udi.LastLoginTs = block7utils.GetCurTimestamp()
+	udi.LastLoginTs = goutils.GetCurTimestamp()
 	udi.LoginTimes++
 
 	ui.Data = append(ui.Data, udi)
 
 	err = db.UpdUser(ctx, ui)
 	if err != nil {
-		block7utils.Error("UserDB.UpdUserDeviceInfo:UpdUser",
+		goutils.Error("UserDB.UpdUserDeviceInfo:UpdUser",
 			zap.Error(err))
 
 		return nil, err

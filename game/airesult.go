@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -74,13 +74,13 @@ func (aiResult *AIResult) Click(symbol int, scene *Scene, bd *BlockData) bool {
 						return false
 					}
 				} else {
-					block7utils.Warn("AIResult.Click:CanClickEx",
+					goutils.Warn("AIResult.Click:CanClickEx",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z))
 				}
 			} else {
-				block7utils.Warn("AIResult.Click:HasBlock",
+				goutils.Warn("AIResult.Click:HasBlock",
 					zap.Int("x", bd.X),
 					zap.Int("y", bd.Y),
 					zap.Int("z", bd.Z))

@@ -10,7 +10,7 @@ import (
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
 	block7game "github.com/zhs007/block7/game"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 )
@@ -57,7 +57,7 @@ func (db *StageDB) setCurSceneID(ctx context.Context, sceneid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, sceneid)
 	if err != nil {
-		block7utils.Error("StageDB.setCurSceneID:binary.Write",
+		goutils.Error("StageDB.setCurSceneID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -83,7 +83,7 @@ func (db *StageDB) GetCurSceneID(ctx context.Context) (int64, error) {
 		if err == ankadb.ErrNotFoundKey {
 			err = db.setCurSceneID(ctx, 1)
 			if err != nil {
-				block7utils.Error("StageDB.GetCurSceneID:setCurSceneID",
+				goutils.Error("StageDB.GetCurSceneID:setCurSceneID",
 					zap.Error(err))
 
 				return 0, err
@@ -99,7 +99,7 @@ func (db *StageDB) GetCurSceneID(ctx context.Context) (int64, error) {
 	reader := bytes.NewReader(buf)
 	err = binary.Read(reader, binary.LittleEndian, &sceneid)
 	if err != nil {
-		block7utils.Error("StageDB.GetCurSceneID:binary.Read",
+		goutils.Error("StageDB.GetCurSceneID:binary.Read",
 			zap.Error(err))
 
 		return 0, err
@@ -107,7 +107,7 @@ func (db *StageDB) GetCurSceneID(ctx context.Context) (int64, error) {
 
 	err = db.setCurSceneID(ctx, sceneid+1)
 	if err != nil {
-		block7utils.Error("StageDB.GetCurSceneID:setCurSceneID",
+		goutils.Error("StageDB.GetCurSceneID:setCurSceneID",
 			zap.Error(err))
 
 		return 0, err
@@ -120,7 +120,7 @@ func (db *StageDB) GetCurSceneID(ctx context.Context) (int64, error) {
 func (db *StageDB) UpdStage(ctx context.Context, scene *block7pb.Scene) error {
 	buf, err := proto.Marshal(scene)
 	if err != nil {
-		block7utils.Warn("StageDB.UpdStage:Marshal",
+		goutils.Warn("StageDB.UpdStage:Marshal",
 			zap.Error(err))
 
 		return err
@@ -130,7 +130,7 @@ func (db *StageDB) UpdStage(ctx context.Context, scene *block7pb.Scene) error {
 	err = db.AnkaDB.Set(ctx, stagedbname, makeStageDBKey(scene.SceneID), buf)
 	db.mutexDB.Unlock()
 	if err != nil {
-		block7utils.Warn("StageDB.UpdStage:Set",
+		goutils.Warn("StageDB.UpdStage:Set",
 			zap.Error(err))
 
 		return err
@@ -156,7 +156,7 @@ func (db *StageDB) GetStage(ctx context.Context, sceneid int64) (*block7pb.Scene
 
 	err = proto.Unmarshal(buf, stage)
 	if err != nil {
-		block7utils.Warn("StageDB.GetStage:Unmarshal",
+		goutils.Warn("StageDB.GetStage:Unmarshal",
 			zap.Error(err))
 
 		return nil, err
@@ -169,7 +169,7 @@ func (db *StageDB) GetStage(ctx context.Context, sceneid int64) (*block7pb.Scene
 func (db *StageDB) SaveStage(ctx context.Context, scene *block7game.Scene) (*block7pb.Scene, error) {
 	sid, err := db.GetCurSceneID(ctx)
 	if err != nil {
-		block7utils.Warn("StageDB.SaveStage:GetCurSceneID",
+		goutils.Warn("StageDB.SaveStage:GetCurSceneID",
 			zap.Error(err))
 
 		return nil, err
@@ -177,7 +177,7 @@ func (db *StageDB) SaveStage(ctx context.Context, scene *block7game.Scene) (*blo
 
 	pbscene, err := scene.ToScenePB()
 	if err != nil {
-		block7utils.Warn("StageDB.SaveStage:ToScenePB",
+		goutils.Warn("StageDB.SaveStage:ToScenePB",
 			zap.Error(err))
 
 		return nil, err
@@ -187,7 +187,7 @@ func (db *StageDB) SaveStage(ctx context.Context, scene *block7game.Scene) (*blo
 
 	err = db.UpdStage(ctx, pbscene)
 	if err != nil {
-		block7utils.Warn("StageDB.SaveStage:UpdStage",
+		goutils.Warn("StageDB.SaveStage:UpdStage",
 			zap.Error(err))
 
 		return nil, err

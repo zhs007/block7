@@ -10,7 +10,7 @@ import (
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
 	block7game "github.com/zhs007/block7/game"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 )
@@ -65,7 +65,7 @@ func (db *HistoryDB) setCurHistoryID(ctx context.Context, historyid int64) error
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, historyid)
 	if err != nil {
-		block7utils.Error("HistoryDB.setCurHistoryID:binary.Write",
+		goutils.Error("HistoryDB.setCurHistoryID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -91,7 +91,7 @@ func (db *HistoryDB) GetCurHistoryID(ctx context.Context) (int64, error) {
 		if err == ankadb.ErrNotFoundKey {
 			err = db.setCurHistoryID(ctx, 1)
 			if err != nil {
-				block7utils.Error("HistoryDB.GetCurHistoryID:setCurHistoryID",
+				goutils.Error("HistoryDB.GetCurHistoryID:setCurHistoryID",
 					zap.Error(err))
 
 				return 0, err
@@ -107,7 +107,7 @@ func (db *HistoryDB) GetCurHistoryID(ctx context.Context) (int64, error) {
 	reader := bytes.NewReader(buf)
 	err = binary.Read(reader, binary.LittleEndian, &historyid)
 	if err != nil {
-		block7utils.Error("HistoryDB.GetCurHistoryID:binary.Read",
+		goutils.Error("HistoryDB.GetCurHistoryID:binary.Read",
 			zap.Error(err))
 
 		return 0, err
@@ -115,7 +115,7 @@ func (db *HistoryDB) GetCurHistoryID(ctx context.Context) (int64, error) {
 
 	err = db.setCurHistoryID(ctx, historyid+1)
 	if err != nil {
-		block7utils.Error("HistoryDB.GetCurHistoryID:setCurHistoryID",
+		goutils.Error("HistoryDB.GetCurHistoryID:setCurHistoryID",
 			zap.Error(err))
 
 		return 0, err
@@ -128,7 +128,7 @@ func (db *HistoryDB) GetCurHistoryID(ctx context.Context) (int64, error) {
 func (db *HistoryDB) updHistory(ctx context.Context, scene *block7pb.Scene) error {
 	buf, err := proto.Marshal(scene)
 	if err != nil {
-		block7utils.Warn("HistoryDB.updHistory:Marshal",
+		goutils.Warn("HistoryDB.updHistory:Marshal",
 			zap.Error(err))
 
 		return err
@@ -138,7 +138,7 @@ func (db *HistoryDB) updHistory(ctx context.Context, scene *block7pb.Scene) erro
 	err = db.AnkaDB.Set(ctx, historydbname, makeHistoryDBKey(scene.HistoryID), buf)
 	db.mutexDB.Unlock()
 	if err != nil {
-		block7utils.Warn("HistoryDB.updHistory:Set",
+		goutils.Warn("HistoryDB.updHistory:Set",
 			zap.Error(err))
 
 		return err
@@ -164,7 +164,7 @@ func (db *HistoryDB) GetHistory(ctx context.Context, historyid int64) (*block7pb
 
 	err = proto.Unmarshal(buf, stage)
 	if err != nil {
-		block7utils.Warn("HistoryDB.GetHistory:Unmarshal",
+		goutils.Warn("HistoryDB.GetHistory:Unmarshal",
 			zap.Error(err))
 
 		return nil, err
@@ -177,7 +177,7 @@ func (db *HistoryDB) GetHistory(ctx context.Context, historyid int64) (*block7pb
 func (db *HistoryDB) SaveHistory(ctx context.Context, scene *block7game.Scene) (*block7pb.Scene, error) {
 	hid, err := db.GetCurHistoryID(ctx)
 	if err != nil {
-		block7utils.Warn("HistoryDB.SaveHistory:GetCurHistoryID",
+		goutils.Warn("HistoryDB.SaveHistory:GetCurHistoryID",
 			zap.Error(err))
 
 		return nil, err
@@ -185,7 +185,7 @@ func (db *HistoryDB) SaveHistory(ctx context.Context, scene *block7game.Scene) (
 
 	pbhistory, err := scene.ToHistoryPB()
 	if err != nil {
-		block7utils.Warn("HistoryDB.SaveHistory:ToHistoryPB",
+		goutils.Warn("HistoryDB.SaveHistory:ToHistoryPB",
 			zap.Error(err))
 
 		return nil, err
@@ -195,7 +195,7 @@ func (db *HistoryDB) SaveHistory(ctx context.Context, scene *block7game.Scene) (
 
 	err = db.updHistory(ctx, pbhistory)
 	if err != nil {
-		block7utils.Warn("HistoryDB.SaveHistory:updHistory",
+		goutils.Warn("HistoryDB.SaveHistory:updHistory",
 			zap.Error(err))
 
 		return nil, err
@@ -211,7 +211,7 @@ func (db *HistoryDB) setHistoryID(ctx context.Context, mapid int32, userid int64
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, historyid)
 	if err != nil {
-		block7utils.Error("HistoryDB.setHistoryID:binary.Write",
+		goutils.Error("HistoryDB.setHistoryID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -221,7 +221,7 @@ func (db *HistoryDB) setHistoryID(ctx context.Context, mapid int32, userid int64
 	err = db.AnkaDB.Set(ctx, historydbname, makeUserHistoryDBKey(mapid, userid, sceneid, historyid), buf.Bytes())
 	db.mutexDB.Unlock()
 	if err != nil {
-		block7utils.Error("HistoryDB.setHistoryID:binary.Write",
+		goutils.Error("HistoryDB.setHistoryID:binary.Write",
 			zap.String("key", makeUserHistoryDBKey(mapid, userid, sceneid, historyid)),
 			zap.Error(err))
 
@@ -232,7 +232,7 @@ func (db *HistoryDB) setHistoryID(ctx context.Context, mapid int32, userid int64
 	err = db.AnkaDB.Set(ctx, historydbname, makeSceneHistoryDBKey(mapid, userid, sceneid, historyid), buf.Bytes())
 	db.mutexDB.Unlock()
 	if err != nil {
-		block7utils.Error("HistoryDB.setHistoryID:binary.Write",
+		goutils.Error("HistoryDB.setHistoryID:binary.Write",
 			zap.String("key", makeSceneHistoryDBKey(mapid, userid, sceneid, historyid)),
 			zap.Error(err))
 

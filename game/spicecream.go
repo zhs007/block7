@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -64,7 +64,7 @@ func (icecream *SpecialIceCream) OnFixScene(rng IRng, std *SpecialTypeData, scen
 	// 	return scene.BlockNums-nums >= std.Nums*3
 	// })
 	// if err != nil {
-	// 	block7utils.Error("SpecialIceCream.OnFixScene:GetAllBlocksEx",
+	// 	goutils.Error("SpecialIceCream.OnFixScene:GetAllBlocksEx",
 	// 		zap.Error(err))
 
 	// 	return err
@@ -75,7 +75,7 @@ func (icecream *SpecialIceCream) OnFixScene(rng IRng, std *SpecialTypeData, scen
 	// for i := 0; i < std.Nums; i++ {
 	// 	cr, err := rng.Rand(len(lst))
 	// 	if err != nil {
-	// 		block7utils.Error("SpecialIceCream.OnFixScene:GetAllBlocksEx",
+	// 		goutils.Error("SpecialIceCream.OnFixScene:GetAllBlocksEx",
 	// 			zap.Int("i", i),
 	// 			zap.Error(err))
 
@@ -97,7 +97,7 @@ func (icecream *SpecialIceCream) OnFixScene(rng IRng, std *SpecialTypeData, scen
 	// 	return scene.InitArr[z][y][x] == icecream.spoonID
 	// })
 	// if err != nil {
-	// 	block7utils.Error("SpecialIceCream.OnFixScene:GetAllBlocks",
+	// 	goutils.Error("SpecialIceCream.OnFixScene:GetAllBlocks",
 	// 		zap.Error(err))
 
 	// 	return err
@@ -121,7 +121,7 @@ func (icecream *SpecialIceCream) OnFixScene(rng IRng, std *SpecialTypeData, scen
 	// 	return 0
 	// })
 	// if err != nil {
-	// 	block7utils.Error("SpecialIceCream.OnFixScene:AddBlocksVal",
+	// 	goutils.Error("SpecialIceCream.OnFixScene:AddBlocksVal",
 	// 		zap.Error(err))
 
 	// 	return err
@@ -142,7 +142,7 @@ func (icecream *SpecialIceCream) OnFixScene(rng IRng, std *SpecialTypeData, scen
 // fixScene - fixScene
 func (icecream *SpecialIceCream) fixSpoon(rng IRng, scene *Scene, lstchild []int) error {
 	lstValid := CheckScene(scene, func(x, y, z int) bool {
-		ci := block7utils.FindInt3(lstchild, x, y, z)
+		ci := goutils.FindInt3(lstchild, x, y, z)
 		if ci < 0 {
 			if scene.InitArr[z][y][x] != icecream.spoonID {
 				return true
@@ -155,7 +155,7 @@ func (icecream *SpecialIceCream) fixSpoon(rng IRng, scene *Scene, lstchild []int
 	for i := 0; i < len(lstchild)/3; i++ {
 		if scene.InitArr[lstchild[i*3+2]][lstchild[i*3+1]][lstchild[i*3]] == icecream.spoonID {
 			if len(lstValid) <= 0 {
-				block7utils.Error("SpecialIceCream.fixSpoon:",
+				goutils.Error("SpecialIceCream.fixSpoon:",
 					zap.Error(ErrInvalidSafeList))
 
 				return ErrInvalidSafeList
@@ -163,7 +163,7 @@ func (icecream *SpecialIceCream) fixSpoon(rng IRng, scene *Scene, lstchild []int
 
 			cr, err := rng.Rand(len(lstValid))
 			if err != nil {
-				block7utils.Error("SpecialIceCream.fixSpoon:Rand",
+				goutils.Error("SpecialIceCream.fixSpoon:Rand",
 					zap.Error(err))
 
 				return err
@@ -211,7 +211,7 @@ func (icecream *SpecialIceCream) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 		return scene.BlockNums-nums >= std.Nums*3
 	})
 	if err != nil {
-		block7utils.Error("SpecialIceCream.OnGenSymbolLayers:GetAllBlocksEx",
+		goutils.Error("SpecialIceCream.OnGenSymbolLayers:GetAllBlocksEx",
 			zap.Error(err))
 
 		return nil, err
@@ -222,7 +222,7 @@ func (icecream *SpecialIceCream) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 	for i := 0; i < std.Nums; i++ {
 		cr, err := rng.Rand(len(lst))
 		if err != nil {
-			block7utils.Error("SpecialIceCream.OnGenSymbolLayers:GetAllBlocksEx",
+			goutils.Error("SpecialIceCream.OnGenSymbolLayers:GetAllBlocksEx",
 				zap.Int("i", i),
 				zap.Error(err))
 
@@ -245,7 +245,7 @@ func (icecream *SpecialIceCream) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 
 	err = icecream.fixSpoon(rng, scene, lstchild)
 	if err != nil {
-		block7utils.Error("SpecialIceCream.OnGenSymbolLayers:fixSpoon",
+		goutils.Error("SpecialIceCream.OnGenSymbolLayers:fixSpoon",
 			zap.Error(err))
 
 		return nil, err

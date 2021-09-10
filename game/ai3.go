@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -25,7 +25,7 @@ func ai3L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			if len(v.LevelList[0]) >= BlockNums-lsn {
 				lst0, lst1, err := GetBlockDataList(v.LevelList[0], BlockNums-lsn)
 				if err != nil {
-					block7utils.Error("ai3L0:lsn:GetBlockDataList",
+					goutils.Error("ai3L0:lsn:GetBlockDataList",
 						zap.Int("lsn", lsn),
 						zap.Int("len", len(v.LevelList[0])),
 						zap.Error(err))
@@ -35,7 +35,7 @@ func ai3L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 				for _, b := range lst1 {
 					if !aiResult.Click(symbol, scene, b) {
-						block7utils.Error("ai3L0:lsn:Click",
+						goutils.Error("ai3L0:lsn:Click",
 							zap.Int("lsn", lsn),
 							zap.Int("len", len(v.LevelList[0])),
 							zap.Error(err))
@@ -53,7 +53,7 @@ func ai3L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		if len(v.LevelList[0]) >= BlockNums {
 			lst0, lst1, err := GetBlockDataList(v.LevelList[0], len(v.LevelList[0])-len(v.LevelList[0])%BlockNums)
 			if err != nil {
-				block7utils.Error("ai3L0:GetBlockDataList",
+				goutils.Error("ai3L0:GetBlockDataList",
 					zap.Int("len", len(v.LevelList[0])),
 					zap.Error(err))
 
@@ -62,7 +62,7 @@ func ai3L0(scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 			for _, b := range lst1 {
 				if !aiResult.Click(symbol, scene, b) {
-					block7utils.Error("ai3L0:Click",
+					goutils.Error("ai3L0:Click",
 						zap.Int("len", len(v.LevelList[0])),
 						zap.Error(err))
 
@@ -96,7 +96,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		if len(v.LevelList[0])+len(v.LevelList[1]) >= BlockNums-lsn {
 			ln0 := len(v.LevelList[0])
 			if ln0 >= BlockNums-lsn {
-				block7utils.Error("ai3L1:lsn:ln0",
+				goutils.Error("ai3L1:lsn:ln0",
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0))
 
@@ -106,7 +106,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			if ln0 > 0 {
 				lst0, lst1, err := GetBlockDataList(v.LevelList[0], ln0)
 				if err != nil {
-					block7utils.Error("ai3L1:lsn:ln0:GetBlockDataList",
+					goutils.Error("ai3L1:lsn:ln0:GetBlockDataList",
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
@@ -116,7 +116,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 				for _, b := range lst1 {
 					if !aiResult.Click(symbol, scene, b) {
-						block7utils.Error("ai3L1:lsn:ln0:Click",
+						goutils.Error("ai3L1:lsn:ln0:Click",
 							zap.Int("lsn", lsn),
 							zap.Int("ln0", ln0),
 							zap.Error(err))
@@ -130,7 +130,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 			ln1 := BlockNums - lsn - ln0
 			if ln1 <= 0 || ln1 > len(v.LevelList[1]) {
-				block7utils.Error("ai3L1:lsn:ln1",
+				goutils.Error("ai3L1:lsn:ln1",
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -141,7 +141,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 			lst0, lst1, err := GetBlockDataList(v.LevelList[1], ln1)
 			if err != nil {
-				block7utils.Error("ai3L1:lsn:ln1:GetBlockDataList",
+				goutils.Error("ai3L1:lsn:ln1:GetBlockDataList",
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -154,7 +154,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 				if len(b.Parent) > 0 {
 					for _, bc := range b.Parent {
 						if !aiResult.Click(symbol, scene, bc) {
-							block7utils.Error("ai3L1:lsn:ln1:parent:Click",
+							goutils.Error("ai3L1:lsn:ln1:parent:Click",
 								zap.Int("lsn", lsn),
 								zap.Int("ln0", ln0),
 								zap.Int("ln1", ln1),
@@ -166,7 +166,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 				}
 
 				if !aiResult.Click(symbol, scene, b) {
-					block7utils.Error("ai3L1:lsn:ln1:Click",
+					goutils.Error("ai3L1:lsn:ln1:Click",
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
 						zap.Int("ln1", ln1),
@@ -187,7 +187,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 	if len(v.LevelList[0])+len(v.LevelList[1]) >= BlockNums {
 		ln0 := len(v.LevelList[0])
 		if ln0 >= BlockNums {
-			block7utils.Error("ai3L1:ln0",
+			goutils.Error("ai3L1:ln0",
 				zap.Int("ln0", ln0))
 
 			return true
@@ -196,7 +196,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 		if ln0 > 0 {
 			lst0, lst1, err := GetBlockDataList(v.LevelList[0], ln0)
 			if err != nil {
-				block7utils.Error("ai3L1:ln0:GetBlockDataList",
+				goutils.Error("ai3L1:ln0:GetBlockDataList",
 					zap.Int("ln0", ln0),
 					zap.Error(err))
 
@@ -205,7 +205,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 			for _, b := range lst1 {
 				if !aiResult.Click(symbol, scene, b) {
-					block7utils.Error("ai3L1:ln0:Click",
+					goutils.Error("ai3L1:ln0:Click",
 						zap.Int("ln0", ln0),
 						zap.Error(err))
 
@@ -218,7 +218,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 		ln1 := BlockNums - ln0
 		if ln1 <= 0 || ln1 > len(v.LevelList[1]) {
-			block7utils.Error("ai3L1:ln1",
+			goutils.Error("ai3L1:ln1",
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Int("len1", len(v.LevelList[1])))
@@ -228,7 +228,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 
 		lst0, lst1, err := GetBlockDataList(v.LevelList[1], ln1)
 		if err != nil {
-			block7utils.Error("ai3L1:ln1:GetBlockDataList",
+			goutils.Error("ai3L1:ln1:GetBlockDataList",
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
 				zap.Error(err))
@@ -240,7 +240,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			if len(b.Parent) > 0 {
 				for _, bc := range b.Parent {
 					if !aiResult.Click(symbol, scene, bc) {
-						block7utils.Error("ai3L1:ln1:parent:Click",
+						goutils.Error("ai3L1:ln1:parent:Click",
 							zap.Int("ln0", ln0),
 							zap.Int("ln1", ln1),
 							zap.Error(err))
@@ -251,7 +251,7 @@ func ai3L1(scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult, symbol int) bo
 			}
 
 			if !aiResult.Click(symbol, scene, b) {
-				block7utils.Error("ai3L1:ln1:Click",
+				goutils.Error("ai3L1:ln1:Click",
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
 					zap.Error(err))
@@ -304,7 +304,7 @@ func AI3(scene *Scene, name string) error {
 		mapbi := scene.Analysis()
 		aiResult, err := ai3PreProc(scene, mapbi)
 		if err != nil {
-			block7utils.Warn("AI3:ai3PreProc",
+			goutils.Warn("AI3:ai3PreProc",
 				zap.Error(err))
 
 			return err
@@ -332,7 +332,7 @@ func AI3(scene *Scene, name string) error {
 				for _, b := range aibr.Arr {
 					gs, isok := scene.Click(b.X, b.Y, b.Z)
 					if !isok {
-						block7utils.Warn("AI3:Click",
+						goutils.Warn("AI3:Click",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z))
@@ -341,7 +341,7 @@ func AI3(scene *Scene, name string) error {
 					}
 
 					if gs != GameStateRunning {
-						block7utils.Info("AI3:Click",
+						goutils.Info("AI3:Click",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z),
@@ -359,13 +359,13 @@ func AI3(scene *Scene, name string) error {
 		}
 
 		if clicknums > 0 {
-			block7utils.Info("AI3:Turn",
+			goutils.Info("AI3:Turn",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),
 				zap.Int("block", len(scene.Block)))
 		} else {
-			block7utils.Info("AI3:Turn:fail",
+			goutils.Info("AI3:Turn:fail",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),

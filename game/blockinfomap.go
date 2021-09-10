@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 )
 
 type BlockInfoMap struct {
@@ -139,6 +139,6 @@ func (m *BlockInfoMap) InsBlockSymbol(s int) {
 }
 
 func (m *BlockInfoMap) OutputLog(msg string) {
-	block7utils.Info(msg,
-		block7utils.JSON("BlockInfoMap", m))
+	goutils.Info(msg,
+		goutils.JSON("BlockInfoMap", m))
 }

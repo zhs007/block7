@@ -6,7 +6,7 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/zhs007/block7/block7pb"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -65,14 +65,14 @@ func LoadScene(rng IRng, fn string, blockNums int) (*Scene, error) {
 func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelData2) (*Scene, error) {
 	ss, err := MgrSpecial.GenSymbols(ld2)
 	if err != nil {
-		block7utils.Warn("NewScene:MgrSpecial.GenSymbols",
+		goutils.Warn("NewScene:MgrSpecial.GenSymbols",
 			zap.Error(err))
 
 		return nil, err
 	}
 
 	if len(ss) > stage.IconNums {
-		block7utils.Warn("NewScene:IconNums",
+		goutils.Warn("NewScene:IconNums",
 			zap.Error(ErrInvalidSpecialNums))
 
 		return nil, ErrInvalidSpecialNums
@@ -81,7 +81,7 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 	if len(ss) < stage.IconNums {
 		ss1, err := genSymbols(rng, symbols, stage.IconNums-len(ss))
 		if err != nil {
-			block7utils.Warn("NewScene:genSymbols",
+			goutils.Warn("NewScene:genSymbols",
 				zap.Error(err))
 
 			return nil, err
@@ -90,8 +90,8 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		ss = append(ss, ss1...)
 	}
 
-	// block7utils.Debug("NewScene",
-	// 	block7utils.JSON("symbols", ss))
+	// goutils.Debug("NewScene",
+	// 	goutils.JSON("symbols", ss))
 
 	scene := &Scene{
 		Width:        stage.Width,
@@ -130,12 +130,12 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		scene.Arr = append(scene.Arr, arrslayer)
 	}
 
-	scene.InitArr = block7utils.CloneArr3(scene.Arr)
+	scene.InitArr = goutils.CloneArr3(scene.Arr)
 	scene.BlockNums = nums
 
 	err = MgrSpecial.OnFixScene(rng, ld2, scene)
 	if err != nil {
-		block7utils.Warn("NewScene:OnFixScene",
+		goutils.Warn("NewScene:OnFixScene",
 			zap.Error(err))
 
 		return nil, err
@@ -143,7 +143,7 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 
 	err = MgrSpecial.GenSymbolLayers(rng, ld2, scene)
 	if err != nil {
-		block7utils.Warn("NewScene:GenSymbolLayers",
+		goutils.Warn("NewScene:GenSymbolLayers",
 			zap.Error(err))
 
 		return nil, err
@@ -167,9 +167,9 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 	}
 
 	if pbscene.InitArr2 != nil {
-		arr, err := block7utils.Int32ArrToIntArr3(pbscene.InitArr2, scene.Width, scene.Height, scene.Layers)
+		arr, err := goutils.Int32ArrToIntArr3(pbscene.InitArr2, scene.Width, scene.Height, scene.Layers)
 		if err != nil {
-			block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr3:InitArr2",
+			goutils.Warn("NewSceneFromPB:Int32ArrToIntArr3:InitArr2",
 				zap.Error(err))
 
 			return nil, err
@@ -192,15 +192,15 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 		}
 	}
 
-	scene.InitArr = block7utils.CloneArr3(scene.Arr)
+	scene.InitArr = goutils.CloneArr3(scene.Arr)
 	scene.BlockNums = scene.CountNums(func(x, y, z int) bool {
 		return scene.InitArr[z][y][x] > 0
 	})
 
 	if len(pbscene.History2) > 0 {
-		arr, err := block7utils.Int32ArrToIntArr2(pbscene.History2, 4, len(pbscene.History2)/4)
+		arr, err := goutils.Int32ArrToIntArr2(pbscene.History2, 4, len(pbscene.History2)/4)
 		if err != nil {
-			block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr2:History2",
+			goutils.Warn("NewSceneFromPB:Int32ArrToIntArr2:History2",
 				zap.Error(err))
 
 			return nil, err
@@ -218,9 +218,9 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 				Special:   cs,
 			}
 
-			arr, err := block7utils.Int32ArrToIntArr2(pbsl.Values, 3, len(pbsl.Values)/3)
+			arr, err := goutils.Int32ArrToIntArr2(pbsl.Values, 3, len(pbsl.Values)/3)
 			if err != nil {
-				block7utils.Warn("NewSceneFromPB:Int32ArrToIntArr2:SpecialLayer",
+				goutils.Warn("NewSceneFromPB:Int32ArrToIntArr2:SpecialLayer",
 					zap.Error(err))
 
 				return nil, err
@@ -235,7 +235,7 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 }
 
 func (scene *Scene) Restart() {
-	scene.Arr = block7utils.CloneArr3(scene.InitArr)
+	scene.Arr = goutils.CloneArr3(scene.InitArr)
 	scene.History = nil
 	scene.ClickValues = 0
 	scene.Block = nil
@@ -440,7 +440,7 @@ func (scene *Scene) analysisNeighboring(mapBI *BlockInfoMap, arr []*BlockData, b
 			if scene.CanClickEx(bd.X+xoff, bd.Y+yoff, bd.Z, arr) {
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+xoff, bd.Y+yoff, bd.Z, scene.Arr[bd.Z][bd.Y+yoff][bd.X+xoff], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisNeighboring:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisNeighboring:AddBlockDataEx2",
 						zap.Int("x", bd.X+xoff),
 						zap.Int("y", bd.Y+yoff),
 						zap.Int("z", bd.Z),
@@ -456,7 +456,7 @@ func (scene *Scene) analysisNeighboring(mapBI *BlockInfoMap, arr []*BlockData, b
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisNeighboring:analysisDepth",
+							goutils.Warn("Scene.analysisNeighboring:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -479,7 +479,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 	if bd.Z > 0 {
 		err := scene.analysisNeighboring(mapBI, arr, bd, level, depth)
 		if err != nil {
-			block7utils.Warn("Scene.analysisDepth:analysisNeighboring",
+			goutils.Warn("Scene.analysisDepth:analysisNeighboring",
 				zap.Error(err))
 		}
 
@@ -488,7 +488,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -508,7 +508,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -524,7 +524,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X+scene.XOff], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X+scene.XOff),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -544,7 +544,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -560,7 +560,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y+scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -580,7 +580,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -596,7 +596,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X+scene.XOff, bd.Y+scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y+scene.YOff][bd.X+scene.XOff], arr)
 
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X+scene.XOff),
 						zap.Int("y", bd.Y+scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -616,7 +616,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -632,7 +632,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -652,7 +652,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -668,7 +668,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X-scene.XOff, bd.Y, bd.Z-1, scene.Arr[bd.Z-1][bd.Y][bd.X-scene.XOff], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X-scene.XOff),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z-1),
@@ -688,7 +688,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -704,7 +704,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y-scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -724,7 +724,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -740,7 +740,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 				cb, err := mapBI.AddBlockDataEx2(scene, bd.X-scene.XOff, bd.Y-scene.YOff, bd.Z-1, scene.Arr[bd.Z-1][bd.Y-scene.YOff][bd.X-scene.XOff], arr)
 				if err != nil {
-					block7utils.Warn("Scene.analysisDepth:AddBlockDataEx2",
+					goutils.Warn("Scene.analysisDepth:AddBlockDataEx2",
 						zap.Int("x", bd.X-scene.XOff),
 						zap.Int("y", bd.Y-scene.YOff),
 						zap.Int("z", bd.Z-1),
@@ -760,7 +760,7 @@ func (scene *Scene) analysisDepth(mapBI *BlockInfoMap, arr []*BlockData, bd *Blo
 
 						err = scene.analysisDepth(mapBI, arr1, cb, level+1, depth-1)
 						if err != nil {
-							block7utils.Warn("Scene.analysisDepth:analysisDepth",
+							goutils.Warn("Scene.analysisDepth:analysisDepth",
 								zap.Int("x", cb.X),
 								zap.Int("y", cb.Y),
 								zap.Int("z", cb.Z),
@@ -791,7 +791,7 @@ func (scene *Scene) Analysis() *BlockInfoMap {
 
 				err := scene.analysisDepth(mapBI, arr, bd, 1, 1)
 				if err != nil {
-					block7utils.Warn("Scene.Analysis:analysisDepth",
+					goutils.Warn("Scene.Analysis:analysisDepth",
 						zap.Int("x", bd.X),
 						zap.Int("y", bd.Y),
 						zap.Int("z", bd.Z),
@@ -834,7 +834,7 @@ func (scene *Scene) Click(x, y, z int) (int, bool) {
 	scene.Block = insBlockDataAndProc(scene.Block, b)
 
 	if !scene.IsValid() {
-		block7utils.Warn("Scene.Click:IsValid",
+		goutils.Warn("Scene.Click:IsValid",
 			zap.Int("blocks", len(scene.Block)),
 			zap.Int("lastSymbols", scene.CountSymbols()))
 	}
@@ -869,7 +869,7 @@ func (scene *Scene) Save(fn string) error {
 
 	buf, err := json.Marshal(scene)
 	if err != nil {
-		block7utils.Error("Scene.Save:Marshal",
+		goutils.Error("Scene.Save:Marshal",
 			zap.Error(err))
 
 		return err
@@ -877,7 +877,7 @@ func (scene *Scene) Save(fn string) error {
 
 	err = ioutil.WriteFile(fn, buf, os.ModePerm)
 	if err != nil {
-		block7utils.Error("Scene.Save:WriteFile",
+		goutils.Error("Scene.Save:WriteFile",
 			zap.Error(err))
 
 		return err
@@ -1025,7 +1025,7 @@ func (scene *Scene) GetChildren(lst []int, x, y, z int, funcHasBlock FuncHasBloc
 		return lst
 	}
 
-	if block7utils.FindInt3(lst, x, y, z) >= 0 {
+	if goutils.FindInt3(lst, x, y, z) >= 0 {
 		return lst
 	}
 
@@ -1106,9 +1106,9 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 		Offset:  scene.Offset,
 	}
 
-	arr, x, y, z := block7utils.IntArr3ToInt32Arr(scene.InitArr)
+	arr, x, y, z := goutils.IntArr3ToInt32Arr(scene.InitArr)
 	if x != scene.Width || y != scene.Height || z != scene.Layers {
-		block7utils.Error("Scene.ToScenePB:IntArr3ToInt32Arr",
+		goutils.Error("Scene.ToScenePB:IntArr3ToInt32Arr",
 			zap.Int("x", x),
 			zap.Int("y", y),
 			zap.Int("z", z),
@@ -1142,7 +1142,7 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 			LayerType: int32(sl.LayerType),
 		}
 
-		vals, _, _ := block7utils.IntArr2ToInt32Arr(sl.Pos)
+		vals, _, _ := goutils.IntArr2ToInt32Arr(sl.Pos)
 		pbsl.Values = vals
 
 		pbScene.SpecialLayer = append(pbScene.SpecialLayer, pbsl)
@@ -1166,9 +1166,9 @@ func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 		return pbScene, nil
 	}
 
-	arr, x, _ := block7utils.IntArr2ToInt32Arr(scene.History)
+	arr, x, _ := goutils.IntArr2ToInt32Arr(scene.History)
 	if x != 4 {
-		block7utils.Error("Scene.ToHistoryPB:IntArr2ToInt32Arr",
+		goutils.Error("Scene.ToHistoryPB:IntArr2ToInt32Arr",
 			zap.Int("x", x),
 			zap.Error(ErrInvalidHistoryWidth))
 
@@ -1206,7 +1206,7 @@ func (scene *Scene) ReadyToClient() {
 func (scene *Scene) HasSpecialLayer(x, y, z int, layer int) bool {
 	for _, v := range scene.SpecialLayers {
 		if v.Layer == layer {
-			if block7utils.FindIntArr(v.Pos, []int{x, y, z}) >= 0 {
+			if goutils.FindIntArr(v.Pos, []int{x, y, z}) >= 0 {
 				return true
 			}
 		}

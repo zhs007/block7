@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -57,8 +57,8 @@ func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, question.layer)
 	})
 	if err != nil {
-		block7utils.Error("SpecialQuestion.OnGenSymbolLayers:GenBlocks",
-			block7utils.JSON("SpecialTypeData", std),
+		goutils.Error("SpecialQuestion.OnGenSymbolLayers:GenBlocks",
+			goutils.JSON("SpecialTypeData", std),
 			zap.Error(err))
 
 		return nil, err
