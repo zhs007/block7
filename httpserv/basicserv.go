@@ -6,7 +6,7 @@ import (
 
 	"github.com/zhs007/block7"
 	block7game "github.com/zhs007/block7/game"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -22,7 +22,7 @@ type BasicServ struct {
 func NewBasicServ(cfg *Config) (*BasicServ, error) {
 	userdb, err := block7.NewUserDB(cfg.DBPath, "", cfg.DBEngine)
 	if err != nil {
-		block7utils.Error("NewBasicServ:NewUserDB",
+		goutils.Error("NewBasicServ:NewUserDB",
 			zap.Error(err))
 
 		return nil, err
@@ -30,7 +30,7 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 
 	stagedb, err := block7.NewStageDB(cfg.DBPath, "", cfg.DBEngine)
 	if err != nil {
-		block7utils.Error("NewBasicServ:NewStageDB",
+		goutils.Error("NewBasicServ:NewStageDB",
 			zap.Error(err))
 
 		return nil, err
@@ -38,7 +38,7 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 
 	historydb, err := block7.NewHistoryDB(cfg.DBPath, "", cfg.DBEngine)
 	if err != nil {
-		block7utils.Error("NewBasicServ:NewHistoryDB",
+		goutils.Error("NewBasicServ:NewHistoryDB",
 			zap.Error(err))
 
 		return nil, err
@@ -47,7 +47,7 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 	levelmgr := block7game.NewLevelMgr()
 	err = levelmgr.LoadLevel("./gamedata/level.json")
 	if err != nil {
-		block7utils.Error("NewBasicServ:LoadLevel",
+		goutils.Error("NewBasicServ:LoadLevel",
 			zap.Error(err))
 
 		return nil, err
@@ -73,7 +73,7 @@ func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 	if udi.UserHash == "" {
 		ui, err := serv.UserDB.NewUser(context.Background(), udi)
 		if err != nil {
-			block7utils.Error("BasicServ.Login:NewUser",
+			goutils.Error("BasicServ.Login:NewUser",
 				zap.Error(err))
 
 			return nil, err
@@ -87,7 +87,7 @@ func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 
 	ui, err := serv.UserDB.UpdUserDeviceInfo(context.Background(), udi)
 	if err != nil {
-		block7utils.Error("BasicServ.Login:UpdUserDeviceInfo",
+		goutils.Error("BasicServ.Login:UpdUserDeviceInfo",
 			zap.Error(err))
 
 		return nil, err
@@ -102,7 +102,7 @@ func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 // Mission - get mission
 func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	if params.UserHash == "" {
-		block7utils.Error("BasicServ.Mission",
+		goutils.Error("BasicServ.Mission",
 			zap.Error(ErrInvalidUserHash))
 
 		return nil, ErrInvalidUserHash
@@ -110,14 +110,14 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	uid, err := serv.UserDB.GetUserID(context.Background(), params.UserHash)
 	if err != nil {
-		block7utils.Error("BasicServ.Mission:GetUserID",
+		goutils.Error("BasicServ.Mission:GetUserID",
 			zap.Error(err))
 
 		return nil, err
 	}
 
 	if uid <= 0 {
-		block7utils.Error("BasicServ.Mission:GetUserID",
+		goutils.Error("BasicServ.Mission:GetUserID",
 			zap.Int64("uid", uid),
 			zap.String("userhash", params.UserHash),
 			zap.Error(ErrInvalidUserHash))
@@ -128,7 +128,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	if params.HistoryID > 0 {
 		pbscene, err := serv.HistoryDB.GetHistory(context.Background(), params.HistoryID)
 		if err != nil {
-			block7utils.Error("BasicServ.Mission:StageDB.GetHistory",
+			goutils.Error("BasicServ.Mission:StageDB.GetHistory",
 				zap.Error(err))
 
 			return nil, err
@@ -137,7 +137,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		if pbscene != nil {
 			pbscene1, err := serv.StageDB.GetStage(context.Background(), pbscene.SceneID)
 			if err != nil {
-				block7utils.Error("BasicServ.Mission:StageDB.GetStage",
+				goutils.Error("BasicServ.Mission:StageDB.GetStage",
 					zap.Error(err))
 
 				return nil, err
@@ -148,8 +148,8 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 				scene, err := block7game.NewSceneFromPB(pbscene1)
 				if err != nil {
-					block7utils.Error("BasicServ.Mission:NewSceneFromPB",
-						block7utils.JSON("pbscene", pbscene1),
+					goutils.Error("BasicServ.Mission:NewSceneFromPB",
+						goutils.JSON("pbscene", pbscene1),
 						zap.Error(err))
 
 					return nil, err
@@ -170,7 +170,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 	if params.SceneID > 0 {
 		pbscene, err := serv.StageDB.GetStage(context.Background(), params.SceneID)
 		if err != nil {
-			block7utils.Error("BasicServ.Mission:StageDB.GetStage",
+			goutils.Error("BasicServ.Mission:StageDB.GetStage",
 				zap.Error(err))
 
 			return nil, err
@@ -179,8 +179,8 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		if pbscene != nil {
 			scene, err := block7game.NewSceneFromPB(pbscene)
 			if err != nil {
-				block7utils.Error("BasicServ.Mission:NewSceneFromPB",
-					block7utils.JSON("pbscene", pbscene),
+				goutils.Error("BasicServ.Mission:NewSceneFromPB",
+					goutils.JSON("pbscene", pbscene),
 					zap.Error(err))
 
 				return nil, err
@@ -199,7 +199,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	ld2, isok := serv.LevelMgr.MapLevel[params.MissionID+30000]
 	if !isok {
-		block7utils.Error("BasicServ.Mission:GetUserID",
+		goutils.Error("BasicServ.Mission:GetUserID",
 			zap.Int64("uid", uid),
 			zap.Int("missionid", params.MissionID),
 			zap.Error(ErrInvalidMissionID))
@@ -209,7 +209,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
 	if err != nil {
-		block7utils.Error("BasicServ.Mission:LoadStage",
+		goutils.Error("BasicServ.Mission:LoadStage",
 			zap.Error(err))
 
 		return nil, err
@@ -219,7 +219,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	scene, err := block7game.NewScene(rng, stage, ld2.GenSymbols(), block7game.DefaultMaxBlockNums, ld2)
 	if err != nil {
-		block7utils.Error("BasicServ.Mission:NewScene",
+		goutils.Error("BasicServ.Mission:NewScene",
 			zap.Error(err))
 
 		return nil, err
@@ -230,7 +230,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	pbScene, err := serv.StageDB.SaveStage(context.Background(), scene)
 	if err != nil {
-		block7utils.Error("BasicServ.Mission:SaveStage",
+		goutils.Error("BasicServ.Mission:SaveStage",
 			zap.Error(err))
 
 		return nil, err
@@ -248,7 +248,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 // MissionData - upload mission data
 func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResult, error) {
 	if params.UserHash == "" {
-		block7utils.Error("BasicServ.MissionData",
+		goutils.Error("BasicServ.MissionData",
 			zap.Error(ErrInvalidUserHash))
 
 		return nil, ErrInvalidUserHash
@@ -256,14 +256,14 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 
 	uid, err := serv.UserDB.GetUserID(context.Background(), params.UserHash)
 	if err != nil {
-		block7utils.Error("BasicServ.MissionData:GetUserID",
+		goutils.Error("BasicServ.MissionData:GetUserID",
 			zap.Error(err))
 
 		return nil, err
 	}
 
 	if uid <= 0 {
-		block7utils.Error("BasicServ.MissionData:GetUserID",
+		goutils.Error("BasicServ.MissionData:GetUserID",
 			zap.Int64("uid", uid),
 			zap.String("userhash", params.UserHash),
 			zap.Error(ErrInvalidUserHash))
@@ -274,25 +274,25 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 	if params.HistoryID > 0 {
 		pbscene2, err := serv.HistoryDB.GetHistory(context.Background(), params.HistoryID)
 		if err != nil {
-			block7utils.Error("BasicServ.MissionData:GetHistory",
+			goutils.Error("BasicServ.MissionData:GetHistory",
 				zap.Error(err))
 
 			return nil, err
 		}
 
 		if pbscene2 != nil {
-			arr2, err := block7utils.Int32ArrToIntArr2(pbscene2.History2, 4, len(pbscene2.History2)/4)
+			arr2, err := goutils.Int32ArrToIntArr2(pbscene2.History2, 4, len(pbscene2.History2)/4)
 			if err != nil {
-				block7utils.Error("BasicServ.MissionData:Int32ArrToIntArr2",
+				goutils.Error("BasicServ.MissionData:Int32ArrToIntArr2",
 					zap.Error(err))
 
 				return nil, err
 			}
 
-			if pbscene2.SceneID == params.SceneID && block7utils.IsSameIntArr2Ex2(params.History, arr2, 3) {
+			if pbscene2.SceneID == params.SceneID && goutils.IsSameIntArr2Ex2(params.History, arr2, 3) {
 				if serv.cfg.IsDebugMode {
-					block7utils.Debug("BasicServ.MissionData",
-						block7utils.JSON("history", pbscene2))
+					goutils.Debug("BasicServ.MissionData",
+						goutils.JSON("history", pbscene2))
 				}
 
 				return &MissionDataResult{
@@ -301,16 +301,16 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 			}
 
 			if serv.cfg.IsDebugMode {
-				block7utils.Debug("BasicServ.MissionData:cmp",
+				goutils.Debug("BasicServ.MissionData:cmp",
 					zap.Int64("sceneID", pbscene2.SceneID),
-					block7utils.JSON("arr2", arr2))
+					goutils.JSON("arr2", arr2))
 			}
 		}
 	}
 
 	pbscene, err := serv.StageDB.GetStage(context.Background(), params.SceneID)
 	if err != nil {
-		block7utils.Error("BasicServ.MissionData:GetStage",
+		goutils.Error("BasicServ.MissionData:GetStage",
 			zap.Error(err))
 
 		return nil, err
@@ -318,7 +318,7 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 
 	scene, err := block7game.NewSceneFromPB(pbscene)
 	if err != nil {
-		block7utils.Error("BasicServ.MissionData:NewSceneFromPB",
+		goutils.Error("BasicServ.MissionData:NewSceneFromPB",
 			zap.Error(err))
 
 		return nil, err
@@ -328,15 +328,15 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 
 	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), scene)
 	if err != nil {
-		block7utils.Error("BasicServ.MissionData:SaveHistory",
+		goutils.Error("BasicServ.MissionData:SaveHistory",
 			zap.Error(err))
 
 		return nil, err
 	}
 
 	if serv.cfg.IsDebugMode {
-		block7utils.Debug("BasicServ.MissionData",
-			block7utils.JSON("history", pbscene1))
+		goutils.Debug("BasicServ.MissionData",
+			goutils.JSON("history", pbscene1))
 	}
 
 	return &MissionDataResult{

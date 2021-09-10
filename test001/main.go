@@ -5,19 +5,19 @@ import (
 
 	"github.com/zhs007/block7"
 	block7game "github.com/zhs007/block7/game"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
 func main() {
-	block7utils.InitLogger("block7.ai", block7.Version,
+	goutils.InitLogger("block7.ai", block7.Version,
 		"info", true, "./logs")
 
 	rng := block7game.NewRngNormal()
 
 	scene, err := block7game.LoadScene(rng, "./cfg/0-15.json", block7game.DefaultMaxBlockNums)
 	if err != nil {
-		block7utils.Error("LoadStage",
+		goutils.Error("LoadStage",
 			zap.Error(err))
 
 		return

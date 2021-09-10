@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -20,7 +20,7 @@ func ai2L0(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 			if len(v.LevelList[0]) >= BlockNums-lsn {
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], BlockNums-lsn)
 				if err != nil {
-					block7utils.Error("ai2L0:RandBlockData:BlockNums-lsn",
+					goutils.Error("ai2L0:RandBlockData:BlockNums-lsn",
 						zap.Error(err))
 
 					return clicknums, true
@@ -29,7 +29,7 @@ func ai2L0(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 				for _, b := range lst1 {
 					gs, isok := scene.Click(b.X, b.Y, b.Z)
 					if !isok {
-						block7utils.Warn("ai2L0:Click:BlockNums-lsn",
+						goutils.Warn("ai2L0:Click:BlockNums-lsn",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z))
@@ -38,7 +38,7 @@ func ai2L0(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 					}
 
 					if gs != GameStateRunning {
-						block7utils.Info("ai2L0:Click:BlockNums-lsn",
+						goutils.Info("ai2L0:Click:BlockNums-lsn",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z),
@@ -57,7 +57,7 @@ func ai2L0(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 		if len(v.LevelList[0]) >= BlockNums {
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], len(v.LevelList[0])-len(v.LevelList[0])%BlockNums)
 			if err != nil {
-				block7utils.Error("ai2L0:RandBlockData",
+				goutils.Error("ai2L0:RandBlockData",
 					zap.Error(err))
 
 				return clicknums, true
@@ -66,7 +66,7 @@ func ai2L0(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 			for _, b := range lst1 {
 				gs, isok := scene.Click(b.X, b.Y, b.Z)
 				if !isok {
-					block7utils.Warn("ai2L0:Click",
+					goutils.Warn("ai2L0:Click",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z))
@@ -75,7 +75,7 @@ func ai2L0(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 				}
 
 				if gs != GameStateRunning {
-					block7utils.Info("ai2L0:Click",
+					goutils.Info("ai2L0:Click",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z),
@@ -106,7 +106,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 			if ln0 > 0 {
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 				if err != nil {
-					block7utils.Error("ai2L1:RandBlockData:BlockNums-lsn:l0",
+					goutils.Error("ai2L1:RandBlockData:BlockNums-lsn:l0",
 						zap.Error(err))
 
 					return clicknums, true
@@ -116,7 +116,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 				for _, b := range lst1 {
 					gs, isok := scene.Click(b.X, b.Y, b.Z)
 					if !isok {
-						block7utils.Warn("ai2L1:Click:L1L0",
+						goutils.Warn("ai2L1:Click:L1L0",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z))
@@ -126,7 +126,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 					}
 
 					if gs != GameStateRunning {
-						block7utils.Info("ai2L1:Click:L1L0",
+						goutils.Info("ai2L1:Click:L1L0",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z),
@@ -142,7 +142,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 			if len(v.LevelList[1]) > 0 && BlockNums-lsn-ln0 > 0 {
 				lst2, lst3, err := RandBlockData(rng, v.LevelList[1], BlockNums-lsn-ln0)
 				if err != nil {
-					block7utils.Error("ai2L1:RandBlockData:BlockNums-lsn:l1",
+					goutils.Error("ai2L1:RandBlockData:BlockNums-lsn:l1",
 						zap.Error(err))
 
 					return clicknums, true
@@ -153,7 +153,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 						for _, bc := range b.Parent {
 							gs, isok := scene.Click(bc.X, bc.Y, bc.Z)
 							if !isok {
-								block7utils.Warn("ai2L1:Click:L1:Parent",
+								goutils.Warn("ai2L1:Click:L1:Parent",
 									zap.Int("x", bc.X),
 									zap.Int("y", bc.Y),
 									zap.Int("z", bc.Z))
@@ -162,7 +162,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 							}
 
 							if gs != GameStateRunning {
-								block7utils.Info("ai2L1:Click:L1:Parent",
+								goutils.Info("ai2L1:Click:L1:Parent",
 									zap.Int("x", bc.X),
 									zap.Int("y", bc.Y),
 									zap.Int("z", bc.Z),
@@ -175,7 +175,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 
 					gs, isok := scene.Click(b.X, b.Y, b.Z)
 					if !isok {
-						block7utils.Warn("ai2L1:Click:L1",
+						goutils.Warn("ai2L1:Click:L1",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z))
@@ -185,7 +185,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 					}
 
 					if gs != GameStateRunning {
-						block7utils.Info("ai2L1:Click:L1",
+						goutils.Info("ai2L1:Click:L1",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z),
@@ -211,7 +211,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 		if ln0 > 0 {
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 			if err != nil {
-				block7utils.Error("ai2L1:RandBlockData:l0",
+				goutils.Error("ai2L1:RandBlockData:l0",
 					zap.Error(err))
 
 				return clicknums, true
@@ -221,7 +221,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 			for _, b := range lst1 {
 				gs, isok := scene.Click(b.X, b.Y, b.Z)
 				if !isok {
-					block7utils.Warn("ai2L1:Click:L1L0",
+					goutils.Warn("ai2L1:Click:L1L0",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z))
@@ -231,7 +231,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 				}
 
 				if gs != GameStateRunning {
-					block7utils.Info("ai2L1:Click:L1L0",
+					goutils.Info("ai2L1:Click:L1L0",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z),
@@ -247,7 +247,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 		if len(v.LevelList[1])-ln > 0 {
 			lst2, lst3, err := RandBlockData(rng, v.LevelList[1], len(v.LevelList[1])-ln)
 			if err != nil {
-				block7utils.Error("ai2L1:RandBlockData:l0",
+				goutils.Error("ai2L1:RandBlockData:l0",
 					zap.Error(err))
 
 				return clicknums, true
@@ -258,7 +258,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 					for _, bc := range b.Parent {
 						gs, isok := scene.Click(bc.X, bc.Y, bc.Z)
 						if !isok {
-							block7utils.Warn("ai2L1:Click:L1:Parent",
+							goutils.Warn("ai2L1:Click:L1:Parent",
 								zap.Int("x", bc.X),
 								zap.Int("y", bc.Y),
 								zap.Int("z", bc.Z))
@@ -267,7 +267,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 						}
 
 						if gs != GameStateRunning {
-							block7utils.Info("ai2L1:Click:L1:Parent",
+							goutils.Info("ai2L1:Click:L1:Parent",
 								zap.Int("x", bc.X),
 								zap.Int("y", bc.Y),
 								zap.Int("z", bc.Z),
@@ -280,7 +280,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 
 				gs, isok := scene.Click(b.X, b.Y, b.Z)
 				if !isok {
-					block7utils.Warn("ai2L1:Click:L1",
+					goutils.Warn("ai2L1:Click:L1",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z))
@@ -290,7 +290,7 @@ func ai2L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) 
 				}
 
 				if gs != GameStateRunning {
-					block7utils.Info("ai2L1:Click:L1",
+					goutils.Info("ai2L1:Click:L1",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z),
@@ -399,13 +399,13 @@ func ai2(rng IRng, scene *Scene) bool {
 		}
 
 		if clicknums > 0 {
-			block7utils.Info("ai2:Turn",
+			goutils.Info("ai2:Turn",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),
 				zap.Int("block", len(scene.Block)))
 		} else {
-			block7utils.Info("ai2:Turn:fail",
+			goutils.Info("ai2:Turn:fail",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),

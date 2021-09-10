@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -25,7 +25,7 @@ func ai1L0(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 
 					gs, isok := scene.Click(b.X, b.Y, b.Z)
 					if !isok {
-						block7utils.Warn("AI1:Click:L0",
+						goutils.Warn("AI1:Click:L0",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z))
@@ -34,7 +34,7 @@ func ai1L0(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 					}
 
 					if gs != GameStateRunning {
-						block7utils.Info("AI1:Click:L0",
+						goutils.Info("AI1:Click:L0",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z),
@@ -57,7 +57,7 @@ func ai1L0(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 
 				gs, isok := scene.Click(b.X, b.Y, b.Z)
 				if !isok {
-					block7utils.Warn("AI1:Click:L0",
+					goutils.Warn("AI1:Click:L0",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z))
@@ -66,7 +66,7 @@ func ai1L0(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 				}
 
 				if gs != GameStateRunning {
-					block7utils.Info("AI1:Click:L0",
+					goutils.Info("AI1:Click:L0",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z),
@@ -95,7 +95,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 			for _, b := range v.LevelList[0] {
 				gs, isok := scene.Click(b.X, b.Y, b.Z)
 				if !isok {
-					block7utils.Warn("AI1:Click:L1L0",
+					goutils.Warn("AI1:Click:L1L0",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z))
@@ -105,7 +105,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 				}
 
 				if gs != GameStateRunning {
-					block7utils.Info("AI1:Click:L1L0",
+					goutils.Info("AI1:Click:L1L0",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z),
@@ -121,7 +121,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 					for _, bc := range b.Parent {
 						gs, isok := scene.Click(bc.X, bc.Y, bc.Z)
 						if !isok {
-							block7utils.Warn("AI1:Click:L1:Parent",
+							goutils.Warn("AI1:Click:L1:Parent",
 								zap.Int("x", bc.X),
 								zap.Int("y", bc.Y),
 								zap.Int("z", bc.Z))
@@ -130,7 +130,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 						}
 
 						if gs != GameStateRunning {
-							block7utils.Info("AI1:Click:L1:Parent",
+							goutils.Info("AI1:Click:L1:Parent",
 								zap.Int("x", bc.X),
 								zap.Int("y", bc.Y),
 								zap.Int("z", bc.Z),
@@ -143,7 +143,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 
 				gs, isok := scene.Click(b.X, b.Y, b.Z)
 				if !isok {
-					block7utils.Warn("AI1:Click:L1",
+					goutils.Warn("AI1:Click:L1",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z))
@@ -153,7 +153,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 				}
 
 				if gs != GameStateRunning {
-					block7utils.Info("AI1:Click:L1",
+					goutils.Info("AI1:Click:L1",
 						zap.Int("x", b.X),
 						zap.Int("y", b.Y),
 						zap.Int("z", b.Z),
@@ -178,7 +178,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 		for _, b := range v.LevelList[0] {
 			gs, isok := scene.Click(b.X, b.Y, b.Z)
 			if !isok {
-				block7utils.Warn("AI1:Click:L1L0",
+				goutils.Warn("AI1:Click:L1L0",
 					zap.Int("x", b.X),
 					zap.Int("y", b.Y),
 					zap.Int("z", b.Z))
@@ -188,7 +188,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 			}
 
 			if gs != GameStateRunning {
-				block7utils.Info("AI1:Click:L1L0",
+				goutils.Info("AI1:Click:L1L0",
 					zap.Int("x", b.X),
 					zap.Int("y", b.Y),
 					zap.Int("z", b.Z),
@@ -204,7 +204,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 				for _, bc := range b.Parent {
 					gs, isok := scene.Click(bc.X, bc.Y, bc.Z)
 					if !isok {
-						block7utils.Warn("AI1:Click:L1:Parent",
+						goutils.Warn("AI1:Click:L1:Parent",
 							zap.Int("x", bc.X),
 							zap.Int("y", bc.Y),
 							zap.Int("z", bc.Z))
@@ -213,7 +213,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 					}
 
 					if gs != GameStateRunning {
-						block7utils.Info("AI1:Click:L1:Parent",
+						goutils.Info("AI1:Click:L1:Parent",
 							zap.Int("x", bc.X),
 							zap.Int("y", bc.Y),
 							zap.Int("z", bc.Z),
@@ -226,7 +226,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 
 			gs, isok := scene.Click(b.X, b.Y, b.Z)
 			if !isok {
-				block7utils.Warn("AI1:Click:L1",
+				goutils.Warn("AI1:Click:L1",
 					zap.Int("x", b.X),
 					zap.Int("y", b.Y),
 					zap.Int("z", b.Z))
@@ -236,7 +236,7 @@ func ai1L1(scene *Scene, mapbi *BlockInfoMap, symbol int) (int, bool) {
 			}
 
 			if gs != GameStateRunning {
-				block7utils.Info("AI1:Click:L1",
+				goutils.Info("AI1:Click:L1",
 					zap.Int("x", b.X),
 					zap.Int("y", b.Y),
 					zap.Int("z", b.Z),
@@ -349,13 +349,13 @@ func AI1(scene *Scene, name string) {
 		}
 
 		if clicknums > 0 {
-			block7utils.Info("AI1:Turn",
+			goutils.Info("AI1:Turn",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),
 				zap.Int("block", len(scene.Block)))
 		} else {
-			block7utils.Info("AI1:Turn:fail",
+			goutils.Info("AI1:Turn:fail",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),

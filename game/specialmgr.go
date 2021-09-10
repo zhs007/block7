@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -31,9 +31,9 @@ func (mgr *SpecialMgr) GenSymbols(ld2 *LevelData2) ([]int, error) {
 		if isok {
 			arr1, err := sp.OnGenSymbolBlocks(v, arr)
 			if err != nil {
-				block7utils.Error("SpecialMgr.GenSymbols:OnGenSymbolBlocks",
+				goutils.Error("SpecialMgr.GenSymbols:OnGenSymbolBlocks",
 					zap.Int("SpecialID", v.SpecialID),
-					block7utils.JSON("SpecialTypeData", v),
+					goutils.JSON("SpecialTypeData", v),
 					zap.Error(err))
 
 				return nil, err
@@ -57,9 +57,9 @@ func (mgr *SpecialMgr) OnFixScene(rng IRng, ld2 *LevelData2, scene *Scene) error
 		if isok {
 			err := sp.OnFixScene(rng, v, scene)
 			if err != nil {
-				block7utils.Error("SpecialMgr.OnFixScene:OnFixScene",
+				goutils.Error("SpecialMgr.OnFixScene:OnFixScene",
 					zap.Int("SpecialID", v.SpecialID),
-					block7utils.JSON("SpecialTypeData", v),
+					goutils.JSON("SpecialTypeData", v),
 					zap.Error(err))
 
 				return err
@@ -81,9 +81,9 @@ func (mgr *SpecialMgr) GenSymbolLayers(rng IRng, ld2 *LevelData2, scene *Scene) 
 		if isok {
 			layer, err := sp.OnGenSymbolLayers(rng, v, scene)
 			if err != nil {
-				block7utils.Error("SpecialMgr.GenSymbolLayers:OnGenSymbolLayers",
+				goutils.Error("SpecialMgr.GenSymbolLayers:OnGenSymbolLayers",
 					zap.Int("SpecialID", v.SpecialID),
-					block7utils.JSON("SpecialTypeData", v),
+					goutils.JSON("SpecialTypeData", v),
 					zap.Error(err))
 
 				return err

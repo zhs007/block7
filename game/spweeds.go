@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -57,8 +57,8 @@ func (weeds *SpecialWeeds) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, sce
 		return scene.InitArr[z][y][x] > 0 && scene.InitArr[z][y][x] != 403 && !scene.HasSpecialLayer(x, y, z, weeds.layer)
 	})
 	if err != nil {
-		block7utils.Error("SpecialWeeds.OnGenSymbolLayers:GenBlocks",
-			block7utils.JSON("SpecialTypeData", std),
+		goutils.Error("SpecialWeeds.OnGenSymbolLayers:GenBlocks",
+			goutils.JSON("SpecialTypeData", std),
 			zap.Error(err))
 
 		return nil, err

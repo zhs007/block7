@@ -1,6 +1,6 @@
 package block7game
 
-import block7utils "github.com/zhs007/block7/utils"
+import goutils "github.com/zhs007/goutils"
 
 // SpecialCake - cake
 type SpecialCake struct {
@@ -53,9 +53,9 @@ func (cake *SpecialCake) fixScene(scene *Scene, lst [][]*BlockData) {
 			if scene.IsParent2(fv, cv, func(x, y, z int) bool {
 				return scene.InitArr[z][y][x] > 0
 			}) {
-				block7utils.Debug("SpecialCake.fixScene",
-					block7utils.JSON("cake", cv),
-					block7utils.JSON("fork", fv))
+				goutils.Debug("SpecialCake.fixScene",
+					goutils.JSON("cake", cv),
+					goutils.JSON("fork", fv))
 
 				scene.InitArr[fv.Z][fv.Y][fv.X] = cake.cakeID
 				scene.InitArr[cv.Z][cv.Y][cv.X] = cake.forkID

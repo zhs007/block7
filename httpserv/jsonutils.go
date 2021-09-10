@@ -2,29 +2,29 @@ package block7serv
 
 import (
 	"github.com/buger/jsonparser"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
 func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
-	userHash, err := block7utils.GetJsonString(data, "userHash")
+	userHash, err := goutils.GetJsonString(data, "userHash")
 	if err != nil {
-		block7utils.Error("parseMissionDataParams:userHash",
+		goutils.Error("parseMissionDataParams:userHash",
 			zap.Error(err))
 
 		return nil, err
 	}
 
-	sceneID, err := block7utils.GetJsonInt(data, "mission")
+	sceneID, err := goutils.GetJsonInt(data, "mission")
 	if err != nil {
-		block7utils.Error("parseMissionDataParams:mission",
+		goutils.Error("parseMissionDataParams:mission",
 			zap.Error(err))
 
 		return nil, err
 	}
 
 	if sceneID <= 0 {
-		block7utils.Error("parseMissionDataParams",
+		goutils.Error("parseMissionDataParams",
 			zap.Error(ErrInvalidSceneID))
 
 		return nil, ErrInvalidSceneID
@@ -34,7 +34,7 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 
 	offset, err := jsonparser.ArrayEach(data, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
 		if err != nil {
-			block7utils.Error("parseMissionDataParams:ArrayEach:func",
+			goutils.Error("parseMissionDataParams:ArrayEach:func",
 				zap.Int("offset", offset),
 				zap.Error(err))
 
@@ -46,7 +46,7 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 
 			offset3, err3 := jsonparser.ArrayEach(value, func(value2 []byte, dataType2 jsonparser.ValueType, offset2 int, err2 error) {
 				if err2 != nil {
-					block7utils.Error("parseMissionDataParams:ArrayEach:func2",
+					goutils.Error("parseMissionDataParams:ArrayEach:func2",
 						zap.Int("offset", offset2),
 						zap.Error(err2))
 
@@ -56,7 +56,7 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 				if dataType2 == jsonparser.Number {
 					cv, err5 := jsonparser.GetInt(value2)
 					if err != nil {
-						block7utils.Error("parseMissionDataParams:ArrayEach:func2:GetInt",
+						goutils.Error("parseMissionDataParams:ArrayEach:func2:GetInt",
 							zap.Int("offset", offset2),
 							zap.Error(err5))
 
@@ -68,12 +68,12 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 					return
 				}
 
-				block7utils.Error("parseMissionDataParams:ArrayEach:func2:dataType",
+				goutils.Error("parseMissionDataParams:ArrayEach:func2:dataType",
 					zap.Int("offset", offset),
 					zap.String("dataType", dataType.String()))
 			})
 			if err3 != nil {
-				block7utils.Error("parseMissionDataParams:ArrayEach:func:ArrayEach",
+				goutils.Error("parseMissionDataParams:ArrayEach:func:ArrayEach",
 					zap.Int("offset", offset3),
 					zap.Error(err3))
 
@@ -85,21 +85,21 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 			return
 		}
 
-		block7utils.Error("parseMissionDataParams:ArrayEach:func:dataType",
+		goutils.Error("parseMissionDataParams:ArrayEach:func:dataType",
 			zap.Int("offset", offset),
 			zap.String("dataType", dataType.String()))
 	}, "history")
 	if err != nil {
-		block7utils.Error("parseMissionDataParams:ArrayEach",
+		goutils.Error("parseMissionDataParams:ArrayEach",
 			zap.Int("offset", offset),
 			zap.Error(err))
 
 		return nil, err
 	}
 
-	historyID, err := block7utils.GetJsonInt(data, "srcHistory")
+	historyID, err := goutils.GetJsonInt(data, "srcHistory")
 	if err != nil {
-		block7utils.Error("parseMissionDataParams:srcHistory",
+		goutils.Error("parseMissionDataParams:srcHistory",
 			zap.Error(err))
 
 		return nil, err

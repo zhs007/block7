@@ -5,17 +5,17 @@ import (
 
 	"github.com/zhs007/block7"
 	block7game "github.com/zhs007/block7/game"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
 func main() {
-	block7utils.InitLogger("block7.ai", block7.Version,
+	goutils.InitLogger("block7.ai", block7.Version,
 		"debug", true, "./logs")
 
 	stage, err := block7game.LoadStage("./cfg/level_0100.json")
 	if err != nil {
-		block7utils.Error("LoadStage",
+		goutils.Error("LoadStage",
 			zap.Error(err))
 
 		return
@@ -26,7 +26,7 @@ func main() {
 	for i := 0; i < 100; i++ {
 		scene, err := block7game.NewScene(rng, stage, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, block7game.DefaultMaxBlockNums, nil)
 		if err != nil {
-			block7utils.Error("NewScene",
+			goutils.Error("NewScene",
 				zap.Error(err))
 
 			return

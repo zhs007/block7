@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -26,7 +26,7 @@ func ai5L0(rng IRng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult2, sym
 			if len(v.LevelList[0]) >= BlockNums-lsn {
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], BlockNums-lsn)
 				if err != nil {
-					block7utils.Error("ai5L0:lsn:RandBlockData",
+					goutils.Error("ai5L0:lsn:RandBlockData",
 						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("len", len(v.LevelList[0])),
@@ -39,7 +39,7 @@ func ai5L0(rng IRng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult2, sym
 
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(level, symbol, scene, b) {
-						block7utils.Error("ai5L0:lsn:ClickEx",
+						goutils.Error("ai5L0:lsn:ClickEx",
 							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("len", len(v.LevelList[0])),
@@ -60,7 +60,7 @@ func ai5L0(rng IRng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult2, sym
 		if len(v.LevelList[0]) >= BlockNums {
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], len(v.LevelList[0])-len(v.LevelList[0])%BlockNums)
 			if err != nil {
-				block7utils.Error("ai5L0:RandBlockData",
+				goutils.Error("ai5L0:RandBlockData",
 					zap.Int("symbol", symbol),
 					zap.Int("len", len(v.LevelList[0])),
 					zap.Error(err))
@@ -72,7 +72,7 @@ func ai5L0(rng IRng, scene *Scene, mapBI *BlockInfoMap, aiResult *AIResult2, sym
 
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(level, symbol, scene, b) {
-					block7utils.Error("ai5L0:ClickEx",
+					goutils.Error("ai5L0:ClickEx",
 						zap.Int("symbol", symbol),
 						zap.Int("len", len(v.LevelList[0])))
 
@@ -112,7 +112,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 		if len(v.LevelList[0])+len(v.LevelList[1]) >= BlockNums-lsn {
 			ln0 := len(v.LevelList[0])
 			if ln0 >= BlockNums-lsn {
-				block7utils.Error("ai5L1:lsn:ln0",
+				goutils.Error("ai5L1:lsn:ln0",
 					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0))
@@ -125,7 +125,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 			if ln0 > 0 {
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 				if err != nil {
-					block7utils.Error("ai5L1:lsn:ln0:RandBlockData",
+					goutils.Error("ai5L1:lsn:ln0:RandBlockData",
 						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
@@ -138,7 +138,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(level, symbol, scene, b) {
-						block7utils.Error("ai5L1:lsn:ln0:ClickEx",
+						goutils.Error("ai5L1:lsn:ln0:ClickEx",
 							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("ln0", ln0),
@@ -155,7 +155,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			ln1 := BlockNums - lsn - ln0
 			if ln1 <= 0 || ln1 > len(v.LevelList[1]) {
-				block7utils.Error("ai5L1:lsn:ln1",
+				goutils.Error("ai5L1:lsn:ln1",
 					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
@@ -169,7 +169,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 			if err != nil {
-				block7utils.Error("ai5L1:lsn:ln1:RandBlockData",
+				goutils.Error("ai5L1:lsn:ln1:RandBlockData",
 					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
@@ -183,7 +183,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(level, symbol, scene, b) {
-					block7utils.Error("ai5L1:lsn:ln1:ClickEx",
+					goutils.Error("ai5L1:lsn:ln1:ClickEx",
 						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
@@ -210,7 +210,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 	if len(v.LevelList[0])+len(v.LevelList[1]) >= BlockNums {
 		ln0 := len(v.LevelList[0])
 		if ln0 >= BlockNums {
-			block7utils.Error("ai5L1:ln0",
+			goutils.Error("ai5L1:ln0",
 				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0))
 
@@ -222,7 +222,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 		if ln0 > 0 {
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 			if err != nil {
-				block7utils.Error("ai5L1:ln0:RandBlockData",
+				goutils.Error("ai5L1:ln0:RandBlockData",
 					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Error(err))
@@ -234,7 +234,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(level, symbol, scene, b) {
-					block7utils.Error("ai5L1:ln0:ClickEx",
+					goutils.Error("ai5L1:ln0:ClickEx",
 						zap.Int("symbol", symbol),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
@@ -250,7 +250,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 		ln1 := BlockNums - ln0
 		if ln1 <= 0 || ln1 > len(v.LevelList[1]) {
-			block7utils.Error("ai5L1:ln1",
+			goutils.Error("ai5L1:ln1",
 				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
@@ -263,7 +263,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 		lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 		if err != nil {
-			block7utils.Error("ai5L1:ln1:RandBlockData",
+			goutils.Error("ai5L1:ln1:RandBlockData",
 				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
@@ -276,7 +276,7 @@ func ai5L1(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 		for _, b := range lst1 {
 			if !aiResult.ClickEx(level, symbol, scene, b) {
-				block7utils.Error("ai5L1:ln1:ClickEx",
+				goutils.Error("ai5L1:ln1:ClickEx",
 					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -321,7 +321,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 		if len(v.LevelList[0])+len(v.LevelList[1])+len(v.LevelList[2]) >= BlockNums-lsn {
 			ln0 := len(v.LevelList[0])
 			if ln0 >= BlockNums-lsn {
-				block7utils.Error("ai5L2:lsn:ln0",
+				goutils.Error("ai5L2:lsn:ln0",
 					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0))
@@ -334,7 +334,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 			if ln0 > 0 {
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 				if err != nil {
-					block7utils.Error("ai5L2:lsn:ln0:RandBlockData",
+					goutils.Error("ai5L2:lsn:ln0:RandBlockData",
 						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
@@ -347,7 +347,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(level, symbol, scene, b) {
-						block7utils.Error("ai5L2:lsn:ln0:ClickEx",
+						goutils.Error("ai5L2:lsn:ln0:ClickEx",
 							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("ln0", ln0),
@@ -364,7 +364,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			ln1 := len(v.LevelList[1])
 			if ln1+ln0 >= BlockNums-lsn {
-				block7utils.Error("ai5L2:lsn:ln1",
+				goutils.Error("ai5L2:lsn:ln1",
 					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
@@ -378,7 +378,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 			if ln1 > 0 {
 				lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 				if err != nil {
-					block7utils.Error("ai5L2:lsn:ln1:RandBlockData",
+					goutils.Error("ai5L2:lsn:ln1:RandBlockData",
 						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
@@ -392,7 +392,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 				for _, b := range lst1 {
 					if !aiResult.ClickEx(level, symbol, scene, b) {
-						block7utils.Error("ai5L2:lsn:ln1:ClickEx",
+						goutils.Error("ai5L2:lsn:ln1:ClickEx",
 							zap.Int("symbol", symbol),
 							zap.Int("lsn", lsn),
 							zap.Int("ln0", ln0),
@@ -410,7 +410,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			ln2 := BlockNums - lsn - ln0 - ln1
 			if ln2 <= 0 || ln2 > len(v.LevelList[2]) {
-				block7utils.Error("ai5L2:lsn:ln2",
+				goutils.Error("ai5L2:lsn:ln2",
 					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
@@ -425,7 +425,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[2], ln2)
 			if err != nil {
-				block7utils.Error("ai5L2:lsn:ln2:RandBlockData",
+				goutils.Error("ai5L2:lsn:ln2:RandBlockData",
 					zap.Int("symbol", symbol),
 					zap.Int("lsn", lsn),
 					zap.Int("ln0", ln0),
@@ -440,7 +440,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(level, symbol, scene, b) {
-					block7utils.Error("ai5L2:lsn:ln2:ClickEx",
+					goutils.Error("ai5L2:lsn:ln2:ClickEx",
 						zap.Int("symbol", symbol),
 						zap.Int("lsn", lsn),
 						zap.Int("ln0", ln0),
@@ -469,7 +469,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 	if len(v.LevelList[0])+len(v.LevelList[1])+len(v.LevelList[2]) >= BlockNums {
 		ln0 := len(v.LevelList[0])
 		if ln0 >= BlockNums {
-			block7utils.Error("ai5L2:ln0",
+			goutils.Error("ai5L2:ln0",
 				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0))
 
@@ -481,7 +481,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 		if ln0 > 0 {
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[0], ln0)
 			if err != nil {
-				block7utils.Error("ai5L2:ln0:RandBlockData",
+				goutils.Error("ai5L2:ln0:RandBlockData",
 					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Error(err))
@@ -493,7 +493,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(level, symbol, scene, b) {
-					block7utils.Error("ai5L2:ln0:ClickEx",
+					goutils.Error("ai5L2:ln0:ClickEx",
 						zap.Int("symbol", symbol),
 						zap.Int("ln0", ln0),
 						zap.Error(err))
@@ -509,7 +509,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 		ln1 := len(v.LevelList[1])
 		if ln0+ln1 >= BlockNums {
-			block7utils.Error("ai5L2:ln1",
+			goutils.Error("ai5L2:ln1",
 				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1))
@@ -522,7 +522,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 		if ln1 > 0 {
 			lst0, lst1, err := RandBlockData(rng, v.LevelList[1], ln1)
 			if err != nil {
-				block7utils.Error("ai5L2:ln1:RandBlockData",
+				goutils.Error("ai5L2:ln1:RandBlockData",
 					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Error(err))
@@ -534,7 +534,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 			for _, b := range lst1 {
 				if !aiResult.ClickEx(level, symbol, scene, b) {
-					block7utils.Error("ai5L2:ln0:ClickEx",
+					goutils.Error("ai5L2:ln0:ClickEx",
 						zap.Int("symbol", symbol),
 						zap.Int("ln0", ln0),
 						zap.Int("ln1", ln1),
@@ -551,7 +551,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 		ln2 := BlockNums - ln0 - ln1
 		if ln2 <= 0 || ln2 > len(v.LevelList[2]) {
-			block7utils.Error("ai5L2:ln2",
+			goutils.Error("ai5L2:ln2",
 				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
@@ -565,7 +565,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 		lst0, lst1, err := RandBlockData(rng, v.LevelList[2], ln2)
 		if err != nil {
-			block7utils.Error("ai5L2:ln2:RandBlockData",
+			goutils.Error("ai5L2:ln2:RandBlockData",
 				zap.Int("symbol", symbol),
 				zap.Int("ln0", ln0),
 				zap.Int("ln1", ln1),
@@ -579,7 +579,7 @@ func ai5L2(rng IRng, scene *Scene, mapbi *BlockInfoMap, aiResult *AIResult2, sym
 
 		for _, b := range lst1 {
 			if !aiResult.ClickEx(level, symbol, scene, b) {
-				block7utils.Error("ai5L2:ln2:ClickEx",
+				goutils.Error("ai5L2:ln2:ClickEx",
 					zap.Int("symbol", symbol),
 					zap.Int("ln0", ln0),
 					zap.Int("ln1", ln1),
@@ -645,7 +645,7 @@ func procAI5(rng IRng, scene *Scene, name string) (bool, error) {
 		mapbi := scene.Analysis()
 		aiResult, err := ai5PreProc(rng, scene, mapbi)
 		if err != nil {
-			block7utils.Warn("AI5:ai5PreProc",
+			goutils.Warn("AI5:ai5PreProc",
 				zap.Error(err))
 
 			return false, err
@@ -682,7 +682,7 @@ func procAI5(rng IRng, scene *Scene, name string) (bool, error) {
 		if ck != "" {
 			aibr, isok := aiResult.MapSymbols[ck]
 			if isok {
-				block7utils.Debug("AI5:Symbol",
+				goutils.Debug("AI5:Symbol",
 					zap.Int("symbol", aibr.Symbol),
 					zap.Int("arr", len(aibr.Arr)),
 					zap.Int("block", len(aibr.LastBlocks)))
@@ -690,7 +690,7 @@ func procAI5(rng IRng, scene *Scene, name string) (bool, error) {
 				for _, b := range aibr.Arr {
 					gs, isok := scene.Click(b.X, b.Y, b.Z)
 					if !isok {
-						block7utils.Warn("AI5:Click",
+						goutils.Warn("AI5:Click",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z))
@@ -699,7 +699,7 @@ func procAI5(rng IRng, scene *Scene, name string) (bool, error) {
 					}
 
 					if gs != GameStateRunning {
-						block7utils.Info("AI5:Click",
+						goutils.Info("AI5:Click",
 							zap.Int("x", b.X),
 							zap.Int("y", b.Y),
 							zap.Int("z", b.Z),
@@ -717,13 +717,13 @@ func procAI5(rng IRng, scene *Scene, name string) (bool, error) {
 		}
 
 		if clicknums > 0 {
-			block7utils.Info("AI5:Turn",
+			goutils.Info("AI5:Turn",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),
 				zap.Int("block", len(scene.Block)))
 		} else {
-			block7utils.Info("AI5:Turn:fail",
+			goutils.Info("AI5:Turn:fail",
 				zap.Int("iturn", iturn),
 				zap.Int("clicknums", clicknums),
 				zap.Int("blocknums", scene.CountSymbols()),
@@ -747,7 +747,7 @@ func AI5(rng IRng, scene *Scene, name string, totalnums int) error {
 
 			isok, err := procAI5(rng, scene, name)
 			if err != nil {
-				block7utils.Error("AI5:procAI5",
+				goutils.Error("AI5:procAI5",
 					zap.Error(err))
 			}
 
@@ -766,7 +766,7 @@ func AI5(rng IRng, scene *Scene, name string, totalnums int) error {
 
 	isok, err := procAI5(rng, scene, name)
 	if err != nil {
-		block7utils.Error("AI5:procAI5",
+		goutils.Error("AI5:procAI5",
 			zap.Error(err))
 	}
 

@@ -1,7 +1,7 @@
 package block7game
 
 import (
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -20,7 +20,7 @@ func GenBlocks(rng IRng, scene *Scene, nums int, funcHasBlock FuncHasBlock, func
 	}
 
 	if len(lstpos)/3 < nums {
-		block7utils.Error("GenBlocks",
+		goutils.Error("GenBlocks",
 			zap.Int("validpos", len(lstpos)/3),
 			zap.Int("nums", nums),
 			zap.Error(ErrInvalidGenBrotherBlocksNums))
@@ -31,7 +31,7 @@ func GenBlocks(rng IRng, scene *Scene, nums int, funcHasBlock FuncHasBlock, func
 	for i := 0; i < nums; i++ {
 		cr, err := rng.Rand(len(lstpos) / 3)
 		if err != nil {
-			block7utils.Error("GenBlocks",
+			goutils.Error("GenBlocks",
 				zap.Int("validpos", len(lstpos)/3),
 				zap.Int("nums", nums),
 				zap.Int("i", i),
@@ -46,7 +46,7 @@ func GenBlocks(rng IRng, scene *Scene, nums int, funcHasBlock FuncHasBlock, func
 
 		lstpos = append(lstpos[0:cr*3], lstpos[(cr+1)*3:]...)
 		if len(lstpos)/3 < nums {
-			block7utils.Error("GenBlocks",
+			goutils.Error("GenBlocks",
 				zap.Int("validpos", len(lstpos)/3),
 				zap.Int("nums", nums),
 				zap.Int("i", i),
@@ -121,8 +121,8 @@ func AddBlocksVal(lst [][]int, countBlockValue FuncCountBlockValue) ([][]int, er
 	narr := [][]int{}
 	for i, pos := range lst {
 		if len(pos) < 3 {
-			block7utils.Error("GenBlocks",
-				block7utils.JSON("pos", pos),
+			goutils.Error("GenBlocks",
+				goutils.JSON("pos", pos),
 				zap.Int("i", i),
 				zap.Error(ErrInvalidPositionList))
 

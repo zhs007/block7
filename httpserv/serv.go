@@ -5,7 +5,7 @@ import (
 
 	"github.com/valyala/fasthttp"
 	block7http "github.com/zhs007/block7/http"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -27,7 +27,7 @@ func NewServ(service IService) *Serv {
 		service,
 	}
 
-	s.RegHandle(block7utils.AppendString(BasicURL, "login"),
+	s.RegHandle(goutils.AppendString(BasicURL, "login"),
 		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
 			if !ctx.Request.Header.IsGet() {
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -58,12 +58,12 @@ func NewServ(service IService) *Serv {
 				}
 			})
 
-			block7utils.Debug("block7serv.Serv.login:ParseBody",
-				block7utils.JSON("params", params))
+			goutils.Debug("block7serv.Serv.login:ParseBody",
+				goutils.JSON("params", params))
 
 			ret, err := s.Service.Login(params)
 			if err != nil {
-				block7utils.Warn("block7serv.Serv.login:Login",
+				goutils.Warn("block7serv.Serv.login:Login",
 					zap.Error(err))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
@@ -72,14 +72,14 @@ func NewServ(service IService) *Serv {
 			}
 
 			if cfg.IsDebugMode {
-				block7utils.Debug("block7serv.Serv.login",
-					block7utils.JSON("result", ret))
+				goutils.Debug("block7serv.Serv.login",
+					goutils.JSON("result", ret))
 			}
 
 			s.SetResponse(ctx, ret)
 		})
 
-	s.RegHandle(block7utils.AppendString(BasicURL, "mission"),
+	s.RegHandle(goutils.AppendString(BasicURL, "mission"),
 		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
 			if !ctx.Request.Header.IsGet() {
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -94,7 +94,7 @@ func NewServ(service IService) *Serv {
 				} else if string(k) == "missionid" {
 					i, err := strconv.Atoi(string(v))
 					if err != nil {
-						block7utils.Warn("block7serv.Serv.mission:VisitAll:missionid",
+						goutils.Warn("block7serv.Serv.mission:VisitAll:missionid",
 							zap.Error(err))
 					} else {
 						params.MissionID = i
@@ -102,7 +102,7 @@ func NewServ(service IService) *Serv {
 				} else if string(k) == "mission" {
 					i64, err := strconv.ParseInt(string(v), 10, 64)
 					if err != nil {
-						block7utils.Warn("block7serv.Serv.mission:VisitAll:mission",
+						goutils.Warn("block7serv.Serv.mission:VisitAll:mission",
 							zap.Error(err))
 					} else {
 						params.SceneID = i64
@@ -110,7 +110,7 @@ func NewServ(service IService) *Serv {
 				} else if string(k) == "history" {
 					i64, err := strconv.ParseInt(string(v), 10, 64)
 					if err != nil {
-						block7utils.Warn("block7serv.Serv.mission:VisitAll:history",
+						goutils.Warn("block7serv.Serv.mission:VisitAll:history",
 							zap.Error(err))
 					} else {
 						params.HistoryID = i64
@@ -118,11 +118,11 @@ func NewServ(service IService) *Serv {
 				}
 			})
 
-			block7utils.Debug("block7serv.Serv.mission:ParseBody",
-				block7utils.JSON("params", params))
+			goutils.Debug("block7serv.Serv.mission:ParseBody",
+				goutils.JSON("params", params))
 
 			if params.MissionID <= 0 {
-				block7utils.Warn("block7serv.Serv.mission:ParseBody",
+				goutils.Warn("block7serv.Serv.mission:ParseBody",
 					zap.Int("missionid", params.MissionID))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -132,7 +132,7 @@ func NewServ(service IService) *Serv {
 
 			ret, err := s.Service.Mission(params)
 			if err != nil {
-				block7utils.Warn("block7serv.Serv.mission:Mission",
+				goutils.Warn("block7serv.Serv.mission:Mission",
 					zap.Error(err))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
@@ -141,14 +141,14 @@ func NewServ(service IService) *Serv {
 			}
 
 			if cfg.IsDebugMode {
-				block7utils.Debug("block7serv.Serv.mission",
-					block7utils.JSON("result", ret))
+				goutils.Debug("block7serv.Serv.mission",
+					goutils.JSON("result", ret))
 			}
 
 			s.SetResponse(ctx, ret)
 		})
 
-	s.RegHandle(block7utils.AppendString(BasicURL, "missiondata"),
+	s.RegHandle(goutils.AppendString(BasicURL, "missiondata"),
 		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
 			if !ctx.Request.Header.IsPost() {
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -158,7 +158,7 @@ func NewServ(service IService) *Serv {
 
 			params, err := parseMissionDataParams(ctx.PostBody())
 			if err != nil {
-				block7utils.Warn("block7serv.Serv.missiondata:parseMissionDataParams",
+				goutils.Warn("block7serv.Serv.missiondata:parseMissionDataParams",
 					zap.Error(err))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -169,7 +169,7 @@ func NewServ(service IService) *Serv {
 			// params := &MissionDataParams{}
 			// err := s.ParseBody(ctx, params)
 			// if err != nil {
-			// 	block7utils.Warn("block7serv.Serv.missiondata:ParseBody",
+			// 	goutils.Warn("block7serv.Serv.missiondata:ParseBody",
 			// 		zap.Error(err))
 
 			// 	s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
@@ -177,12 +177,12 @@ func NewServ(service IService) *Serv {
 			// 	return
 			// }
 
-			block7utils.Debug("block7serv.Serv.missiondata:ParseBody",
-				block7utils.JSON("params", params))
+			goutils.Debug("block7serv.Serv.missiondata:ParseBody",
+				goutils.JSON("params", params))
 
 			ret, err := s.Service.MissionData(params)
 			if err != nil {
-				block7utils.Warn("block7serv.Serv.missiondata:MissionData",
+				goutils.Warn("block7serv.Serv.missiondata:MissionData",
 					zap.Error(err))
 
 				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
@@ -191,8 +191,8 @@ func NewServ(service IService) *Serv {
 			}
 
 			if cfg.IsDebugMode {
-				block7utils.Debug("block7serv.Serv.missiondata",
-					block7utils.JSON("result", ret))
+				goutils.Debug("block7serv.Serv.missiondata",
+					goutils.JSON("result", ret))
 			}
 
 			s.SetResponse(ctx, ret)

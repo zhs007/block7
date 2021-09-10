@@ -1,6 +1,6 @@
 package block7game
 
-import block7utils "github.com/zhs007/block7/utils"
+import goutils "github.com/zhs007/goutils"
 
 type BlockData struct {
 	X        int          `json:"x"`
@@ -173,7 +173,7 @@ func FindAllSymbolsEx(arr [][][]int, symbols []int) [][]*BlockData {
 	for z, arr1 := range arr {
 		for y, arr2 := range arr1 {
 			for x, s := range arr2 {
-				i := block7utils.FindInt(symbols, s)
+				i := goutils.FindInt(symbols, s)
 				if i >= 0 {
 					lst[i] = append(lst[i], &BlockData{
 						X:      x,

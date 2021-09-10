@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	jsoniter "github.com/json-iterator/go"
-	block7utils "github.com/zhs007/block7/utils"
+	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
 
@@ -61,7 +61,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 	data, err := ioutil.ReadFile(fn)
 	if err != nil {
-		block7utils.Error("LevelMgr.LoadLevel:ReadFile",
+		goutils.Error("LevelMgr.LoadLevel:ReadFile",
 			zap.String("fn", fn),
 			zap.Error(err))
 
@@ -79,7 +79,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 		id, err := strconv.Atoi(v.ID)
 		if err != nil {
-			block7utils.Error("LevelMgr.LoadLevel:Atoi",
+			goutils.Error("LevelMgr.LoadLevel:Atoi",
 				zap.String("fn", fn),
 				zap.Int("i", i),
 				zap.String("id", v.ID),
@@ -91,7 +91,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 		mapid, err := strconv.Atoi(v.MapID)
 		if err != nil {
-			block7utils.Error("LevelMgr.LoadLevel:Atoi",
+			goutils.Error("LevelMgr.LoadLevel:Atoi",
 				zap.String("fn", fn),
 				zap.Int("i", i),
 				zap.String("map", v.MapID),
@@ -103,7 +103,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 		mintype, err := strconv.Atoi(v.MinType)
 		if err != nil {
-			block7utils.Error("LevelMgr.LoadLevel:Atoi",
+			goutils.Error("LevelMgr.LoadLevel:Atoi",
 				zap.String("fn", fn),
 				zap.Int("i", i),
 				zap.String("mintype", v.MinType),
@@ -115,7 +115,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 		maxtype, err := strconv.Atoi(v.MaxType)
 		if err != nil {
-			block7utils.Error("LevelMgr.LoadLevel:Atoi",
+			goutils.Error("LevelMgr.LoadLevel:Atoi",
 				zap.String("fn", fn),
 				zap.Int("i", i),
 				zap.String("maxtype", v.MaxType),
@@ -126,7 +126,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 		ld2.MaxType = maxtype
 
 		if ld2.MinType > ld2.MaxType {
-			block7utils.Error("LevelMgr.LoadLevel:Atoi",
+			goutils.Error("LevelMgr.LoadLevel:Atoi",
 				zap.String("fn", fn),
 				zap.Int("i", i),
 				zap.String("mintype", v.MinType),
@@ -139,7 +139,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 		arrstr := strings.Split(v.SpecialType, ",")
 		if len(arrstr) > 1 {
 			if len(arrstr)%2 == 1 {
-				block7utils.Error("LevelMgr.LoadLevel:Split",
+				goutils.Error("LevelMgr.LoadLevel:Split",
 					zap.String("fn", fn),
 					zap.Int("i", i),
 					zap.String("specialType", v.SpecialType),
@@ -153,7 +153,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 				sid, err := strconv.Atoi(arrstr[j*2])
 				if err != nil {
-					block7utils.Error("LevelMgr.LoadLevel:Atoi",
+					goutils.Error("LevelMgr.LoadLevel:Atoi",
 						zap.String("fn", fn),
 						zap.Int("i", i),
 						zap.Int("j", j*2),
@@ -166,7 +166,7 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 				nums, err := strconv.Atoi(arrstr[j*2+1])
 				if err != nil {
-					block7utils.Error("LevelMgr.LoadLevel:Atoi",
+					goutils.Error("LevelMgr.LoadLevel:Atoi",
 						zap.String("fn", fn),
 						zap.Int("i", i),
 						zap.Int("j", j*2+1),
