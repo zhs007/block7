@@ -9,8 +9,8 @@ const DefaultMaxBlockLevel = 7
 // DefaultMaxBlockNums - 7
 const DefaultMaxBlockNums = 7
 
-// DefaultVersion - 5
-const DefaultVersion = 5
+// DefaultVersion - 6
+const DefaultVersion = 6
 
 const (
 	GameStateRunning = 1
