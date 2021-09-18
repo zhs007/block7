@@ -21,7 +21,7 @@ func (rainbow *SpecialRainbow) GetSpecialID() int {
 // OnGenSymbolBlocks - OnGenSymbolBlocks
 func (rainbow *SpecialRainbow) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
 	if std.Nums%3 > 0 {
-		return nil, ErrInvalidBombNums
+		return nil, ErrInvalidRainbowNums
 	}
 
 	for i := 0; i < std.Nums; i++ {
