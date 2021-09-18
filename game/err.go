@@ -27,4 +27,10 @@ var (
 	ErrInvalidPositionList = errors.New("invalid position list")
 	// ErrInvalidSafeList - invalid safe list
 	ErrInvalidSafeList = errors.New("invalid safe list")
+	// ErrInvalidCakeNums - invalid cake nums
+	ErrInvalidCakeNums = errors.New("invalid cake nums")
+	// ErrInvalidRainbowNums - invalid rainbow nums
+	ErrInvalidRainbowNums = errors.New("invalid rainbow nums")
+	// ErrInvalidTeleportNums - invalid teleport nums
+	ErrInvalidTeleportNums = errors.New("invalid teleport nums")
 )

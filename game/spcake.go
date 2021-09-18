@@ -25,7 +25,7 @@ func (cake *SpecialCake) GetSpecialID() int {
 // OnGenSymbolBlocks - OnGenSymbolBlocks
 func (cake *SpecialCake) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
 	if std.Nums%3 > 0 {
-		return nil, ErrInvalidBombNums
+		return nil, ErrInvalidCakeNums
 	}
 
 	for i := 0; i < std.Nums; i++ {

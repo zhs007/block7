@@ -21,7 +21,7 @@ func (teleport *SpecialTeleport) GetSpecialID() int {
 // OnGenSymbolBlocks - OnGenSymbolBlocks
 func (teleport *SpecialTeleport) OnGenSymbolBlocks(std *SpecialTypeData, arr []int) ([]int, error) {
 	if std.Nums%3 > 0 {
-		return nil, ErrInvalidBombNums
+		return nil, ErrInvalidTeleportNums
 	}
 
 	for i := 0; i < std.Nums; i++ {
