@@ -18,12 +18,18 @@ type MissionResult struct {
 
 // MissionDataParams - missionData parameters
 type MissionDataParams struct {
-	UserHash  string  `json:"userHash"`
-	SceneID   int64   `json:"mission"`
-	History   [][]int `json:"history"`
-	HistoryID int64   `json:"srcHistory"`
-	RngData   []int64 `json:"rngdata"`
-	GameState int32   `json:"gamestate"`
+	UserHash      string                     `json:"userHash"`
+	SceneID       int64                      `json:"mission"`
+	History       [][]int                    `json:"history"`
+	HistoryID     int64                      `json:"srcHistory"`
+	RngData       []int64                    `json:"rngdata"`
+	GameState     int32                      `json:"gamestate"`
+	InitArr       [][][]int                  `json:"initArr"`
+	BlockNums     int                        `json:"blockNums"`
+	StageType     int                        `json:"stageType"`
+	SpecialLayers []*block7game.SpecialLayer `json:"specialLayers"`
+	FirstItem     int                        `json:"firstItem"`
+	MissionID     int                        `json:"missionid"`
 }
 
 // MissionDataResult - missionData result
