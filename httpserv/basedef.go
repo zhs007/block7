@@ -76,6 +76,16 @@ type UpdUserDataParams struct {
 	Version   int64       `json:"version"`
 }
 
+// UpdUserDataStatus - update userdata status
+type UpdUserDataStatus struct {
+	HasCoin      bool
+	HasLevel     bool
+	HasLevelArr  bool
+	HasToolsArr  bool
+	HasHomeScene bool
+	HasCooking   bool
+}
+
 // UpdUserDataResult - update userdata result
 type UpdUserDataResult struct {
 	OldVersion int64 `json:"oldVersion"`
