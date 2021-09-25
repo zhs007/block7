@@ -364,3 +364,21 @@ func (serv *BasicServ) GetUserData(params *UserDataParams) (*UserDataResult, err
 
 	return PB2UserDataResult(ud), nil
 }
+
+// UpdUserData - update UserData
+func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDataStatus) (*UpdUserDataResult, error) {
+	udpb := UpdUserDataParams2PB(ud, uds)
+
+	oldversion, err := serv.UserDB.UpdUserData(context.Background(), udpb, uds)
+	if err != nil {
+		goutils.Error("BasicServ.UpdUserData:UpdUserData",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return &UpdUserDataResult{
+		OldVersion: oldversion,
+		NewVersion: ud.Version,
+	}, nil
+}

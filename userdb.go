@@ -432,13 +432,13 @@ func (db *UserDB) GetUserData(ctx context.Context, name string, platform string)
 }
 
 // UpdUserData - update userData
-func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *UpdUserDataStatus) error {
+func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *UpdUserDataStatus) (int64, error) {
 	ud0, err := db.GetUserData(ctx, ud.Name, ud.Platform)
 	if err != nil {
 		goutils.Warn("UserDB.UpdUserData:GetUserData",
 			zap.Error(err))
 
-		return err
+		return 0, err
 	}
 
 	nud := MergeUserData(ud0, ud, uds)
@@ -448,7 +448,7 @@ func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *U
 		goutils.Warn("UserDB.UpdUserData:Marshal",
 			zap.Error(err))
 
-		return err
+		return 0, err
 	}
 
 	db.mutexDB.Lock()
@@ -458,8 +458,8 @@ func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *U
 		goutils.Warn("UserDB.UpdUserData:Set",
 			zap.Error(err))
 
-		return err
+		return 0, err
 	}
 
-	return nil
+	return ud0.Version, nil
 }

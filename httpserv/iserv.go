@@ -1,5 +1,7 @@
 package block7serv
 
+import "github.com/zhs007/block7"
+
 // IService - service
 type IService interface {
 	// GetConfig - get configuation
@@ -12,4 +14,6 @@ type IService interface {
 	MissionData(params *MissionDataParams) (*MissionDataResult, error)
 	// GetUserData - get UserData
 	GetUserData(params *UserDataParams) (*UserDataResult, error)
+	// UpdUserData - update UserData
+	UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDataStatus) (*UpdUserDataResult, error)
 }

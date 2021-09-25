@@ -247,5 +247,44 @@ func NewServ(service IService) *Serv {
 			s.SetResponse(ctx, ret)
 		})
 
+	s.RegHandle(goutils.AppendString(BasicURL, "upduserdata"),
+		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
+			if !ctx.Request.Header.IsPost() {
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			ud, uds, err := parseUpdUserDataParams(ctx.PostBody())
+			if err != nil {
+				goutils.Warn("block7serv.Serv.upduserdata:parseUpdUserDataParams",
+					zap.Error(err))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			goutils.Debug("block7serv.Serv.upduserdata:ParseBody",
+				goutils.JSON("params", ud))
+
+			ret, err := s.Service.UpdUserData(ud, uds)
+			if err != nil {
+				goutils.Warn("block7serv.Serv.upduserdata:MissionData",
+					zap.Error(err))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
+
+				return
+			}
+
+			if cfg.IsDebugMode {
+				goutils.Debug("block7serv.Serv.upduserdata",
+					goutils.JSON("result", ret))
+			}
+
+			s.SetResponse(ctx, ret)
+		})
+
 	return s
 }
