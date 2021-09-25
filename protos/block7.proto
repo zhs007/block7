@@ -48,17 +48,17 @@ message Scene {
 	int32 BlockNums = 24;									// blockNums, it's like 7, 8
 }
 
-// MissionParams
-message MissionParams {
-    int32 MissionID = 1;				    // mission id
-}
+// // MissionParams
+// message MissionParams {
+//     int32 MissionID = 1;				    // mission id
+// }
 
-// MissionResult
-message MissionResult {
-    int32 MissionID = 1;				    // mission id	
-	string MissionHash = 2;					// mission hash
-	Scene Scene = 3;						// scene
-}
+// // MissionResult
+// message MissionResult {
+//     int32 MissionID = 1;				    // mission id	
+// 	string MissionHash = 2;					// mission hash
+// 	Scene Scene = 3;						// scene
+// }
 
 // UserDeviceInfo
 message UserDeviceInfo {
@@ -82,21 +82,41 @@ message UserInfo {
 	repeated UserDeviceInfo Data = 2;	// user device infomations
 }
 
-// LoginParams
-message LoginParams {
-    string UserHash = 1;				// user hash
-	string Game = 2;					// game code
-	string Platform = 3;				// ios or android
-	string ADID = 4;					// ad id
-	string GUID = 5;					// guid
-	string PlatformInfo = 6;			// platform infomation
-	string GameVersion = 7;				// game version
-	string ResourceVersion = 8;			// game resource version
-	string DeviceInfo = 9;				// device infomation
+// // LoginParams
+// message LoginParams {
+//     string UserHash = 1;				// user hash
+// 	string Game = 2;					// game code
+// 	string Platform = 3;				// ios or android
+// 	string ADID = 4;					// ad id
+// 	string GUID = 5;					// guid
+// 	string PlatformInfo = 6;			// platform infomation
+// 	string GameVersion = 7;				// game version
+// 	string ResourceVersion = 8;			// game resource version
+// 	string DeviceInfo = 9;				// device infomation
+// }
+
+// // LoginResult
+// message LoginResult {
+// 	string UserHash = 1;				// user hash
+// 	int64 UserID = 2;					// user id
+// }
+
+// Cooking
+message Cooking {
+	int32 Level = 1;
+	bool Unlock = 2;
+	int32 StarNums = 3;
 }
 
-// LoginResult
-message LoginResult {
-	string UserHash = 1;				// user hash
-	int64 UserID = 2;					// user id
+// UserData
+message UserData {
+	string Name = 1;
+	int64 Coin = 2;
+	int32 Level = 3;
+	map<int32,int32> LevelArr = 4;
+	map<int32,int32> ToolsArr = 5;
+	repeated int32 HomeScene = 6;
+	repeated Cooking Cooking = 7;
+	string Platform = 8;
+	int64 Version = 9;
 }

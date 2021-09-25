@@ -56,3 +56,47 @@ type LoginResult struct {
 	UserID   int64  `json:"uid"`
 	UserHash string `json:"userHash"`
 }
+
+type Cooking struct {
+	Level    int  `json:"level"`
+	Unlock   bool `json:"unlock"`
+	StarNums int  `json:"starnum"`
+}
+
+// UpdUserDataParams - update userdata parameters
+type UpdUserDataParams struct {
+	Name      string      `json:"name"`
+	Coin      int64       `json:"coin"`
+	Level     int         `json:"level"`
+	LevelArr  map[int]int `json:"levelarr"`
+	ToolsArr  map[int]int `json:"toolsarr"`
+	HomeScene []int       `json:"homeScene"`
+	Cooking   []*Cooking  `json:"cooking"`
+	Platform  string      `json:"platform"` // it's like android, iphone
+	Version   int64       `json:"version"`
+}
+
+// UpdUserDataResult - update userdata result
+type UpdUserDataResult struct {
+	OldVersion int64 `json:"oldVersion"`
+	NewVersion int64 `json:"newVersion"`
+}
+
+// UserDataParams - userdata parameters
+type UserDataParams struct {
+	Name     string `json:"name"`
+	Platform string `json:"platform"` // it's like android, iphone
+}
+
+// UserDataResult - userdata parameters
+type UserDataResult struct {
+	Name      string      `json:"name"`
+	Coin      int64       `json:"coin"`
+	Level     int         `json:"level"`
+	LevelArr  map[int]int `json:"levelarr"`
+	ToolsArr  map[int]int `json:"toolsarr"`
+	HomeScene []int       `json:"homeScene"`
+	Cooking   []*Cooking  `json:"cooking"`
+	Platform  string      `json:"platform"` // it's like android, iphone
+	Version   int64       `json:"version"`
+}
