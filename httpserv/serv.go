@@ -2,6 +2,7 @@ package block7serv
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/valyala/fasthttp"
 	block7http "github.com/zhs007/block7/http"
@@ -192,6 +193,54 @@ func NewServ(service IService) *Serv {
 
 			if cfg.IsDebugMode {
 				goutils.Debug("block7serv.Serv.missiondata",
+					goutils.JSON("result", ret))
+			}
+
+			s.SetResponse(ctx, ret)
+		})
+
+	s.RegHandle(goutils.AppendString(BasicURL, "userdata"),
+		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
+			if !ctx.Request.Header.IsGet() {
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			params := &UserDataParams{}
+			ctx.QueryArgs().VisitAll(func(k []byte, v []byte) {
+				if string(k) == "name" {
+					params.Name = strings.TrimSpace(string(v))
+				} else if string(k) == "platform" {
+					params.Platform = strings.TrimSpace(string(v))
+				}
+			})
+
+			goutils.Debug("block7serv.Serv.userdata:ParseBody",
+				goutils.JSON("params", params))
+
+			if params.Name == "" || params.Platform == "" {
+				goutils.Warn("block7serv.Serv.userdata:ParseBody",
+					zap.String("name", params.Name),
+					zap.String("platform", params.Platform))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			ret, err := s.Service.GetUserData(params)
+			if err != nil {
+				goutils.Warn("block7serv.Serv.userdata:GetUserData",
+					zap.Error(err))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
+
+				return
+			}
+
+			if cfg.IsDebugMode {
+				goutils.Debug("block7serv.Serv.userdata",
 					goutils.JSON("result", ret))
 			}
 

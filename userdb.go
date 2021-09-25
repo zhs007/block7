@@ -26,6 +26,10 @@ func makeUserHashDBKey(uasehash string) string {
 	return goutils.AppendString(userHashKeyPrefix, uasehash)
 }
 
+func makeUserDataDBKey(name string, platform string) string {
+	return fmt.Sprintf("d:%v:%v", platform, name)
+}
+
 // UserDB - database
 type UserDB struct {
 	AnkaDB  ankadb.AnkaDB
@@ -396,4 +400,66 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 	}
 
 	return ui, nil
+}
+
+// GetUserData - get userData
+func (db *UserDB) GetUserData(ctx context.Context, name string, platform string) (*block7pb.UserData, error) {
+	db.mutexDB.Lock()
+	buf, err := db.AnkaDB.Get(ctx, userdbname, makeUserDataDBKey(name, platform))
+	db.mutexDB.Unlock()
+	if err != nil {
+		if err == ankadb.ErrNotFoundKey {
+			return nil, nil
+		}
+
+		goutils.Warn("UserDB.GetUserData:Get",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	ud := &block7pb.UserData{}
+
+	err = proto.Unmarshal(buf, ud)
+	if err != nil {
+		goutils.Warn("UserDB.GetUserData:Unmarshal",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return ud, nil
+}
+
+// UpdUserData - update userData
+func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *UpdUserDataStatus) error {
+	ud0, err := db.GetUserData(ctx, ud.Name, ud.Platform)
+	if err != nil {
+		goutils.Warn("UserDB.UpdUserData:GetUserData",
+			zap.Error(err))
+
+		return err
+	}
+
+	nud := MergeUserData(ud0, ud, uds)
+
+	buf, err := proto.Marshal(nud)
+	if err != nil {
+		goutils.Warn("UserDB.UpdUserData:Marshal",
+			zap.Error(err))
+
+		return err
+	}
+
+	db.mutexDB.Lock()
+	err = db.AnkaDB.Set(ctx, userdbname, makeUserDataDBKey(ud.Name, ud.Platform), buf)
+	db.mutexDB.Unlock()
+	if err != nil {
+		goutils.Warn("UserDB.UpdUserData:Set",
+			zap.Error(err))
+
+		return err
+	}
+
+	return nil
 }

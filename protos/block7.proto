@@ -82,8 +82,8 @@ message UserData {
 	string Name = 1;
 	int64 Coin = 2;
 	int32 Level = 3;
-	map<int32,int32> LevelArr = 4;
-	map<int32,int32> ToolsArr = 5;
+	map<string,int32> LevelArr = 4;
+	map<string,int32> ToolsArr = 5;
 	repeated int32 HomeScene = 6;
 	repeated Cooking Cooking = 7;
 	string Platform = 8;

@@ -10,4 +10,6 @@ type IService interface {
 	Mission(params *MissionParams) (*MissionResult, error)
 	// MissionData - upload mission data
 	MissionData(params *MissionDataParams) (*MissionDataResult, error)
+	// GetUserData - get UserData
+	GetUserData(params *UserDataParams) (*UserDataResult, error)
 }

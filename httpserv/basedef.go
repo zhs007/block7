@@ -65,26 +65,26 @@ type Cooking struct {
 
 // UpdUserDataParams - update userdata parameters
 type UpdUserDataParams struct {
-	Name      string      `json:"name"`
-	Coin      int64       `json:"coin"`
-	Level     int         `json:"level"`
-	LevelArr  map[int]int `json:"levelarr"`
-	ToolsArr  map[int]int `json:"toolsarr"`
-	HomeScene []int       `json:"homeScene"`
-	Cooking   []*Cooking  `json:"cooking"`
-	Platform  string      `json:"platform"` // it's like android, iphone
-	Version   int64       `json:"version"`
+	Name      string         `json:"name"`
+	Coin      int64          `json:"coin"`
+	Level     int            `json:"level"`
+	LevelArr  map[string]int `json:"levelarr"`
+	ToolsArr  map[string]int `json:"toolsarr"`
+	HomeScene []int          `json:"homeScene"`
+	Cooking   []*Cooking     `json:"cooking"`
+	Platform  string         `json:"platform"` // it's like android, iphone
+	Version   int64          `json:"version"`
 }
 
-// UpdUserDataStatus - update userdata status
-type UpdUserDataStatus struct {
-	HasCoin      bool
-	HasLevel     bool
-	HasLevelArr  bool
-	HasToolsArr  bool
-	HasHomeScene bool
-	HasCooking   bool
-}
+// // UpdUserDataStatus - update userdata status
+// type UpdUserDataStatus struct {
+// 	HasCoin      bool
+// 	HasLevel     bool
+// 	HasLevelArr  bool
+// 	HasToolsArr  bool
+// 	HasHomeScene bool
+// 	HasCooking   bool
+// }
 
 // UpdUserDataResult - update userdata result
 type UpdUserDataResult struct {
@@ -100,13 +100,13 @@ type UserDataParams struct {
 
 // UserDataResult - userdata parameters
 type UserDataResult struct {
-	Name      string      `json:"name"`
-	Coin      int64       `json:"coin"`
-	Level     int         `json:"level"`
-	LevelArr  map[int]int `json:"levelarr"`
-	ToolsArr  map[int]int `json:"toolsarr"`
-	HomeScene []int       `json:"homeScene"`
-	Cooking   []*Cooking  `json:"cooking"`
-	Platform  string      `json:"platform"` // it's like android, iphone
-	Version   int64       `json:"version"`
+	Name      string         `json:"name"`
+	Coin      int64          `json:"coin"`
+	Level     int            `json:"level"`
+	LevelArr  map[string]int `json:"levelarr"`
+	ToolsArr  map[string]int `json:"toolsarr"`
+	HomeScene []int          `json:"homeScene"`
+	Cooking   []*Cooking     `json:"cooking"`
+	Platform  string         `json:"platform"` // it's like android, iphone
+	Version   int64          `json:"version"`
 }

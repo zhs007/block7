@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/buger/jsonparser"
+	"github.com/zhs007/block7"
 	block7game "github.com/zhs007/block7/game"
 	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
@@ -172,9 +173,9 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 	}, nil
 }
 
-func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *UpdUserDataStatus, error) {
+func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *block7.UpdUserDataStatus, error) {
 	ud := &UpdUserDataParams{}
-	uds := &UpdUserDataStatus{}
+	uds := &block7.UpdUserDataStatus{}
 
 	name, _, err := goutils.GetJsonString(data, "name")
 	if err != nil {
@@ -224,17 +225,17 @@ func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *UpdUserDataStatus
 	}
 
 	hasLevelArr := false
-	mapLevelArr := make(map[int]int)
+	mapLevelArr := make(map[string]int)
 	err = goutils.GetJsonObject(data, func(key []byte, value []byte, dataType jsonparser.ValueType, offset int) error {
 		if dataType == jsonparser.Number {
-			k, err := goutils.String2Int64(string(key))
-			if err != nil {
-				goutils.Error("parseUpdUserDataParams:levelarr:GetJsonObject",
-					zap.String("key", string(key)),
-					zap.Error(err))
+			// k, err := goutils.String2Int64(string(key))
+			// if err != nil {
+			// 	goutils.Error("parseUpdUserDataParams:levelarr:GetJsonObject",
+			// 		zap.String("key", string(key)),
+			// 		zap.Error(err))
 
-				return err
-			}
+			// 	return err
+			// }
 
 			v, err := goutils.String2Int64(string(value))
 			if err != nil {
@@ -245,7 +246,7 @@ func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *UpdUserDataStatus
 				return err
 			}
 
-			mapLevelArr[int(k)] = int(v)
+			mapLevelArr[string(key)] = int(v)
 			hasLevelArr = true
 		}
 
@@ -265,17 +266,17 @@ func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *UpdUserDataStatus
 	}
 
 	hasToolsArr := false
-	mapToolsArr := make(map[int]int)
+	mapToolsArr := make(map[string]int)
 	err = goutils.GetJsonObject(data, func(key []byte, value []byte, dataType jsonparser.ValueType, offset int) error {
 		if dataType == jsonparser.Number {
-			k, err := goutils.String2Int64(string(key))
-			if err != nil {
-				goutils.Error("parseUpdUserDataParams:levelarr:GetJsonObject",
-					zap.String("key", string(key)),
-					zap.Error(err))
+			// k, err := goutils.String2Int64(string(key))
+			// if err != nil {
+			// 	goutils.Error("parseUpdUserDataParams:levelarr:GetJsonObject",
+			// 		zap.String("key", string(key)),
+			// 		zap.Error(err))
 
-				return err
-			}
+			// 	return err
+			// }
 
 			v, err := goutils.String2Int64(string(value))
 			if err != nil {
@@ -286,7 +287,7 @@ func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *UpdUserDataStatus
 				return err
 			}
 
-			mapToolsArr[int(k)] = int(v)
+			mapToolsArr[string(key)] = int(v)
 			hasToolsArr = true
 		}
 

@@ -1,6 +1,7 @@
 package block7serv
 
 import (
+	"github.com/zhs007/block7"
 	"github.com/zhs007/block7/block7pb"
 )
 
@@ -20,7 +21,7 @@ func LoginParams2PB(params *LoginParams) *block7pb.UserDeviceInfo {
 	return udi
 }
 
-func UpdUserDataParams2PB(params *UpdUserDataParams, uds *UpdUserDataStatus) *block7pb.UserData {
+func UpdUserDataParams2PB(params *UpdUserDataParams, uds *block7.UpdUserDataStatus) *block7pb.UserData {
 	ud := &block7pb.UserData{
 		Name:     params.Name,
 		Platform: params.Platform,
@@ -55,15 +56,49 @@ func UpdUserDataParams2PB(params *UpdUserDataParams, uds *UpdUserDataStatus) *bl
 
 	if uds.HasLevelArr {
 		for k, v := range params.LevelArr {
-			ud.LevelArr[int32(k)] = int32(v)
+			ud.LevelArr[k] = int32(v)
 		}
 	}
 
 	if uds.HasToolsArr {
 		for k, v := range params.ToolsArr {
-			ud.ToolsArr[int32(k)] = int32(v)
+			ud.ToolsArr[k] = int32(v)
 		}
 	}
 
 	return ud
+}
+
+func PB2UserDataResult(ud *block7pb.UserData) *UserDataResult {
+	udr := &UserDataResult{
+		Name:     ud.Name,
+		Coin:     ud.Coin,
+		Level:    int(ud.Level),
+		Platform: ud.Platform,
+		Version:  ud.Version,
+	}
+
+	for _, v := range ud.Cooking {
+		c := &Cooking{
+			Level:    int(v.Level),
+			Unlock:   v.Unlock,
+			StarNums: int(v.StarNums),
+		}
+
+		udr.Cooking = append(udr.Cooking, c)
+	}
+
+	for _, v := range ud.HomeScene {
+		udr.HomeScene = append(udr.HomeScene, int(v))
+	}
+
+	for k, v := range ud.LevelArr {
+		udr.LevelArr[k] = int(v)
+	}
+
+	for k, v := range ud.ToolsArr {
+		udr.ToolsArr[k] = int(v)
+	}
+
+	return udr
 }
