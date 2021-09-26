@@ -14,6 +14,7 @@ type Config struct {
 	DBEngine    string `yaml:"dbengine"`
 	LogLevel    string `yaml:"loglevel"`
 	LogPath     string `yaml:"logpath"`
+	StatsToken  string `yaml:"statstoken"`
 }
 
 // LoadConfig - load config

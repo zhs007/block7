@@ -464,3 +464,61 @@ func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *U
 
 	return ud0.Version, nil
 }
+
+// GetLatestUserID - get latest userID
+func (db *UserDB) GetLatestUserID(ctx context.Context) (int64, error) {
+	db.mutexDB.Lock()
+	buf, err := db.AnkaDB.Get(ctx, userdbname, userIDKey)
+	db.mutexDB.Unlock()
+	if err != nil {
+		if err == ankadb.ErrNotFoundKey {
+			return 0, nil
+		}
+
+		goutils.Warn("UserDB.GetLatestUserID:Get",
+			zap.Error(err))
+
+		return 0, err
+	}
+
+	var userid int64
+	reader := bytes.NewReader(buf)
+	err = binary.Read(reader, binary.LittleEndian, &userid)
+	if err != nil {
+		goutils.Error("UserDB.GetLatestUserID:binary.Read",
+			zap.Error(err))
+
+		return 0, err
+	}
+
+	return userid, nil
+}
+
+// Stats - statistics
+func (db *UserDB) Stats(ctx context.Context) (int64, int, int, error) {
+	latestUserID, err := db.GetLatestUserID(ctx)
+	if err != nil {
+		goutils.Error("UserDB.Stats:GetLatestUserID",
+			zap.Error(err))
+
+		return 0, 0, 0, err
+	}
+
+	userNums := 0
+	userDataNums := 0
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
+		userNums++
+
+		return nil
+	})
+	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "d:", func(key string, value []byte) error {
+		userDataNums++
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return latestUserID, userNums, userDataNums, nil
+}

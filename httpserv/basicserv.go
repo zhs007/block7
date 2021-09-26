@@ -393,3 +393,49 @@ func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDat
 		NewVersion: ud.Version,
 	}, nil
 }
+
+// Stats - statistics
+func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
+	if params.Token != serv.cfg.StatsToken {
+		goutils.Error("BasicServ.Stats:checkToken",
+			zap.String("params.Token", params.Token),
+			zap.String("cfg.StatsToken", serv.cfg.StatsToken),
+			zap.Error(ErrInvalidToken))
+
+		return nil, ErrInvalidToken
+	}
+
+	latestSceneID, sceneNums, err := serv.StageDB.Stats(context.Background())
+	if err != nil {
+		goutils.Error("BasicServ.Stats:StageDB.Stats",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	latestHistoryID, historyNums, err := serv.HistoryDB.Stats(context.Background())
+	if err != nil {
+		goutils.Error("BasicServ.Stats:HistoryDB.Stats",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	latestUserID, userNums, userDataNums, err := serv.UserDB.Stats(context.Background())
+	if err != nil {
+		goutils.Error("BasicServ.Stats:UserDB.Stats",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return &StatsResult{
+		LatestUserID:    latestUserID,
+		UserNums:        userNums,
+		UserDataNums:    userDataNums,
+		LatestSceneID:   latestSceneID,
+		SceneNums:       sceneNums,
+		LatestHistoryID: latestHistoryID,
+		HistoryNums:     historyNums,
+	}, nil
+}
