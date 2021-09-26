@@ -241,3 +241,55 @@ func (db *HistoryDB) setHistoryID(ctx context.Context, mapid int32, userid int64
 
 	return nil
 }
+
+// GetLatestHistoryID - get latest historyID
+func (db *HistoryDB) GetLatestHistoryID(ctx context.Context) (int64, error) {
+	db.mutexDB.Lock()
+	buf, err := db.AnkaDB.Get(ctx, historydbname, historyIDKey)
+	db.mutexDB.Unlock()
+	if err != nil {
+		if err == ankadb.ErrNotFoundKey {
+			return 0, nil
+		}
+
+		goutils.Error("HistoryDB.GetLatestHistoryID:Get",
+			zap.Error(err))
+
+		return 0, err
+	}
+
+	var historyid int64
+	reader := bytes.NewReader(buf)
+	err = binary.Read(reader, binary.LittleEndian, &historyid)
+	if err != nil {
+		goutils.Error("HistoryDB.GetLatestHistoryID:binary.Read",
+			zap.Error(err))
+
+		return 0, err
+	}
+
+	return historyid, nil
+}
+
+// Stats - statistics
+func (db *HistoryDB) Stats(ctx context.Context) (int64, int, error) {
+	latestHistoryID, err := db.GetLatestHistoryID(ctx)
+	if err != nil {
+		goutils.Error("HistoryDB.Stats:GetLatestHistoryID",
+			zap.Error(err))
+
+		return 0, 0, err
+	}
+
+	historyNums := 0
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
+		historyNums++
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return latestHistoryID, historyNums, nil
+}

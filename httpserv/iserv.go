@@ -16,4 +16,6 @@ type IService interface {
 	GetUserData(params *UserDataParams) (*UserDataResult, error)
 	// UpdUserData - update UserData
 	UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDataStatus) (*UpdUserDataResult, error)
+	// Stats - statistics
+	Stats(params *StatsParams) (*StatsResult, error)
 }

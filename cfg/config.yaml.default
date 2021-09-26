@@ -10,3 +10,5 @@ loglevel: debug
 logpath: ./logs
 # is debug mode
 isdebugmode: true
+# statistics token
+statstoken: 123456

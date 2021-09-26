@@ -102,3 +102,19 @@ type UserDataResult struct {
 	Platform  string         `json:"platform"` // it's like android, iphone
 	Version   int64          `json:"version"`
 }
+
+// StatsParams - statistics parameters
+type StatsParams struct {
+	Token string `json:"token"`
+}
+
+// StatsResult - statistics result
+type StatsResult struct {
+	LatestUserID    int64 `json:"latestuserid"`
+	UserNums        int   `json:"usernums"`
+	UserDataNums    int   `json:"userdatanums"`
+	LatestSceneID   int64 `json:"latestsceneid"`
+	SceneNums       int   `json:"scenenums"`
+	LatestHistoryID int64 `json:"latesthistoryid"`
+	HistoryNums     int   `json:"historynums"`
+}

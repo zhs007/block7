@@ -195,3 +195,55 @@ func (db *StageDB) SaveStage(ctx context.Context, scene *block7game.Scene) (*blo
 
 	return pbscene, nil
 }
+
+// GetLatestSceneID - get latest sceneID
+func (db *StageDB) GetLatestSceneID(ctx context.Context) (int64, error) {
+	db.mutexDB.Lock()
+	buf, err := db.AnkaDB.Get(ctx, stagedbname, sceneIDKey)
+	db.mutexDB.Unlock()
+	if err != nil {
+		if err == ankadb.ErrNotFoundKey {
+			return 0, nil
+		}
+
+		goutils.Error("StageDB.GetLatestSceneID:Get",
+			zap.Error(err))
+
+		return 0, err
+	}
+
+	var sceneid int64
+	reader := bytes.NewReader(buf)
+	err = binary.Read(reader, binary.LittleEndian, &sceneid)
+	if err != nil {
+		goutils.Error("StageDB.GetLatestSceneID:binary.Read",
+			zap.Error(err))
+
+		return 0, err
+	}
+
+	return sceneid, nil
+}
+
+// Stats - statistics
+func (db *StageDB) Stats(ctx context.Context) (int64, int, error) {
+	lastSceneID, err := db.GetLatestSceneID(ctx)
+	if err != nil {
+		goutils.Error("StageDB.Stats:GetLatestSceneID",
+			zap.Error(err))
+
+		return 0, 0, err
+	}
+
+	sceneNums := 0
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, stagedbname, "s:", func(key string, value []byte) error {
+		sceneNums++
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return lastSceneID, sceneNums, nil
+}

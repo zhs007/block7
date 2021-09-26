@@ -286,5 +286,50 @@ func NewServ(service IService) *Serv {
 			s.SetResponse(ctx, ret)
 		})
 
+	s.RegHandle(goutils.AppendString(BasicURL, "stats"),
+		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
+			if !ctx.Request.Header.IsGet() {
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			params := &StatsParams{}
+			ctx.QueryArgs().VisitAll(func(k []byte, v []byte) {
+				if string(k) == "token" {
+					params.Token = strings.TrimSpace(string(v))
+				}
+			})
+
+			goutils.Debug("block7serv.Serv.stats:ParseBody",
+				goutils.JSON("params", params))
+
+			if params.Token == "" {
+				goutils.Warn("block7serv.Serv.stats:Token:nil",
+					zap.Error(ErrInvalidToken))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			ret, err := s.Service.Stats(params)
+			if err != nil {
+				goutils.Warn("block7serv.Serv.stats:GetUserData",
+					zap.Error(err))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
+
+				return
+			}
+
+			if cfg.IsDebugMode {
+				goutils.Debug("block7serv.Serv.stats",
+					goutils.JSON("result", ret))
+			}
+
+			s.SetResponse(ctx, ret)
+		})
+
 	return s
 }

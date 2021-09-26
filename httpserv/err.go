@@ -11,4 +11,6 @@ var (
 	ErrInvalidSceneID = errors.New("invalid SceneID")
 	// ErrInvalidUserDataName - invalid UserData Name
 	ErrInvalidUserDataName = errors.New("invalid UserData Name")
+	// ErrInvalidToken - invalid Token
+	ErrInvalidToken = errors.New("invalid Token")
 )
