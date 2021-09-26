@@ -442,6 +442,7 @@ func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *U
 	}
 
 	nud := MergeUserData(ud0, ud, uds)
+	nud.LastTs = goutils.GetCurTimestamp()
 
 	buf, err := proto.Marshal(nud)
 	if err != nil {

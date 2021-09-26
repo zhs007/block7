@@ -414,5 +414,17 @@ func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *block7.UpdUserDat
 
 	ud.Version = version
 
+	userHash, _, err := goutils.GetJsonString(data, "userHash")
+	if err != nil {
+		goutils.Error("parseUpdUserDataParams:userHash",
+			zap.Error(err))
+
+		return nil, nil, err
+	}
+
+	userHash = strings.TrimSpace(userHash)
+
+	ud.UserHash = userHash
+
 	return ud, uds, nil
 }

@@ -74,17 +74,8 @@ type UpdUserDataParams struct {
 	Cooking   []*Cooking     `json:"cooking"`
 	Platform  string         `json:"platform"` // it's like android, iphone
 	Version   int64          `json:"version"`
+	UserHash  string         `json:"userHash"`
 }
-
-// // UpdUserDataStatus - update userdata status
-// type UpdUserDataStatus struct {
-// 	HasCoin      bool
-// 	HasLevel     bool
-// 	HasLevelArr  bool
-// 	HasToolsArr  bool
-// 	HasHomeScene bool
-// 	HasCooking   bool
-// }
 
 // UpdUserDataResult - update userdata result
 type UpdUserDataResult struct {

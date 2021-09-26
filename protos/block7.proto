@@ -88,4 +88,6 @@ message UserData {
 	repeated Cooking Cooking = 7;
 	string Platform = 8;
 	int64 Version = 9;
+	int64 UserID = 10;
+	int64 LastTs = 11;				// last timestamp
 }

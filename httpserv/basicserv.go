@@ -368,6 +368,17 @@ func (serv *BasicServ) GetUserData(params *UserDataParams) (*UserDataResult, err
 // UpdUserData - update UserData
 func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDataStatus) (*UpdUserDataResult, error) {
 	udpb := UpdUserDataParams2PB(ud, uds)
+	if ud.UserHash != "" {
+		uid, err := serv.UserDB.GetUserID(context.Background(), ud.UserHash)
+		if err != nil {
+			goutils.Error("BasicServ.UpdUserData:GetUserID",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		udpb.UserID = uid
+	}
 
 	oldversion, err := serv.UserDB.UpdUserData(context.Background(), udpb, uds)
 	if err != nil {

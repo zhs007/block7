@@ -5,6 +5,10 @@ import (
 )
 
 func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserDataStatus) *block7pb.UserData {
+	if ud0 == nil {
+		return ud1
+	}
+
 	if ud1.Version <= ud0.Version {
 		return ud0
 	}
@@ -73,6 +77,12 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 		for k, v := range ud1.ToolsArr {
 			ud.ToolsArr[k] = v
 		}
+	}
+
+	if ud1.UserID > 0 {
+		ud.UserID = ud1.UserID
+	} else if ud0.UserID > 0 {
+		ud.UserID = ud0.UserID
 	}
 
 	return ud
