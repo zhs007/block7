@@ -90,4 +90,5 @@ message UserData {
 	int64 Version = 9;
 	int64 UserID = 10;
 	int64 LastTs = 11;				// last timestamp
+	string ClientVersion = 12;
 }

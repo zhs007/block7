@@ -65,16 +65,17 @@ type Cooking struct {
 
 // UpdUserDataParams - update userdata parameters
 type UpdUserDataParams struct {
-	Name      string         `json:"name"`
-	Coin      int64          `json:"coin"`
-	Level     int            `json:"level"`
-	LevelArr  map[string]int `json:"levelarr"`
-	ToolsArr  map[string]int `json:"toolsarr"`
-	HomeScene []int          `json:"homeScene"`
-	Cooking   []*Cooking     `json:"cooking"`
-	Platform  string         `json:"platform"` // it's like android, iphone
-	Version   int64          `json:"version"`
-	UserHash  string         `json:"userHash"`
+	Name          string         `json:"name"`
+	Coin          int64          `json:"coin"`
+	Level         int            `json:"level"`
+	LevelArr      map[string]int `json:"levelarr"`
+	ToolsArr      map[string]int `json:"toolsarr"`
+	HomeScene     []int          `json:"homeScene"`
+	Cooking       []*Cooking     `json:"cooking"`
+	Platform      string         `json:"platform"` // it's like android, iphone
+	Version       int64          `json:"version"`
+	UserHash      string         `json:"userHash"`
+	ClientVersion string         `json:"clientVersion"`
 }
 
 // UpdUserDataResult - update userdata result

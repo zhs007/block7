@@ -426,5 +426,17 @@ func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *block7.UpdUserDat
 
 	ud.UserHash = userHash
 
+	clientVersion, _, err := goutils.GetJsonString(data, "clientVersion")
+	if err != nil {
+		goutils.Error("parseUpdUserDataParams:clientVersion",
+			zap.Error(err))
+
+		return nil, nil, err
+	}
+
+	clientVersion = strings.TrimSpace(clientVersion)
+
+	ud.ClientVersion = clientVersion
+
 	return ud, uds, nil
 }

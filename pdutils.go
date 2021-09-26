@@ -81,8 +81,14 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 
 	if ud1.UserID > 0 {
 		ud.UserID = ud1.UserID
-	} else if ud0.UserID > 0 {
+	} else {
 		ud.UserID = ud0.UserID
+	}
+
+	if ud1.ClientVersion != "" {
+		ud.ClientVersion = ud1.ClientVersion
+	} else {
+		ud.ClientVersion = ud0.ClientVersion
 	}
 
 	return ud
