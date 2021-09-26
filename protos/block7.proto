@@ -33,7 +33,7 @@ message Scene {
 	float FinishedPer = 9 [deprecated = true];				// FinishedPer
 	string Offset = 10;										// Offset
 	bool IsOutputScene = 11 [deprecated = true];			// IsOutputScene
-	int32 StageID = 12;										// stage
+	int32 StageID = 12 [deprecated = true];					// stage
 	string MapID = 13 [deprecated = true];					// map
 	int32 Version = 14;										// version
 	int64 sceneID = 15;										// id
@@ -46,6 +46,7 @@ message Scene {
 	repeated int64 RngData = 22;							// rngdata
 	int32 GameState = 23;									// gamestate
 	int32 BlockNums = 24;									// blockNums, it's like 7, 8
+	int32 StageID2 = 25;									// stage
 }
 
 // UserDeviceInfo

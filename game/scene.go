@@ -1093,16 +1093,16 @@ func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 
 func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
-		StageID: int32(scene.StageID),
-		MapID2:  int32(scene.MapID),
-		Version: int32(scene.Version),
-		SceneID: scene.SceneID,
-		Width:   int32(scene.Width),
-		Height:  int32(scene.Height),
-		Layers:  int32(scene.Layers),
-		XOff:    int32(scene.XOff),
-		YOff:    int32(scene.YOff),
-		Offset:  scene.Offset,
+		StageID2: int32(scene.StageID),
+		MapID2:   int32(scene.MapID),
+		Version:  int32(scene.Version),
+		SceneID:  scene.SceneID,
+		Width:    int32(scene.Width),
+		Height:   int32(scene.Height),
+		Layers:   int32(scene.Layers),
+		XOff:     int32(scene.XOff),
+		YOff:     int32(scene.YOff),
+		Offset:   scene.Offset,
 	}
 
 	arr, x, y, z := goutils.IntArr3ToInt32Arr(scene.InitArr)
@@ -1152,7 +1152,7 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 
 func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
-		StageID:   int32(scene.StageID),
+		StageID2:  int32(scene.StageID),
 		MapID2:    int32(scene.MapID),
 		Version:   int32(scene.Version),
 		SceneID:   scene.SceneID,

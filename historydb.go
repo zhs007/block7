@@ -311,11 +311,13 @@ func (db *HistoryDB) Stats(ctx context.Context) (*HistoryDBStatsData, error) {
 			mapNums[int(stage.MapID2)] = 1
 		}
 
-		_, isok = stageNums[int(stage.StageID)]
-		if isok {
-			stageNums[int(stage.StageID)]++
-		} else {
-			stageNums[int(stage.StageID)] = 1
+		if stage.StageID2 > 0 {
+			_, isok = stageNums[int(stage.StageID2)]
+			if isok {
+				stageNums[int(stage.StageID2)]++
+			} else {
+				stageNums[int(stage.StageID2)] = 1
+			}
 		}
 
 		return nil
