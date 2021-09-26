@@ -414,7 +414,7 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 		return nil, err
 	}
 
-	latestHistoryID, historyNums, err := serv.HistoryDB.Stats(context.Background())
+	history, err := serv.HistoryDB.Stats(context.Background())
 	if err != nil {
 		goutils.Error("BasicServ.Stats:HistoryDB.Stats",
 			zap.Error(err))
@@ -431,11 +431,10 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 	}
 
 	return &StatsResult{
-		LatestUserID:    latestUserID,
-		UserNums:        userNums,
-		UserDataNums:    userDataNums,
-		Stage:           stage,
-		LatestHistoryID: latestHistoryID,
-		HistoryNums:     historyNums,
+		LatestUserID: latestUserID,
+		UserNums:     userNums,
+		UserDataNums: userDataNums,
+		Stage:        stage,
+		History:      history,
 	}, nil
 }

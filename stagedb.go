@@ -255,6 +255,8 @@ func (db *StageDB) Stats(ctx context.Context) (*StageDBStatsData, error) {
 		if err != nil {
 			goutils.Warn("StageDB.Stats:Unmarshal",
 				zap.Error(err))
+
+			return nil
 		}
 
 		_, isok := mapNums[int(stage.MapID2)]
