@@ -225,6 +225,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
+	scene.StageID = params.MissionID
 	scene.MapID = ld2.MapID
 	scene.IsOutputScene = true
 
@@ -413,7 +414,7 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 		return nil, err
 	}
 
-	latestHistoryID, historyNums, err := serv.HistoryDB.Stats(context.Background())
+	history, err := serv.HistoryDB.Stats(context.Background())
 	if err != nil {
 		goutils.Error("BasicServ.Stats:HistoryDB.Stats",
 			zap.Error(err))
@@ -430,11 +431,10 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 	}
 
 	return &StatsResult{
-		LatestUserID:    latestUserID,
-		UserNums:        userNums,
-		UserDataNums:    userDataNums,
-		Stage:           stage,
-		LatestHistoryID: latestHistoryID,
-		HistoryNums:     historyNums,
+		LatestUserID: latestUserID,
+		UserNums:     userNums,
+		UserDataNums: userDataNums,
+		Stage:        stage,
+		History:      history,
 	}, nil
 }

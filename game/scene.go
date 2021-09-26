@@ -1093,7 +1093,7 @@ func (scene *Scene) ProcParent(bd *BlockData, arr []*BlockData) {
 
 func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
-		StageID: int32(scene.SceneID),
+		StageID: int32(scene.StageID),
 		MapID2:  int32(scene.MapID),
 		Version: int32(scene.Version),
 		SceneID: scene.SceneID,
@@ -1152,7 +1152,7 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 
 func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
-		StageID:   int32(scene.SceneID),
+		StageID:   int32(scene.StageID),
 		MapID2:    int32(scene.MapID),
 		Version:   int32(scene.Version),
 		SceneID:   scene.SceneID,

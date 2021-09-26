@@ -113,10 +113,9 @@ type StatsParams struct {
 
 // StatsResult - statistics result
 type StatsResult struct {
-	LatestUserID    int64                    `json:"latestuserid"`
-	UserNums        int                      `json:"usernums"`
-	UserDataNums    int                      `json:"userdatanums"`
-	Stage           *block7.StageDBStatsData `json:"stage"`
-	LatestHistoryID int64                    `json:"latesthistoryid"`
-	HistoryNums     int                      `json:"historynums"`
+	LatestUserID int64                      `json:"latestuserid"`
+	UserNums     int                        `json:"usernums"`
+	UserDataNums int                        `json:"userdatanums"`
+	Stage        *block7.StageDBStatsData   `json:"stage"`
+	History      *block7.HistoryDBStatsData `json:"history"`
 }
