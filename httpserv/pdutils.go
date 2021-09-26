@@ -23,9 +23,10 @@ func LoginParams2PB(params *LoginParams) *block7pb.UserDeviceInfo {
 
 func UpdUserDataParams2PB(params *UpdUserDataParams, uds *block7.UpdUserDataStatus) *block7pb.UserData {
 	ud := &block7pb.UserData{
-		Name:     params.Name,
-		Platform: params.Platform,
-		Version:  params.Version,
+		Name:          params.Name,
+		Platform:      params.Platform,
+		Version:       params.Version,
+		ClientVersion: params.ClientVersion,
 	}
 
 	if uds.HasCoin {
