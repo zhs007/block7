@@ -225,6 +225,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
+	scene.StageID = params.MissionID
 	scene.MapID = ld2.MapID
 	scene.IsOutputScene = true
 
