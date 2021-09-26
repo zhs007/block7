@@ -16,6 +16,7 @@ func LoginParams2PB(params *LoginParams) *block7pb.UserDeviceInfo {
 		GameVersion:     params.GameVersion,
 		ResourceVersion: params.ResourceVersion,
 		DeviceInfo:      params.DeviceInfo,
+		IPAddr:          params.IPAddr,
 	}
 
 	return udi

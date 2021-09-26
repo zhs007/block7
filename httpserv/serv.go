@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 
+	realip "github.com/Ferluci/fast-realip"
 	"github.com/valyala/fasthttp"
 	block7http "github.com/zhs007/block7/http"
 	goutils "github.com/zhs007/goutils"
@@ -58,6 +59,9 @@ func NewServ(service IService) *Serv {
 					params.DeviceInfo = string(v)
 				}
 			})
+
+			ipaddr := realip.FromRequest(ctx)
+			params.IPAddr = ipaddr
 
 			goutils.Debug("block7serv.Serv.login:ParseBody",
 				goutils.JSON("params", params))
