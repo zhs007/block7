@@ -3,6 +3,7 @@ module github.com/zhs007/block7
 go 1.16
 
 require (
+	github.com/Ferluci/fast-realip v1.0.0
 	github.com/buger/jsonparser v1.1.1
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/json-iterator/go v1.1.11

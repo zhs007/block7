@@ -63,6 +63,7 @@ message UserDeviceInfo {
 	int64 CreateTs = 10;				// create timestamp
 	int32 LoginTimes = 11;				// login times
 	int64 LastLoginTs = 12;				// last login timestamp
+	string IPAddr = 13;					// IP Address
 }
 
 // UserInfo

@@ -52,6 +52,7 @@ type LoginParams struct {
 	GameVersion     string `json:"gameVersion"`
 	ResourceVersion string `json:"resVersion"`
 	DeviceInfo      string `json:"deviceInfo"`
+	IPAddr          string `json:"ipaddr"`
 }
 
 // LoginResult - login result
