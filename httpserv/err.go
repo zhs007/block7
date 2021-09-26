@@ -9,4 +9,6 @@ var (
 	ErrInvalidMissionID = errors.New("invalid MissionID")
 	// ErrInvalidSceneID - invalid SceneID
 	ErrInvalidSceneID = errors.New("invalid SceneID")
+	// ErrInvalidUserDataName - invalid UserData Name
+	ErrInvalidUserDataName = errors.New("invalid UserData Name")
 )

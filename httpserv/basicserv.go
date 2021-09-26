@@ -343,3 +343,53 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 		UserLevel: 100,
 		HistoryID: pbscene1.HistoryID}, nil
 }
+
+// GetUserData - get UserData
+func (serv *BasicServ) GetUserData(params *UserDataParams) (*UserDataResult, error) {
+	ud, err := serv.UserDB.GetUserData(context.Background(), params.Name, params.Platform)
+	if err != nil {
+		goutils.Error("BasicServ.GetUserData:GetUserData",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	if ud == nil {
+		return &UserDataResult{
+			Name:     params.Name,
+			Platform: params.Platform,
+			Version:  0,
+		}, nil
+	}
+
+	return PB2UserDataResult(ud), nil
+}
+
+// UpdUserData - update UserData
+func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDataStatus) (*UpdUserDataResult, error) {
+	udpb := UpdUserDataParams2PB(ud, uds)
+	if ud.UserHash != "" {
+		uid, err := serv.UserDB.GetUserID(context.Background(), ud.UserHash)
+		if err != nil {
+			goutils.Error("BasicServ.UpdUserData:GetUserID",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		udpb.UserID = uid
+	}
+
+	oldversion, err := serv.UserDB.UpdUserData(context.Background(), udpb, uds)
+	if err != nil {
+		goutils.Error("BasicServ.UpdUserData:UpdUserData",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return &UpdUserDataResult{
+		OldVersion: oldversion,
+		NewVersion: ud.Version,
+	}, nil
+}

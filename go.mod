@@ -12,7 +12,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/valyala/fasthttp v1.26.0
 	github.com/zhs007/ankadb v0.3.35
-	github.com/zhs007/goutils v0.1.3
+	github.com/zhs007/goutils v0.1.13
 	go.uber.org/zap v1.19.0
 	google.golang.org/genproto v0.0.0-20210315173758-2651cd453018 // indirect
 	google.golang.org/grpc v1.36.0 // indirect

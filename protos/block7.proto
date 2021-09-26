@@ -45,18 +45,7 @@ message Scene {
 	repeated int32 History2 = 21;							// history
 	repeated int64 RngData = 22;							// rngdata
 	int32 GameState = 23;									// gamestate
-}
-
-// MissionParams
-message MissionParams {
-    int32 MissionID = 1;				    // mission id
-}
-
-// MissionResult
-message MissionResult {
-    int32 MissionID = 1;				    // mission id	
-	string MissionHash = 2;					// mission hash
-	Scene Scene = 3;						// scene
+	int32 BlockNums = 24;									// blockNums, it's like 7, 8
 }
 
 // UserDeviceInfo
@@ -81,21 +70,24 @@ message UserInfo {
 	repeated UserDeviceInfo Data = 2;	// user device infomations
 }
 
-// LoginParams
-message LoginParams {
-    string UserHash = 1;				// user hash
-	string Game = 2;					// game code
-	string Platform = 3;				// ios or android
-	string ADID = 4;					// ad id
-	string GUID = 5;					// guid
-	string PlatformInfo = 6;			// platform infomation
-	string GameVersion = 7;				// game version
-	string ResourceVersion = 8;			// game resource version
-	string DeviceInfo = 9;				// device infomation
+// Cooking
+message Cooking {
+	int32 Level = 1;
+	bool Unlock = 2;
+	int32 StarNums = 3;
 }
 
-// LoginResult
-message LoginResult {
-	string UserHash = 1;				// user hash
-	int64 UserID = 2;					// user id
+// UserData
+message UserData {
+	string Name = 1;
+	int64 Coin = 2;
+	int32 Level = 3;
+	map<string,int32> LevelArr = 4;
+	map<string,int32> ToolsArr = 5;
+	repeated int32 HomeScene = 6;
+	repeated Cooking Cooking = 7;
+	string Platform = 8;
+	int64 Version = 9;
+	int64 UserID = 10;
+	int64 LastTs = 11;				// last timestamp
 }

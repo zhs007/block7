@@ -36,7 +36,6 @@ type Scene struct {
 	BlockNums     int             `json:"-"`             // 初始化block数量
 	RngData       []int64         `json:"rngdata"`       // 前端rng数据
 	GameState     int32           `json:"gamestate"`     // 前端gamestate
-	// SpecialLayersData [][]int         `json:"specialLayersData"` // 这个给前端用的
 }
 
 // LoadScene - load a scene
