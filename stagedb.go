@@ -15,6 +15,13 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+type StageDBStatsData struct {
+	LatestSceneID int64       `json:"latestsceneid"`
+	SceneNums     int         `json:"scenenums"`
+	MapNums       map[int]int `json:"mapnums"`
+	StageNums     map[int]int `json:"stagenums"`
+}
+
 const stagedbname = "stagedb"
 const sceneIDKey = "cursceneid"
 
@@ -226,24 +233,52 @@ func (db *StageDB) GetLatestSceneID(ctx context.Context) (int64, error) {
 }
 
 // Stats - statistics
-func (db *StageDB) Stats(ctx context.Context) (int64, int, error) {
+func (db *StageDB) Stats(ctx context.Context) (*StageDBStatsData, error) {
 	lastSceneID, err := db.GetLatestSceneID(ctx)
 	if err != nil {
 		goutils.Error("StageDB.Stats:GetLatestSceneID",
 			zap.Error(err))
 
-		return 0, 0, err
+		return nil, err
 	}
 
 	sceneNums := 0
+	mapNums := make(map[int]int)
+	stageNums := make(map[int]int)
 
 	db.mutexDB.Lock()
 	db.AnkaDB.ForEachWithPrefix(ctx, stagedbname, "s:", func(key string, value []byte) error {
 		sceneNums++
 
+		stage := &block7pb.Scene{}
+		err = proto.Unmarshal(value, stage)
+		if err != nil {
+			goutils.Warn("StageDB.Stats:Unmarshal",
+				zap.Error(err))
+		}
+
+		_, isok := mapNums[int(stage.MapID2)]
+		if isok {
+			mapNums[int(stage.MapID2)]++
+		} else {
+			mapNums[int(stage.MapID2)] = 1
+		}
+
+		_, isok = stageNums[int(stage.StageID)]
+		if isok {
+			stageNums[int(stage.StageID)]++
+		} else {
+			stageNums[int(stage.StageID)] = 1
+		}
+
 		return nil
 	})
 	db.mutexDB.Unlock()
 
-	return lastSceneID, sceneNums, nil
+	return &StageDBStatsData{
+		LatestSceneID: lastSceneID,
+		SceneNums:     sceneNums,
+		MapNums:       mapNums,
+		StageNums:     stageNums,
+	}, nil
 }

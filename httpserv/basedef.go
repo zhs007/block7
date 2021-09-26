@@ -1,6 +1,9 @@
 package block7serv
 
-import block7game "github.com/zhs007/block7/game"
+import (
+	"github.com/zhs007/block7"
+	block7game "github.com/zhs007/block7/game"
+)
 
 // MissionParams - mission parameters
 type MissionParams struct {
@@ -110,11 +113,10 @@ type StatsParams struct {
 
 // StatsResult - statistics result
 type StatsResult struct {
-	LatestUserID    int64 `json:"latestuserid"`
-	UserNums        int   `json:"usernums"`
-	UserDataNums    int   `json:"userdatanums"`
-	LatestSceneID   int64 `json:"latestsceneid"`
-	SceneNums       int   `json:"scenenums"`
-	LatestHistoryID int64 `json:"latesthistoryid"`
-	HistoryNums     int   `json:"historynums"`
+	LatestUserID    int64                    `json:"latestuserid"`
+	UserNums        int                      `json:"usernums"`
+	UserDataNums    int                      `json:"userdatanums"`
+	Stage           *block7.StageDBStatsData `json:"stage"`
+	LatestHistoryID int64                    `json:"latesthistoryid"`
+	HistoryNums     int                      `json:"historynums"`
 }

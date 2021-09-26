@@ -405,7 +405,7 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 		return nil, ErrInvalidToken
 	}
 
-	latestSceneID, sceneNums, err := serv.StageDB.Stats(context.Background())
+	stage, err := serv.StageDB.Stats(context.Background())
 	if err != nil {
 		goutils.Error("BasicServ.Stats:StageDB.Stats",
 			zap.Error(err))
@@ -433,8 +433,7 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 		LatestUserID:    latestUserID,
 		UserNums:        userNums,
 		UserDataNums:    userDataNums,
-		LatestSceneID:   latestSceneID,
-		SceneNums:       sceneNums,
+		Stage:           stage,
 		LatestHistoryID: latestHistoryID,
 		HistoryNums:     historyNums,
 	}, nil
