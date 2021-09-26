@@ -99,8 +99,8 @@ github.com/valyala/tcplisten v1.0.0/go.mod h1:T0xQ8SeCZGxckz9qRXTfG43PvQ/mcWh7Fw
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 github.com/zhs007/ankadb v0.3.35 h1:Vk7LuirnUS7qSEntpBPdlnzwsmx6ZLhi0UFB1umLL0A=
 github.com/zhs007/ankadb v0.3.35/go.mod h1:IsfaA6sTij3tK+2knD9UMdMfN1xGOmwjRJOsEfg7NKk=
-github.com/zhs007/goutils v0.1.13 h1:pvlFxAFaeSkdL+uRRWfinz3H5dIBIzdSZL2krlLje+w=
-github.com/zhs007/goutils v0.1.13/go.mod h1:GomJyN3cVfOT/2njNZE5tp2HOzHng3v7czh20M1xH4Y=
+github.com/zhs007/goutils v0.1.15 h1:U7k6Pqj8LgZoRI3sTQpeMyYbIMJoIstBeR5dmKpeDco=
+github.com/zhs007/goutils v0.1.15/go.mod h1:GomJyN3cVfOT/2njNZE5tp2HOzHng3v7czh20M1xH4Y=
 go.uber.org/atomic v1.7.0 h1:ADUqmZGgLDDfbSL9ZmPxKTybcoEYHgpYfELNoN+7hsw=
 go.uber.org/atomic v1.7.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
 go.uber.org/goleak v1.1.10 h1:z+mqJhf6ss6BSfSM671tgKyZBFPTTJM+HLxnhPC3wu0=

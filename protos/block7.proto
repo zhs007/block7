@@ -94,3 +94,10 @@ message UserData {
 	int64 LastTs = 11;				// last timestamp
 	string ClientVersion = 12;
 }
+
+// DayStatsData
+message DayStatsData {
+	int64 Ts = 1;
+	int32 NewUserNums = 2;
+	int32 AliveUserNums = 3;
+}

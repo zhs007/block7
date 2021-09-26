@@ -842,6 +842,70 @@ func (x *UserData) GetClientVersion() string {
 	return ""
 }
 
+// DayStatsData
+type DayStatsData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ts            int64 `protobuf:"varint,1,opt,name=Ts,proto3" json:"Ts,omitempty"`
+	NewUserNums   int32 `protobuf:"varint,2,opt,name=NewUserNums,proto3" json:"NewUserNums,omitempty"`
+	AliveUserNums int32 `protobuf:"varint,3,opt,name=AliveUserNums,proto3" json:"AliveUserNums,omitempty"`
+}
+
+func (x *DayStatsData) Reset() {
+	*x = DayStatsData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_block7_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DayStatsData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DayStatsData) ProtoMessage() {}
+
+func (x *DayStatsData) ProtoReflect() protoreflect.Message {
+	mi := &file_block7_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DayStatsData.ProtoReflect.Descriptor instead.
+func (*DayStatsData) Descriptor() ([]byte, []int) {
+	return file_block7_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DayStatsData) GetTs() int64 {
+	if x != nil {
+		return x.Ts
+	}
+	return 0
+}
+
+func (x *DayStatsData) GetNewUserNums() int32 {
+	if x != nil {
+		return x.NewUserNums
+	}
+	return 0
+}
+
+func (x *DayStatsData) GetAliveUserNums() int32 {
+	if x != nil {
+		return x.AliveUserNums
+	}
+	return 0
+}
+
 var File_block7_proto protoreflect.FileDescriptor
 
 var file_block7_proto_rawDesc = []byte{
@@ -976,10 +1040,17 @@ var file_block7_proto_rawDesc = []byte{
 	0x01, 0x1a, 0x3b, 0x0a, 0x0d, 0x54, 0x6f, 0x6f, 0x6c, 0x73, 0x41, 0x72, 0x72, 0x45, 0x6e, 0x74,
 	0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x05, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x23,
-	0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x7a, 0x68, 0x73,
-	0x30, 0x30, 0x37, 0x2f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x37, 0x2f, 0x62, 0x6c, 0x6f, 0x63, 0x6b,
-	0x37, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x01, 0x28, 0x05, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x66,
+	0x0a, 0x0c, 0x44, 0x61, 0x79, 0x53, 0x74, 0x61, 0x74, 0x73, 0x44, 0x61, 0x74, 0x61, 0x12, 0x0e,
+	0x0a, 0x02, 0x54, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x54, 0x73, 0x12, 0x20,
+	0x0a, 0x0b, 0x4e, 0x65, 0x77, 0x55, 0x73, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x73, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x0b, 0x4e, 0x65, 0x77, 0x55, 0x73, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x73,
+	0x12, 0x24, 0x0a, 0x0d, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x55, 0x73, 0x65, 0x72, 0x4e, 0x75, 0x6d,
+	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x55, 0x73,
+	0x65, 0x72, 0x4e, 0x75, 0x6d, 0x73, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x7a, 0x68, 0x73, 0x30, 0x30, 0x37, 0x2f, 0x62, 0x6c, 0x6f, 0x63,
+	0x6b, 0x37, 0x2f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x37, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -994,7 +1065,7 @@ func file_block7_proto_rawDescGZIP() []byte {
 	return file_block7_proto_rawDescData
 }
 
-var file_block7_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_block7_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_block7_proto_goTypes = []interface{}{
 	(*Column)(nil),         // 0: block7pb.Column
 	(*SceneLayer)(nil),     // 1: block7pb.SceneLayer
@@ -1004,23 +1075,24 @@ var file_block7_proto_goTypes = []interface{}{
 	(*UserInfo)(nil),       // 5: block7pb.UserInfo
 	(*Cooking)(nil),        // 6: block7pb.Cooking
 	(*UserData)(nil),       // 7: block7pb.UserData
-	nil,                    // 8: block7pb.UserData.LevelArrEntry
-	nil,                    // 9: block7pb.UserData.ToolsArrEntry
+	(*DayStatsData)(nil),   // 8: block7pb.DayStatsData
+	nil,                    // 9: block7pb.UserData.LevelArrEntry
+	nil,                    // 10: block7pb.UserData.ToolsArrEntry
 }
 var file_block7_proto_depIdxs = []int32{
-	0, // 0: block7pb.SceneLayer.values:type_name -> block7pb.Column
-	1, // 1: block7pb.Scene.InitArr:type_name -> block7pb.SceneLayer
-	0, // 2: block7pb.Scene.History:type_name -> block7pb.Column
-	2, // 3: block7pb.Scene.specialLayer:type_name -> block7pb.SpecialLayer
-	4, // 4: block7pb.UserInfo.Data:type_name -> block7pb.UserDeviceInfo
-	8, // 5: block7pb.UserData.LevelArr:type_name -> block7pb.UserData.LevelArrEntry
-	9, // 6: block7pb.UserData.ToolsArr:type_name -> block7pb.UserData.ToolsArrEntry
-	6, // 7: block7pb.UserData.Cooking:type_name -> block7pb.Cooking
-	8, // [8:8] is the sub-list for method output_type
-	8, // [8:8] is the sub-list for method input_type
-	8, // [8:8] is the sub-list for extension type_name
-	8, // [8:8] is the sub-list for extension extendee
-	0, // [0:8] is the sub-list for field type_name
+	0,  // 0: block7pb.SceneLayer.values:type_name -> block7pb.Column
+	1,  // 1: block7pb.Scene.InitArr:type_name -> block7pb.SceneLayer
+	0,  // 2: block7pb.Scene.History:type_name -> block7pb.Column
+	2,  // 3: block7pb.Scene.specialLayer:type_name -> block7pb.SpecialLayer
+	4,  // 4: block7pb.UserInfo.Data:type_name -> block7pb.UserDeviceInfo
+	9,  // 5: block7pb.UserData.LevelArr:type_name -> block7pb.UserData.LevelArrEntry
+	10, // 6: block7pb.UserData.ToolsArr:type_name -> block7pb.UserData.ToolsArrEntry
+	6,  // 7: block7pb.UserData.Cooking:type_name -> block7pb.Cooking
+	8,  // [8:8] is the sub-list for method output_type
+	8,  // [8:8] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_block7_proto_init() }
@@ -1125,6 +1197,18 @@ func file_block7_proto_init() {
 				return nil
 			}
 		}
+		file_block7_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DayStatsData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1132,7 +1216,7 @@ func file_block7_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_block7_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
