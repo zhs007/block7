@@ -125,7 +125,7 @@ func (db *StatsDB) UpdDayStats(ctx context.Context, dsd *block7pb.DayStatsData) 
 	}
 
 	db.mutexDB.Lock()
-	err = db.AnkaDB.Set(ctx, stagedbname, makeDayStatsDataDBKey(dsd.Ts), buf)
+	err = db.AnkaDB.Set(ctx, statsdbname, makeDayStatsDataDBKey(dsd.Ts), buf)
 	db.mutexDB.Unlock()
 	if err != nil {
 		goutils.Warn("StatsDB.UpdDayStats:Set",
@@ -140,7 +140,7 @@ func (db *StatsDB) UpdDayStats(ctx context.Context, dsd *block7pb.DayStatsData) 
 // GetDayStats - get DayStats
 func (db *StatsDB) GetDayStats(ctx context.Context, ts int64) (*block7pb.DayStatsData, error) {
 	db.mutexDB.Lock()
-	buf, err := db.AnkaDB.Get(ctx, stagedbname, makeDayStatsDataDBKey(ts))
+	buf, err := db.AnkaDB.Get(ctx, statsdbname, makeDayStatsDataDBKey(ts))
 	db.mutexDB.Unlock()
 	if err != nil {
 		if err == ankadb.ErrNotFoundKey {
@@ -324,7 +324,7 @@ func (db *StatsDB) Stats(ctx context.Context) (*StatsDBStatsData, error) {
 	mapDayStats := make(map[string]*block7pb.DayStatsData)
 
 	db.mutexDB.Lock()
-	db.AnkaDB.ForEachWithPrefix(ctx, stagedbname, "d:", func(key string, value []byte) error {
+	db.AnkaDB.ForEachWithPrefix(ctx, statsdbname, "d:", func(key string, value []byte) error {
 		dsd := &block7pb.DayStatsData{}
 		err = proto.Unmarshal(value, dsd)
 		if err != nil {
