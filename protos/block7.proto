@@ -47,6 +47,7 @@ message Scene {
 	int32 GameState = 23;									// gamestate
 	int32 BlockNums = 24;									// blockNums, it's like 7, 8
 	int32 StageID2 = 25;									// stage
+	int64 ts = 26;											// timestamp
 }
 
 // UserDeviceInfo
@@ -100,4 +101,12 @@ message DayStatsData {
 	int64 Ts = 1;
 	int32 NewUserNums = 2;
 	int32 AliveUserNums = 3;
+	int32 NewStageNums = 4;
+	int32 StageOKNums = 5;
+	int32 StageFailNums = 6;
+	int32 StageCancelNums = 7;
+	string Time = 8;
+	int64 FirstUserID = 9;
+	int64 FirstSceneID = 10;
+	int64 FirstHistoryID = 11;
 }

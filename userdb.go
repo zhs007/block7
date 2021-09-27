@@ -23,6 +23,28 @@ func makeUserDBKey(userid int64) string {
 	return fmt.Sprintf("u:%v", userid)
 }
 
+func getUserIDFromUserDBKey(key string) int64 {
+	if len(key) > 2 {
+		key = key[2:]
+
+		i64, err := goutils.String2Int64(key)
+		if err == nil {
+			return i64
+		}
+
+		goutils.Warn("getUserIDFromUserDBKey:String2Int64",
+			zap.String("key", key),
+			zap.Error(err))
+
+		return 0
+	}
+
+	goutils.Warn("getUserIDFromUserDBKey",
+		zap.String("key", key))
+
+	return 0
+}
+
 func makeUserHashDBKey(uasehash string) string {
 	return goutils.AppendString(userHashKeyPrefix, uasehash)
 }
@@ -524,8 +546,8 @@ func (db *UserDB) Stats(ctx context.Context) (int64, int, int, error) {
 	return latestUserID, userNums, userDataNums, nil
 }
 
-// CountTodayUsers - count users today
-func (db *UserDB) CountTodayUsers(ctx context.Context, t time.Time) (int, int, error) {
+// countTodayUsers - count users today
+func (db *UserDB) countTodayUsers(ctx context.Context, t time.Time) (int, int, error) {
 	newusers := 0
 	loginusers := 0
 	// ct := time.Unix(ts, 0)
@@ -559,4 +581,42 @@ func (db *UserDB) CountTodayUsers(ctx context.Context, t time.Time) (int, int, e
 	db.mutexDB.Unlock()
 
 	return newusers, loginusers, nil
+}
+
+// findTodayFirstUserID - find first userID today
+func (db *UserDB) findTodayFirstUserID(ctx context.Context, t time.Time, lastUserID int64) (int64, error) {
+	firstuserid := int64(0)
+	// ct := time.Unix(ts, 0)
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
+		cuid := getUserIDFromUserDBKey(key)
+		if cuid > 0 && cuid <= lastUserID {
+			return nil
+		}
+
+		user := &block7pb.UserInfo{}
+
+		err := proto.Unmarshal(value, user)
+		if err != nil {
+			goutils.Warn("UserDB.findTodayFirstUserID:Unmarshal",
+				zap.Error(err))
+
+			return nil
+		}
+
+		if len(user.Data) > 0 {
+			rt := time.Unix(user.Data[0].CreateTs, 0)
+			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+				if firstuserid == 0 || user.UserID < firstuserid {
+					firstuserid = user.UserID
+				}
+			}
+		}
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return firstuserid, nil
 }

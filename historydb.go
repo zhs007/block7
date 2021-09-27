@@ -133,6 +133,8 @@ func (db *HistoryDB) GetCurHistoryID(ctx context.Context) (int64, error) {
 
 // updHistory - update history
 func (db *HistoryDB) updHistory(ctx context.Context, scene *block7pb.Scene) error {
+	scene.Ts = goutils.GetCurTimestamp()
+
 	buf, err := proto.Marshal(scene)
 	if err != nil {
 		goutils.Warn("HistoryDB.updHistory:Marshal",
