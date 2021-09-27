@@ -45,7 +45,7 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 		return nil, err
 	}
 
-	statsdb, err := block7.NewStatsDB(cfg.DBPath, "", cfg.DBEngine, userdb)
+	statsdb, err := block7.NewStatsDB(cfg.DBPath, "", cfg.DBEngine, userdb, stagedb)
 	if err != nil {
 		goutils.Error("NewBasicServ:NewStatsDB",
 			zap.Error(err))

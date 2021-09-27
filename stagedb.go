@@ -125,6 +125,8 @@ func (db *StageDB) GetCurSceneID(ctx context.Context) (int64, error) {
 
 // UpdStage - update stage
 func (db *StageDB) UpdStage(ctx context.Context, scene *block7pb.Scene) error {
+	scene.Ts = goutils.GetCurTimestamp()
+
 	buf, err := proto.Marshal(scene)
 	if err != nil {
 		goutils.Warn("StageDB.UpdStage:Marshal",
@@ -286,3 +288,41 @@ func (db *StageDB) Stats(ctx context.Context) (*StageDBStatsData, error) {
 		StageNums:     stageNums,
 	}, nil
 }
+
+// // countTodayStages - count stages today
+// func (db *StageDB) countTodayStages(ctx context.Context, t time.Time) (int, int, error) {
+// 	newuserstages := 0
+// 	newstages := 0
+// 	// ct := time.Unix(ts, 0)
+
+// 	db.mutexDB.Lock()
+// 	db.AnkaDB.ForEachWithPrefix(ctx, stagedbname, "s:", func(key string, value []byte) error {
+// 		stage := &block7pb.Scene{}
+// 		err := proto.Unmarshal(value, stage)
+// 		if err != nil {
+// 			goutils.Warn("StageDB.countTodayStages:Unmarshal",
+// 				zap.Error(err))
+
+// 			return nil
+// 		}
+
+// 		if stage.
+
+// 		if len(user.Data) > 0 {
+// 			rt := time.Unix(user.Data[0].CreateTs, 0)
+// 			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+// 				newusers++
+// 			}
+
+// 			lt := time.Unix(user.Data[0].LastLoginTs, 0)
+// 			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
+// 				loginusers++
+// 			}
+// 		}
+
+// 		return nil
+// 	})
+// 	db.mutexDB.Unlock()
+
+// 	return newusers, loginusers, nil
+// }

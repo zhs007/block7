@@ -35,10 +35,11 @@ type StatsDB struct {
 	mutexDB sync.Mutex
 	ticker  *time.Ticker
 	userDB  *UserDB
+	stageDB *StageDB
 }
 
 // NewStatsDB - new StatsDB
-func NewStatsDB(dbpath string, httpAddr string, engine string, userdb *UserDB) (*StatsDB, error) {
+func NewStatsDB(dbpath string, httpAddr string, engine string, userdb *UserDB, stagedb *StageDB) (*StatsDB, error) {
 	cfg := ankadb.NewConfig()
 
 	cfg.AddrHTTP = httpAddr
@@ -55,8 +56,9 @@ func NewStatsDB(dbpath string, httpAddr string, engine string, userdb *UserDB) (
 	}
 
 	db := &StatsDB{
-		AnkaDB: ankaDB,
-		userDB: userdb,
+		AnkaDB:  ankaDB,
+		userDB:  userdb,
+		stageDB: stagedb,
 	}
 
 	return db, err
@@ -167,14 +169,14 @@ func (db *StatsDB) GetDayStats(ctx context.Context, ts int64) (*block7pb.DayStat
 }
 
 // genDayStats - genarate DayStats
-func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time) (*block7pb.DayStatsData, error) {
+func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, firstUserId int64) (*block7pb.DayStatsData, error) {
 	// nt := time.Now()
 	// curts := goutils.FormatUTCDayTs(nt)
 	// cdt := time.Unix(curts, 0)
 
-	nus, lus, err := db.userDB.CountTodayUsers(ctx, cdt)
+	nus, lus, err := db.userDB.countTodayUsers(ctx, cdt)
 	if err != nil {
-		goutils.Warn("StatsDB.GetDayStats:CountTodayUsers",
+		goutils.Warn("StatsDB.GetDayStats:countTodayUsers",
 			zap.Error(err))
 
 		return nil, err
@@ -184,6 +186,7 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time) (*block7pb.Da
 		Ts:            cdt.Unix(),
 		NewUserNums:   int32(nus),
 		AliveUserNums: int32(lus),
+		FirstUserID:   firstUserId,
 	}, nil
 }
 
@@ -225,6 +228,8 @@ func (db *StatsDB) onTimer() {
 		latestdayts = goutils.FormatUTCDayTs(time.Unix(latestts, 0))
 	}
 
+	firstuserid := int64(0)
+
 	for range db.ticker.C {
 		nt := time.Now()
 		curts := goutils.FormatUTCDayTs(nt)
@@ -232,10 +237,26 @@ func (db *StatsDB) onTimer() {
 
 		// new day
 		if curts != latestdayts {
+			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, firstuserid)
+			if err != nil {
+				goutils.Warn("StatsDB.onTimer:findTodayFirstUserID:newday",
+					zap.Error(err))
+			}
 
+			firstuserid = uid
 		}
 
-		dsd, err := db.genDayStats(context.Background(), cdt)
+		if firstuserid == 0 {
+			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, firstuserid)
+			if err != nil {
+				goutils.Warn("StatsDB.onTimer:findTodayFirstUserID",
+					zap.Error(err))
+			}
+
+			firstuserid = uid
+		}
+
+		dsd, err := db.genDayStats(context.Background(), cdt, firstuserid)
 		if err != nil {
 			goutils.Warn("StatsDB.onTimer:GenDayStats",
 				zap.Error(err))
@@ -337,6 +358,9 @@ func (db *StatsDB) Stats(ctx context.Context) (*StatsDBStatsData, error) {
 		nt := time.Unix(dsd.Ts, 0)
 		curts := goutils.FormatUTCDayTs(nt)
 		cdt := time.Unix(curts, 0)
+
+		dsd.Time = time.Unix(dsd.Ts, 0).Format("2006-01-02_15:04:05")
+		dsd.Ts = 0
 
 		mapDayStats[cdt.Format("2006-01-02")] = dsd
 

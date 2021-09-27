@@ -26,7 +26,7 @@ type MissionDataParams struct {
 	History       [][]int                    `json:"history"`
 	HistoryID     int64                      `json:"srcHistory"`
 	RngData       []int64                    `json:"rngdata"`
-	GameState     int32                      `json:"gamestate"`
+	GameState     int32                      `json:"gamestate"` // 1 - ok, 2 - fail, 3 - cancel
 	InitArr       [][][]int                  `json:"initArr"`
 	BlockNums     int                        `json:"blockNums"`
 	StageType     int                        `json:"stageType"`
