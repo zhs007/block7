@@ -15,6 +15,12 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+type StatsDBStatsData struct {
+	FirstTime  string                            `json:"firstTime"`
+	LatestTime string                            `json:"latestTime"`
+	DayStats   map[string]*block7pb.DayStatsData `json:"dayStats"`
+}
+
 const statsdbname = "statsdb"
 const latestStatsKey = "lateststats"
 const firstStatsKey = "firststats"
@@ -160,11 +166,11 @@ func (db *StatsDB) GetDayStats(ctx context.Context, ts int64) (*block7pb.DayStat
 	return dsd, nil
 }
 
-// GenDayStats - genarate DayStats
-func (db *StatsDB) GenDayStats(ctx context.Context) (*block7pb.DayStatsData, error) {
-	nt := time.Now()
-	curts := goutils.FormatUTCDayTs(nt)
-	cdt := time.Unix(curts, 0)
+// genDayStats - genarate DayStats
+func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time) (*block7pb.DayStatsData, error) {
+	// nt := time.Now()
+	// curts := goutils.FormatUTCDayTs(nt)
+	// cdt := time.Unix(curts, 0)
 
 	nus, lus, err := db.userDB.CountTodayUsers(ctx, cdt)
 	if err != nil {
@@ -175,7 +181,7 @@ func (db *StatsDB) GenDayStats(ctx context.Context) (*block7pb.DayStatsData, err
 	}
 
 	return &block7pb.DayStatsData{
-		Ts:            curts,
+		Ts:            cdt.Unix(),
 		NewUserNums:   int32(nus),
 		AliveUserNums: int32(lus),
 	}, nil
@@ -197,8 +203,39 @@ func (db *StatsDB) Stop() {
 
 // onTimer - on Timer
 func (db *StatsDB) onTimer() {
+	firstts, err := db.GetFirstStatsTs(context.Background())
+	if err != nil {
+		goutils.Warn("StatsDB.onTimer:GetFirstStatsTs",
+			zap.Error(err))
+
+		return
+	}
+
+	latestts, err := db.GetLatestStatsTs(context.Background())
+	if err != nil {
+		goutils.Warn("StatsDB.onTimer:GetLatestStatsTs",
+			zap.Error(err))
+
+		return
+	}
+
+	latestdayts := int64(0)
+
+	if latestts > 0 {
+		latestdayts = goutils.FormatUTCDayTs(time.Unix(latestts, 0))
+	}
+
 	for range db.ticker.C {
-		dsd, err := db.GenDayStats(context.Background())
+		nt := time.Now()
+		curts := goutils.FormatUTCDayTs(nt)
+		cdt := time.Unix(curts, 0)
+
+		// new day
+		if curts != latestdayts {
+
+		}
+
+		dsd, err := db.genDayStats(context.Background(), cdt)
 		if err != nil {
 			goutils.Warn("StatsDB.onTimer:GenDayStats",
 				zap.Error(err))
@@ -209,5 +246,59 @@ func (db *StatsDB) onTimer() {
 			goutils.Warn("StatsDB.onTimer:UpdDayStats",
 				zap.Error(err))
 		}
+
+		if firstts == 0 {
+			firstts = nt.Unix()
+
+			db.setFirstStatsTs(context.Background(), firstts)
+		}
+
+		if latestts == 0 {
+			latestts = nt.Unix()
+
+			db.setLatestStatsTs(context.Background(), latestts)
+		}
 	}
+}
+
+// setLatestStatsTs - set latest timeatamp
+func (db *StatsDB) setLatestStatsTs(ctx context.Context, ts int64) error {
+	buf := new(bytes.Buffer)
+	err := binary.Write(buf, binary.LittleEndian, ts)
+	if err != nil {
+		goutils.Error("StatsDB.setLatestStatsTs:binary.Write",
+			zap.Error(err))
+
+		return err
+	}
+
+	db.mutexDB.Lock()
+	err = db.AnkaDB.Set(ctx, statsdbname, latestStatsKey, buf.Bytes())
+	db.mutexDB.Unlock()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// setFirstStatsTs - set first timeatamp
+func (db *StatsDB) setFirstStatsTs(ctx context.Context, ts int64) error {
+	buf := new(bytes.Buffer)
+	err := binary.Write(buf, binary.LittleEndian, ts)
+	if err != nil {
+		goutils.Error("StatsDB.setFirstStatsTs:binary.Write",
+			zap.Error(err))
+
+		return err
+	}
+
+	db.mutexDB.Lock()
+	err = db.AnkaDB.Set(ctx, statsdbname, firstStatsKey, buf.Bytes())
+	db.mutexDB.Unlock()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

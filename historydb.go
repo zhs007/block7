@@ -67,12 +67,12 @@ func NewHistoryDB(dbpath string, httpAddr string, engine string) (*HistoryDB, er
 	return db, err
 }
 
-// setCurHistoryID - set current historyID
-func (db *HistoryDB) setCurHistoryID(ctx context.Context, historyid int64) error {
+// _setCurHistoryID - set current historyID
+func (db *HistoryDB) _setCurHistoryID(ctx context.Context, historyid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, historyid)
 	if err != nil {
-		goutils.Error("HistoryDB.setCurHistoryID:binary.Write",
+		goutils.Error("HistoryDB._setCurHistoryID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -96,9 +96,9 @@ func (db *HistoryDB) GetCurHistoryID(ctx context.Context) (int64, error) {
 	buf, err := db.AnkaDB.Get(ctx, historydbname, historyIDKey)
 	if err != nil {
 		if err == ankadb.ErrNotFoundKey {
-			err = db.setCurHistoryID(ctx, 1)
+			err = db._setCurHistoryID(ctx, 1)
 			if err != nil {
-				goutils.Error("HistoryDB.GetCurHistoryID:setCurHistoryID",
+				goutils.Error("HistoryDB.GetCurHistoryID:_setCurHistoryID",
 					zap.Error(err))
 
 				return 0, err
@@ -120,9 +120,9 @@ func (db *HistoryDB) GetCurHistoryID(ctx context.Context) (int64, error) {
 		return 0, err
 	}
 
-	err = db.setCurHistoryID(ctx, historyid+1)
+	err = db._setCurHistoryID(ctx, historyid+1)
 	if err != nil {
-		goutils.Error("HistoryDB.GetCurHistoryID:setCurHistoryID",
+		goutils.Error("HistoryDB.GetCurHistoryID:_setCurHistoryID",
 			zap.Error(err))
 
 		return 0, err

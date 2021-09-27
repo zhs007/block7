@@ -337,3 +337,17 @@ func NewServ(service IService) *Serv {
 
 	return s
 }
+
+// Stop - stop a server
+func (s *Serv) Stop() error {
+	s.Service.Stop()
+
+	return s.Serv.Stop()
+}
+
+// Start - start a server
+func (s *Serv) Start() error {
+	s.Service.Start()
+
+	return s.Serv.Start()
+}

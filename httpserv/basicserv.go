@@ -15,6 +15,7 @@ type BasicServ struct {
 	UserDB    *block7.UserDB
 	StageDB   *block7.StageDB
 	HistoryDB *block7.HistoryDB
+	StatsDB   *block7.StatsDB
 	LevelMgr  *block7game.LevelMgr
 	cfg       *Config
 }
@@ -44,6 +45,14 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 		return nil, err
 	}
 
+	statsdb, err := block7.NewStatsDB(cfg.DBPath, "", cfg.DBEngine, userdb)
+	if err != nil {
+		goutils.Error("NewBasicServ:NewStatsDB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	levelmgr := block7game.NewLevelMgr()
 	err = levelmgr.LoadLevel("./gamedata/level.json")
 	if err != nil {
@@ -57,6 +66,7 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 		UserDB:    userdb,
 		StageDB:   stagedb,
 		HistoryDB: historydb,
+		StatsDB:   statsdb,
 		LevelMgr:  levelmgr,
 		cfg:       cfg,
 	}, nil
@@ -437,4 +447,14 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 		Stage:        stage,
 		History:      history,
 	}, nil
+}
+
+// Start - start
+func (serv *BasicServ) Start() {
+	serv.StatsDB.Start()
+}
+
+// Stop - stop
+func (serv *BasicServ) Stop() {
+	serv.StatsDB.Stop()
 }

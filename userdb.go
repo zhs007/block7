@@ -61,12 +61,12 @@ func NewUserDB(dbpath string, httpAddr string, engine string) (*UserDB, error) {
 	return db, err
 }
 
-// setCurUserID - set current userID
-func (db *UserDB) setCurUserID(ctx context.Context, userid int64) error {
+// _setCurUserID - set current userID
+func (db *UserDB) _setCurUserID(ctx context.Context, userid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, userid)
 	if err != nil {
-		goutils.Error("UserDB.setCurUserID:binary.Write",
+		goutils.Error("UserDB._setCurUserID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -90,9 +90,9 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 	buf, err := db.AnkaDB.Get(ctx, userdbname, userIDKey)
 	if err != nil {
 		if err == ankadb.ErrNotFoundKey {
-			err = db.setCurUserID(ctx, 1)
+			err = db._setCurUserID(ctx, 1)
 			if err != nil {
-				goutils.Error("UserDB.GetCurUserID:setCurUserID",
+				goutils.Error("UserDB.GetCurUserID:_setCurUserID",
 					zap.Error(err))
 
 				return 0, err
@@ -117,9 +117,9 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 		return 0, err
 	}
 
-	err = db.setCurUserID(ctx, userid+1)
+	err = db._setCurUserID(ctx, userid+1)
 	if err != nil {
-		goutils.Error("UserDB.GetCurSceneID:setCurSceneID",
+		goutils.Error("UserDB.GetCurSceneID:_setCurUserID",
 			zap.Error(err))
 
 		return 0, err
