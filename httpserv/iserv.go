@@ -18,4 +18,8 @@ type IService interface {
 	UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDataStatus) (*UpdUserDataResult, error)
 	// Stats - statistics
 	Stats(params *StatsParams) (*StatsResult, error)
+	// Start - start
+	Start()
+	// Stop - stop
+	Stop()
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"sync"
+	"time"
 
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
@@ -60,12 +61,12 @@ func NewUserDB(dbpath string, httpAddr string, engine string) (*UserDB, error) {
 	return db, err
 }
 
-// setCurUserID - set current userID
-func (db *UserDB) setCurUserID(ctx context.Context, userid int64) error {
+// _setCurUserID - set current userID
+func (db *UserDB) _setCurUserID(ctx context.Context, userid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, userid)
 	if err != nil {
-		goutils.Error("UserDB.setCurUserID:binary.Write",
+		goutils.Error("UserDB._setCurUserID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -89,9 +90,9 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 	buf, err := db.AnkaDB.Get(ctx, userdbname, userIDKey)
 	if err != nil {
 		if err == ankadb.ErrNotFoundKey {
-			err = db.setCurUserID(ctx, 1)
+			err = db._setCurUserID(ctx, 1)
 			if err != nil {
-				goutils.Error("UserDB.GetCurUserID:setCurUserID",
+				goutils.Error("UserDB.GetCurUserID:_setCurUserID",
 					zap.Error(err))
 
 				return 0, err
@@ -116,9 +117,9 @@ func (db *UserDB) GetCurUserID(ctx context.Context) (int64, error) {
 		return 0, err
 	}
 
-	err = db.setCurUserID(ctx, userid+1)
+	err = db._setCurUserID(ctx, userid+1)
 	if err != nil {
-		goutils.Error("UserDB.GetCurSceneID:setCurSceneID",
+		goutils.Error("UserDB.GetCurSceneID:_setCurUserID",
 			zap.Error(err))
 
 		return 0, err
@@ -521,4 +522,41 @@ func (db *UserDB) Stats(ctx context.Context) (int64, int, int, error) {
 	db.mutexDB.Unlock()
 
 	return latestUserID, userNums, userDataNums, nil
+}
+
+// CountTodayUsers - count users today
+func (db *UserDB) CountTodayUsers(ctx context.Context, t time.Time) (int, int, error) {
+	newusers := 0
+	loginusers := 0
+	// ct := time.Unix(ts, 0)
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
+		user := &block7pb.UserInfo{}
+
+		err := proto.Unmarshal(value, user)
+		if err != nil {
+			goutils.Warn("UserDB.CountTodayNewUsers:Unmarshal",
+				zap.Error(err))
+
+			return nil
+		}
+
+		if len(user.Data) > 0 {
+			rt := time.Unix(user.Data[0].CreateTs, 0)
+			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+				newusers++
+			}
+
+			lt := time.Unix(user.Data[0].LastLoginTs, 0)
+			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
+				loginusers++
+			}
+		}
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return newusers, loginusers, nil
 }

@@ -59,12 +59,12 @@ func NewStageDB(dbpath string, httpAddr string, engine string) (*StageDB, error)
 	return db, err
 }
 
-// setCurSceneID - set current sceneID
-func (db *StageDB) setCurSceneID(ctx context.Context, sceneid int64) error {
+// _setCurSceneID - set current sceneID
+func (db *StageDB) _setCurSceneID(ctx context.Context, sceneid int64) error {
 	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, sceneid)
 	if err != nil {
-		goutils.Error("StageDB.setCurSceneID:binary.Write",
+		goutils.Error("StageDB._setCurSceneID:binary.Write",
 			zap.Error(err))
 
 		return err
@@ -88,9 +88,9 @@ func (db *StageDB) GetCurSceneID(ctx context.Context) (int64, error) {
 	buf, err := db.AnkaDB.Get(ctx, stagedbname, sceneIDKey)
 	if err != nil {
 		if err == ankadb.ErrNotFoundKey {
-			err = db.setCurSceneID(ctx, 1)
+			err = db._setCurSceneID(ctx, 1)
 			if err != nil {
-				goutils.Error("StageDB.GetCurSceneID:setCurSceneID",
+				goutils.Error("StageDB.GetCurSceneID:_setCurSceneID",
 					zap.Error(err))
 
 				return 0, err
@@ -112,9 +112,9 @@ func (db *StageDB) GetCurSceneID(ctx context.Context) (int64, error) {
 		return 0, err
 	}
 
-	err = db.setCurSceneID(ctx, sceneid+1)
+	err = db._setCurSceneID(ctx, sceneid+1)
 	if err != nil {
-		goutils.Error("StageDB.GetCurSceneID:setCurSceneID",
+		goutils.Error("StageDB.GetCurSceneID:_setCurSceneID",
 			zap.Error(err))
 
 		return 0, err
