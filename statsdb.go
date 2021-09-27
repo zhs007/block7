@@ -302,3 +302,51 @@ func (db *StatsDB) setFirstStatsTs(ctx context.Context, ts int64) error {
 
 	return nil
 }
+
+// Stats - statistics
+func (db *StatsDB) Stats(ctx context.Context) (*StatsDBStatsData, error) {
+	firstts, err := db.GetFirstStatsTs(context.Background())
+	if err != nil {
+		goutils.Warn("StatsDB.Stats:GetFirstStatsTs",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	latestts, err := db.GetLatestStatsTs(context.Background())
+	if err != nil {
+		goutils.Warn("StatsDB.Stats:GetLatestStatsTs",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	mapDayStats := make(map[string]*block7pb.DayStatsData)
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, stagedbname, "d:", func(key string, value []byte) error {
+		dsd := &block7pb.DayStatsData{}
+		err = proto.Unmarshal(value, dsd)
+		if err != nil {
+			goutils.Warn("StatsDB.Stats:Unmarshal",
+				zap.Error(err))
+
+			return nil
+		}
+
+		nt := time.Unix(dsd.Ts, 0)
+		curts := goutils.FormatUTCDayTs(nt)
+		cdt := time.Unix(curts, 0)
+
+		mapDayStats[cdt.Format("2006-01-02")] = dsd
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return &StatsDBStatsData{
+		FirstTime:  time.Unix(firstts, 0).Format("2006-01-02_15:04:05"),
+		LatestTime: time.Unix(latestts, 0).Format("2006-01-02_15:04:05"),
+		DayStats:   mapDayStats,
+	}, nil
+}

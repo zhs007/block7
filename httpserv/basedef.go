@@ -119,4 +119,5 @@ type StatsResult struct {
 	UserDataNums int                        `json:"userdatanums"`
 	Stage        *block7.StageDBStatsData   `json:"stage"`
 	History      *block7.HistoryDBStatsData `json:"history"`
+	Stats        *block7.StatsDBStatsData   `json:"stats"`
 }
