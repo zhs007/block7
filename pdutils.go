@@ -59,6 +59,8 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 		ud.HomeScene = append(ud.HomeScene, ud0.HomeScene...)
 	}
 
+	ud.LevelArr = make(map[string]int32)
+
 	for k, v := range ud0.LevelArr {
 		ud.LevelArr[k] = v
 	}
@@ -68,6 +70,8 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 			ud.LevelArr[k] = v
 		}
 	}
+
+	ud.ToolsArr = make(map[string]int32)
 
 	for k, v := range ud0.ToolsArr {
 		ud.ToolsArr[k] = v
