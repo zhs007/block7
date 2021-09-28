@@ -391,6 +391,11 @@ func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDat
 		udpb.UserID = uid
 	}
 
+	goutils.Debug("BasicServ.UpdUserData",
+		goutils.JSON("udpb", udpb),
+		goutils.JSON("ud", ud),
+		goutils.JSON("uds", uds))
+
 	oldversion, newversion, err := serv.UserDB.UpdUserData(context.Background(), udpb, uds)
 	if err != nil {
 		goutils.Error("BasicServ.UpdUserData:UpdUserData",
