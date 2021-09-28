@@ -101,9 +101,13 @@ func PB2UserDataResult(ud *block7pb.UserData) *UserDataResult {
 		udr.HomeScene = append(udr.HomeScene, int(v))
 	}
 
+	udr.LevelArr = make(map[string]int)
+
 	for k, v := range ud.LevelArr {
 		udr.LevelArr[k] = int(v)
 	}
+
+	ud.ToolsArr = make(map[string]int32)
 
 	for k, v := range ud.ToolsArr {
 		udr.ToolsArr[k] = int(v)
