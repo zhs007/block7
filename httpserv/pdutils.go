@@ -28,6 +28,7 @@ func UpdUserDataParams2PB(params *UpdUserDataParams, uds *block7.UpdUserDataStat
 		Platform:      params.Platform,
 		Version:       params.Version,
 		ClientVersion: params.ClientVersion,
+		LastAwardTs:   params.LastAwardTs,
 	}
 
 	if uds.HasCoin {
