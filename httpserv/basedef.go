@@ -87,6 +87,7 @@ type UpdUserDataParams struct {
 type UpdUserDataResult struct {
 	OldVersion int64 `json:"oldVersion"`
 	NewVersion int64 `json:"newVersion"`
+	Version    int64 `json:"version"`
 }
 
 // UserDataParams - userdata parameters

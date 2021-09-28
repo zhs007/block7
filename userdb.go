@@ -485,7 +485,11 @@ func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *U
 		return 0, err
 	}
 
-	return ud0.Version, nil
+	if ud0 != nil {
+		return ud0.Version, nil
+	}
+
+	return 0, nil
 }
 
 // GetLatestUserID - get latest userID
