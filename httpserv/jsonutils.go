@@ -438,5 +438,15 @@ func parseUpdUserDataParams(data []byte) (*UpdUserDataParams, *block7.UpdUserDat
 
 	ud.ClientVersion = clientVersion
 
+	lastAwardTs, _, err := goutils.GetJsonInt(data, "lastAwardTs")
+	if err != nil {
+		goutils.Error("parseUpdUserDataParams:lastAwardTs",
+			zap.Error(err))
+
+		return nil, nil, err
+	}
+
+	ud.LastAwardTs = lastAwardTs
+
 	return ud, uds, nil
 }

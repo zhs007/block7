@@ -94,6 +94,7 @@ message UserData {
 	int64 UserID = 10;
 	int64 LastTs = 11;				// last timestamp
 	string ClientVersion = 12;
+	int64 LastAwardTs = 13;
 }
 
 // DayStatsData

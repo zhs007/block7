@@ -73,11 +73,13 @@ func UpdUserDataParams2PB(params *UpdUserDataParams, uds *block7.UpdUserDataStat
 
 func PB2UserDataResult(ud *block7pb.UserData) *UserDataResult {
 	udr := &UserDataResult{
-		Name:     ud.Name,
-		Coin:     ud.Coin,
-		Level:    int(ud.Level),
-		Platform: ud.Platform,
-		Version:  ud.Version,
+		Name:          ud.Name,
+		Coin:          ud.Coin,
+		Level:         int(ud.Level),
+		Platform:      ud.Platform,
+		Version:       ud.Version,
+		ClientVersion: ud.ClientVersion,
+		LastAwardTs:   ud.LastAwardTs,
 	}
 
 	for _, v := range ud.Cooking {

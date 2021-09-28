@@ -230,6 +230,12 @@ func (db *StatsDB) onTimer() {
 
 	firstuserid := int64(0)
 
+	goutils.Info("StatsDB.onTimer",
+		zap.String("first", time.Unix(firstts, 0).Format("2006-01-02_15:04:05")),
+		zap.String("latest", time.Unix(latestts, 0).Format("2006-01-02_15:04:05")),
+		zap.String("latestday", time.Unix(latestdayts, 0).Format("2006-01-02_15:04:05")),
+	)
+
 	for range db.ticker.C {
 		nt := time.Now()
 		curts := goutils.FormatUTCDayTs(nt)
@@ -262,6 +268,8 @@ func (db *StatsDB) onTimer() {
 				zap.Error(err))
 		}
 
+		dsd.Ts = nt.Unix()
+
 		err = db.UpdDayStats(context.Background(), dsd)
 		if err != nil {
 			goutils.Warn("StatsDB.onTimer:UpdDayStats",
@@ -270,15 +278,11 @@ func (db *StatsDB) onTimer() {
 
 		if firstts == 0 {
 			firstts = nt.Unix()
-
 			db.setFirstStatsTs(context.Background(), firstts)
 		}
 
-		if latestts == 0 {
-			latestts = nt.Unix()
-
-			db.setLatestStatsTs(context.Background(), latestts)
-		}
+		latestts = nt.Unix()
+		db.setLatestStatsTs(context.Background(), latestts)
 	}
 }
 
