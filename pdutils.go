@@ -14,9 +14,10 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 	}
 
 	ud := &block7pb.UserData{
-		Name:     ud0.Name,
-		Platform: ud0.Platform,
-		Version:  ud1.Version,
+		Name:        ud0.Name,
+		Platform:    ud0.Platform,
+		Version:     ud1.Version,
+		LastAwardTs: ud1.LastAwardTs,
 	}
 
 	if uds.HasCoin {
