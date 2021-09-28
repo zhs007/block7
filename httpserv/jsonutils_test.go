@@ -57,3 +57,17 @@ func Test_parseMissionDataParams(t *testing.T) {
 
 	t.Logf("Test_parseMissionDataParams OK")
 }
+
+func Test_parseUpdUserDataParams(t *testing.T) {
+	p, ps, err := parseUpdUserDataParams([]byte(``))
+	assert.Error(t, err)
+	assert.Nil(t, p)
+	assert.Nil(t, ps)
+
+	p, ps, err = parseUpdUserDataParams([]byte(`{"name":"kUzsFBBpdijLtiLz","coin":"","level":"","levelarr":{"1":3},"toolsarr":{"20001":2},"homeScene":[21100,21101,21102,21103,21104,21105],"cooking":[{"Level":1,"Unlock":true,"starnum":0}],"platform":"android","version":1,"userHash":"kUzsFBBpdijLtiLz","clientVersion":"1.0.1"}`))
+	assert.NoError(t, err)
+	assert.NotNil(t, p)
+	assert.NotNil(t, ps)
+
+	t.Logf("Test_parseMissionDataParams OK")
+}

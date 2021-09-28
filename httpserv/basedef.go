@@ -80,6 +80,7 @@ type UpdUserDataParams struct {
 	Version       int64          `json:"version"`
 	UserHash      string         `json:"userHash"`
 	ClientVersion string         `json:"clientVersion"`
+	LastAwardTs   int64          `json:"lastAwardTs"`
 }
 
 // UpdUserDataResult - update userdata result
@@ -96,15 +97,18 @@ type UserDataParams struct {
 
 // UserDataResult - userdata parameters
 type UserDataResult struct {
-	Name      string         `json:"name"`
-	Coin      int64          `json:"coin"`
-	Level     int            `json:"level"`
-	LevelArr  map[string]int `json:"levelarr"`
-	ToolsArr  map[string]int `json:"toolsarr"`
-	HomeScene []int          `json:"homeScene"`
-	Cooking   []*Cooking     `json:"cooking"`
-	Platform  string         `json:"platform"` // it's like android, iphone
-	Version   int64          `json:"version"`
+	Name          string         `json:"name"`
+	Coin          int64          `json:"coin"`
+	Level         int            `json:"level"`
+	LevelArr      map[string]int `json:"levelarr"`
+	ToolsArr      map[string]int `json:"toolsarr"`
+	HomeScene     []int          `json:"homeScene"`
+	Cooking       []*Cooking     `json:"cooking"`
+	Platform      string         `json:"platform"` // it's like android, iphone
+	Version       int64          `json:"version"`
+	UserHash      string         `json:"userHash"`
+	ClientVersion string         `json:"clientVersion"`
+	LastAwardTs   int64          `json:"lastAwardTs"`
 }
 
 // StatsParams - statistics parameters
