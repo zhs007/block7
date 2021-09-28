@@ -57,12 +57,16 @@ func UpdUserDataParams2PB(params *UpdUserDataParams, uds *block7.UpdUserDataStat
 	}
 
 	if uds.HasLevelArr {
+		ud.LevelArr = make(map[string]int32)
+
 		for k, v := range params.LevelArr {
 			ud.LevelArr[k] = int32(v)
 		}
 	}
 
 	if uds.HasToolsArr {
+		ud.ToolsArr = make(map[string]int32)
+
 		for k, v := range params.ToolsArr {
 			ud.ToolsArr[k] = int32(v)
 		}
