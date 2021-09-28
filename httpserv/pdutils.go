@@ -107,7 +107,7 @@ func PB2UserDataResult(ud *block7pb.UserData) *UserDataResult {
 		udr.LevelArr[k] = int(v)
 	}
 
-	ud.ToolsArr = make(map[string]int32)
+	udr.ToolsArr = make(map[string]int)
 
 	for k, v := range ud.ToolsArr {
 		udr.ToolsArr[k] = int(v)
