@@ -391,7 +391,7 @@ func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDat
 		udpb.UserID = uid
 	}
 
-	oldversion, err := serv.UserDB.UpdUserData(context.Background(), udpb, uds)
+	oldversion, newversion, err := serv.UserDB.UpdUserData(context.Background(), udpb, uds)
 	if err != nil {
 		goutils.Error("BasicServ.UpdUserData:UpdUserData",
 			zap.Error(err))
@@ -401,7 +401,8 @@ func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDat
 
 	return &UpdUserDataResult{
 		OldVersion: oldversion,
-		NewVersion: ud.Version,
+		NewVersion: newversion,
+		Version:    ud.Version,
 	}, nil
 }
 
