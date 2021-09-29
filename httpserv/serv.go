@@ -126,14 +126,18 @@ func NewServ(service IService) *Serv {
 			goutils.Debug("block7serv.Serv.mission:ParseBody",
 				goutils.JSON("params", params))
 
-			if params.MissionID <= 0 {
-				goutils.Warn("block7serv.Serv.mission:ParseBody",
-					zap.Int("missionid", params.MissionID))
+			// if params.HistoryID > 0 && params.MissionID == 0 {
 
-				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+			// }
 
-				return
-			}
+			// if params.MissionID <= 0 {
+			// 	goutils.Warn("block7serv.Serv.mission:ParseBody",
+			// 		zap.Int("missionid", params.MissionID))
+
+			// 	s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+			// 	return
+			// }
 
 			ret, err := s.Service.Mission(params)
 			if err != nil {
@@ -220,8 +224,8 @@ func NewServ(service IService) *Serv {
 				}
 			})
 
-			goutils.Debug("block7serv.Serv.userdata:ParseBody",
-				goutils.JSON("params", params))
+			// goutils.Debug("block7serv.Serv.userdata:ParseBody",
+			// 	goutils.JSON("params", params))
 
 			if params.Name == "" || params.Platform == "" {
 				goutils.Warn("block7serv.Serv.userdata:ParseBody",
@@ -243,10 +247,10 @@ func NewServ(service IService) *Serv {
 				return
 			}
 
-			if cfg.IsDebugMode {
-				goutils.Debug("block7serv.Serv.userdata",
-					goutils.JSON("result", ret))
-			}
+			// if cfg.IsDebugMode {
+			// 	goutils.Debug("block7serv.Serv.userdata",
+			// 		goutils.JSON("result", ret))
+			// }
 
 			s.SetResponse(ctx, ret)
 		})
@@ -269,8 +273,8 @@ func NewServ(service IService) *Serv {
 				return
 			}
 
-			goutils.Debug("block7serv.Serv.upduserdata:ParseBody",
-				goutils.JSON("params", ud))
+			// goutils.Debug("block7serv.Serv.upduserdata:ParseBody",
+			// 	goutils.JSON("params", ud))
 
 			ret, err := s.Service.UpdUserData(ud, uds)
 			if err != nil {
@@ -282,10 +286,10 @@ func NewServ(service IService) *Serv {
 				return
 			}
 
-			if cfg.IsDebugMode {
-				goutils.Debug("block7serv.Serv.upduserdata",
-					goutils.JSON("result", ret))
-			}
+			// if cfg.IsDebugMode {
+			// 	goutils.Debug("block7serv.Serv.upduserdata",
+			// 		goutils.JSON("result", ret))
+			// }
 
 			s.SetResponse(ctx, ret)
 		})
