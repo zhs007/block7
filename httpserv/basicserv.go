@@ -173,7 +173,32 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 					Scene:   scene,
 					SceneID: pbscene1.SceneID,
 				}, nil
+			} else {
+				if len(pbscene.InitArr2) > 0 {
+					scene, err := block7game.NewSceneFromPB(pbscene)
+					if err != nil {
+						goutils.Error("BasicServ.Mission:NewSceneFromPB",
+							goutils.JSON("pbscene", pbscene),
+							zap.Error(err))
+
+						return nil, err
+					}
+
+					scene.IsOutputScene = true
+
+					scene.ReadyToClient()
+
+					return &MissionResult{
+						Scene: scene,
+					}, nil
+				} else {
+					goutils.Warn("BasicServ.Mission:StageDB.GetStage:nil",
+						zap.Int64("sceneid", pbscene.SceneID))
+				}
 			}
+		} else {
+			goutils.Warn("BasicServ.Mission:StageDB.GetHistory:nil",
+				zap.Int64("HistoryID", params.HistoryID))
 		}
 	}
 
@@ -209,8 +234,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	ld2, isok := serv.LevelMgr.MapLevel[params.MissionID+30000]
 	if !isok {
-		goutils.Error("BasicServ.Mission:GetUserID",
-			zap.Int64("uid", uid),
+		goutils.Error("BasicServ.Mission:MapLevel",
 			zap.Int("missionid", params.MissionID),
 			zap.Error(ErrInvalidMissionID))
 
