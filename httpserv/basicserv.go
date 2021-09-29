@@ -319,25 +319,39 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 		}
 	}
 
-	pbscene, err := serv.StageDB.GetStage(context.Background(), params.SceneID)
-	if err != nil {
-		goutils.Error("BasicServ.MissionData:GetStage",
-			zap.Error(err))
+	var curScene *block7game.Scene
 
-		return nil, err
+	if params.SceneID > 0 {
+		pbscene, err := serv.StageDB.GetStage(context.Background(), params.SceneID)
+		if err != nil {
+			goutils.Error("BasicServ.MissionData:GetStage",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		if pbscene == nil {
+			goutils.Error("BasicServ.MissionData:GetStage",
+				zap.Int64("sceneID", params.SceneID),
+				zap.Error(ErrInvalidSceneID))
+
+			return nil, ErrInvalidSceneID
+		}
+
+		scene, err := block7game.NewSceneFromPB(pbscene)
+		if err != nil {
+			goutils.Error("BasicServ.MissionData:NewSceneFromPB",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		curScene = MissionDataParams2Scene(scene, params)
+	} else {
+		curScene = MissionDataParams2SceneEx(params)
 	}
 
-	scene, err := block7game.NewSceneFromPB(pbscene)
-	if err != nil {
-		goutils.Error("BasicServ.MissionData:NewSceneFromPB",
-			zap.Error(err))
-
-		return nil, err
-	}
-
-	MissionDataParams2Scene(scene, params)
-
-	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), scene)
+	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), curScene)
 	if err != nil {
 		goutils.Error("BasicServ.MissionData:SaveHistory",
 			zap.Error(err))

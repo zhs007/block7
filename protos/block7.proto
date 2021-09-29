@@ -48,6 +48,9 @@ message Scene {
 	int32 BlockNums = 24;									// blockNums, it's like 7, 8
 	int32 StageID2 = 25;									// stage
 	int64 ts = 26;											// timestamp
+	int32 ClientMissionID = 27;
+	int32 ClientStageType = 28;
+	int32 FirstItem = 29;
 }
 
 // UserDeviceInfo
