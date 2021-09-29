@@ -39,3 +39,29 @@ func init() {
 	MgrSpecial.RegSpecial(10, NewBomb(10, 307))
 	MgrSpecial.RegSpecial(11, NewBomb(11, 308))
 }
+
+func SpecialType2SpecialID(st int) int {
+	if st == 10703 {
+		return 7
+	} else if st == 10200 {
+		return 17
+	} else if st == 10600 {
+		return 6
+	} else if st == 10503 {
+		return 5
+	} else if st == 10400 {
+		return 4
+	} else if st == 10300 {
+		return 3
+	} else if st == 10101 {
+		return 1
+	} else if st == 10102 {
+		return 14
+	} else if st == 10103 {
+		return 15
+	} else if st == 10104 {
+		return 16
+	}
+
+	return 0
+}

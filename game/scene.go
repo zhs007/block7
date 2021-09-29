@@ -12,30 +12,33 @@ import (
 
 // Scene - scene
 type Scene struct {
-	StageID       int             `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
-	MapID         int             `json:"mapid"`   // 实际的mapid，有对比价值
-	Version       int             `json:"version"`
-	SceneID       int64           `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
-	UserID        int64           `json:"userid"`
-	Width         int             `json:"width"`
-	Height        int             `json:"height"`
-	Layers        int             `json:"layers"`
-	XOff          int             `json:"xoff"`
-	YOff          int             `json:"yoff"`
-	Arr           [][][]int       `json:"-"`
-	Block         []*BlockData    `json:"-"`
-	BlockEx       []*BlockData    `json:"-"`
-	MaxBlockNums  int             `json:"-"`
-	InitArr       [][][]int       `json:"layer"`
-	History       [][]int         `json:"history"`
-	ClickValues   int             `json:"clickValues"`
-	FinishedPer   float32         `json:"finishedPer"`
-	Offset        string          `json:"offset"`
-	IsOutputScene bool            `json:"isOutputScene"`
-	SpecialLayers []*SpecialLayer `json:"specialLayers"` // 这个是自己用的
-	BlockNums     int             `json:"-"`             // 初始化block数量
-	RngData       []int64         `json:"rngdata"`       // 前端rng数据
-	GameState     int32           `json:"gamestate"`     // 前端gamestate
+	StageID         int             `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
+	MapID           int             `json:"mapid"`   // 实际的mapid，有对比价值
+	Version         int             `json:"version"`
+	SceneID         int64           `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
+	UserID          int64           `json:"userid"`
+	Width           int             `json:"width"`
+	Height          int             `json:"height"`
+	Layers          int             `json:"layers"`
+	XOff            int             `json:"xoff"`
+	YOff            int             `json:"yoff"`
+	Arr             [][][]int       `json:"-"`
+	Block           []*BlockData    `json:"-"`
+	BlockEx         []*BlockData    `json:"-"`
+	MaxBlockNums    int             `json:"-"`
+	InitArr         [][][]int       `json:"layer"`
+	History         [][]int         `json:"history"`
+	ClickValues     int             `json:"clickValues"`
+	FinishedPer     float32         `json:"finishedPer"`
+	Offset          string          `json:"offset"`
+	IsOutputScene   bool            `json:"isOutputScene"`
+	SpecialLayers   []*SpecialLayer `json:"specialLayers"`   // 这个是自己用的
+	BlockNums       int             `json:"-"`               // 初始化block数量
+	RngData         []int64         `json:"rngdata"`         // 前端rng数据
+	GameState       int32           `json:"gamestate"`       // 前端gamestate
+	ClientMissionID int             `json:"clientMissionID"` // 前端missionID
+	ClientStageType int             `json:"clientStageType"` // 前端stage type
+	FirstItem       int             `json:"firstItem"`       // 前置道具
 }
 
 // LoadScene - load a scene
@@ -151,18 +154,75 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 	return scene, nil
 }
 
+// NewSceneFromData - new a scene
+func NewSceneFromData(arr [][][]int, layers []*SpecialLayer) (*Scene, error) {
+	scene := &Scene{
+		Width:  len(arr[0][0]),
+		Height: len(arr[0]),
+		Layers: len(arr),
+		XOff:   -1,
+		YOff:   -1,
+		Offset: "1,0,1",
+	}
+
+	for _, arrlayer := range arr {
+		arrslayer := [][]int{}
+		for _, arrrow := range arrlayer {
+			arrsrow := []int{}
+			for _, v := range arrrow {
+				arrsrow = append(arrsrow, int(v))
+			}
+
+			arrslayer = append(arrslayer, arrsrow)
+		}
+
+		scene.Arr = append(scene.Arr, arrslayer)
+	}
+
+	scene.InitArr = goutils.CloneArr3(scene.Arr)
+	scene.BlockNums = scene.CountNums(func(x, y, z int) bool {
+		return scene.InitArr[z][y][x] > 0
+	})
+
+	for _, ssl := range layers {
+		spid := SpecialType2SpecialID(ssl.LayerType)
+		if spid > 0 {
+			cs, isok := MgrSpecial.MapSpecial[spid]
+			if isok {
+				sl := &SpecialLayer{
+					Layer:     int(ssl.Layer),
+					LayerType: int(ssl.LayerType),
+					Special:   cs,
+				}
+
+				sl.Pos = ssl.Pos
+
+				scene.SpecialLayers = append(scene.SpecialLayers, sl)
+			}
+		}
+	}
+
+	return scene, nil
+}
+
 // NewSceneFromPB - new a scene
 func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 	scene := &Scene{
-		MapID:   int(pbscene.MapID2),
-		Version: int(pbscene.Version),
-		SceneID: pbscene.SceneID,
-		Width:   int(pbscene.Width),
-		Height:  int(pbscene.Height),
-		Layers:  int(pbscene.Layers),
-		XOff:    int(pbscene.XOff),
-		YOff:    int(pbscene.YOff),
-		Offset:  pbscene.Offset,
+		MapID:           int(pbscene.MapID2),
+		Version:         int(pbscene.Version),
+		SceneID:         pbscene.SceneID,
+		Width:           int(pbscene.Width),
+		Height:          int(pbscene.Height),
+		Layers:          int(pbscene.Layers),
+		XOff:            int(pbscene.XOff),
+		YOff:            int(pbscene.YOff),
+		Offset:          pbscene.Offset,
+		RngData:         pbscene.RngData,
+		GameState:       pbscene.GameState,
+		BlockNums:       int(pbscene.BlockNums),
+		ClientMissionID: int(pbscene.ClientMissionID),
+		ClientStageType: int(pbscene.ClientStageType),
+		FirstItem:       int(pbscene.FirstItem),
 	}
 
 	if pbscene.InitArr2 != nil {
@@ -1152,13 +1212,17 @@ func (scene *Scene) ToScenePB() (*block7pb.Scene, error) {
 
 func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 	pbScene := &block7pb.Scene{
-		StageID2:  int32(scene.StageID),
-		MapID2:    int32(scene.MapID),
-		Version:   int32(scene.Version),
-		SceneID:   scene.SceneID,
-		UserID:    scene.UserID,
-		RngData:   scene.RngData,
-		GameState: scene.GameState,
+		StageID2:        int32(scene.StageID),
+		MapID2:          int32(scene.MapID),
+		Version:         int32(scene.Version),
+		SceneID:         scene.SceneID,
+		UserID:          scene.UserID,
+		RngData:         scene.RngData,
+		GameState:       scene.GameState,
+		BlockNums:       int32(scene.BlockNums),
+		ClientMissionID: int32(scene.ClientMissionID),
+		ClientStageType: int32(scene.ClientStageType),
+		FirstItem:       int32(scene.FirstItem),
 	}
 
 	if len(scene.History) == 0 {
