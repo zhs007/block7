@@ -158,6 +158,14 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 		return nil, err
 	}
 
+	missionid, _, err := goutils.GetJsonInt(data, "missionid")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:missionid",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	return &MissionDataParams{
 		UserHash:      userHash,
 		SceneID:       sceneID,
@@ -170,6 +178,7 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 		StageType:     int(stageType),
 		SpecialLayers: specialLayers,
 		FirstItem:     int(firstItem),
+		MissionID:     int(missionid),
 	}, nil
 }
 

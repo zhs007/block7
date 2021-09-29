@@ -467,11 +467,11 @@ func (db *UserDB) UpdUserData(ctx context.Context, ud *block7pb.UserData, uds *U
 	nud := MergeUserData(ud0, ud, uds)
 	nud.LastTs = goutils.GetCurTimestamp()
 
-	goutils.Debug("UserDB.UpdUserData",
-		goutils.JSON("ud", ud),
-		goutils.JSON("uds", uds),
-		goutils.JSON("ud0", ud0),
-		goutils.JSON("nud", nud))
+	// goutils.Debug("UserDB.UpdUserData",
+	// 	goutils.JSON("ud", ud),
+	// 	goutils.JSON("uds", uds),
+	// 	goutils.JSON("ud0", ud0),
+	// 	goutils.JSON("nud", nud))
 
 	buf, err := proto.Marshal(nud)
 	if err != nil {
