@@ -12,33 +12,34 @@ import (
 
 // Scene - scene
 type Scene struct {
-	StageID         int             `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
-	MapID           int             `json:"mapid"`   // 实际的mapid，有对比价值
-	Version         int             `json:"version"`
-	SceneID         int64           `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
-	UserID          int64           `json:"userid"`
-	Width           int             `json:"width"`
-	Height          int             `json:"height"`
-	Layers          int             `json:"layers"`
-	XOff            int             `json:"xoff"`
-	YOff            int             `json:"yoff"`
-	Arr             [][][]int       `json:"-"`
-	Block           []*BlockData    `json:"-"`
-	BlockEx         []*BlockData    `json:"-"`
-	MaxBlockNums    int             `json:"-"`
-	InitArr         [][][]int       `json:"layer"`
-	History         [][]int         `json:"history"`
-	ClickValues     int             `json:"clickValues"`
-	FinishedPer     float32         `json:"finishedPer"`
-	Offset          string          `json:"offset"`
-	IsOutputScene   bool            `json:"isOutputScene"`
-	SpecialLayers   []*SpecialLayer `json:"specialLayers"`   // 这个是自己用的
-	BlockNums       int             `json:"-"`               // 初始化block数量
-	RngData         []int64         `json:"rngdata"`         // 前端rng数据
-	GameState       int32           `json:"gamestate"`       // 前端gamestate
-	ClientMissionID int             `json:"clientMissionID"` // 前端missionID
-	ClientStageType int             `json:"clientStageType"` // 前端stage type
-	FirstItem       int             `json:"firstItem"`       // 前置道具
+	StageID           int             `json:"stageid"` // 对应missionid，就是关卡id，版本不同，可能没有对比价值
+	MapID             int             `json:"mapid"`   // 实际的mapid，有对比价值
+	Version           int             `json:"version"`
+	SceneID           int64           `json:"sceneid"` // 关卡的动态id，同一个地图，可能随机出不同的scene，这就是随机后的id
+	UserID            int64           `json:"userid"`
+	Width             int             `json:"width"`
+	Height            int             `json:"height"`
+	Layers            int             `json:"layers"`
+	XOff              int             `json:"xoff"`
+	YOff              int             `json:"yoff"`
+	Arr               [][][]int       `json:"-"`
+	Block             []*BlockData    `json:"-"`
+	BlockEx           []*BlockData    `json:"-"`
+	MaxBlockNums      int             `json:"-"`
+	InitArr           [][][]int       `json:"layer"`
+	History           [][]int         `json:"history"`
+	ClickValues       int             `json:"clickValues"`
+	FinishedPer       float32         `json:"finishedPer"`
+	Offset            string          `json:"offset"`
+	IsOutputScene     bool            `json:"isOutputScene"`
+	SpecialLayers     []*SpecialLayer `json:"specialLayers"`   // 这个是自己用的
+	BlockNums         int             `json:"-"`               // 初始化block数量
+	RngData           []int64         `json:"rngdata"`         // 前端rng数据
+	GameState         int32           `json:"gamestate"`       // 前端gamestate
+	ClientMissionID   int             `json:"clientMissionID"` // 前端missionID
+	ClientStageType   int             `json:"clientStageType"` // 前端stage type
+	FirstItem         int             `json:"firstItem"`       // 前置道具
+	IsFullHistoryData bool            `json:"-"`               // 是否是完整的数据
 }
 
 // LoadScene - load a scene
@@ -229,6 +230,9 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 		arr, err := goutils.Int32ArrToIntArr3(pbscene.InitArr2, scene.Width, scene.Height, scene.Layers)
 		if err != nil {
 			goutils.Warn("NewSceneFromPB:Int32ArrToIntArr3:InitArr2",
+				zap.Int("w", scene.Width),
+				zap.Int("h", scene.Height),
+				zap.Int("len", len(pbscene.InitArr2)),
 				zap.Error(err))
 
 			return nil, err
@@ -1223,6 +1227,57 @@ func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 		ClientMissionID: int32(scene.ClientMissionID),
 		ClientStageType: int32(scene.ClientStageType),
 		FirstItem:       int32(scene.FirstItem),
+	}
+
+	if scene.IsFullHistoryData {
+		pbScene.Width = int32(scene.Width)
+		pbScene.Height = int32(scene.Height)
+		pbScene.Layers = int32(scene.Layers)
+		pbScene.XOff = int32(scene.XOff)
+		pbScene.YOff = int32(scene.YOff)
+		pbScene.Offset = scene.Offset
+
+		arr, x, y, z := goutils.IntArr3ToInt32Arr(scene.InitArr)
+		if x != scene.Width || y != scene.Height || z != scene.Layers {
+			goutils.Error("Scene.ToScenePB:IntArr3ToInt32Arr",
+				zap.Int("x", x),
+				zap.Int("y", y),
+				zap.Int("z", z),
+				zap.Error(ErrInvalidSceneWHL))
+
+			return nil, ErrInvalidSceneWHL
+		}
+
+		pbScene.InitArr2 = arr
+
+		// for _, arr2 := range scene.InitArr {
+		// 	pblayer := &block7pb.SceneLayer{}
+
+		// 	for _, arr1 := range arr2 {
+		// 		pbcolumn := &block7pb.Column{}
+
+		// 		for _, s := range arr1 {
+		// 			pbcolumn.Values = append(pbcolumn.Values, int32(s))
+		// 		}
+
+		// 		pblayer.Values = append(pblayer.Values, pbcolumn)
+		// 	}
+
+		// 	pbScene.InitArr = append(pbScene.InitArr, pblayer)
+		// }
+
+		for _, sl := range scene.SpecialLayers {
+			pbsl := &block7pb.SpecialLayer{
+				Special:   int32(sl.Special.GetSpecialID()),
+				Layer:     int32(sl.Layer),
+				LayerType: int32(sl.LayerType),
+			}
+
+			vals, _, _ := goutils.IntArr2ToInt32Arr(sl.Pos)
+			pbsl.Values = vals
+
+			pbScene.SpecialLayer = append(pbScene.SpecialLayer, pbsl)
+		}
 	}
 
 	if len(scene.History) == 0 {
