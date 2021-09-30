@@ -185,6 +185,7 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 					}
 
 					scene.IsOutputScene = true
+					scene.IsFullHistoryData = true
 
 					scene.ReadyToClient()
 

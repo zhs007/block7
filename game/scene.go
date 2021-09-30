@@ -32,14 +32,14 @@ type Scene struct {
 	FinishedPer       float32         `json:"finishedPer"`
 	Offset            string          `json:"offset"`
 	IsOutputScene     bool            `json:"isOutputScene"`
-	SpecialLayers     []*SpecialLayer `json:"specialLayers"`   // 这个是自己用的
-	BlockNums         int             `json:"-"`               // 初始化block数量
-	RngData           []int64         `json:"rngdata"`         // 前端rng数据
-	GameState         int32           `json:"gamestate"`       // 前端gamestate
-	ClientMissionID   int             `json:"clientMissionID"` // 前端missionID
-	ClientStageType   int             `json:"clientStageType"` // 前端stage type
-	FirstItem         int             `json:"firstItem"`       // 前置道具
-	IsFullHistoryData bool            `json:"-"`               // 是否是完整的数据
+	SpecialLayers     []*SpecialLayer `json:"specialLayers"`     // 这个是自己用的
+	BlockNums         int             `json:"-"`                 // 初始化block数量
+	RngData           []int64         `json:"rngdata"`           // 前端rng数据
+	GameState         int32           `json:"gamestate"`         // 前端gamestate
+	ClientMissionID   int             `json:"clientMissionID"`   // 前端missionID
+	ClientStageType   int             `json:"clientStageType"`   // 前端stage type
+	FirstItem         int             `json:"firstItem"`         // 前置道具
+	IsFullHistoryData bool            `json:"isFullHistoryData"` // 是否是完整的数据
 }
 
 // LoadScene - load a scene
