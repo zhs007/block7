@@ -42,5 +42,7 @@ func MissionDataParams2SceneEx(params *MissionDataParams) *block7game.Scene {
 		scene.History = append(scene.History, append([]int{}, arr...))
 	}
 
+	scene.IsFullHistoryData = true
+
 	return scene
 }
