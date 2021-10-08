@@ -40,9 +40,9 @@ func makeUserDBKey(userid int64) string {
 
 func getUserIDFromUserDBKey(key string) int64 {
 	if len(key) > 2 {
-		key = key[2:]
+		key1 := key[2:]
 
-		i64, err := goutils.String2Int64(key)
+		i64, err := goutils.String2Int64(key1)
 		if err == nil {
 			return i64
 		}
@@ -624,10 +624,10 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 	newuds := 0
 	loginuds := 0
 	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "d:", func(key string, value []byte) error {
-		cuid := getUserIDFromUserDBKey(key)
-		if cuid > 0 && cuid <= lastUserID {
-			return nil
-		}
+		// cuid := getUserIDFromUserDBKey(key)
+		// if cuid > 0 && cuid <= lastUserID {
+		// 	return nil
+		// }
 
 		ud := &block7pb.UserData{}
 
