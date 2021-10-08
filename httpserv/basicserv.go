@@ -477,7 +477,7 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 		return nil, err
 	}
 
-	latestUserID, userNums, userDataNums, err := serv.UserDB.Stats(context.Background())
+	usd, err := serv.UserDB.Stats(context.Background())
 	if err != nil {
 		goutils.Error("BasicServ.Stats:UserDB.Stats",
 			zap.Error(err))
@@ -494,12 +494,10 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 	}
 
 	return &StatsResult{
-		LatestUserID: latestUserID,
-		UserNums:     userNums,
-		UserDataNums: userDataNums,
-		Stage:        stage,
-		History:      history,
-		Stats:        stats,
+		User:    usd,
+		Stage:   stage,
+		History: history,
+		Stats:   stats,
 	}, nil
 }
 

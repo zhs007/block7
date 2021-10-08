@@ -15,6 +15,12 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+type UserDBStatsData struct {
+	LatestUserID int64 `json:"latestuserid"`
+	UserNums     int   `json:"usernums"`
+	UserDataNums int   `json:"userdatanums"`
+}
+
 const userdbname = "userdb"
 const userHashKeyPrefix = "h:"
 const userIDKey = "curuserid"
@@ -528,13 +534,13 @@ func (db *UserDB) GetLatestUserID(ctx context.Context) (int64, error) {
 }
 
 // Stats - statistics
-func (db *UserDB) Stats(ctx context.Context) (int64, int, int, error) {
+func (db *UserDB) Stats(ctx context.Context) (*UserDBStatsData, error) {
 	latestUserID, err := db.GetLatestUserID(ctx)
 	if err != nil {
 		goutils.Error("UserDB.Stats:GetLatestUserID",
 			zap.Error(err))
 
-		return 0, 0, 0, err
+		return nil, err
 	}
 
 	userNums := 0
@@ -553,7 +559,11 @@ func (db *UserDB) Stats(ctx context.Context) (int64, int, int, error) {
 	})
 	db.mutexDB.Unlock()
 
-	return latestUserID, userNums, userDataNums, nil
+	return &UserDBStatsData{
+		LatestUserID: latestUserID,
+		UserNums:     userNums,
+		UserDataNums: userDataNums,
+	}, nil
 }
 
 // countTodayUsers - count users today
