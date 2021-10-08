@@ -98,6 +98,7 @@ message UserData {
 	int64 LastTs = 11;				// last timestamp
 	string ClientVersion = 12;
 	int64 LastAwardTs = 13;
+	int64 CreateTs = 14;
 }
 
 // DayStatsData
@@ -113,4 +114,7 @@ message DayStatsData {
 	int64 FirstUserID = 9;
 	int64 FirstSceneID = 10;
 	int64 FirstHistoryID = 11;
+	int32 NewUserDataNums = 12;
+	int32 AliveUserDataNums = 13;
+	int64 FirstUserDataUID = 14;
 }
