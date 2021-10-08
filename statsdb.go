@@ -169,24 +169,27 @@ func (db *StatsDB) GetDayStats(ctx context.Context, ts int64) (*block7pb.DayStat
 }
 
 // genDayStats - genarate DayStats
-func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, firstUserId int64) (*block7pb.DayStatsData, error) {
+func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64) (*block7pb.DayStatsData, error) {
 	// nt := time.Now()
 	// curts := goutils.FormatUTCDayTs(nt)
 	// cdt := time.Unix(curts, 0)
 
-	nus, lus, err := db.userDB.countTodayUsers(ctx, cdt)
+	uds, err := db.userDB.StatsDay(ctx, cdt, lastUID)
 	if err != nil {
-		goutils.Warn("StatsDB.GetDayStats:countTodayUsers",
+		goutils.Warn("StatsDB.GetDayStats:StatsDay",
 			zap.Error(err))
 
 		return nil, err
 	}
 
 	return &block7pb.DayStatsData{
-		Ts:            cdt.Unix(),
-		NewUserNums:   int32(nus),
-		AliveUserNums: int32(lus),
-		FirstUserID:   firstUserId,
+		Ts:                cdt.Unix(),
+		NewUserNums:       int32(uds.NewUserNums),
+		AliveUserNums:     int32(uds.AliveUserNums),
+		FirstUserID:       uds.FirstUserID,
+		NewUserDataNums:   int32(uds.NewUserDataNums),
+		AliveUserDataNums: int32(uds.AliveUserDataNums),
+		FirstUserDataUID:  uds.FirstUserDataUID,
 	}, nil
 }
 
@@ -228,7 +231,8 @@ func (db *StatsDB) onTimer() {
 		latestdayts = goutils.FormatUTCDayTs(time.Unix(latestts, 0))
 	}
 
-	firstuserid := int64(0)
+	// firstuserid := int64(0)
+	dayfirstuid := int64(0)
 
 	goutils.Info("StatsDB.onTimer",
 		zap.String("first", time.Unix(firstts, 0).Format("2006-01-02_15:04:05")),
@@ -243,26 +247,28 @@ func (db *StatsDB) onTimer() {
 
 		// new day
 		if curts != latestdayts {
-			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, firstuserid)
+			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, dayfirstuid)
 			if err != nil {
 				goutils.Warn("StatsDB.onTimer:findTodayFirstUserID:newday",
 					zap.Error(err))
 			}
 
-			firstuserid = uid
+			dayfirstuid = uid
+
+			latestdayts = curts
 		}
 
-		if firstuserid == 0 {
-			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, firstuserid)
+		if dayfirstuid == 0 {
+			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, 0)
 			if err != nil {
 				goutils.Warn("StatsDB.onTimer:findTodayFirstUserID",
 					zap.Error(err))
 			}
 
-			firstuserid = uid
+			dayfirstuid = uid
 		}
 
-		dsd, err := db.genDayStats(context.Background(), cdt, firstuserid)
+		dsd, err := db.genDayStats(context.Background(), cdt, dayfirstuid)
 		if err != nil {
 			goutils.Warn("StatsDB.onTimer:GenDayStats",
 				zap.Error(err))

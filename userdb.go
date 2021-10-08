@@ -21,6 +21,15 @@ type UserDBStatsData struct {
 	UserDataNums int   `json:"userdatanums"`
 }
 
+type UserDBDayStatsData struct {
+	FirstUserID       int64 `json:"firstuserid"`
+	NewUserNums       int   `json:"newusernums"`
+	NewUserDataNums   int   `json:"newuserdatanums"`
+	FirstUserDataUID  int64 `json:"firstuserdatauid"`
+	AliveUserNums     int   `json:"aliveusernums"`
+	AliveUserDataNums int   `json:"aliveuserdatanums"`
+}
+
 const userdbname = "userdb"
 const userHashKeyPrefix = "h:"
 const userIDKey = "curuserid"
@@ -566,8 +575,105 @@ func (db *UserDB) Stats(ctx context.Context) (*UserDBStatsData, error) {
 	}, nil
 }
 
+// StatsDay - statistics
+func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (*UserDBDayStatsData, error) {
+	firstuid := int64(0)
+	newusers := 0
+	loginusers := 0
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
+		cuid := getUserIDFromUserDBKey(key)
+		if cuid > 0 && cuid <= lastUserID {
+			return nil
+		}
+
+		user := &block7pb.UserInfo{}
+
+		err := proto.Unmarshal(value, user)
+		if err != nil {
+			goutils.Warn("UserDB.StatsDay:Unmarshal",
+				zap.String("key", key),
+				zap.Error(err))
+
+			return nil
+		}
+
+		if len(user.Data) > 0 {
+			rt := time.Unix(user.Data[0].CreateTs, 0)
+			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+				newusers++
+
+				if firstuid == 0 {
+					firstuid = user.UserID
+				} else if firstuid > user.UserID {
+					firstuid = user.UserID
+				}
+			}
+
+			lt := time.Unix(user.Data[0].LastLoginTs, 0)
+			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
+				loginusers++
+			}
+		}
+
+		return nil
+	})
+
+	firstuduid := int64(0)
+	newuds := 0
+	loginuds := 0
+	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "d:", func(key string, value []byte) error {
+		cuid := getUserIDFromUserDBKey(key)
+		if cuid > 0 && cuid <= lastUserID {
+			return nil
+		}
+
+		ud := &block7pb.UserData{}
+
+		err := proto.Unmarshal(value, ud)
+		if err != nil {
+			goutils.Warn("UserDB.StatsDay:Unmarshal",
+				zap.String("key", key),
+				zap.Error(err))
+
+			return nil
+		}
+
+		if ud.UserID > 0 {
+			rt := time.Unix(ud.CreateTs, 0)
+			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+				newuds++
+
+				if firstuduid == 0 {
+					firstuduid = ud.UserID
+				} else if firstuduid > ud.UserID {
+					firstuduid = ud.UserID
+				}
+			}
+
+			lt := time.Unix(ud.LastTs, 0)
+			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
+				loginuds++
+			}
+		}
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return &UserDBDayStatsData{
+		FirstUserID:       firstuid,
+		NewUserNums:       newusers,
+		AliveUserNums:     loginusers,
+		FirstUserDataUID:  firstuduid,
+		NewUserDataNums:   newuds,
+		AliveUserDataNums: loginuds,
+	}, nil
+}
+
 // countTodayUsers - count users today
-func (db *UserDB) countTodayUsers(ctx context.Context, t time.Time) (int, int, error) {
+func (db *UserDB) countTodayUsers(ctx context.Context, t time.Time, lastUserID int64) (int, int, error) {
 	newusers := 0
 	loginusers := 0
 	// ct := time.Unix(ts, 0)

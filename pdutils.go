@@ -2,10 +2,13 @@ package block7
 
 import (
 	"github.com/zhs007/block7/block7pb"
+	"github.com/zhs007/goutils"
 )
 
 func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserDataStatus) *block7pb.UserData {
 	if ud0 == nil {
+		ud1.CreateTs = goutils.GetCurTimestamp()
+
 		return ud1
 	}
 
