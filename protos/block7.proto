@@ -88,8 +88,8 @@ message UserData {
 	string Name = 1;
 	int64 Coin = 2;
 	int32 Level = 3;
-	map<string,int32> LevelArr = 4;
-	map<string,int32> ToolsArr = 5;
+	map<string, int32> LevelArr = 4;
+	map<string, int32> ToolsArr = 5;
 	repeated int32 HomeScene = 6;
 	repeated Cooking Cooking = 7;
 	string Platform = 8;
@@ -117,4 +117,7 @@ message DayStatsData {
 	int32 NewUserDataNums = 12;
 	int32 AliveUserDataNums = 13;
 	int64 FirstUserDataUID = 14;
+	int32 SceneNums = 15;
+	map<int32, int32> MapNums = 16;
+	map<int32, int32> StageNums = 17;
 }
