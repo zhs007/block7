@@ -31,15 +31,16 @@ func makeDayStatsDataDBKey(ts int64) string {
 
 // StatsDB - database
 type StatsDB struct {
-	AnkaDB  ankadb.AnkaDB
-	mutexDB sync.Mutex
-	ticker  *time.Ticker
-	userDB  *UserDB
-	stageDB *StageDB
+	AnkaDB    ankadb.AnkaDB
+	mutexDB   sync.Mutex
+	ticker    *time.Ticker
+	userDB    *UserDB
+	stageDB   *StageDB
+	historyDB *HistoryDB
 }
 
 // NewStatsDB - new StatsDB
-func NewStatsDB(dbpath string, httpAddr string, engine string, userdb *UserDB, stagedb *StageDB) (*StatsDB, error) {
+func NewStatsDB(dbpath string, httpAddr string, engine string, userdb *UserDB, stagedb *StageDB, historydb *HistoryDB) (*StatsDB, error) {
 	cfg := ankadb.NewConfig()
 
 	cfg.AddrHTTP = httpAddr
@@ -56,9 +57,10 @@ func NewStatsDB(dbpath string, httpAddr string, engine string, userdb *UserDB, s
 	}
 
 	db := &StatsDB{
-		AnkaDB:  ankaDB,
-		userDB:  userdb,
-		stageDB: stagedb,
+		AnkaDB:    ankaDB,
+		userDB:    userdb,
+		stageDB:   stagedb,
+		historyDB: historydb,
 	}
 
 	return db, err
@@ -190,6 +192,14 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64
 		return nil, err
 	}
 
+	hds, err := db.historyDB.StatsDay(ctx, cdt)
+	if err != nil {
+		goutils.Warn("StatsDB.GetDayStats:StatsDay:historyDB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	return &block7pb.DayStatsData{
 		Ts:                cdt.Unix(),
 		NewUserNums:       int32(uds.NewUserNums),
@@ -202,6 +212,10 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64
 		SceneNums:         int32(sds.SceneNums),
 		MapNums:           goutils.MapII2MapI32I32(sds.MapNums),
 		StageNums:         goutils.MapII2MapI32I32(sds.StageNums),
+		FirstHistoryID:    hds.FirstHistoryID,
+		HistoryNums:       int32(hds.HistoryNums),
+		HistoryMapNums:    goutils.MapII2MapI32I32(hds.MapNums),
+		HistoryStageNums:  goutils.MapII2MapI32I32(hds.StageNums),
 	}, nil
 }
 
