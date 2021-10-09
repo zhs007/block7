@@ -640,22 +640,22 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 			return nil
 		}
 
-		if ud.UserID > 0 {
-			rt := time.Unix(ud.CreateTs, 0)
-			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
-				newuds++
+		rt := time.Unix(ud.CreateTs, 0)
+		if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+			newuds++
 
+			if ud.UserID > 0 {
 				if firstuduid == 0 {
 					firstuduid = ud.UserID
 				} else if firstuduid > ud.UserID {
 					firstuduid = ud.UserID
 				}
 			}
+		}
 
-			lt := time.Unix(ud.LastTs, 0)
-			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
-				loginuds++
-			}
+		lt := time.Unix(ud.LastTs, 0)
+		if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
+			loginuds++
 		}
 
 		return nil
@@ -672,42 +672,42 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 	}, nil
 }
 
-// countTodayUsers - count users today
-func (db *UserDB) countTodayUsers(ctx context.Context, t time.Time, lastUserID int64) (int, int, error) {
-	newusers := 0
-	loginusers := 0
-	// ct := time.Unix(ts, 0)
+// // countTodayUsers - count users today
+// func (db *UserDB) countTodayUsers(ctx context.Context, t time.Time, lastUserID int64) (int, int, error) {
+// 	newusers := 0
+// 	loginusers := 0
+// 	// ct := time.Unix(ts, 0)
 
-	db.mutexDB.Lock()
-	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
-		user := &block7pb.UserInfo{}
+// 	db.mutexDB.Lock()
+// 	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
+// 		user := &block7pb.UserInfo{}
 
-		err := proto.Unmarshal(value, user)
-		if err != nil {
-			goutils.Warn("UserDB.CountTodayNewUsers:Unmarshal",
-				zap.Error(err))
+// 		err := proto.Unmarshal(value, user)
+// 		if err != nil {
+// 			goutils.Warn("UserDB.CountTodayNewUsers:Unmarshal",
+// 				zap.Error(err))
 
-			return nil
-		}
+// 			return nil
+// 		}
 
-		if len(user.Data) > 0 {
-			rt := time.Unix(user.Data[0].CreateTs, 0)
-			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
-				newusers++
-			}
+// 		if len(user.Data) > 0 {
+// 			rt := time.Unix(user.Data[0].CreateTs, 0)
+// 			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+// 				newusers++
+// 			}
 
-			lt := time.Unix(user.Data[0].LastLoginTs, 0)
-			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
-				loginusers++
-			}
-		}
+// 			lt := time.Unix(user.Data[0].LastLoginTs, 0)
+// 			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
+// 				loginusers++
+// 			}
+// 		}
 
-		return nil
-	})
-	db.mutexDB.Unlock()
+// 		return nil
+// 	})
+// 	db.mutexDB.Unlock()
 
-	return newusers, loginusers, nil
-}
+// 	return newusers, loginusers, nil
+// }
 
 // findTodayFirstUserID - find first userID today
 func (db *UserDB) findTodayFirstUserID(ctx context.Context, t time.Time, lastUserID int64) (int64, error) {

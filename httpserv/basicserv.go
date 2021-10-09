@@ -428,6 +428,9 @@ func (serv *BasicServ) UpdUserData(ud *UpdUserDataParams, uds *block7.UpdUserDat
 		}
 
 		udpb.UserID = uid
+	} else {
+		goutils.Warn("BasicServ.UpdUserData:non-userhash",
+			zap.String("name", ud.Name))
 	}
 
 	// goutils.Debug("BasicServ.UpdUserData",
