@@ -226,6 +226,10 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 		FirstItem:       int(pbscene.FirstItem),
 	}
 
+	// if pbscene.ClientMissionID > 0 {
+
+	// }
+
 	if pbscene.InitArr2 != nil {
 		arr, err := goutils.Int32ArrToIntArr3(pbscene.InitArr2, scene.Width, scene.Height, scene.Layers)
 		if err != nil {
