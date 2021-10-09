@@ -1233,6 +1233,10 @@ func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 		FirstItem:       int32(scene.FirstItem),
 	}
 
+	if pbScene.StageID2 == 0 && pbScene.ClientMissionID > 0 {
+		pbScene.StageID2 = pbScene.ClientMissionID
+	}
+
 	if scene.IsFullHistoryData {
 		pbScene.Width = int32(scene.Width)
 		pbScene.Height = int32(scene.Height)
