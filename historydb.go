@@ -374,9 +374,9 @@ func (db *HistoryDB) StatsDay(ctx context.Context, t time.Time) (*HistoryDBDaySt
 			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
 				historyNums++
 
-				if stage.SceneID > 0 {
-					if firstHistoryID == 0 || firstHistoryID > stage.SceneID {
-						firstHistoryID = stage.SceneID
+				if stage.HistoryID > 0 {
+					if firstHistoryID == 0 || firstHistoryID > stage.HistoryID {
+						firstHistoryID = stage.HistoryID
 					}
 				}
 
