@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"sync"
+	"time"
 
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
@@ -20,6 +21,13 @@ type StageDBStatsData struct {
 	SceneNums     int         `json:"scenenums"`
 	MapNums       map[int]int `json:"mapnums"`
 	StageNums     map[int]int `json:"stagenums"`
+}
+
+type StageDBDayStatsData struct {
+	FirstSceneID int64       `json:"firstsceneid"`
+	SceneNums    int         `json:"scenenums"`
+	MapNums      map[int]int `json:"mapnums"`
+	StageNums    map[int]int `json:"stagenums"`
 }
 
 const stagedbname = "stagedb"
@@ -286,6 +294,75 @@ func (db *StageDB) Stats(ctx context.Context) (*StageDBStatsData, error) {
 		SceneNums:     sceneNums,
 		MapNums:       mapNums,
 		StageNums:     stageNums,
+	}, nil
+}
+
+// Stats - statistics
+func (db *StageDB) StatsDay(ctx context.Context, t time.Time) (*StageDBDayStatsData, error) {
+	// lastSceneID, err := db.GetLatestSceneID(ctx)
+	// if err != nil {
+	// 	goutils.Error("StageDB.Stats:GetLatestSceneID",
+	// 		zap.Error(err))
+
+	// 	return nil, err
+	// }
+
+	firstSceneID := int64(0)
+	sceneNums := 0
+	mapNums := make(map[int]int)
+	stageNums := make(map[int]int)
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, stagedbname, "s:", func(key string, value []byte) error {
+		// sceneNums++
+
+		stage := &block7pb.Scene{}
+		err := proto.Unmarshal(value, stage)
+		if err != nil {
+			goutils.Warn("StageDB.StatsDay:Unmarshal",
+				zap.Error(err))
+
+			return nil
+		}
+
+		if stage.Ts > 0 {
+			rt := time.Unix(stage.Ts, 0)
+			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+				sceneNums++
+
+				if stage.SceneID > 0 {
+					if firstSceneID == 0 || firstSceneID > stage.SceneID {
+						firstSceneID = stage.SceneID
+					}
+				}
+
+				_, isok := mapNums[int(stage.MapID2)]
+				if isok {
+					mapNums[int(stage.MapID2)]++
+				} else {
+					mapNums[int(stage.MapID2)] = 1
+				}
+
+				if stage.StageID2 > 0 {
+					_, isok = stageNums[int(stage.StageID2)]
+					if isok {
+						stageNums[int(stage.StageID2)]++
+					} else {
+						stageNums[int(stage.StageID2)] = 1
+					}
+				}
+			}
+		}
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return &StageDBDayStatsData{
+		FirstSceneID: firstSceneID,
+		SceneNums:    sceneNums,
+		MapNums:      mapNums,
+		StageNums:    stageNums,
 	}, nil
 }
 

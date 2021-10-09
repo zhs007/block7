@@ -176,7 +176,15 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64
 
 	uds, err := db.userDB.StatsDay(ctx, cdt, lastUID)
 	if err != nil {
-		goutils.Warn("StatsDB.GetDayStats:StatsDay",
+		goutils.Warn("StatsDB.GetDayStats:StatsDay:userDB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	sds, err := db.stageDB.StatsDay(ctx, cdt)
+	if err != nil {
+		goutils.Warn("StatsDB.GetDayStats:StatsDay:stageDB",
 			zap.Error(err))
 
 		return nil, err
@@ -190,6 +198,10 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64
 		NewUserDataNums:   int32(uds.NewUserDataNums),
 		AliveUserDataNums: int32(uds.AliveUserDataNums),
 		FirstUserDataUID:  uds.FirstUserDataUID,
+		FirstSceneID:      sds.FirstSceneID,
+		SceneNums:         int32(sds.SceneNums),
+		MapNums:           goutils.MapII2MapI32I32(sds.MapNums),
+		StageNums:         goutils.MapII2MapI32I32(sds.StageNums),
 	}, nil
 }
 
