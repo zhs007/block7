@@ -184,6 +184,29 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 						return nil, err
 					}
 
+					if scene.ClientMissionID > 0 {
+						ld2, isok := serv.LevelMgr.MapLevel[scene.ClientMissionID+30000]
+						if !isok {
+							goutils.Error("BasicServ.Mission:MapLevel",
+								zap.Int("missionid", scene.ClientMissionID),
+								zap.Error(ErrInvalidMissionID))
+
+							return nil, ErrInvalidMissionID
+						}
+
+						stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
+						if err != nil {
+							goutils.Error("BasicServ.Mission:LoadStage",
+								zap.Error(err))
+
+							return nil, err
+						}
+
+						scene.Offset = stage.Offset
+						scene.XOff = stage.XOff
+						scene.YOff = stage.YOff
+					}
+
 					scene.IsOutputScene = true
 					scene.IsFullHistoryData = true
 

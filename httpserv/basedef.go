@@ -33,6 +33,7 @@ type MissionDataParams struct {
 	SpecialLayers []*block7game.SpecialLayer `json:"specialLayers"`
 	FirstItem     int                        `json:"firstItem"`
 	MissionID     int                        `json:"missionid"`
+	// Offset        string                     `json:"offset"`
 }
 
 // MissionDataResult - missionData result
