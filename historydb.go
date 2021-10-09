@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"sync"
+	"time"
 
 	ankadb "github.com/zhs007/ankadb"
 	"github.com/zhs007/block7/block7pb"
@@ -20,6 +21,13 @@ type HistoryDBStatsData struct {
 	HistoryNums     int         `json:"historynums"`
 	MapNums         map[int]int `json:"mapnums"`
 	StageNums       map[int]int `json:"stagenums"`
+}
+
+type HistoryDBDayStatsData struct {
+	FirstHistoryID int64       `json:"firsthistoryid"`
+	HistoryNums    int         `json:"historynums"`
+	MapNums        map[int]int `json:"mapnums"`
+	StageNums      map[int]int `json:"stagenums"`
 }
 
 const historydbname = "historydb"
@@ -331,5 +339,73 @@ func (db *HistoryDB) Stats(ctx context.Context) (*HistoryDBStatsData, error) {
 		HistoryNums:     historyNums,
 		MapNums:         mapNums,
 		StageNums:       stageNums,
+	}, nil
+}
+
+// Stats - statistics
+func (db *HistoryDB) StatsDay(ctx context.Context, t time.Time) (*HistoryDBDayStatsData, error) {
+	// latestHistoryID, err := db.GetLatestHistoryID(ctx)
+	// if err != nil {
+	// 	goutils.Error("HistoryDB.Stats:GetLatestHistoryID",
+	// 		zap.Error(err))
+
+	// 	return nil, err
+	// }
+
+	firstHistoryID := int64(0)
+	historyNums := 0
+	mapNums := make(map[int]int)
+	stageNums := make(map[int]int)
+
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
+		// historyNums++
+
+		stage := &block7pb.Scene{}
+
+		err := proto.Unmarshal(value, stage)
+		if err != nil {
+			goutils.Warn("HistoryDB.StatsDay:Unmarshal",
+				zap.Error(err))
+		}
+
+		if stage.Ts > 0 {
+			rt := time.Unix(stage.Ts, 0)
+			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+				historyNums++
+
+				if stage.SceneID > 0 {
+					if firstHistoryID == 0 || firstHistoryID > stage.SceneID {
+						firstHistoryID = stage.SceneID
+					}
+				}
+
+				_, isok := mapNums[int(stage.MapID2)]
+				if isok {
+					mapNums[int(stage.MapID2)]++
+				} else {
+					mapNums[int(stage.MapID2)] = 1
+				}
+
+				if stage.StageID2 > 0 {
+					_, isok = stageNums[int(stage.StageID2)]
+					if isok {
+						stageNums[int(stage.StageID2)]++
+					} else {
+						stageNums[int(stage.StageID2)] = 1
+					}
+				}
+			}
+		}
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return &HistoryDBDayStatsData{
+		FirstHistoryID: firstHistoryID,
+		HistoryNums:    historyNums,
+		MapNums:        mapNums,
+		StageNums:      stageNums,
 	}, nil
 }
