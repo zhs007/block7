@@ -101,6 +101,11 @@ message UserData {
 	int64 CreateTs = 14;
 }
 
+message HistoryStageData {
+	int32 Nums = 1;
+	map<int32, int32> GameStateNums = 2;
+}
+
 // DayStatsData
 message DayStatsData {
 	int64 Ts = 1;
@@ -122,6 +127,7 @@ message DayStatsData {
 	map<int32, int32> StageNums = 17;
 	int32 HistoryNums = 18;
 	map<int32, int32> HistoryMapNums = 19;
-	map<int32, int32> HistoryStageNums = 20;
+	map<int32, int32> HistoryStageNums = 20 [deprecated = true];
 	map<int32, int32> HistoryGameStateNums = 21;
+	map<int32, HistoryStageData> HistoryStages2 = 22;
 }
