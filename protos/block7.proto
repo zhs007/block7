@@ -123,4 +123,5 @@ message DayStatsData {
 	int32 HistoryNums = 18;
 	map<int32, int32> HistoryMapNums = 19;
 	map<int32, int32> HistoryStageNums = 20;
+	map<int32, int32> HistoryGameStateNums = 21;
 }
