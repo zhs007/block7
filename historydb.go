@@ -21,6 +21,7 @@ type HistoryDBStatsData struct {
 	HistoryNums     int         `json:"historynums"`
 	MapNums         map[int]int `json:"mapnums"`
 	StageNums       map[int]int `json:"stagenums"`
+	GameStateNums   map[int]int `json:"gamestatenums"`
 }
 
 type HistoryDBDayStatsData struct {
@@ -28,6 +29,7 @@ type HistoryDBDayStatsData struct {
 	HistoryNums    int         `json:"historynums"`
 	MapNums        map[int]int `json:"mapnums"`
 	StageNums      map[int]int `json:"stagenums"`
+	GameStateNums  map[int]int `json:"gamestatenums"`
 }
 
 const historydbname = "historydb"
@@ -301,6 +303,7 @@ func (db *HistoryDB) Stats(ctx context.Context) (*HistoryDBStatsData, error) {
 	historyNums := 0
 	mapNums := make(map[int]int)
 	stageNums := make(map[int]int)
+	gameStateNums := make(map[int]int)
 
 	db.mutexDB.Lock()
 	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
@@ -330,6 +333,15 @@ func (db *HistoryDB) Stats(ctx context.Context) (*HistoryDBStatsData, error) {
 			}
 		}
 
+		if stage.GameState > 0 {
+			_, isok = gameStateNums[int(stage.GameState)]
+			if isok {
+				gameStateNums[int(stage.GameState)]++
+			} else {
+				gameStateNums[int(stage.GameState)] = 1
+			}
+		}
+
 		return nil
 	})
 	db.mutexDB.Unlock()
@@ -339,6 +351,7 @@ func (db *HistoryDB) Stats(ctx context.Context) (*HistoryDBStatsData, error) {
 		HistoryNums:     historyNums,
 		MapNums:         mapNums,
 		StageNums:       stageNums,
+		GameStateNums:   gameStateNums,
 	}, nil
 }
 
@@ -356,6 +369,7 @@ func (db *HistoryDB) StatsDay(ctx context.Context, t time.Time) (*HistoryDBDaySt
 	historyNums := 0
 	mapNums := make(map[int]int)
 	stageNums := make(map[int]int)
+	gameStateNums := make(map[int]int)
 
 	db.mutexDB.Lock()
 	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
@@ -395,6 +409,15 @@ func (db *HistoryDB) StatsDay(ctx context.Context, t time.Time) (*HistoryDBDaySt
 						stageNums[int(stage.StageID2)] = 1
 					}
 				}
+
+				if stage.GameState > 0 {
+					_, isok = gameStateNums[int(stage.GameState)]
+					if isok {
+						gameStateNums[int(stage.GameState)]++
+					} else {
+						gameStateNums[int(stage.GameState)] = 1
+					}
+				}
 			}
 		}
 
@@ -407,5 +430,6 @@ func (db *HistoryDB) StatsDay(ctx context.Context, t time.Time) (*HistoryDBDaySt
 		HistoryNums:    historyNums,
 		MapNums:        mapNums,
 		StageNums:      stageNums,
+		GameStateNums:  gameStateNums,
 	}, nil
 }

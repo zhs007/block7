@@ -201,21 +201,22 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64
 	}
 
 	return &block7pb.DayStatsData{
-		Ts:                cdt.Unix(),
-		NewUserNums:       int32(uds.NewUserNums),
-		AliveUserNums:     int32(uds.AliveUserNums),
-		FirstUserID:       uds.FirstUserID,
-		NewUserDataNums:   int32(uds.NewUserDataNums),
-		AliveUserDataNums: int32(uds.AliveUserDataNums),
-		FirstUserDataUID:  uds.FirstUserDataUID,
-		FirstSceneID:      sds.FirstSceneID,
-		SceneNums:         int32(sds.SceneNums),
-		MapNums:           goutils.MapII2MapI32I32(sds.MapNums),
-		StageNums:         goutils.MapII2MapI32I32(sds.StageNums),
-		FirstHistoryID:    hds.FirstHistoryID,
-		HistoryNums:       int32(hds.HistoryNums),
-		HistoryMapNums:    goutils.MapII2MapI32I32(hds.MapNums),
-		HistoryStageNums:  goutils.MapII2MapI32I32(hds.StageNums),
+		Ts:                   cdt.Unix(),
+		NewUserNums:          int32(uds.NewUserNums),
+		AliveUserNums:        int32(uds.AliveUserNums),
+		FirstUserID:          uds.FirstUserID,
+		NewUserDataNums:      int32(uds.NewUserDataNums),
+		AliveUserDataNums:    int32(uds.AliveUserDataNums),
+		FirstUserDataUID:     uds.FirstUserDataUID,
+		FirstSceneID:         sds.FirstSceneID,
+		SceneNums:            int32(sds.SceneNums),
+		MapNums:              goutils.MapII2MapI32I32(sds.MapNums),
+		StageNums:            goutils.MapII2MapI32I32(sds.StageNums),
+		FirstHistoryID:       hds.FirstHistoryID,
+		HistoryNums:          int32(hds.HistoryNums),
+		HistoryMapNums:       goutils.MapII2MapI32I32(hds.MapNums),
+		HistoryStageNums:     goutils.MapII2MapI32I32(hds.StageNums),
+		HistoryGameStateNums: goutils.MapII2MapI32I32(hds.GameStateNums),
 	}, nil
 }
 
