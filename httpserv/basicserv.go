@@ -399,6 +399,8 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 		curScene = MissionDataParams2SceneEx(params)
 	}
 
+	curScene.UserID = uid
+
 	pbscene1, err := serv.HistoryDB.SaveHistory(context.Background(), curScene)
 	if err != nil {
 		goutils.Error("BasicServ.MissionData:SaveHistory",

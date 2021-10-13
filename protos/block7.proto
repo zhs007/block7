@@ -135,9 +135,10 @@ message DayStatsData {
 	map<int32, int32> MapNums = 16;
 	map<int32, int32> StageNums = 17;
 	int32 HistoryNums = 18;
-	map<int32, int32> HistoryMapNums = 19;
+	map<int32, int32> HistoryMapNums = 19 [deprecated = true];
 	map<int32, int32> HistoryStageNums = 20 [deprecated = true];
 	map<int32, int32> HistoryGameStateNums = 21;
 	map<int32, HistoryStageData> HistoryStages2 = 22;
 	map<string, UserDayStatsData> Users = 23;
+	map<int64, int32> HistoryUserIDNums = 24;
 }
