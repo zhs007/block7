@@ -538,6 +538,9 @@ func (db *HistoryDB) statsDayUser(ctx context.Context, t time.Time, udsd *UserDa
 
 // statsUser - statistics
 func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) error {
+	goutils.Info("HistoryDB.statsUser",
+		goutils.JSON("uusd", uusd))
+
 	db.mutexDB.Lock()
 	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
 		stage := &block7pb.Scene{}
@@ -547,6 +550,11 @@ func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) e
 			goutils.Warn("HistoryDB.statsDayUser:Unmarshal",
 				zap.Error(err))
 		}
+
+		goutils.Info("HistoryDB.statsUser",
+			zap.String("key", key),
+			zap.Int64("uid", stage.UserID),
+			zap.Int32("stageID", stage.StageID2))
 
 		if stage.UserID == uusd.UserID && stage.StageID2 > 0 {
 			if stage.HistoryID == 0 {
