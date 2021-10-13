@@ -781,6 +781,7 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 
 	uusd := &UserDBUserStatsData{
 		UserID: user.UserID,
+		Stages: make(map[int]*UserStageData),
 	}
 
 	if len(user.Data) > 0 {
