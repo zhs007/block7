@@ -15,6 +15,41 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+type UserStageState struct {
+	GameStateNums map[int]int `json:"gamestatenums"`
+}
+
+func (uss *UserStageState) SetGameState(gs int) {
+	if gs > 0 {
+		_, isok := uss.GameStateNums[gs]
+		if isok {
+			uss.GameStateNums[gs]++
+		} else {
+			uss.GameStateNums[gs] = 1
+		}
+	}
+}
+
+type UserDayStatsData struct {
+	UserID int64                   `json:"uid"`
+	Stages map[int]*UserStageState `json:"stages"`
+}
+
+func (udsd *UserDayStatsData) SetGameState(stage int, gs int) {
+	if stage > 0 && gs > 0 {
+		_, isok := udsd.Stages[stage]
+		if isok {
+			udsd.Stages[stage].SetGameState(gs)
+		} else {
+			udsd.Stages[stage] = &UserStageState{
+				GameStateNums: make(map[int]int),
+			}
+
+			udsd.Stages[stage].SetGameState(gs)
+		}
+	}
+}
+
 type UserDBStatsData struct {
 	LatestUserID int64 `json:"latestuserid"`
 	UserNums     int   `json:"usernums"`
@@ -22,12 +57,13 @@ type UserDBStatsData struct {
 }
 
 type UserDBDayStatsData struct {
-	FirstUserID       int64 `json:"firstuserid"`
-	NewUserNums       int   `json:"newusernums"`
-	NewUserDataNums   int   `json:"newuserdatanums"`
-	FirstUserDataUID  int64 `json:"firstuserdatauid"`
-	AliveUserNums     int   `json:"aliveusernums"`
-	AliveUserDataNums int   `json:"aliveuserdatanums"`
+	FirstUserID       int64                        `json:"firstuserid"`
+	NewUserNums       int                          `json:"newusernums"`
+	NewUserDataNums   int                          `json:"newuserdatanums"`
+	FirstUserDataUID  int64                        `json:"firstuserdatauid"`
+	AliveUserNums     int                          `json:"aliveusernums"`
+	AliveUserDataNums int                          `json:"aliveuserdatanums"`
+	Users             map[string]*UserDayStatsData `json:"users"`
 }
 
 const userdbname = "userdb"
@@ -70,12 +106,13 @@ func makeUserDataDBKey(name string, platform string) string {
 
 // UserDB - database
 type UserDB struct {
-	AnkaDB  ankadb.AnkaDB
-	mutexDB sync.Mutex
+	AnkaDB    ankadb.AnkaDB
+	mutexDB   sync.Mutex
+	historyDB *HistoryDB
 }
 
 // NewUserDB - new UserDB
-func NewUserDB(dbpath string, httpAddr string, engine string) (*UserDB, error) {
+func NewUserDB(dbpath string, httpAddr string, engine string, historydb *HistoryDB) (*UserDB, error) {
 	cfg := ankadb.NewConfig()
 
 	cfg.AddrHTTP = httpAddr
@@ -92,7 +129,8 @@ func NewUserDB(dbpath string, httpAddr string, engine string) (*UserDB, error) {
 	}
 
 	db := &UserDB{
-		AnkaDB: ankaDB,
+		AnkaDB:    ankaDB,
+		historyDB: historydb,
 	}
 
 	return db, err
@@ -575,11 +613,25 @@ func (db *UserDB) Stats(ctx context.Context) (*UserDBStatsData, error) {
 	}, nil
 }
 
+// statsUserDay - statistics
+func (db *UserDB) statsUserDay(ctx context.Context, t time.Time, ui *block7pb.UserInfo) (*UserDayStatsData, error) {
+	udsd := &UserDayStatsData{
+		UserID: ui.UserID,
+		Stages: make(map[int]*UserStageState),
+	}
+
+	db.historyDB.statsDayUser(ctx, t, udsd)
+
+	return udsd, nil
+}
+
 // StatsDay - statistics
 func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (*UserDBDayStatsData, error) {
 	firstuid := int64(0)
 	newusers := 0
 	loginusers := 0
+
+	users := make(map[string]*UserDayStatsData)
 
 	db.mutexDB.Lock()
 	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
@@ -600,6 +652,7 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 		}
 
 		if len(user.Data) > 0 {
+			isui := false
 			rt := time.Unix(user.Data[0].CreateTs, 0)
 			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
 				newusers++
@@ -609,11 +662,30 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 				} else if firstuid > user.UserID {
 					firstuid = user.UserID
 				}
+
+				isui = true
 			}
 
 			lt := time.Unix(user.Data[0].LastLoginTs, 0)
 			if t.Year() == lt.Year() && t.YearDay() == lt.YearDay() {
 				loginusers++
+
+				isui = true
+			}
+
+			if isui {
+				udsd, err := db.statsUserDay(ctx, t, user)
+				if err != nil {
+					goutils.Warn("UserDB.StatsDay:statsUserDay",
+						zap.String("key", key),
+						zap.Error(err))
+
+					return nil
+				}
+
+				if udsd != nil {
+					users[user.Data[0].UserHash] = udsd
+				}
 			}
 		}
 
@@ -669,6 +741,7 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 		FirstUserDataUID:  firstuduid,
 		NewUserDataNums:   newuds,
 		AliveUserDataNums: loginuds,
+		Users:             users,
 	}, nil
 }
 
