@@ -64,6 +64,28 @@ func makeSceneHistoryDBKey(mapid int32, userid int64, sceneid int64, historyid i
 	return fmt.Sprintf("s:%v:%v:%v:%v", mapid, sceneid, userid, historyid)
 }
 
+func getHistoryIDFromHistoryDBKey(key string) int64 {
+	if len(key) > 2 {
+		key1 := key[2:]
+
+		i64, err := goutils.String2Int64(key1)
+		if err == nil {
+			return i64
+		}
+
+		goutils.Warn("getHistoryIDFromHistoryDBKey:String2Int64",
+			zap.String("key", key),
+			zap.Error(err))
+
+		return 0
+	}
+
+	goutils.Warn("getHistoryIDFromHistoryDBKey",
+		zap.String("key", key))
+
+	return 0
+}
+
 // HistoryDB - database
 type HistoryDB struct {
 	AnkaDB  ankadb.AnkaDB
@@ -527,6 +549,15 @@ func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) e
 		}
 
 		if stage.UserID == uusd.UserID && stage.StageID2 > 0 {
+			if stage.HistoryID == 0 {
+				stage.HistoryID = getHistoryIDFromHistoryDBKey(key)
+			}
+
+			if stage.HistoryID == 0 {
+				goutils.Warn("HistoryDB.statsUser:non-historyID",
+					zap.String("key", key))
+			}
+
 			uusd.AddHistory(int(stage.StageID2), stage.HistoryID)
 		}
 
