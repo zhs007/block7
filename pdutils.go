@@ -104,8 +104,8 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 
 func SetHistoryInDayStatsData(dsd *block7pb.DayStatsData, hds *HistoryDBDayStatsData) {
 	dsd.HistoryNums = int32(hds.HistoryNums)
-	dsd.HistoryMapNums = goutils.MapII2MapI32I32(hds.MapNums)
 	dsd.HistoryGameStateNums = goutils.MapII2MapI32I32(hds.GameStateNums)
+	dsd.HistoryUserIDNums = goutils.MapI64I2MapI64I32(hds.UserIDNums)
 
 	if len(hds.Stages) > 0 {
 		dsd.HistoryStages2 = make(map[int32]*block7pb.HistoryStageData)
