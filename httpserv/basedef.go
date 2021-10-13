@@ -125,3 +125,15 @@ type StatsResult struct {
 	History *block7.HistoryDBStatsData `json:"history"`
 	Stats   *block7.StatsDBStatsData   `json:"stats"`
 }
+
+// UserStatsParams - statistics parameters
+type UserStatsParams struct {
+	Token    string `json:"token"`
+	UserID   int64  `json:"uid"`
+	UserHash string `json:"userHash"`
+}
+
+// UserStatsResult - statistics result
+type UserStatsResult struct {
+	User *block7.UserDBUserStatsData `json:"user"`
+}

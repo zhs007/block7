@@ -13,4 +13,6 @@ var (
 	ErrInvalidUserDataName = errors.New("invalid UserData Name")
 	// ErrInvalidToken - invalid Token
 	ErrInvalidToken = errors.New("invalid Token")
+	// ErrInvalidUserID - invalid userID
+	ErrInvalidUserID = errors.New("invalid userID")
 )

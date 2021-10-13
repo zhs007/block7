@@ -513,3 +513,26 @@ func (db *HistoryDB) statsDayUser(ctx context.Context, t time.Time, udsd *UserDa
 
 	return nil
 }
+
+// statsUser - statistics
+func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) error {
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
+		stage := &block7pb.Scene{}
+
+		err := proto.Unmarshal(value, stage)
+		if err != nil {
+			goutils.Warn("HistoryDB.statsDayUser:Unmarshal",
+				zap.Error(err))
+		}
+
+		if stage.UserID == uusd.UserID && stage.StageID2 > 0 {
+			uusd.AddHistory(int(stage.StageID2), stage.HistoryID)
+		}
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return nil
+}
