@@ -529,6 +529,44 @@ func (serv *BasicServ) Stats(params *StatsParams) (*StatsResult, error) {
 	}, nil
 }
 
+// UserStats - statistics
+func (serv *BasicServ) UserStats(params *UserStatsParams) (*UserStatsResult, error) {
+	uid := params.UserID
+	if uid == 0 && params.UserHash != "" {
+		uid1, err := serv.UserDB.GetUserID(context.Background(), params.UserHash)
+		if err != nil {
+			goutils.Error("BasicServ.UserStats:GetUserID",
+				zap.String("userHash", params.UserHash),
+				zap.Error(err))
+
+			return nil, ErrInvalidUserHash
+		}
+
+		uid = uid1
+	}
+
+	if uid == 0 {
+		goutils.Error("BasicServ.UserStats",
+			zap.String("userHash", params.UserHash),
+			zap.Error(ErrInvalidUserID))
+
+		return nil, ErrInvalidUserID
+	}
+
+	uusd, err := serv.UserDB.UserStats(context.Background(), uid)
+	if err != nil {
+		goutils.Error("BasicServ.UserStats:UserStats",
+			zap.Int64("uid", uid),
+			zap.Error(err))
+
+		return nil, ErrInvalidUserHash
+	}
+
+	return &UserStatsResult{
+		User: uusd,
+	}, nil
+}
+
 // Start - start
 func (serv *BasicServ) Start() {
 	serv.StatsDB.Start()

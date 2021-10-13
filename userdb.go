@@ -50,6 +50,29 @@ func (udsd *UserDayStatsData) SetGameState(stage int, gs int) {
 	}
 }
 
+type UserStageData struct {
+	HistoryIDs []int64 `json:"historys"`
+}
+
+type UserDBUserStatsData struct {
+	UserID   int64                  `json:"userid"`
+	UserHash string                 `json:"userHash"`
+	Stages   map[int]*UserStageData `json:"stages"`
+}
+
+func (uusd *UserDBUserStatsData) AddHistory(stage int, historyid int64) {
+	if stage > 0 && historyid > 0 {
+		_, isok := uusd.Stages[stage]
+		if isok {
+			uusd.Stages[stage].HistoryIDs = append(uusd.Stages[stage].HistoryIDs, historyid)
+		} else {
+			uusd.Stages[stage] = &UserStageData{}
+
+			uusd.Stages[stage].HistoryIDs = append(uusd.Stages[stage].HistoryIDs, historyid)
+		}
+	}
+}
+
 type UserDBStatsData struct {
 	LatestUserID int64 `json:"latestuserid"`
 	UserNums     int   `json:"usernums"`
@@ -743,6 +766,30 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 		AliveUserDataNums: loginuds,
 		Users:             users,
 	}, nil
+}
+
+// UserStats - statistics
+func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsData, error) {
+	user, err := db.GetUser(ctx, uid)
+	if err != nil {
+		goutils.Error("UserDB.UserStats:GetUser",
+			zap.Int64("uid", uid),
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	uusd := &UserDBUserStatsData{
+		UserID: user.UserID,
+	}
+
+	if len(user.Data) > 0 {
+		uusd.UserHash = user.Data[0].UserHash
+	}
+
+	db.historyDB.statsUser(ctx, uusd)
+
+	return uusd, nil
 }
 
 // // countTodayUsers - count users today

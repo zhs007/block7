@@ -339,6 +339,64 @@ func NewServ(service IService) *Serv {
 			s.SetResponse(ctx, ret)
 		})
 
+	s.RegHandle(goutils.AppendString(BasicURL, "userstats"),
+		func(ctx *fasthttp.RequestCtx, serv *block7http.Serv) {
+			if !ctx.Request.Header.IsGet() {
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			params := &UserStatsParams{}
+			ctx.QueryArgs().VisitAll(func(k []byte, v []byte) {
+				if string(k) == "token" {
+					params.Token = strings.TrimSpace(string(v))
+				} else if string(k) == "uid" {
+					uid, err := goutils.String2Int64(strings.TrimSpace(string(v)))
+					if err != nil {
+						goutils.Warn("block7serv.Serv.userstats:ParseBody",
+							zap.String("uid", string(v)),
+							goutils.JSON("params", params))
+
+						return
+					}
+
+					params.UserID = uid
+				} else if string(k) == "userHash" {
+					params.UserHash = strings.TrimSpace(string(v))
+				}
+			})
+
+			goutils.Debug("block7serv.Serv.userstats:ParseBody",
+				goutils.JSON("params", params))
+
+			if params.Token == "" {
+				goutils.Warn("block7serv.Serv.userstats:Token:nil",
+					zap.Error(ErrInvalidToken))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
+
+			ret, err := s.Service.UserStats(params)
+			if err != nil {
+				goutils.Warn("block7serv.Serv.userstats:GetUserData",
+					zap.Error(err))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusInternalServerError)
+
+				return
+			}
+
+			if cfg.IsDebugMode {
+				goutils.Debug("block7serv.Serv.userstats",
+					goutils.JSON("result", ret))
+			}
+
+			s.SetResponse(ctx, ret)
+		})
+
 	return s
 }
 
