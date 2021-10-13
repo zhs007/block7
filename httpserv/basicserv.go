@@ -21,14 +21,6 @@ type BasicServ struct {
 }
 
 func NewBasicServ(cfg *Config) (*BasicServ, error) {
-	userdb, err := block7.NewUserDB(cfg.DBPath, "", cfg.DBEngine)
-	if err != nil {
-		goutils.Error("NewBasicServ:NewUserDB",
-			zap.Error(err))
-
-		return nil, err
-	}
-
 	stagedb, err := block7.NewStageDB(cfg.DBPath, "", cfg.DBEngine)
 	if err != nil {
 		goutils.Error("NewBasicServ:NewStageDB",
@@ -40,6 +32,14 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 	historydb, err := block7.NewHistoryDB(cfg.DBPath, "", cfg.DBEngine)
 	if err != nil {
 		goutils.Error("NewBasicServ:NewHistoryDB",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	userdb, err := block7.NewUserDB(cfg.DBPath, "", cfg.DBEngine, historydb)
+	if err != nil {
+		goutils.Error("NewBasicServ:NewUserDB",
 			zap.Error(err))
 
 		return nil, err

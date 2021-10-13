@@ -224,6 +224,7 @@ func NewSceneFromPB(pbscene *block7pb.Scene) (*Scene, error) {
 		ClientMissionID: int(pbscene.ClientMissionID),
 		ClientStageType: int(pbscene.ClientStageType),
 		FirstItem:       int(pbscene.FirstItem),
+		UserID:          pbscene.UserID,
 	}
 
 	// if pbscene.ClientMissionID > 0 {

@@ -391,7 +391,7 @@ func (db *HistoryDB) Stats(ctx context.Context) (*HistoryDBStatsData, error) {
 	}, nil
 }
 
-// Stats - statistics
+// StatsDay - statistics
 func (db *HistoryDB) StatsDay(ctx context.Context, t time.Time) (*HistoryDBDayStatsData, error) {
 	// latestHistoryID, err := db.GetLatestHistoryID(ctx)
 	// if err != nil {
@@ -474,4 +474,32 @@ func (db *HistoryDB) StatsDay(ctx context.Context, t time.Time) (*HistoryDBDaySt
 		Stages:         stages,
 		GameStateNums:  gameStateNums,
 	}, nil
+}
+
+// statsDayUser - statistics
+func (db *HistoryDB) statsDayUser(ctx context.Context, t time.Time, udsd *UserDayStatsData) error {
+	db.mutexDB.Lock()
+	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
+		stage := &block7pb.Scene{}
+
+		err := proto.Unmarshal(value, stage)
+		if err != nil {
+			goutils.Warn("HistoryDB.statsDayUser:Unmarshal",
+				zap.Error(err))
+		}
+
+		if stage.UserID == udsd.UserID && stage.Ts > 0 {
+			rt := time.Unix(stage.Ts, 0)
+			if t.Year() == rt.Year() && t.YearDay() == rt.YearDay() {
+				if stage.StageID2 > 0 && stage.GameState > 0 {
+					udsd.SetGameState(int(stage.StageID2), int(stage.GameState))
+				}
+			}
+		}
+
+		return nil
+	})
+	db.mutexDB.Unlock()
+
+	return nil
 }
