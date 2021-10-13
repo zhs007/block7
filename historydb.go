@@ -559,6 +559,10 @@ func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) e
 			}
 
 			uusd.AddHistory(int(stage.StageID2), stage.HistoryID)
+			goutils.Info("HistoryDB.statsUser",
+				zap.String("key", key),
+				zap.Int("stageID", int(stage.StageID2)),
+				zap.Int64("HistoryID", stage.HistoryID))
 		}
 
 		return nil
