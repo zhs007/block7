@@ -106,6 +106,15 @@ message HistoryStageData {
 	map<int32, int32> GameStateNums = 2;
 }
 
+message UserStageData {
+	map<int32, int32> GameStateNums = 1;
+}
+
+message UserDayStatsData {
+	int64 UserID = 1;
+	map<int32, UserStageData> Stages = 2;
+}
+
 // DayStatsData
 message DayStatsData {
 	int64 Ts = 1;
@@ -130,4 +139,5 @@ message DayStatsData {
 	map<int32, int32> HistoryStageNums = 20 [deprecated = true];
 	map<int32, int32> HistoryGameStateNums = 21;
 	map<int32, HistoryStageData> HistoryStages2 = 22;
+	map<string, UserDayStatsData> Users = 23;
 }

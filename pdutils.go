@@ -118,3 +118,37 @@ func SetHistoryInDayStatsData(dsd *block7pb.DayStatsData, hds *HistoryDBDayStats
 		}
 	}
 }
+
+func SetUserInDayStatsData(dsd *block7pb.DayStatsData, uds *UserDBDayStatsData) {
+	dsd.NewUserNums = int32(uds.NewUserNums)
+	dsd.AliveUserNums = int32(uds.AliveUserNums)
+	dsd.FirstUserID = uds.FirstUserID
+	dsd.NewUserDataNums = int32(uds.NewUserDataNums)
+	dsd.AliveUserDataNums = int32(uds.AliveUserDataNums)
+	dsd.FirstUserDataUID = uds.FirstUserDataUID
+
+	if len(uds.Users) > 0 {
+		dsd.Users = make(map[string]*block7pb.UserDayStatsData)
+
+		for k, v := range uds.Users {
+			udsd := &block7pb.UserDayStatsData{
+				UserID: v.UserID,
+				Stages: make(map[int32]*block7pb.UserStageData),
+			}
+
+			for k1, v1 := range v.Stages {
+				cusd := &block7pb.UserStageData{
+					GameStateNums: make(map[int32]int32),
+				}
+
+				for k2, v2 := range v1.GameStateNums {
+					cusd.GameStateNums[int32(k2)] = int32(v2)
+				}
+
+				udsd.Stages[int32(k1)] = cusd
+			}
+
+			dsd.Users[k] = udsd
+		}
+	}
+}

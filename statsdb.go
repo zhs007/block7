@@ -201,21 +201,16 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64
 	}
 
 	dsd := &block7pb.DayStatsData{
-		Ts:                cdt.Unix(),
-		NewUserNums:       int32(uds.NewUserNums),
-		AliveUserNums:     int32(uds.AliveUserNums),
-		FirstUserID:       uds.FirstUserID,
-		NewUserDataNums:   int32(uds.NewUserDataNums),
-		AliveUserDataNums: int32(uds.AliveUserDataNums),
-		FirstUserDataUID:  uds.FirstUserDataUID,
-		FirstSceneID:      sds.FirstSceneID,
-		SceneNums:         int32(sds.SceneNums),
-		MapNums:           goutils.MapII2MapI32I32(sds.MapNums),
-		StageNums:         goutils.MapII2MapI32I32(sds.StageNums),
-		FirstHistoryID:    hds.FirstHistoryID,
+		Ts:             cdt.Unix(),
+		FirstSceneID:   sds.FirstSceneID,
+		SceneNums:      int32(sds.SceneNums),
+		MapNums:        goutils.MapII2MapI32I32(sds.MapNums),
+		StageNums:      goutils.MapII2MapI32I32(sds.StageNums),
+		FirstHistoryID: hds.FirstHistoryID,
 	}
 
 	SetHistoryInDayStatsData(dsd, hds)
+	SetUserInDayStatsData(dsd, uds)
 
 	return dsd, nil
 }
