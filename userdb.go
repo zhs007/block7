@@ -852,6 +852,10 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 		for k2, v2 := range ud.ToolsArr {
 			uusd.ToolsArr[k2] = int(v2)
 		}
+
+		for _, v3 := range ud.HomeScene {
+			uusd.HomeScene = append(uusd.HomeScene, int(v3))
+		}
 	}
 
 	db.historyDB.statsUser(ctx, uusd)
