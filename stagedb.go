@@ -19,15 +19,15 @@ import (
 type StageDBStatsData struct {
 	LatestSceneID int64       `json:"latestsceneid"`
 	SceneNums     int         `json:"scenenums"`
-	MapNums       map[int]int `json:"mapnums"`
 	StageNums     map[int]int `json:"stagenums"`
+	// MapNums       map[int]int `json:"mapnums"`
 }
 
 type StageDBDayStatsData struct {
 	FirstSceneID int64       `json:"firstsceneid"`
 	SceneNums    int         `json:"scenenums"`
-	MapNums      map[int]int `json:"mapnums"`
 	StageNums    map[int]int `json:"stagenums"`
+	// MapNums      map[int]int `json:"mapnums"`
 }
 
 const stagedbname = "stagedb"
@@ -253,7 +253,7 @@ func (db *StageDB) Stats(ctx context.Context) (*StageDBStatsData, error) {
 	}
 
 	sceneNums := 0
-	mapNums := make(map[int]int)
+	// mapNums := make(map[int]int)
 	stageNums := make(map[int]int)
 
 	db.mutexDB.Lock()
@@ -269,15 +269,15 @@ func (db *StageDB) Stats(ctx context.Context) (*StageDBStatsData, error) {
 			return nil
 		}
 
-		_, isok := mapNums[int(stage.MapID2)]
-		if isok {
-			mapNums[int(stage.MapID2)]++
-		} else {
-			mapNums[int(stage.MapID2)] = 1
-		}
+		// _, isok := mapNums[int(stage.MapID2)]
+		// if isok {
+		// 	mapNums[int(stage.MapID2)]++
+		// } else {
+		// 	mapNums[int(stage.MapID2)] = 1
+		// }
 
 		if stage.StageID2 > 0 {
-			_, isok = stageNums[int(stage.StageID2)]
+			_, isok := stageNums[int(stage.StageID2)]
 			if isok {
 				stageNums[int(stage.StageID2)]++
 			} else {
@@ -292,8 +292,8 @@ func (db *StageDB) Stats(ctx context.Context) (*StageDBStatsData, error) {
 	return &StageDBStatsData{
 		LatestSceneID: lastSceneID,
 		SceneNums:     sceneNums,
-		MapNums:       mapNums,
-		StageNums:     stageNums,
+		// MapNums:       mapNums,
+		StageNums: stageNums,
 	}, nil
 }
 
@@ -309,7 +309,7 @@ func (db *StageDB) StatsDay(ctx context.Context, t time.Time) (*StageDBDayStatsD
 
 	firstSceneID := int64(0)
 	sceneNums := 0
-	mapNums := make(map[int]int)
+	// mapNums := make(map[int]int)
 	stageNums := make(map[int]int)
 
 	db.mutexDB.Lock()
@@ -336,15 +336,15 @@ func (db *StageDB) StatsDay(ctx context.Context, t time.Time) (*StageDBDayStatsD
 					}
 				}
 
-				_, isok := mapNums[int(stage.MapID2)]
-				if isok {
-					mapNums[int(stage.MapID2)]++
-				} else {
-					mapNums[int(stage.MapID2)] = 1
-				}
+				// _, isok := mapNums[int(stage.MapID2)]
+				// if isok {
+				// 	mapNums[int(stage.MapID2)]++
+				// } else {
+				// 	mapNums[int(stage.MapID2)] = 1
+				// }
 
 				if stage.StageID2 > 0 {
-					_, isok = stageNums[int(stage.StageID2)]
+					_, isok := stageNums[int(stage.StageID2)]
 					if isok {
 						stageNums[int(stage.StageID2)]++
 					} else {
@@ -361,7 +361,6 @@ func (db *StageDB) StatsDay(ctx context.Context, t time.Time) (*StageDBDayStatsD
 	return &StageDBDayStatsData{
 		FirstSceneID: firstSceneID,
 		SceneNums:    sceneNums,
-		MapNums:      mapNums,
 		StageNums:    stageNums,
 	}, nil
 }
