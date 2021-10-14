@@ -53,7 +53,7 @@ func (udsd *UserDayStatsData) SetGameState(stage int, gs int) {
 
 type UserStageData struct {
 	HistoryIDs []int64 `json:"historys"`
-	WinPer     float32 `json:"winper"`
+	WinNums    int     `json:"winnums"`
 }
 
 type UserCooking struct {
@@ -82,7 +82,7 @@ type UserDBUserStatsData struct {
 	LastAwardTime string                 `json:"lastAwardTime"`
 }
 
-func (uusd *UserDBUserStatsData) AddHistory(stage int, historyid int64) {
+func (uusd *UserDBUserStatsData) AddHistory(stage int, historyid int64, gs int) {
 	if stage > 0 && historyid > 0 {
 		_, isok := uusd.Stages[stage]
 		if isok {
@@ -91,6 +91,10 @@ func (uusd *UserDBUserStatsData) AddHistory(stage int, historyid int64) {
 			uusd.Stages[stage] = &UserStageData{}
 
 			uusd.Stages[stage].HistoryIDs = append(uusd.Stages[stage].HistoryIDs, historyid)
+		}
+
+		if gs == 1 {
+			uusd.Stages[stage].WinNums++
 		}
 	}
 }

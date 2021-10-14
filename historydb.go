@@ -37,7 +37,6 @@ type HistoryDBStatsData struct {
 	HistoryNums     int                       `json:"historynums"`
 	Stages          map[int]*HistoryStageData `json:"stages"`
 	GameStateNums   map[int]int               `json:"gamestatenums"`
-	// MapNums         map[int]int               `json:"mapnums"`
 }
 
 type HistoryDBDayStatsData struct {
@@ -46,7 +45,6 @@ type HistoryDBDayStatsData struct {
 	Stages         map[int]*HistoryStageData `json:"stages"`
 	GameStateNums  map[int]int               `json:"gamestatenums"`
 	UserIDNums     map[int64]int             `json:"useridnums"`
-	// MapNums        map[int]int               `json:"mapnums"`
 }
 
 const historydbname = "historydb"
@@ -566,7 +564,7 @@ func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) e
 					zap.String("key", key))
 			}
 
-			uusd.AddHistory(int(stage.StageID2), stage.HistoryID)
+			uusd.AddHistory(int(stage.StageID2), stage.HistoryID, int(stage.GameState))
 			// goutils.Info("HistoryDB.statsUser",
 			// 	zap.String("key", key),
 			// 	zap.Int("stageID", int(stage.StageID2)),
