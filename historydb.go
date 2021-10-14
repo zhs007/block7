@@ -538,8 +538,8 @@ func (db *HistoryDB) statsDayUser(ctx context.Context, t time.Time, udsd *UserDa
 
 // statsUser - statistics
 func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) error {
-	goutils.Info("HistoryDB.statsUser",
-		goutils.JSON("uusd", uusd))
+	// goutils.Info("HistoryDB.statsUser",
+	// 	goutils.JSON("uusd", uusd))
 
 	db.mutexDB.Lock()
 	db.AnkaDB.ForEachWithPrefix(ctx, historydbname, "h:", func(key string, value []byte) error {
@@ -551,10 +551,10 @@ func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) e
 				zap.Error(err))
 		}
 
-		goutils.Info("HistoryDB.statsUser",
-			zap.String("key", key),
-			zap.Int64("uid", stage.UserID),
-			zap.Int32("stageID", stage.StageID2))
+		// goutils.Info("HistoryDB.statsUser",
+		// 	zap.String("key", key),
+		// 	zap.Int64("uid", stage.UserID),
+		// 	zap.Int32("stageID", stage.StageID2))
 
 		if stage.UserID == uusd.UserID && stage.StageID2 > 0 {
 			if stage.HistoryID == 0 {
@@ -567,10 +567,10 @@ func (db *HistoryDB) statsUser(ctx context.Context, uusd *UserDBUserStatsData) e
 			}
 
 			uusd.AddHistory(int(stage.StageID2), stage.HistoryID)
-			goutils.Info("HistoryDB.statsUser",
-				zap.String("key", key),
-				zap.Int("stageID", int(stage.StageID2)),
-				zap.Int64("HistoryID", stage.HistoryID))
+			// goutils.Info("HistoryDB.statsUser",
+			// 	zap.String("key", key),
+			// 	zap.Int("stageID", int(stage.StageID2)),
+			// 	zap.Int64("HistoryID", stage.HistoryID))
 		}
 
 		return nil

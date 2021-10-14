@@ -204,7 +204,6 @@ func (db *StatsDB) genDayStats(ctx context.Context, cdt time.Time, lastUID int64
 		Ts:             cdt.Unix(),
 		FirstSceneID:   sds.FirstSceneID,
 		SceneNums:      int32(sds.SceneNums),
-		MapNums:        goutils.MapII2MapI32I32(sds.MapNums),
 		StageNums:      goutils.MapII2MapI32I32(sds.StageNums),
 		FirstHistoryID: hds.FirstHistoryID,
 	}

@@ -111,8 +111,9 @@ message UserStageData {
 }
 
 message UserDayStatsData {
-	int64 UserID = 1;
+	int64 UserID = 1 [deprecated = true];
 	map<int32, UserStageData> Stages = 2;
+	string UserHash = 3;
 }
 
 // DayStatsData
@@ -132,13 +133,14 @@ message DayStatsData {
 	int32 AliveUserDataNums = 13;
 	int64 FirstUserDataUID = 14;
 	int32 SceneNums = 15;
-	map<int32, int32> MapNums = 16;
+	map<int32, int32> MapNums = 16 [deprecated = true];
 	map<int32, int32> StageNums = 17;
 	int32 HistoryNums = 18;
 	map<int32, int32> HistoryMapNums = 19 [deprecated = true];
 	map<int32, int32> HistoryStageNums = 20 [deprecated = true];
 	map<int32, int32> HistoryGameStateNums = 21;
 	map<int32, HistoryStageData> HistoryStages2 = 22;
-	map<string, UserDayStatsData> Users = 23;
+	map<string, UserDayStatsData> Users = 23 [deprecated = true];
 	map<int64, int32> HistoryUserIDNums = 24;
+	map<int64, UserDayStatsData> Users2 = 25;
 }

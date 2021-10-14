@@ -31,8 +31,9 @@ func (uss *UserStageState) SetGameState(gs int) {
 }
 
 type UserDayStatsData struct {
-	UserID int64                   `json:"uid"`
-	Stages map[int]*UserStageState `json:"stages"`
+	UserID   int64                   `json:"userid"`
+	UserHash string                  `json:"userHash"`
+	Stages   map[int]*UserStageState `json:"stages"`
 }
 
 func (udsd *UserDayStatsData) SetGameState(stage int, gs int) {
@@ -80,13 +81,13 @@ type UserDBStatsData struct {
 }
 
 type UserDBDayStatsData struct {
-	FirstUserID       int64                        `json:"firstuserid"`
-	NewUserNums       int                          `json:"newusernums"`
-	NewUserDataNums   int                          `json:"newuserdatanums"`
-	FirstUserDataUID  int64                        `json:"firstuserdatauid"`
-	AliveUserNums     int                          `json:"aliveusernums"`
-	AliveUserDataNums int                          `json:"aliveuserdatanums"`
-	Users             map[string]*UserDayStatsData `json:"users"`
+	FirstUserID       int64                       `json:"firstuserid"`
+	NewUserNums       int                         `json:"newusernums"`
+	NewUserDataNums   int                         `json:"newuserdatanums"`
+	FirstUserDataUID  int64                       `json:"firstuserdatauid"`
+	AliveUserNums     int                         `json:"aliveusernums"`
+	AliveUserDataNums int                         `json:"aliveuserdatanums"`
+	Users2            map[int64]*UserDayStatsData `json:"users2"`
 }
 
 const userdbname = "userdb"
@@ -643,6 +644,10 @@ func (db *UserDB) statsUserDay(ctx context.Context, t time.Time, ui *block7pb.Us
 		Stages: make(map[int]*UserStageState),
 	}
 
+	if len(ui.Data) > 0 {
+		udsd.UserHash = ui.Data[0].UserHash
+	}
+
 	db.historyDB.statsDayUser(ctx, t, udsd)
 
 	return udsd, nil
@@ -654,7 +659,7 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 	newusers := 0
 	loginusers := 0
 
-	users := make(map[string]*UserDayStatsData)
+	users2 := make(map[int64]*UserDayStatsData)
 
 	db.mutexDB.Lock()
 	db.AnkaDB.ForEachWithPrefix(ctx, userdbname, "u:", func(key string, value []byte) error {
@@ -707,7 +712,7 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 				}
 
 				if udsd != nil {
-					users[user.Data[0].UserHash] = udsd
+					users2[user.UserID] = udsd
 				}
 			}
 		}
@@ -764,7 +769,7 @@ func (db *UserDB) StatsDay(ctx context.Context, t time.Time, lastUserID int64) (
 		FirstUserDataUID:  firstuduid,
 		NewUserDataNums:   newuds,
 		AliveUserDataNums: loginuds,
-		Users:             users,
+		Users2:            users2,
 	}, nil
 }
 
