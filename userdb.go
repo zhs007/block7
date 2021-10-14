@@ -53,12 +53,33 @@ func (udsd *UserDayStatsData) SetGameState(stage int, gs int) {
 
 type UserStageData struct {
 	HistoryIDs []int64 `json:"historys"`
+	WinPer     float32 `json:"winper"`
+}
+
+type UserCooking struct {
+	Level    int  `json:"level"`
+	Unlock   bool `json:"unlock"`
+	StarNums int  `json:"starnum"`
 }
 
 type UserDBUserStatsData struct {
-	UserID   int64                  `json:"userid"`
-	UserHash string                 `json:"userHash"`
-	Stages   map[int]*UserStageData `json:"stages"`
+	UserID        int64                  `json:"userid"`
+	UserHash      string                 `json:"userHash"`
+	Stages        map[int]*UserStageData `json:"stages"`
+	IPAddr        string                 `json:"ip"`
+	CreateTime    string                 `json:"createTime"`
+	LastLoginTime string                 `json:"lastLoginTime"`
+	Name          string                 `json:"name"`
+	Coin          int64                  `json:"coin"`
+	Level         int                    `json:"level"`
+	LevelArr      map[string]int         `json:"levelarr"`
+	ToolsArr      map[string]int         `json:"toolsarr"`
+	HomeScene     []int                  `json:"homeScene"`
+	Cooking       []UserCooking          `json:"cooking"`
+	Platform      string                 `json:"platform"`
+	Version       int64                  `json:"version"`
+	ClientVersion string                 `json:"clientVersion"`
+	LastAwardTime string                 `json:"lastAwardTime"`
 }
 
 func (uusd *UserDBUserStatsData) AddHistory(stage int, historyid int64) {
@@ -791,6 +812,46 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 
 	if len(user.Data) > 0 {
 		uusd.UserHash = user.Data[0].UserHash
+		uusd.IPAddr = user.Data[0].IPAddr
+	}
+
+	ud, err := db.GetUserData(ctx, uusd.UserHash, "android")
+	if err != nil {
+		goutils.Error("UserDB.UserStats:GetUserData",
+			zap.Int64("uid", uid),
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	if ud != nil {
+		uusd.Name = ud.Name
+		uusd.Platform = ud.Platform
+		uusd.Coin = ud.Coin
+		uusd.ClientVersion = ud.ClientVersion
+		uusd.CreateTime = time.Unix(ud.CreateTs, 0).Format("2006-01-02_15:04:05")
+		uusd.LastAwardTime = time.Unix(ud.LastAwardTs, 0).Format("2006-01-02_15:04:05")
+		uusd.LastLoginTime = time.Unix(ud.LastTs, 0).Format("2006-01-02_15:04:05")
+		uusd.Level = int(ud.Level)
+		uusd.Version = ud.Version
+
+		for _, v := range ud.Cooking {
+			uusd.Cooking = append(uusd.Cooking, UserCooking{
+				Level:    int(v.Level),
+				Unlock:   v.Unlock,
+				StarNums: int(v.StarNums),
+			})
+		}
+
+		uusd.LevelArr = make(map[string]int)
+		for k1, v1 := range ud.LevelArr {
+			uusd.LevelArr[k1] = int(v1)
+		}
+
+		uusd.ToolsArr = make(map[string]int)
+		for k2, v2 := range ud.ToolsArr {
+			uusd.ToolsArr[k2] = int(v2)
+		}
 	}
 
 	db.historyDB.statsUser(ctx, uusd)
