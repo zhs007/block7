@@ -5,6 +5,19 @@ import (
 	"github.com/zhs007/goutils"
 )
 
+func addCooking(ud *block7pb.UserData, cooking *block7pb.Cooking) {
+	for _, v := range ud.Cooking {
+		if v.Level == cooking.Level {
+			v.Unlock = cooking.Unlock
+			v.StarNums = cooking.StarNums
+
+			return
+		}
+	}
+
+	ud.Cooking = append(ud.Cooking, cooking)
+}
+
 func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserDataStatus) *block7pb.UserData {
 	if ud0 == nil {
 		ud1.CreateTs = goutils.GetCurTimestamp()
@@ -29,6 +42,16 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 		ud.Coin = ud0.Coin
 	}
 
+	for _, v := range ud0.Cooking {
+		c := &block7pb.Cooking{
+			Level:    int32(v.Level),
+			Unlock:   v.Unlock,
+			StarNums: int32(v.StarNums),
+		}
+
+		addCooking(ud, c)
+	}
+
 	if uds.HasCooking {
 		for _, v := range ud1.Cooking {
 			c := &block7pb.Cooking{
@@ -37,17 +60,7 @@ func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserD
 				StarNums: int32(v.StarNums),
 			}
 
-			ud.Cooking = append(ud.Cooking, c)
-		}
-	} else {
-		for _, v := range ud0.Cooking {
-			c := &block7pb.Cooking{
-				Level:    int32(v.Level),
-				Unlock:   v.Unlock,
-				StarNums: int32(v.StarNums),
-			}
-
-			ud.Cooking = append(ud.Cooking, c)
+			addCooking(ud, c)
 		}
 	}
 
