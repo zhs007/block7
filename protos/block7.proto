@@ -111,8 +111,9 @@ message UserStageData {
 }
 
 message UserDayStatsData {
-	int64 UserID = 1;
+	int64 UserID = 1 [deprecated = true];
 	map<int32, UserStageData> Stages = 2;
+	string UserHash = 3;
 }
 
 // DayStatsData

@@ -127,13 +127,13 @@ func SetUserInDayStatsData(dsd *block7pb.DayStatsData, uds *UserDBDayStatsData) 
 	dsd.AliveUserDataNums = int32(uds.AliveUserDataNums)
 	dsd.FirstUserDataUID = uds.FirstUserDataUID
 
-	if len(uds.Users) > 0 {
-		dsd.Users = make(map[string]*block7pb.UserDayStatsData)
+	if len(uds.Users2) > 0 {
+		dsd.Users2 = make(map[int64]*block7pb.UserDayStatsData)
 
-		for k, v := range uds.Users {
+		for k, v := range uds.Users2 {
 			udsd := &block7pb.UserDayStatsData{
-				UserID: v.UserID,
-				Stages: make(map[int32]*block7pb.UserStageData),
+				UserHash: v.UserHash,
+				Stages:   make(map[int32]*block7pb.UserStageData),
 			}
 
 			for k1, v1 := range v.Stages {
@@ -148,7 +148,7 @@ func SetUserInDayStatsData(dsd *block7pb.DayStatsData, uds *UserDBDayStatsData) 
 				udsd.Stages[int32(k1)] = cusd
 			}
 
-			dsd.Users[k] = udsd
+			dsd.Users2[k] = udsd
 		}
 	}
 }
