@@ -813,6 +813,7 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 	if len(user.Data) > 0 {
 		uusd.UserHash = user.Data[0].UserHash
 		uusd.IPAddr = user.Data[0].IPAddr
+		uusd.CreateTime = time.Unix(user.Data[0].CreateTs, 0).Format("2006-01-02_15:04:05")
 	}
 
 	ud, err := db.GetUserData(ctx, uusd.UserHash, "android")
@@ -829,7 +830,6 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 		uusd.Platform = ud.Platform
 		uusd.Coin = ud.Coin
 		uusd.ClientVersion = ud.ClientVersion
-		uusd.CreateTime = time.Unix(ud.CreateTs, 0).Format("2006-01-02_15:04:05")
 		uusd.LastAwardTime = time.Unix(ud.LastAwardTs, 0).Format("2006-01-02_15:04:05")
 		uusd.LastLoginTime = time.Unix(ud.LastTs, 0).Format("2006-01-02_15:04:05")
 		uusd.Level = int(ud.Level)
