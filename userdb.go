@@ -857,6 +857,10 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 		return nil, err
 	}
 
+	if user == nil {
+		return nil, nil
+	}
+
 	uusd := &UserDBUserStatsData{
 		UserID: user.UserID,
 		Stages: make(map[int]*UserStageData),
