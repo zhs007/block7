@@ -51,9 +51,19 @@ func (udsd *UserDayStatsData) SetGameState(stage int, gs int) {
 	}
 }
 
+type UserStageHistoryData struct {
+	HistoryID      int64   `json:"history"`
+	Ts             int64   `json:"ts"`
+	ClickNums      int     `json:"clickNums"`
+	AvgClickTime   float32 `json:"avgClickTime"`
+	MaxClickTime   int     `json:"maxClickTime"`
+	MinClickTime   int     `json:"minClickTime"`
+	TotalClickTime int64   `json:"totalClickTime"`
+}
+
 type UserStageData struct {
-	HistoryIDs []int64 `json:"historys"`
-	WinNums    int     `json:"winnums"`
+	Historys []*UserStageHistoryData `json:"historys"`
+	WinNums  int                     `json:"winnums"`
 }
 
 type UserCooking struct {
@@ -82,19 +92,55 @@ type UserDBUserStatsData struct {
 	LastAwardTime string                 `json:"lastAwardTime"`
 }
 
-func (uusd *UserDBUserStatsData) AddHistory(stage int, historyid int64, gs int) {
-	if stage > 0 && historyid > 0 {
-		_, isok := uusd.Stages[stage]
-		if isok {
-			uusd.Stages[stage].HistoryIDs = append(uusd.Stages[stage].HistoryIDs, historyid)
-		} else {
-			uusd.Stages[stage] = &UserStageData{}
+func (uusd *UserDBUserStatsData) AddHistory(historyID int64, pbHistory *block7pb.Scene) {
+	if pbHistory.StageID2 > 0 && historyID > 0 {
+		h, isok := uusd.Stages[int(pbHistory.StageID2)]
+		if !isok {
+			h = &UserStageData{}
 
-			uusd.Stages[stage].HistoryIDs = append(uusd.Stages[stage].HistoryIDs, historyid)
+			uusd.Stages[int(pbHistory.StageID2)] = h
 		}
 
-		if gs == 1 {
-			uusd.Stages[stage].WinNums++
+		tt := int64(0)
+		maxt := -1
+		mint := -1
+		pt := -1
+		for i := 0; i < len(pbHistory.History2)/4; i++ {
+			ct := int(pbHistory.History2[i*4+3])
+			if pt < 0 {
+				pt = ct
+			}
+
+			ot := ct - pt
+
+			if maxt < 0 || maxt < ot {
+				maxt = ot
+			}
+
+			if mint < 0 || mint > ot {
+				mint = ot
+			}
+
+			tt += int64(ot)
+		}
+
+		hd := &UserStageHistoryData{
+			HistoryID: historyID,
+			Ts:        pbHistory.Ts,
+			ClickNums: len(pbHistory.History2) / 4,
+		}
+
+		if hd.ClickNums > 0 {
+			hd.MaxClickTime = maxt
+			hd.MinClickTime = mint
+			hd.TotalClickTime = tt
+			hd.AvgClickTime = float32(float64(tt) / float64(hd.ClickNums))
+		}
+
+		h.Historys = append(h.Historys, hd)
+
+		if pbHistory.GameState == 1 {
+			h.WinNums++
 		}
 	}
 }
