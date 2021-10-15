@@ -59,6 +59,7 @@ type UserStageHistoryData struct {
 	MaxClickTime   int     `json:"maxClickTime"`
 	MinClickTime   int     `json:"minClickTime"`
 	TotalClickTime int64   `json:"totalClickTime"`
+	GameState      int     `json:"gamestate"`
 }
 
 type UserStageData struct {
@@ -128,6 +129,7 @@ func (uusd *UserDBUserStatsData) AddHistory(historyID int64, pbHistory *block7pb
 			HistoryID: historyID,
 			Ts:        pbHistory.Ts,
 			ClickNums: len(pbHistory.History2) / 4,
+			GameState: int(pbHistory.GameState),
 		}
 
 		if hd.ClickNums > 0 {
