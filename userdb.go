@@ -118,7 +118,7 @@ func (uusd *UserDBUserStatsData) AddHistory(historyID int64, pbHistory *block7pb
 				maxt = ot
 			}
 
-			if mint < 0 || mint > ot {
+			if (mint < 0 || mint > ot) && ot > 0 {
 				mint = ot
 			}
 
