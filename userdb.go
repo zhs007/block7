@@ -721,7 +721,7 @@ func (db *UserDB) statsUserDay(ctx context.Context, t time.Time, ui *block7pb.Us
 		udsd.UserHash = ui.Data[0].UserHash
 	}
 
-	db.historyDB.statsDayUser(ctx, t, udsd)
+	// db.historyDB.statsDayUser(ctx, t, udsd)
 
 	return udsd, nil
 }
@@ -914,7 +914,7 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 		}
 	}
 
-	db.historyDB.statsUser(ctx, uusd)
+	// db.historyDB.statsUser(ctx, uusd)
 
 	return uusd, nil
 }
