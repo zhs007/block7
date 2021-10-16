@@ -914,7 +914,7 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 		}
 	}
 
-	// db.historyDB.statsUser(ctx, uusd)
+	db.historyDB.statsUser(ctx, uusd)
 
 	return uusd, nil
 }
