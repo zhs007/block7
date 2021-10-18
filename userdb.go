@@ -60,6 +60,13 @@ type UserStageHistoryData struct {
 	MinClickTime   int     `json:"minClickTime"`
 	TotalClickTime int64   `json:"totalClickTime"`
 	GameState      int     `json:"gamestate"`
+	ClientVersion  string  `json:"clientVersion"`
+	LastHP         int     `json:"lastHP"`
+	LastCoin       int     `json:"lastCoin"`
+	RefreshTimes   int     `json:"refreshTimes"`
+	BackTimes      int     `json:"backTimes"`
+	BombTimes      int     `json:"bombTimes"`
+	RebirthTimes   int     `json:"rebirthTimes"`
 }
 
 type UserStageData struct {
@@ -126,10 +133,17 @@ func (uusd *UserDBUserStatsData) AddHistory(historyID int64, pbHistory *block7pb
 		}
 
 		hd := &UserStageHistoryData{
-			HistoryID: historyID,
-			Ts:        pbHistory.Ts,
-			ClickNums: len(pbHistory.History2) / 4,
-			GameState: int(pbHistory.GameState),
+			HistoryID:     historyID,
+			Ts:            pbHistory.Ts,
+			ClickNums:     len(pbHistory.History2) / 4,
+			GameState:     int(pbHistory.GameState),
+			ClientVersion: pbHistory.ClientVersion,
+			LastHP:        int(pbHistory.LastHP),
+			LastCoin:      int(pbHistory.LastCoin),
+			RefreshTimes:  int(pbHistory.RefreshTimes),
+			BackTimes:     int(pbHistory.BackTimes),
+			BombTimes:     int(pbHistory.BombTimes),
+			RebirthTimes:  int(pbHistory.RefreshTimes),
 		}
 
 		if hd.ClickNums > 0 {

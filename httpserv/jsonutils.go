@@ -166,6 +166,62 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 		return nil, err
 	}
 
+	clientVersion, _, err := goutils.GetJsonString(data, "clientVersion")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:clientVersion",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	lastHP, _, err := goutils.GetJsonInt(data, "lastHP")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:lastHP",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	lastCoin, _, err := goutils.GetJsonInt(data, "lastCoin")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:lastCoin",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	refresh, _, err := goutils.GetJsonInt(data, "refresh")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:refresh",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	back, _, err := goutils.GetJsonInt(data, "back")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:back",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	bomb, _, err := goutils.GetJsonInt(data, "bomb")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:bomb",
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	rebirth, _, err := goutils.GetJsonInt(data, "rebirth")
+	if err != nil {
+		goutils.Error("parseMissionDataParams:rebirth",
+			zap.Error(err))
+
+		return nil, err
+	}
+
 	return &MissionDataParams{
 		UserHash:      userHash,
 		SceneID:       sceneID,
@@ -179,6 +235,13 @@ func parseMissionDataParams(data []byte) (*MissionDataParams, error) {
 		SpecialLayers: specialLayers,
 		FirstItem:     int(firstItem),
 		MissionID:     int(missionid),
+		ClientVersion: clientVersion,
+		LastHP:        int(lastHP),
+		LastCoin:      int(lastCoin),
+		Refresh:       int(refresh),
+		Back:          int(back),
+		Bomb:          int(bomb),
+		Rebirth:       int(rebirth),
 	}, nil
 }
 

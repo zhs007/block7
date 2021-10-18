@@ -51,6 +51,13 @@ message Scene {
 	int32 ClientMissionID = 27;
 	int32 ClientStageType = 28;
 	int32 FirstItem = 29;
+	string ClientVersion = 30;
+	int32 LastHP = 31;										// 关卡结束时，剩余体力，-1表示无限体力
+	int32 LastCoin = 32;									// 关卡结束时，剩余金币
+	int32 RefreshTimes = 33;								// 道具-刷新使用次数
+	int32 BackTimes = 34;									// 道具-回退使用次数
+	int32 BombTimes = 35;									// 道具-炸弹使用次数
+	int32 RebirthTimes = 36;								// 道具-复活使用次数
 }
 
 // UserDeviceInfo
