@@ -143,7 +143,7 @@ func (uusd *UserDBUserStatsData) AddHistory(historyID int64, pbHistory *block7pb
 			RefreshTimes:  int(pbHistory.RefreshTimes),
 			BackTimes:     int(pbHistory.BackTimes),
 			BombTimes:     int(pbHistory.BombTimes),
-			RebirthTimes:  int(pbHistory.RefreshTimes),
+			RebirthTimes:  int(pbHistory.RebirthTimes),
 		}
 
 		if hd.ClickNums > 0 {
