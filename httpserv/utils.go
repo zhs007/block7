@@ -39,6 +39,14 @@ func MissionDataParams2SceneEx(params *MissionDataParams) *block7game.Scene {
 	scene.FirstItem = params.FirstItem
 	scene.StageID = params.MissionID
 
+	scene.ClientVersion = params.ClientVersion
+	scene.LastHP = params.LastHP
+	scene.LastCoin = params.LastCoin
+	scene.RefreshTimes = params.Refresh
+	scene.BackTimes = params.Back
+	scene.BombTimes = params.Bomb
+	scene.RebirthTimes = params.Rebirth
+
 	for _, arr := range params.History {
 		scene.History = append(scene.History, append([]int{}, arr...))
 	}

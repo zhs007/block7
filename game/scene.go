@@ -40,6 +40,13 @@ type Scene struct {
 	ClientStageType   int             `json:"clientStageType"`   // 前端stage type
 	FirstItem         int             `json:"firstItem"`         // 前置道具
 	IsFullHistoryData bool            `json:"isFullHistoryData"` // 是否是完整的数据
+	ClientVersion     string          `json:"clientVersion"`
+	LastHP            int             `json:"lastHP"`
+	LastCoin          int             `json:"lastCoin"`
+	RefreshTimes      int             `json:"refresh"`
+	BackTimes         int             `json:"back"`
+	BombTimes         int             `json:"bomb"`
+	RebirthTimes      int             `json:"rebirth"`
 }
 
 // LoadScene - load a scene
@@ -1232,6 +1239,13 @@ func (scene *Scene) ToHistoryPB() (*block7pb.Scene, error) {
 		ClientMissionID: int32(scene.ClientMissionID),
 		ClientStageType: int32(scene.ClientStageType),
 		FirstItem:       int32(scene.FirstItem),
+		ClientVersion:   scene.ClientVersion,
+		LastHP:          int32(scene.LastHP),
+		LastCoin:        int32(scene.LastCoin),
+		RefreshTimes:    int32(scene.RefreshTimes),
+		BackTimes:       int32(scene.BackTimes),
+		BombTimes:       int32(scene.BombTimes),
+		RebirthTimes:    int32(scene.RebirthTimes),
 	}
 
 	if pbScene.StageID2 == 0 && pbScene.ClientMissionID > 0 {
