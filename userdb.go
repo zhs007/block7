@@ -130,6 +130,8 @@ func (uusd *UserDBUserStatsData) AddHistory(historyID int64, pbHistory *block7pb
 			}
 
 			tt += int64(ot)
+
+			pt = ct
 		}
 
 		hd := &UserStageHistoryData{
