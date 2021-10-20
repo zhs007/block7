@@ -106,6 +106,7 @@ message UserData {
 	string ClientVersion = 12;
 	int64 LastAwardTs = 13;
 	int64 CreateTs = 14;
+	string InitClientVersion = 15;
 }
 
 message HistoryStageData {

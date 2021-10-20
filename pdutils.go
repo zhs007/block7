@@ -21,6 +21,7 @@ func addCooking(ud *block7pb.UserData, cooking *block7pb.Cooking) {
 func MergeUserData(ud0 *block7pb.UserData, ud1 *block7pb.UserData, uds *UpdUserDataStatus) *block7pb.UserData {
 	if ud0 == nil {
 		ud1.CreateTs = goutils.GetCurTimestamp()
+		ud1.InitClientVersion = ud1.ClientVersion
 
 		return ud1
 	}
