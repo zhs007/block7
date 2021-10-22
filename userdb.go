@@ -81,23 +81,24 @@ type UserCooking struct {
 }
 
 type UserDBUserStatsData struct {
-	UserID        int64                  `json:"userid"`
-	UserHash      string                 `json:"userHash"`
-	Stages        map[int]*UserStageData `json:"stages"`
-	IPAddr        string                 `json:"ip"`
-	CreateTime    string                 `json:"createTime"`
-	LastLoginTime string                 `json:"lastLoginTime"`
-	Name          string                 `json:"name"`
-	Coin          int64                  `json:"coin"`
-	Level         int                    `json:"level"`
-	LevelArr      map[string]int         `json:"levelarr"`
-	ToolsArr      map[string]int         `json:"toolsarr"`
-	HomeScene     []int                  `json:"homeScene"`
-	Cooking       []UserCooking          `json:"cooking"`
-	Platform      string                 `json:"platform"`
-	Version       int64                  `json:"version"`
-	ClientVersion string                 `json:"clientVersion"`
-	LastAwardTime string                 `json:"lastAwardTime"`
+	UserID            int64                  `json:"userid"`
+	UserHash          string                 `json:"userHash"`
+	Stages            map[int]*UserStageData `json:"stages"`
+	IPAddr            string                 `json:"ip"`
+	CreateTime        string                 `json:"createTime"`
+	LastLoginTime     string                 `json:"lastLoginTime"`
+	Name              string                 `json:"name"`
+	Coin              int64                  `json:"coin"`
+	Level             int                    `json:"level"`
+	LevelArr          map[string]int         `json:"levelarr"`
+	ToolsArr          map[string]int         `json:"toolsarr"`
+	HomeScene         []int                  `json:"homeScene"`
+	Cooking           []UserCooking          `json:"cooking"`
+	Platform          string                 `json:"platform"`
+	Version           int64                  `json:"version"`
+	ClientVersion     string                 `json:"clientVersion"`
+	LastAwardTime     string                 `json:"lastAwardTime"`
+	InitClientVersion string                 `json:"initClientVersion"`
 }
 
 func (uusd *UserDBUserStatsData) AddHistory(historyID int64, pbHistory *block7pb.Scene) {
@@ -906,6 +907,7 @@ func (db *UserDB) UserStats(ctx context.Context, uid int64) (*UserDBUserStatsDat
 		uusd.LastLoginTime = time.Unix(ud.LastTs, 0).Format("2006-01-02_15:04:05")
 		uusd.Level = int(ud.Level)
 		uusd.Version = ud.Version
+		uusd.InitClientVersion = ud.InitClientVersion
 
 		for _, v := range ud.Cooking {
 			uusd.Cooking = append(uusd.Cooking, UserCooking{
