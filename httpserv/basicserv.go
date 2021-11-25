@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/zhs007/block7"
+	"github.com/zhs007/block7/block7pb"
 	block7game "github.com/zhs007/block7/game"
 	goutils "github.com/zhs007/goutils"
 	"go.uber.org/zap"
@@ -12,12 +13,13 @@ import (
 
 // BasicServ - basic server
 type BasicServ struct {
-	UserDB    *block7.UserDB
-	StageDB   *block7.StageDB
-	HistoryDB *block7.HistoryDB
-	StatsDB   *block7.StatsDB
-	LevelMgr  *block7game.LevelMgr
-	cfg       *Config
+	UserDB      *block7.UserDB
+	StageDB     *block7.StageDB
+	HistoryDB   *block7.HistoryDB
+	StatsDB     *block7.StatsDB
+	levelMgr    *block7game.LevelMgr
+	cfg         *Config
+	mapLevelMgr map[string]*block7game.LevelMgr
 }
 
 func NewBasicServ(cfg *Config) (*BasicServ, error) {
@@ -62,13 +64,32 @@ func NewBasicServ(cfg *Config) (*BasicServ, error) {
 		return nil, err
 	}
 
+	mapLevelMgr := make(map[string]*block7game.LevelMgr)
+
+	if cfg.IsMulGameData {
+		for _, v := range cfg.GameDataArr {
+			clm := block7game.NewLevelMgr()
+			err = clm.LoadLevel(fmt.Sprintf("./gamedata/%v/level.json", v))
+			if err != nil {
+				goutils.Error("NewBasicServ:LoadLevel",
+					zap.String("abversion", v),
+					zap.Error(err))
+
+				return nil, err
+			}
+
+			mapLevelMgr[v] = clm
+		}
+	}
+
 	return &BasicServ{
-		UserDB:    userdb,
-		StageDB:   stagedb,
-		HistoryDB: historydb,
-		StatsDB:   statsdb,
-		LevelMgr:  levelmgr,
-		cfg:       cfg,
+		UserDB:      userdb,
+		StageDB:     stagedb,
+		HistoryDB:   historydb,
+		StatsDB:     statsdb,
+		levelMgr:    levelmgr,
+		cfg:         cfg,
+		mapLevelMgr: mapLevelMgr,
 	}, nil
 }
 
@@ -81,7 +102,7 @@ func (serv *BasicServ) GetConfig() *Config {
 func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 	udi := LoginParams2PB(params)
 	if udi.UserHash == "" {
-		ui, err := serv.UserDB.NewUser(context.Background(), udi)
+		ui, err := serv.UserDB.NewUser(context.Background(), udi, params.ABVersion)
 		if err != nil {
 			goutils.Error("BasicServ.Login:NewUser",
 				zap.Error(err))
@@ -95,7 +116,7 @@ func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 		}, nil
 	}
 
-	ui, err := serv.UserDB.UpdUserDeviceInfo(context.Background(), udi)
+	ui, err := serv.UserDB.UpdUserDeviceInfo(context.Background(), udi, params.ABVersion)
 	if err != nil {
 		goutils.Error("BasicServ.Login:UpdUserDeviceInfo",
 			zap.Error(err))
@@ -133,6 +154,15 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 			zap.Error(ErrInvalidUserHash))
 
 		return nil, ErrInvalidUserHash
+	}
+
+	ui, err := serv.UserDB.GetUser(context.Background(), uid)
+	if err != nil {
+		goutils.Error("BasicServ.Mission:GetUser",
+			zap.Int64("uid", uid),
+			zap.Error(ErrInvalidUserID))
+
+		return nil, ErrInvalidUserID
 	}
 
 	if params.HistoryID > 0 {
@@ -185,16 +215,16 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 					}
 
 					if scene.ClientMissionID > 0 {
-						ld2, isok := serv.LevelMgr.MapLevel[scene.ClientMissionID+30000]
-						if !isok {
+						ld2, err := serv.GetLevelData2(ui, scene.ClientMissionID)
+						if err != nil {
 							goutils.Error("BasicServ.Mission:MapLevel",
 								zap.Int("missionid", scene.ClientMissionID),
-								zap.Error(ErrInvalidMissionID))
+								zap.Error(err))
 
-							return nil, ErrInvalidMissionID
+							return nil, err
 						}
 
-						stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
+						stage, err := serv.LoadStage(ui, ld2)
 						if err != nil {
 							goutils.Error("BasicServ.Mission:LoadStage",
 								zap.Error(err))
@@ -256,16 +286,16 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		}
 	}
 
-	ld2, isok := serv.LevelMgr.MapLevel[params.MissionID+30000]
-	if !isok {
+	ld2, err := serv.GetLevelData2(ui, params.MissionID)
+	if err != nil {
 		goutils.Error("BasicServ.Mission:MapLevel",
 			zap.Int("missionid", params.MissionID),
-			zap.Error(ErrInvalidMissionID))
+			zap.Error(err))
 
-		return nil, ErrInvalidMissionID
+		return nil, err
 	}
 
-	stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
+	stage, err := serv.LoadStage(ui, ld2)
 	if err != nil {
 		goutils.Error("BasicServ.Mission:LoadStage",
 			zap.Error(err))
@@ -575,4 +605,66 @@ func (serv *BasicServ) Start() {
 // Stop - stop
 func (serv *BasicServ) Stop() {
 	serv.StatsDB.Stop()
+}
+
+func (serv *BasicServ) GetLevelData2(ui *block7pb.UserInfo, missionid int) (*block7game.LevelData2, error) {
+	if ui.ABTestMode == "" {
+		ld2, isok := serv.levelMgr.MapLevel[missionid+30000]
+		if !isok {
+			goutils.Error("BasicServ.Mission:MapLevel",
+				zap.Int("missionid", missionid),
+				zap.Error(ErrInvalidMissionID))
+
+			return nil, ErrInvalidMissionID
+		}
+
+		return ld2, nil
+	}
+
+	lm, isok := serv.mapLevelMgr[ui.ABTestMode]
+	if !isok {
+		goutils.Error("BasicServ.Mission:MapLevel",
+			zap.Int64("uid", ui.UserID),
+			zap.String("abVersion", ui.ABTestMode),
+			zap.Error(ErrInvalidABVersion))
+
+		return nil, ErrInvalidABVersion
+	}
+
+	ld2, isok := lm.MapLevel[missionid+30000]
+	if !isok {
+		goutils.Error("BasicServ.Mission:MapLevel",
+			zap.Int("missionid", missionid),
+			zap.Error(ErrInvalidMissionID))
+
+		return nil, ErrInvalidMissionID
+	}
+
+	return ld2, nil
+}
+
+func (serv *BasicServ) LoadStage(ui *block7pb.UserInfo, ld2 *block7game.LevelData2) (*block7game.Stage, error) {
+	if ui.ABTestMode == "" {
+		stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/map/level_%04d.json", ld2.MapID))
+		if err != nil {
+			goutils.Error("BasicServ.LoadStage:LoadStage",
+				zap.Error(err))
+
+			return nil, err
+		}
+
+		return stage, nil
+	}
+
+	stage, err := block7game.LoadStage(fmt.Sprintf("./gamedata/%v/map/level_%04d.json", ui.ABTestMode, ld2.MapID))
+	if err != nil {
+		goutils.Error("BasicServ.LoadStage:LoadStage",
+			zap.Int64("uid", ui.UserID),
+			zap.String("abVersion", ui.ABTestMode),
+			zap.Error(err))
+
+		return nil, err
+	}
+
+	return stage, nil
 }

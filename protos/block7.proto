@@ -81,6 +81,7 @@ message UserDeviceInfo {
 message UserInfo {
 	int64 UserID = 1;
 	repeated UserDeviceInfo Data = 2;	// user device infomations
+	string ABTestMode = 3;				// for A/B test
 }
 
 // Cooking

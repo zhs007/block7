@@ -60,6 +60,7 @@ type LoginParams struct {
 	ResourceVersion string `json:"resVersion"`
 	DeviceInfo      string `json:"deviceInfo"`
 	IPAddr          string `json:"ipaddr"`
+	ABVersion       string `json:"abVersion"`
 }
 
 // LoginResult - login result
