@@ -15,4 +15,6 @@ var (
 	ErrInvalidToken = errors.New("invalid Token")
 	// ErrInvalidUserID - invalid userID
 	ErrInvalidUserID = errors.New("invalid userID")
+	// ErrInvalidABVersion - invalid ABVersion
+	ErrInvalidABVersion = errors.New("invalid ABVersion")
 )
