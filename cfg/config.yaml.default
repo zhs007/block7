@@ -12,3 +12,9 @@ logpath: ./logs
 isdebugmode: true
 # statistics token
 statstoken: 123456
+# for A/B test
+ismulgamedata: true
+# for A/B test
+gamedataarr:
+  - a
+  - b

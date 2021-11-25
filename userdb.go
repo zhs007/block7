@@ -476,7 +476,7 @@ func (db *UserDB) genUserHash(ctx context.Context) (string, error) {
 }
 
 // NewUser - new a userinfo
-func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*block7pb.UserInfo, error) {
+func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo, abVersion string) (*block7pb.UserInfo, error) {
 	if udi.UserHash != "" {
 		db.DelUserHash(ctx, udi.UserHash)
 	}
@@ -490,7 +490,8 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 	}
 
 	ui := &block7pb.UserInfo{
-		UserID: uid,
+		UserID:     uid,
+		ABTestMode: abVersion,
 	}
 
 	userhash, err := db.genUserHash(ctx)
@@ -527,9 +528,9 @@ func (db *UserDB) NewUser(ctx context.Context, udi *block7pb.UserDeviceInfo) (*b
 }
 
 // UpdUserDeviceInfo - Update userinfo with userdeviceinfo
-func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDeviceInfo) (*block7pb.UserInfo, error) {
+func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDeviceInfo, abVersion string) (*block7pb.UserInfo, error) {
 	if udi.UserHash == "" {
-		return db.NewUser(ctx, udi)
+		return db.NewUser(ctx, udi, abVersion)
 	}
 
 	uid, err := db.GetUserID(ctx, udi.UserHash)
@@ -541,7 +542,7 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 	}
 
 	if uid <= 0 {
-		return db.NewUser(ctx, udi)
+		return db.NewUser(ctx, udi, abVersion)
 	}
 
 	ui, err := db.GetUser(ctx, uid)
@@ -551,6 +552,8 @@ func (db *UserDB) UpdUserDeviceInfo(ctx context.Context, udi *block7pb.UserDevic
 
 		return nil, err
 	}
+
+	ui.ABTestMode = abVersion
 
 	for _, cudi := range ui.Data {
 		if cudi.UserHash == udi.UserHash {

@@ -81,7 +81,7 @@ func (serv *BasicServ) GetConfig() *Config {
 func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 	udi := LoginParams2PB(params)
 	if udi.UserHash == "" {
-		ui, err := serv.UserDB.NewUser(context.Background(), udi)
+		ui, err := serv.UserDB.NewUser(context.Background(), udi, params.ABVersion)
 		if err != nil {
 			goutils.Error("BasicServ.Login:NewUser",
 				zap.Error(err))
@@ -95,7 +95,7 @@ func (serv *BasicServ) Login(params *LoginParams) (*LoginResult, error) {
 		}, nil
 	}
 
-	ui, err := serv.UserDB.UpdUserDeviceInfo(context.Background(), udi)
+	ui, err := serv.UserDB.UpdUserDeviceInfo(context.Background(), udi, params.ABVersion)
 	if err != nil {
 		goutils.Error("BasicServ.Login:UpdUserDeviceInfo",
 			zap.Error(err))

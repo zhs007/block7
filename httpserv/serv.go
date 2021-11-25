@@ -57,8 +57,19 @@ func NewServ(service IService) *Serv {
 					params.ResourceVersion = string(v)
 				} else if string(k) == "deviceInfo" {
 					params.DeviceInfo = string(v)
+				} else if string(k) == "abVersion" {
+					params.ABVersion = strings.ToLower(strings.TrimSpace(string(v)))
 				}
 			})
+
+			if !cfg.IsValidABVersion(params.ABVersion) {
+				goutils.Debug("block7serv.Serv.login:IsValidABVersion",
+					goutils.JSON("params", params))
+
+				s.SetHTTPStatus(ctx, fasthttp.StatusBadRequest)
+
+				return
+			}
 
 			ipaddr := realip.FromRequest(ctx)
 			params.IPAddr = ipaddr
