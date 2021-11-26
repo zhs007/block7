@@ -21,7 +21,7 @@ func init() {
 
 	MgrSpecial.RegSpecial(6, NewWeeds(6, 10600))
 
-	MgrSpecial.RegSpecial(5, NewLadybug(5, 10503, 3))
+	MgrSpecial.RegSpecial(5, NewLadybug(5, 10503, 1))
 
 	MgrSpecial.RegSpecial(4, NewCurtain(4, 10400))
 
