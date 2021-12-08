@@ -12,11 +12,12 @@ import (
 )
 
 type LevelData struct {
-	ID          string `json:"id"`
-	MapID       string `json:"map"`
-	MinType     string `json:"minType"`
-	MaxType     string `json:"maxType"`
-	SpecialType string `json:"specialType"`
+	ID          string   `json:"id"`
+	MapID       string   `json:"map"`
+	MinType     string   `json:"minType"`
+	MaxType     string   `json:"maxType"`
+	SpecialType string   `json:"specialType"`
+	IconType2   []string `json:"iconType2"`
 }
 
 type SpecialTypeData struct {
@@ -31,6 +32,8 @@ type LevelData2 struct {
 	MinType     int                `json:"minType"`
 	MaxType     int                `json:"maxType"`
 	SpecialType []*SpecialTypeData `json:"specialType"`
+	IconType2   [][]int            `json:"iconType2"`   // 这个是直接解码的level表里的数据
+	IconType2Ex [][]int            `json:"iconType2ex"` // 这个是处理后的数据，类似 [[1,2,3],[4,5,6]] 这样
 }
 
 func (ld2 *LevelData2) GenSymbols() []int {
@@ -42,6 +45,27 @@ func (ld2 *LevelData2) GenSymbols() []int {
 	n := ld2.MinType + ci%(ld2.MaxType-ld2.MinType)
 
 	return GenSymbols(n)
+}
+
+func (ld2 *LevelData2) genIconType2Ex() {
+	ld2.IconType2Ex = nil
+	icons := []int{}
+
+	for _, arr := range ld2.IconType2 {
+		arr2 := []int{}
+
+		for _, icon := range arr {
+			ci := goutils.FindInt(icons, icon)
+			if ci < 0 {
+				icons = append(icons, icon)
+				arr2 = append(arr2, len(icons))
+			} else {
+				arr2 = append(arr2, ci+1)
+			}
+		}
+
+		ld2.IconType2Ex = append(ld2.IconType2Ex, arr2)
+	}
 }
 
 type LevelMgr struct {
@@ -179,6 +203,33 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 
 				ld2.SpecialType = append(ld2.SpecialType, std)
 			}
+		}
+
+		if len(v.IconType2) > 0 {
+			for _, iv := range v.IconType2 {
+				arrstr := strings.Split(iv, ",")
+				if len(arrstr) > 0 {
+					arri := []int{}
+
+					for _, strv := range arrstr {
+						i64, err := goutils.String2Int64(strv)
+						if err != nil {
+							goutils.Error("LevelMgr.LoadLevel:IconType2",
+								zap.String("fn", fn),
+								zap.String("val", strv),
+								zap.Error(err))
+
+							return err
+						}
+
+						arri = append(arri, int(i64))
+					}
+
+					ld2.IconType2 = append(ld2.IconType2, arri)
+				}
+			}
+
+			ld2.genIconType2Ex()
 		}
 
 		mgr.MapLevel[id] = ld2
