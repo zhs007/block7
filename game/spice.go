@@ -75,3 +75,8 @@ func (ice *SpecialIce) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *
 func (ice *SpecialIce) GetSpecialLayerType() int {
 	return ice.specialType
 }
+
+// OnGen2 - OnGen2
+func (ice *SpecialIce) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	return nil, nil
+}

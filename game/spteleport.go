@@ -45,3 +45,8 @@ func (teleport *SpecialTeleport) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 func (teleport *SpecialTeleport) GetSpecialLayerType() int {
 	return 0
 }
+
+// OnGen2 - OnGen2
+func (teleport *SpecialTeleport) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	return nil, nil
+}

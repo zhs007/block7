@@ -73,3 +73,8 @@ func (curtain *SpecialCurtain) OnGenSymbolLayers(rng IRng, std *SpecialTypeData,
 func (curtain *SpecialCurtain) GetSpecialLayerType() int {
 	return curtain.specialType
 }
+
+// OnGen2 - OnGen2
+func (curtain *SpecialCurtain) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	return nil, nil
+}

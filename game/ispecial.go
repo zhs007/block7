@@ -12,4 +12,6 @@ type ISpecial interface {
 	OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene) error
 	// OnGenSymbolLayer - OnGenSymbolLayer
 	OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error)
+	// OnGen2 - OnGen2
+	OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error)
 }

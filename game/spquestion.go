@@ -73,3 +73,8 @@ func (question *SpecialQuestion) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 func (question *SpecialQuestion) GetSpecialLayerType() int {
 	return question.specialType
 }
+
+// OnGen2 - OnGen2
+func (question *SpecialQuestion) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	return nil, nil
+}

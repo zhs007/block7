@@ -73,3 +73,8 @@ func (weeds *SpecialWeeds) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, sce
 func (weeds *SpecialWeeds) GetSpecialLayerType() int {
 	return weeds.specialType
 }
+
+// OnGen2 - OnGen2
+func (weeds *SpecialWeeds) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	return nil, nil
+}

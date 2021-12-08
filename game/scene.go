@@ -47,6 +47,7 @@ type Scene struct {
 	BackTimes         int             `json:"back"`
 	BombTimes         int             `json:"bomb"`
 	RebirthTimes      int             `json:"rebirth"`
+	MapType           int             `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
 }
 
 // LoadScene - load a scene

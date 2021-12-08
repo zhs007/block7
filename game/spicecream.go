@@ -258,3 +258,8 @@ func (icecream *SpecialIceCream) OnGenSymbolLayers(rng IRng, std *SpecialTypeDat
 func (icecream *SpecialIceCream) GetSpecialLayerType() int {
 	return icecream.specialType
 }
+
+// OnGen2 - OnGen2
+func (icecream *SpecialIceCream) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	return nil, nil
+}

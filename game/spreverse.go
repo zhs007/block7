@@ -70,6 +70,11 @@ func (reverse *SpecialReverse) OnGenSymbolLayers(rng IRng, std *SpecialTypeData,
 }
 
 // GetSpecialLayerType - GetSpecialLayerType
-func (weeds *SpecialReverse) GetSpecialLayerType() int {
-	return weeds.specialType
+func (reverse *SpecialReverse) GetSpecialLayerType() int {
+	return reverse.specialType
+}
+
+// OnGen2 - OnGen2
+func (reverse *SpecialReverse) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	return nil, nil
 }

@@ -33,4 +33,6 @@ var (
 	ErrInvalidRainbowNums = errors.New("invalid rainbow nums")
 	// ErrInvalidTeleportNums - invalid teleport nums
 	ErrInvalidTeleportNums = errors.New("invalid teleport nums")
+	// ErrInvalidMap2BlockNums - invalid map2 block nums
+	ErrInvalidMap2BlockNums = errors.New("invalid map2 block nums")
 )
