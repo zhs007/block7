@@ -101,6 +101,14 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 		return NewScene(rng, stage, symbols, blockNums, ld2)
 	}
 
+	if ld2.IconType2Ex == nil {
+		goutils.Warn("NewScene2:IconType2Ex",
+			goutils.JSON("ld2", ld2),
+			zap.Error(ErrInvalidIconTypes2))
+
+		return nil, ErrInvalidIconTypes2
+	}
+
 	// ss, err := MgrSpecial.GenSymbols(ld2)
 	// if err != nil {
 	// 	goutils.Warn("NewScene:MgrSpecial.GenSymbols",
@@ -175,6 +183,15 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 				zap.Error(ErrInvalidMap2BlockNums))
 
 			return nil, ErrInvalidMap2BlockNums
+		}
+
+		if area <= 0 || area > len(ld2.IconType2Ex)+1 {
+			goutils.Warn("NewScene2:MapLayerPos",
+				goutils.JSON("ld2", ld2),
+				zap.Int("area", area),
+				zap.Error(ErrInvalidIconTypes2))
+
+			return nil, ErrInvalidIconTypes2
 		}
 
 		symbolarr := ld2.IconType2Ex[area-1]

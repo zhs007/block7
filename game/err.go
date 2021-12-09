@@ -35,4 +35,6 @@ var (
 	ErrInvalidTeleportNums = errors.New("invalid teleport nums")
 	// ErrInvalidMap2BlockNums - invalid map2 block nums
 	ErrInvalidMap2BlockNums = errors.New("invalid map2 block nums")
+	// ErrInvalidIconTypes2 - invalid IconTypes2
+	ErrInvalidIconTypes2 = errors.New("invalid IconTypes2")
 )
