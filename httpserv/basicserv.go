@@ -305,9 +305,9 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 
 	rng := block7game.NewRngNormal()
 
-	scene, err := block7game.NewScene(rng, stage, ld2.GenSymbols(), block7game.DefaultMaxBlockNums, ld2)
+	scene, err := block7game.NewScene2(rng, stage, ld2.GenSymbols(), block7game.DefaultMaxBlockNums, ld2)
 	if err != nil {
-		goutils.Error("BasicServ.Mission:NewScene",
+		goutils.Error("BasicServ.Mission:NewScene2",
 			zap.Error(err))
 
 		return nil, err
