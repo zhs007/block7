@@ -72,7 +72,8 @@ func genSymbolList(rng IRng, initSymbols []int, nums int) ([]int, error) {
 		}
 
 		ln := (nums - n*len(initSymbols)*BlockNums) / BlockNums
-		lastsymbols := initSymbols[0:]
+		lastsymbols := make([]int, len(initSymbols))
+		copy(lastsymbols, initSymbols)
 
 		for i := 0; i < ln; i++ {
 			si, err := rng.Rand(len(lastsymbols))
