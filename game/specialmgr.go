@@ -97,3 +97,46 @@ func (mgr *SpecialMgr) GenSymbolLayers(rng IRng, ld2 *LevelData2, scene *Scene) 
 
 	return nil
 }
+
+// Gen2 - GenSymbolLayers
+func (mgr *SpecialMgr) Gen2(scene *Scene, x, y, z int, specialLayer int, specialBlock int) error {
+	if specialLayer > 0 {
+		sp, isok := mgr.MapSpecial[specialLayer]
+		if isok {
+			spl, err := sp.OnGen2(scene, x, y, z)
+			if err != nil {
+				goutils.Error("SpecialMgr.Gen2:OnGen2",
+					zap.Int("specialLayer", specialLayer),
+					zap.Error(err))
+
+				return err
+			}
+
+			if spl != nil {
+				scene.AddSpecialLayers(spl)
+				// scene.SpecialLayers = append(scene.SpecialLayers, spl)
+			}
+		}
+	}
+
+	if specialBlock > 0 {
+		sp, isok := mgr.MapSpecial[specialBlock]
+		if isok {
+			spl, err := sp.OnGen2(scene, x, y, z)
+			if err != nil {
+				goutils.Error("SpecialMgr.Gen2:OnGen2",
+					zap.Int("specialBlock", specialBlock),
+					zap.Error(err))
+
+				return err
+			}
+
+			if spl != nil {
+				scene.AddSpecialLayers(spl)
+				// scene.SpecialLayers = append(scene.SpecialLayers, spl)
+			}
+		}
+	}
+
+	return nil
+}

@@ -16,6 +16,7 @@ type Stage struct {
 	IconNums int       `json:"iconnums"`
 	XOff     int       `json:"xoff"`
 	YOff     int       `json:"yoff"`
+	MapType  int       `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
 }
 
 func LoadStage(fn string) (*Stage, error) {

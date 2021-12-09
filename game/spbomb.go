@@ -45,3 +45,10 @@ func (bomb *SpecialBomb) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene
 func (bomb *SpecialBomb) GetSpecialLayerType() int {
 	return 0
 }
+
+// OnGen2 - OnGen2
+func (bomb *SpecialBomb) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	scene.InitArr[z][y][x] = bomb.bombID
+
+	return nil, nil
+}

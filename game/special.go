@@ -38,6 +38,8 @@ func init() {
 	MgrSpecial.RegSpecial(9, NewBomb(9, 306))
 	MgrSpecial.RegSpecial(10, NewBomb(10, 307))
 	MgrSpecial.RegSpecial(11, NewBomb(11, 308))
+
+	MgrSpecial.RegSpecial(18, NewFork(18, 301))
 }
 
 func SpecialType2SpecialID(st int) int {

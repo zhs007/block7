@@ -87,3 +87,10 @@ func (cake *SpecialCake) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene
 func (cake *SpecialCake) GetSpecialLayerType() int {
 	return 0
 }
+
+// OnGen2 - OnGen2
+func (cake *SpecialCake) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	scene.InitArr[z][y][x] = cake.cakeID
+
+	return nil, nil
+}

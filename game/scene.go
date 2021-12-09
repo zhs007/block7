@@ -47,6 +47,7 @@ type Scene struct {
 	BackTimes         int             `json:"back"`
 	BombTimes         int             `json:"bomb"`
 	RebirthTimes      int             `json:"rebirth"`
+	MapType           int             `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
 }
 
 // LoadScene - load a scene
@@ -1354,4 +1355,18 @@ func (scene *Scene) HasSpecialLayer(x, y, z int, layer int) bool {
 	}
 
 	return false
+}
+
+func (scene *Scene) AddSpecialLayers(spl *SpecialLayer) error {
+	for _, v := range scene.SpecialLayers {
+		if v.LayerType != 0 && v.LayerType == spl.LayerType {
+			v.Pos = append(v.Pos, spl.Pos...)
+
+			return nil
+		}
+	}
+
+	scene.SpecialLayers = append(scene.SpecialLayers, spl)
+
+	return nil
 }

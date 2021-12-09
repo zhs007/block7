@@ -75,3 +75,17 @@ func (ladybug *SpecialLadybug) OnGenSymbolLayers(rng IRng, std *SpecialTypeData,
 func (ladybug *SpecialLadybug) GetSpecialLayerType() int {
 	return ladybug.specialType
 }
+
+// OnGen2 - OnGen2
+func (ladybug *SpecialLadybug) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	sl := &SpecialLayer{
+		Layer:     ladybug.layer,
+		LayerType: ladybug.specialType,
+		Special:   ladybug,
+		Pos: [][]int{
+			{x, y, z},
+		},
+	}
+
+	return sl, nil
+}
