@@ -29,7 +29,7 @@ func getBlockSpecialLayer(block int) int {
 		return 0
 	}
 
-	return (block % 1000000) - (block % 1000)
+	return ((block % 1000000) - (block % 1000)) / 1000
 }
 
 // getBlockSpecialBlock - ABCCCDDD -> D
