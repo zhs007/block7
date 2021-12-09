@@ -76,5 +76,14 @@ func (weeds *SpecialWeeds) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (weeds *SpecialWeeds) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
-	return nil, nil
+	sl := &SpecialLayer{
+		Layer:     weeds.layer,
+		LayerType: weeds.specialType,
+		Special:   weeds,
+		Pos: [][]int{
+			{x, y, z},
+		},
+	}
+
+	return sl, nil
 }

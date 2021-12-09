@@ -28,9 +28,9 @@ func (fork *SpecialFork) OnFixScene(rng IRng, std *SpecialTypeData, scene *Scene
 	return nil
 }
 
-// fixScene - fixScene
-func (fork *SpecialFork) fixScene(scene *Scene, lst [][]*BlockData) {
-}
+// // fixScene - fixScene
+// func (fork *SpecialFork) fixScene(scene *Scene, lst [][]*BlockData) {
+// }
 
 // OnGenSymbolLayer - OnGenSymbolLayer
 func (fork *SpecialFork) OnGenSymbolLayers(rng IRng, std *SpecialTypeData, scene *Scene) (*SpecialLayer, error) {

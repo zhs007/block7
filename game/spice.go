@@ -78,5 +78,14 @@ func (ice *SpecialIce) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (ice *SpecialIce) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
-	return nil, nil
+	sl := &SpecialLayer{
+		Layer:     ice.layer,
+		LayerType: ice.specialType,
+		Special:   ice,
+		Pos: [][]int{
+			{x, y, z},
+		},
+	}
+
+	return sl, nil
 }

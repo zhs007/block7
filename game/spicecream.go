@@ -261,5 +261,14 @@ func (icecream *SpecialIceCream) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (icecream *SpecialIceCream) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
-	return nil, nil
+	sl := &SpecialLayer{
+		Layer:     icecream.layer,
+		LayerType: icecream.specialType,
+		Special:   icecream,
+		Pos: [][]int{
+			{x, y, z},
+		},
+	}
+
+	return sl, nil
 }

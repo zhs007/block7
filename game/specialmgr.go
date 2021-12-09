@@ -113,7 +113,8 @@ func (mgr *SpecialMgr) Gen2(scene *Scene, x, y, z int, specialLayer int, special
 			}
 
 			if spl != nil {
-				scene.SpecialLayers = append(scene.SpecialLayers, spl)
+				scene.AddSpecialLayers(spl)
+				// scene.SpecialLayers = append(scene.SpecialLayers, spl)
 			}
 		}
 	}
@@ -131,7 +132,8 @@ func (mgr *SpecialMgr) Gen2(scene *Scene, x, y, z int, specialLayer int, special
 			}
 
 			if spl != nil {
-				scene.SpecialLayers = append(scene.SpecialLayers, spl)
+				scene.AddSpecialLayers(spl)
+				// scene.SpecialLayers = append(scene.SpecialLayers, spl)
 			}
 		}
 	}

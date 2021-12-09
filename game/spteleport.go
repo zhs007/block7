@@ -48,5 +48,7 @@ func (teleport *SpecialTeleport) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (teleport *SpecialTeleport) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	scene.InitArr[z][y][x] = teleport.teleportID
+
 	return nil, nil
 }

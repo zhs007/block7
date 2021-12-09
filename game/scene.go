@@ -1356,3 +1356,17 @@ func (scene *Scene) HasSpecialLayer(x, y, z int, layer int) bool {
 
 	return false
 }
+
+func (scene *Scene) AddSpecialLayers(spl *SpecialLayer) error {
+	for _, v := range scene.SpecialLayers {
+		if v.LayerType != 0 && v.LayerType == spl.LayerType {
+			v.Pos = append(v.Pos, spl.Pos...)
+
+			return nil
+		}
+	}
+
+	scene.SpecialLayers = append(scene.SpecialLayers, spl)
+
+	return nil
+}

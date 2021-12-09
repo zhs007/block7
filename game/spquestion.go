@@ -76,5 +76,14 @@ func (question *SpecialQuestion) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (question *SpecialQuestion) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
-	return nil, nil
+	sl := &SpecialLayer{
+		Layer:     question.layer,
+		LayerType: question.specialType,
+		Special:   question,
+		Pos: [][]int{
+			{x, y, z},
+		},
+	}
+
+	return sl, nil
 }

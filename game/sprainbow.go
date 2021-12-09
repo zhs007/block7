@@ -48,5 +48,7 @@ func (rainbow *SpecialRainbow) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (rainbow *SpecialRainbow) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	scene.InitArr[z][y][x] = rainbow.rainbowID
+
 	return nil, nil
 }

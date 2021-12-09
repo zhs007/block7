@@ -76,5 +76,14 @@ func (curtain *SpecialCurtain) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (curtain *SpecialCurtain) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
-	return nil, nil
+	sl := &SpecialLayer{
+		Layer:     curtain.layer,
+		LayerType: curtain.specialType,
+		Special:   curtain,
+		Pos: [][]int{
+			{x, y, z},
+		},
+	}
+
+	return sl, nil
 }
