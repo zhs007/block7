@@ -2,21 +2,21 @@ package block7game
 
 import (
 	"io/ioutil"
-	"strings"
 
 	jsoniter "github.com/json-iterator/go"
 )
 
 // Stage - stage
 type Stage struct {
-	Width    int       `json:"width"`
-	Height   int       `json:"height"`
-	Offset   string    `json:"offset"`
-	Layer    [][][]int `json:"layer"`
-	IconNums int       `json:"iconnums"`
-	XOff     int       `json:"xoff"`
-	YOff     int       `json:"yoff"`
-	MapType  int       `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
+	Width       int       `json:"width"`
+	Height      int       `json:"height"`
+	Offset      string    `json:"offset"`
+	Layer       [][][]int `json:"layer"`
+	IconNums    int       `json:"iconnums"`
+	XOff        int       `json:"xoff"`
+	YOff        int       `json:"yoff"`
+	MapType     int       `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
+	ComboEnable bool      `json:"comboEnable"`
 }
 
 func LoadStage(fn string) (*Stage, error) {
@@ -33,18 +33,22 @@ func LoadStage(fn string) (*Stage, error) {
 		return nil, err
 	}
 
-	if len(stage.Offset) > 0 {
-		arr := strings.Split(stage.Offset, ",")
-		if len(arr) == 3 {
-			if arr[0] == "0" {
-				stage.XOff = 1
-				stage.YOff = -1
-			} else {
-				stage.XOff = -1
-				stage.YOff = 1
-			}
-		}
-	}
+	xoff, yoff := OffsetStringToXYOff(stage.Offset)
+	stage.XOff = xoff
+	stage.YOff = yoff
+
+	// if len(stage.Offset) > 0 {
+	// 	arr := strings.Split(stage.Offset, ",")
+	// 	if len(arr) == 3 {
+	// 		if arr[0] == "0" {
+	// 			stage.XOff = 1
+	// 			stage.YOff = -1
+	// 		} else {
+	// 			stage.XOff = -1
+	// 			stage.YOff = 1
+	// 		}
+	// 	}
+	// }
 
 	stage.IconNums = stage.CountSymbols()
 
