@@ -21,3 +21,4 @@ ai4_output
 cfg/config.yaml
 logs
 data
+*.zip
