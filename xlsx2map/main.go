@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/zhs007/block7"
+	block7game "github.com/zhs007/block7/game"
 	"github.com/zhs007/goutils"
 	"go.uber.org/zap"
 )
@@ -21,7 +22,7 @@ func main() {
 		}
 
 		if filepath.Ext(path) == ".xlsx" {
-			stage, err := loadExcel(path)
+			stage, err := block7game.LoadExcel(path)
 			if err != nil {
 				goutils.Error("loadExcel",
 					zap.String("fn", path),
@@ -41,6 +42,8 @@ func main() {
 			}
 
 			ioutil.WriteFile(fmt.Sprintf("%v.json", fn), fd, 0644)
+
+			stage.Analyze(fn)
 
 			return nil
 		}
