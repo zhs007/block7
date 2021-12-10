@@ -11,15 +11,15 @@ import (
 
 // Stage - stage
 type Stage struct {
-	Width       int       `json:"width"`
-	Height      int       `json:"height"`
-	Offset      string    `json:"offset"`
-	Layer       [][][]int `json:"layer"`
-	IconNums    int       `json:"iconnums"`
-	XOff        int       `json:"xoff"`
-	YOff        int       `json:"yoff"`
-	MapType     int       `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
-	ComboEnable bool      `json:"comboEnable"`
+	Width    int       `json:"width"`
+	Height   int       `json:"height"`
+	Offset   string    `json:"offset"`
+	Layer    [][][]int `json:"layer"`
+	IconNums int       `json:"iconnums"`
+	XOff     int       `json:"xoff"`
+	YOff     int       `json:"yoff"`
+	MapType  int       `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
+	// ComboEnable bool      `json:"comboEnable"`
 }
 
 func LoadStage(fn string) (*Stage, error) {
