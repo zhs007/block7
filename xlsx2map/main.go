@@ -22,13 +22,17 @@ func main() {
 		}
 
 		if filepath.Ext(path) == ".xlsx" {
+			if strings.Contains(info.Name(), "$") {
+				return nil
+			}
+
 			stage, err := block7game.LoadExcel(path)
 			if err != nil {
 				goutils.Error("loadExcel",
 					zap.String("fn", path),
 					zap.Error(err))
 
-				return err
+				return nil
 			}
 
 			fn := strings.Split(info.Name(), ".")[0]
@@ -38,7 +42,7 @@ func main() {
 					goutils.JSON("stage", stage),
 					zap.Error(err))
 
-				return err
+				return nil
 			}
 
 			ioutil.WriteFile(fmt.Sprintf("%v.json", fn), fd, 0644)
