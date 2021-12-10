@@ -12,6 +12,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/valyala/fasthttp v1.26.0
+	github.com/xuri/excelize/v2 v2.4.1
 	github.com/zhs007/ankadb v0.3.35
 	github.com/zhs007/goutils v0.1.17
 	go.uber.org/zap v1.19.0

@@ -37,4 +37,8 @@ var (
 	ErrInvalidMap2BlockNums = errors.New("invalid map2 block nums")
 	// ErrInvalidIconTypes2 - invalid IconTypes2
 	ErrInvalidIconTypes2 = errors.New("invalid IconTypes2")
+	// ErrInvalidMapExcelFile - invalid MapExcelFile
+	ErrInvalidMapExcelFile = errors.New("invalid MapExcelFile")
+	// ErrInvalidMapExcelWidthHeight - invalid MapExcel Width Height
+	ErrInvalidMapExcelWidthHeight = errors.New("invalid MapExcel Width Height")
 )

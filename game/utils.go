@@ -1,5 +1,7 @@
 package block7game
 
+import "strings"
+
 func GenSymbols(nums int) []int {
 	arr := []int{}
 
@@ -125,6 +127,21 @@ func GetChildrenEx(scene *Scene, pos [][]int, w, h int, funcHasBlock FuncHasBloc
 	}
 
 	return lst
+}
+
+func OffsetStringToXYOff(offset string) (int, int) {
+	if len(offset) > 0 {
+		arr := strings.Split(offset, ",")
+		if len(arr) == 3 {
+			if arr[0] == "0" {
+				return 1, -1
+			} else {
+				return -1, 1
+			}
+		}
+	}
+
+	return 1, -1
 }
 
 // func cloneArr3(src [][][]int) [][][]int {
