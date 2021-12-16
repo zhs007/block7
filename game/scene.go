@@ -113,7 +113,11 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		YOff:         stage.YOff,
 		MaxBlockNums: blockNums,
 		Offset:       stage.Offset,
-		SpecialType:  ld2.SpecialTypeStr,
+		// SpecialType:  ld2.SpecialTypeStr,
+	}
+
+	if ld2 != nil {
+		scene.SpecialType = ld2.SpecialTypeStr
 	}
 
 	nums := 0

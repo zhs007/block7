@@ -147,6 +147,10 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 		Offset:       stage.Offset,
 	}
 
+	if ld2 != nil {
+		scene.SpecialType = ld2.SpecialTypeStr
+	}
+
 	nums := 0
 	mapLayerPos := NewLayerPosMap()
 	for z, arrlayer := range stage.Layer {
