@@ -27,13 +27,14 @@ type SpecialTypeData struct {
 }
 
 type LevelData2 struct {
-	ID          int                `json:"id"`
-	MapID       int                `json:"map"`
-	MinType     int                `json:"minType"`
-	MaxType     int                `json:"maxType"`
-	SpecialType []*SpecialTypeData `json:"specialType"`
-	IconType2   [][]int            `json:"iconType2"`   // 这个是直接解码的level表里的数据
-	IconType2Ex [][]int            `json:"iconType2ex"` // 这个是处理后的数据，类似 [[1,2,3],[4,5,6]] 这样
+	ID             int                `json:"id"`
+	MapID          int                `json:"map"`
+	MinType        int                `json:"minType"`
+	MaxType        int                `json:"maxType"`
+	SpecialType    []*SpecialTypeData `json:"specialType"`
+	IconType2      [][]int            `json:"iconType2"`   // 这个是直接解码的level表里的数据
+	IconType2Ex    [][]int            `json:"iconType2ex"` // 这个是处理后的数据，类似 [[1,2,3],[4,5,6]] 这样
+	SpecialTypeStr string             `json:"specialTypeString"`
 }
 
 func (ld2 *LevelData2) GenSymbols() []int {
@@ -99,7 +100,9 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 	}
 
 	for i, v := range arr {
-		ld2 := &LevelData2{}
+		ld2 := &LevelData2{
+			SpecialTypeStr: v.SpecialType,
+		}
 
 		id, err := strconv.Atoi(v.ID)
 		if err != nil {

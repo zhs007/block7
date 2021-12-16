@@ -47,7 +47,8 @@ type Scene struct {
 	BackTimes         int             `json:"back"`
 	BombTimes         int             `json:"bomb"`
 	RebirthTimes      int             `json:"rebirth"`
-	MapType           int             `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
+	MapType           int             `json:"mapTypes"`    // 地图类型，0是老版本方式，1是新版本
+	SpecialType       string          `json:"specialType"` // level.json 文件内容
 }
 
 // LoadScene - load a scene
@@ -112,6 +113,7 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		YOff:         stage.YOff,
 		MaxBlockNums: blockNums,
 		Offset:       stage.Offset,
+		SpecialType:  ld2.SpecialTypeStr,
 	}
 
 	nums := 0
