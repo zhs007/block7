@@ -223,6 +223,13 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 
 			arr2 = append(arr2[:si], arr2[si+1:]...)
 		}
+
+		if len(arr2) != 0 {
+			goutils.Warn("NewScene2:check arr2",
+				zap.Int("arr2 len", len(arr2)))
+
+			return nil, err
+		}
 	}
 
 	// nums := 0
