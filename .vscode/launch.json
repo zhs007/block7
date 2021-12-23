@@ -36,6 +36,16 @@
             "env": {"PLUGIN":"basic"}
         },
         {
+            "name": "test002",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/test002/main.go",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {"PLUGIN":"basic"}
+        },        
+        {
             "name": "serv",
             "type": "go",
             "request": "launch",
