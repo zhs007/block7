@@ -9,6 +9,38 @@ import (
 	"go.uber.org/zap"
 )
 
+func foreachStages(service *block7serv.BasicServ, abVersion string, startMissionID int, endMissionID int) {
+	retLogin, err := service.Login(&block7serv.LoginParams{
+		Game:      "test002",
+		Platform:  "test",
+		ABVersion: "b",
+	})
+	if err != nil {
+		goutils.Info("Login",
+			zap.Error(err))
+
+		return
+	}
+
+	for curMissionID := startMissionID; curMissionID <= endMissionID; curMissionID++ {
+		retMission, err := service.Mission(&block7serv.MissionParams{
+			UserHash:  retLogin.UserHash,
+			MissionID: curMissionID,
+		})
+		if err != nil {
+			goutils.Info("Mission",
+				zap.Int("missionid", curMissionID),
+				zap.Error(err))
+
+			return
+		}
+
+		goutils.Info("serv end.",
+			zap.Int("missionid", curMissionID),
+			goutils.JSON("ret", retMission))
+	}
+}
+
 func main() {
 	cfg, err := block7serv.LoadConfig("./cfg/config.yaml")
 	if err != nil {
@@ -29,29 +61,31 @@ func main() {
 		return
 	}
 
-	retLogin, err := service.Login(&block7serv.LoginParams{
-		Game:      "test002",
-		Platform:  "test",
-		ABVersion: "b",
-	})
-	if err != nil {
-		goutils.Info("Login",
-			zap.Error(err))
+	foreachStages(service, "b", 1, 50)
 
-		return
-	}
+	// retLogin, err := service.Login(&block7serv.LoginParams{
+	// 	Game:      "test002",
+	// 	Platform:  "test",
+	// 	ABVersion: "b",
+	// })
+	// if err != nil {
+	// 	goutils.Info("Login",
+	// 		zap.Error(err))
 
-	retMission, err := service.Mission(&block7serv.MissionParams{
-		UserHash:  retLogin.UserHash,
-		MissionID: 8,
-	})
-	if err != nil {
-		goutils.Info("Mission",
-			zap.Error(err))
+	// 	return
+	// }
 
-		return
-	}
+	// retMission, err := service.Mission(&block7serv.MissionParams{
+	// 	UserHash:  retLogin.UserHash,
+	// 	MissionID: 8,
+	// })
+	// if err != nil {
+	// 	goutils.Info("Mission",
+	// 		zap.Error(err))
 
-	goutils.Info("serv end.",
-		goutils.JSON("ret", retMission))
+	// 	return
+	// }
+
+	// goutils.Info("serv end.",
+	// 	goutils.JSON("ret", retMission))
 }

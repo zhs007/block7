@@ -295,6 +295,10 @@ func (serv *BasicServ) Mission(params *MissionParams) (*MissionResult, error) {
 		return nil, err
 	}
 
+	if ld2.Difficult != 0 {
+		return &MissionResult{}, nil
+	}
+
 	stage, err := serv.LoadStage(ui, ld2)
 	if err != nil {
 		goutils.Error("BasicServ.Mission:LoadStage",
