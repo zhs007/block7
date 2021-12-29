@@ -43,7 +43,7 @@ func main() {
 
 	retMission, err := service.Mission(&block7serv.MissionParams{
 		UserHash:  retLogin.UserHash,
-		MissionID: 15,
+		MissionID: 8,
 	})
 	if err != nil {
 		goutils.Info("Mission",
