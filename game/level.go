@@ -14,6 +14,7 @@ import (
 type LevelData struct {
 	ID          string   `json:"id"`
 	MapID       string   `json:"map"`
+	Difficult   string   `json:"difficult"`
 	MinType     string   `json:"minType"`
 	MaxType     string   `json:"maxType"`
 	SpecialType string   `json:"specialType"`
@@ -35,6 +36,7 @@ type LevelData2 struct {
 	IconType2      [][]int            `json:"iconType2"`   // 这个是直接解码的level表里的数据
 	IconType2Ex    [][]int            `json:"iconType2ex"` // 这个是处理后的数据，类似 [[1,2,3],[4,5,6]] 这样
 	SpecialTypeStr string             `json:"specialTypeString"`
+	Difficult      int                `json:"difficult"`
 }
 
 func (ld2 *LevelData2) GenSymbols() []int {
@@ -115,6 +117,18 @@ func (mgr *LevelMgr) LoadLevel(fn string) error {
 			return err
 		}
 		ld2.ID = id
+
+		difficult, err := strconv.Atoi(v.Difficult)
+		if err != nil {
+			goutils.Error("LevelMgr.LoadLevel:Atoi",
+				zap.String("fn", fn),
+				zap.Int("i", i),
+				zap.String("difficult", v.Difficult),
+				zap.Error(err))
+
+			return err
+		}
+		ld2.Difficult = difficult
 
 		mapid, err := strconv.Atoi(v.MapID)
 		if err != nil {
