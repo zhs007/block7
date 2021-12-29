@@ -190,7 +190,7 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 			return nil, ErrInvalidMap2BlockNums
 		}
 
-		if area <= 0 || area > len(ld2.IconType2Ex)+1 {
+		if area <= 0 || area > len(ld2.IconType2Ex) {
 			goutils.Warn("NewScene2:MapLayerPos",
 				goutils.JSON("ld2", ld2),
 				zap.Int("area", area),
