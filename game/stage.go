@@ -1,6 +1,7 @@
 package block7game
 
 import (
+	"fmt"
 	"io/ioutil"
 
 	jsoniter "github.com/json-iterator/go"
@@ -109,6 +110,107 @@ func (stage *Stage) Analyze(str string) error {
 	}
 
 	return nil
+}
+
+func (stage *Stage) Analyze2(name string) (*MapState, error) {
+	ms := &MapState{
+		Name:             name,
+		AreaBlockNums:    make(map[int]int),
+		AreaSPLayerNums:  make(map[int]int),
+		SPMap:            make(map[int]int),
+		Layers:           len(stage.Layer),
+		Height:           len(stage.Layer[0]),
+		Width:            len(stage.Layer[0][0]),
+		LayerBlockNums:   make([]int, len(stage.Layer)),
+		LayerSPLayerNums: make([]int, len(stage.Layer)),
+	}
+
+	for layeri, arrlayer := range stage.Layer {
+		for _, arrrow := range arrlayer {
+			for _, v := range arrrow {
+				if v > 0 {
+					area := getBlockArea(v)
+					spl := getBlockSpecialLayer(v)
+					spb := getBlockSpecialBlock(v)
+
+					if spl > 0 {
+						_, isok := ms.AreaSPLayerNums[area]
+						if isok {
+							ms.AreaSPLayerNums[area]++
+						} else {
+							ms.AreaSPLayerNums[area] = 1
+						}
+
+						ms.LayerSPLayerNums[layeri]++
+					}
+
+					if spb == 0 {
+						_, isok := ms.AreaBlockNums[area]
+						if isok {
+							ms.AreaBlockNums[area]++
+						} else {
+							ms.AreaBlockNums[area] = 1
+						}
+
+						ms.LayerBlockNums[layeri]++
+					}
+
+					if spl > 0 {
+						_, isok := ms.SPMap[spl]
+						if isok {
+							ms.SPMap[spl]++
+						} else {
+							ms.SPMap[spl] = 1
+						}
+					}
+
+					if spb > 0 {
+						_, isok := ms.SPMap[spb]
+						if isok {
+							ms.SPMap[spb]++
+						} else {
+							ms.SPMap[spb] = 1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	ms.SpecialType = ""
+	for k, v := range ms.SPMap {
+		if ms.SpecialType == "" {
+			ms.SpecialType += fmt.Sprintf("%03d,%d", k, v)
+		} else {
+			ms.SpecialType += fmt.Sprintf(",%03d,%d", k, v)
+		}
+	}
+
+	areaBlockNums := make([]int, len(ms.AreaBlockNums))
+	for k, v := range ms.AreaBlockNums {
+		areaBlockNums[k-1] = v
+	}
+
+	si := 31001
+	for _, v := range areaBlockNums {
+		if v%3 != 0 {
+			return nil, ErrInvalidBlockNumber
+		}
+
+		strblock := ""
+		for i := 0; i < v/3; i++ {
+			if strblock == "" {
+				strblock += fmt.Sprintf("%v", si+i)
+			} else {
+				strblock += fmt.Sprintf(",%v", si+i)
+			}
+		}
+		si += v / 3
+
+		ms.IconType2 = append(ms.IconType2, strblock)
+	}
+
+	return ms, nil
 }
 
 func LoadExcel(fn string) (*Stage, error) {

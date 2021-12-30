@@ -41,4 +41,6 @@ var (
 	ErrInvalidMapExcelFile = errors.New("invalid MapExcelFile")
 	// ErrInvalidMapExcelWidthHeight - invalid MapExcel Width Height
 	ErrInvalidMapExcelWidthHeight = errors.New("invalid MapExcel Width Height")
+	// ErrInvalidBlockNumber - invalid block number
+	ErrInvalidBlockNumber = errors.New("invalid block number")
 )
