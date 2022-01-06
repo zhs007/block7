@@ -12,14 +12,15 @@ import (
 
 // Stage - stage
 type Stage struct {
-	Width    int       `json:"width"`
-	Height   int       `json:"height"`
-	Offset   string    `json:"offset"`
-	Layer    [][][]int `json:"layer"`
-	IconNums int       `json:"iconnums"`
-	XOff     int       `json:"xoff"`
-	YOff     int       `json:"yoff"`
-	MapType  int       `json:"mapTypes"` // 地图类型，0是老版本方式，1是新版本
+	Width      int       `json:"width"`
+	Height     int       `json:"height"`
+	Offset     string    `json:"offset"`
+	Layer      [][][]int `json:"layer"`
+	IconNums   int       `json:"iconnums"`
+	XOff       int       `json:"xoff"`
+	YOff       int       `json:"yoff"`
+	MapType    int       `json:"mapTypes"`   // 地图类型，0是老版本方式，1是新版本
+	LayerLevel []int     `json:"layerlevel"` // 分章节，[1,1,1,0,0]，就是5层分2个章节，最上面2层全部消除完才允许操作下面3层
 	// ComboEnable bool      `json:"comboEnable"`
 }
 

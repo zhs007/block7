@@ -145,6 +145,7 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 		YOff:         stage.YOff,
 		MaxBlockNums: blockNums,
 		Offset:       stage.Offset,
+		LayerLevel:   stage.LayerLevel,
 	}
 
 	if ld2 != nil {

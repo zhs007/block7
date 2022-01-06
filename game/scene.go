@@ -49,6 +49,7 @@ type Scene struct {
 	RebirthTimes      int             `json:"rebirth"`
 	MapType           int             `json:"mapTypes"`    // 地图类型，0是老版本方式，1是新版本
 	SpecialType       string          `json:"specialType"` // level.json 文件内容
+	LayerLevel        []int           `json:"layerlevel"`  // 分章节，[1,1,1,0,0]，就是5层分2个章节，最上面2层全部消除完才允许操作下面3层
 }
 
 // LoadScene - load a scene
@@ -113,6 +114,7 @@ func NewScene(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelDa
 		YOff:         stage.YOff,
 		MaxBlockNums: blockNums,
 		Offset:       stage.Offset,
+		LayerLevel:   stage.LayerLevel,
 		// SpecialType:  ld2.SpecialTypeStr,
 	}
 
