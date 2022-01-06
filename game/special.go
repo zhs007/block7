@@ -40,6 +40,13 @@ func init() {
 	MgrSpecial.RegSpecial(11, NewBomb(11, 308))
 
 	MgrSpecial.RegSpecial(18, NewFork(18, 301))
+
+	MgrSpecial.RegSpecial(19, NewIce2(19, 10901, 1))
+	MgrSpecial.RegSpecial(20, NewIce2(20, 10902, 2))
+	MgrSpecial.RegSpecial(21, NewIce2(21, 10903, 3))
+	MgrSpecial.RegSpecial(22, NewIce2(22, 10904, 4))
+
+	MgrSpecial.RegSpecial(23, NewBomb2(23, 309))
 }
 
 func SpecialType2SpecialID(st int) int {
