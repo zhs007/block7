@@ -1,6 +1,64 @@
 [
   {
     "name": "level_0001",
+    "width": 3,
+    "height": 2,
+    "layers": 1,
+    "specialType": "",
+    "iconType2": [
+      "31001",
+      "31002"
+    ],
+    "areaBlockNums": {
+      "1": 3,
+      "2": 3
+    },
+    "areaSPLayerNums": {
+      
+    },
+    "layerBlockNums": [
+      6
+    ],
+    "layerSPLayerNums": [
+      0
+    ],
+    "SPMap": {
+      
+    }
+  },
+  {
+    "name": "level_0002",
+    "width": 6,
+    "height": 6,
+    "layers": 3,
+    "specialType": "",
+    "iconType2": [
+      "31001,31002",
+      "31003"
+    ],
+    "areaBlockNums": {
+      "1": 6,
+      "2": 3
+    },
+    "areaSPLayerNums": {
+      
+    },
+    "layerBlockNums": [
+      3,
+      3,
+      3
+    ],
+    "layerSPLayerNums": [
+      0,
+      0,
+      0
+    ],
+    "SPMap": {
+      
+    }
+  },
+  {
+    "name": "level_10001",
     "width": 6,
     "height": 6,
     "layers": 1,
@@ -25,7 +83,7 @@
     }
   },
   {
-    "name": "level_0002",
+    "name": "level_10002",
     "width": 6,
     "height": 6,
     "layers": 1,
@@ -53,7 +111,7 @@
     }
   },
   {
-    "name": "level_0003",
+    "name": "level_10003",
     "width": 6,
     "height": 6,
     "layers": 2,
@@ -89,7 +147,7 @@
     }
   },
   {
-    "name": "level_0004",
+    "name": "level_10004",
     "width": 7,
     "height": 7,
     "layers": 3,
@@ -133,11 +191,11 @@
     }
   },
   {
-    "name": "level_0005",
+    "name": "level_10005",
     "width": 7,
     "height": 7,
     "layers": 1,
-    "specialType": "015,2,016,2,014,14,001,20",
+    "specialType": "016,2,014,14,001,20,015,2",
     "iconType2": [
       "31001",
       "31002,31003",
@@ -170,7 +228,7 @@
     }
   },
   {
-    "name": "level_0006",
+    "name": "level_10006",
     "width": 5,
     "height": 6,
     "layers": 2,
@@ -205,11 +263,11 @@
     }
   },
   {
-    "name": "level_0007",
+    "name": "level_10007",
     "width": 7,
     "height": 7,
     "layers": 2,
-    "specialType": "014,28,001,40,015,4,016,4",
+    "specialType": "001,40,015,4,016,4,014,28",
     "iconType2": [
       "31001",
       "31002,31003",
