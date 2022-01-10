@@ -30,6 +30,37 @@
     "name": "level_0002",
     "width": 6,
     "height": 6,
+    "layers": 2,
+    "specialType": "",
+    "iconType2": [
+      "31001",
+      "31002",
+      "31003"
+    ],
+    "areaBlockNums": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+    },
+    "areaSPLayerNums": {
+      
+    },
+    "layerBlockNums": [
+      3,
+      6
+    ],
+    "layerSPLayerNums": [
+      0,
+      0
+    ],
+    "SPMap": {
+      
+    }
+  },
+  {
+    "name": "level_0002t",
+    "width": 6,
+    "height": 6,
     "layers": 3,
     "specialType": "",
     "iconType2": [
@@ -61,6 +92,37 @@
   },
   {
     "name": "level_0003",
+    "width": 6,
+    "height": 6,
+    "layers": 2,
+    "specialType": "",
+    "iconType2": [
+      "31001,31002",
+      "31003,31004",
+      "31005"
+    ],
+    "areaBlockNums": {
+      "1": 6,
+      "2": 6,
+      "3": 3
+    },
+    "areaSPLayerNums": {
+      
+    },
+    "layerBlockNums": [
+      12,
+      3
+    ],
+    "layerSPLayerNums": [
+      0,
+      0
+    ],
+    "SPMap": {
+      
+    }
+  },
+  {
+    "name": "level_0003t",
     "width": 6,
     "height": 6,
     "layers": 2,
@@ -228,7 +290,7 @@
     "width": 7,
     "height": 7,
     "layers": 1,
-    "specialType": "016,2,014,14,001,20,015,2",
+    "specialType": "014,14,001,20,015,2,016,2",
     "iconType2": [
       "31001",
       "31002,31003",
