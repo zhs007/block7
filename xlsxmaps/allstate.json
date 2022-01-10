@@ -46,8 +46,8 @@
       
     },
     "layerBlockNums": [
-      3,
-      6
+      6,
+      3
     ],
     "layerSPLayerNums": [
       0,
@@ -362,7 +362,7 @@
     "width": 7,
     "height": 7,
     "layers": 2,
-    "specialType": "014,28,001,40,015,4,016,4",
+    "specialType": "015,4,016,4,014,28,001,40",
     "iconType2": [
       "31001",
       "31002,31003",
