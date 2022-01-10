@@ -256,6 +256,39 @@
     }
   },
   {
+    "name": "level_0007",
+    "width": 7,
+    "height": 7,
+    "layers": 5,
+    "specialType": "001,8",
+    "iconType2": [
+      "31001,31002,31003,31004,31005"
+    ],
+    "areaBlockNums": {
+      "1": 15
+    },
+    "areaSPLayerNums": {
+      "1": 8
+    },
+    "layerBlockNums": [
+      5,
+      4,
+      3,
+      2,
+      1
+    ],
+    "layerSPLayerNums": [
+      3,
+      2,
+      2,
+      1,
+      0
+    ],
+    "SPMap": {
+      "1": 8
+    }
+  },
+  {
     "name": "level_10001",
     "width": 6,
     "height": 6,
@@ -393,7 +426,7 @@
     "width": 7,
     "height": 7,
     "layers": 1,
-    "specialType": "014,14,001,20,015,2,016,2",
+    "specialType": "015,2,016,2,014,14,001,20",
     "iconType2": [
       "31001",
       "31002,31003",
@@ -465,7 +498,7 @@
     "width": 7,
     "height": 7,
     "layers": 2,
-    "specialType": "016,4,014,28,001,40,015,4",
+    "specialType": "014,28,001,40,015,4,016,4",
     "iconType2": [
       "31001",
       "31002,31003",
