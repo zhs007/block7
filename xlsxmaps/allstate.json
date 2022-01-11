@@ -392,6 +392,45 @@
     }
   },
   {
+    "name": "level_0010",
+    "width": 7,
+    "height": 7,
+    "layers": 7,
+    "specialType": "",
+    "iconType2": [
+      "31001,31002,31003,31004,31005,31006",
+      "31007,31008,31009,31010,31011,31012,31013"
+    ],
+    "areaBlockNums": {
+      "1": 18,
+      "2": 21
+    },
+    "areaSPLayerNums": {
+      
+    },
+    "layerBlockNums": [
+      1,
+      2,
+      6,
+      6,
+      3,
+      16,
+      5
+    ],
+    "layerSPLayerNums": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "SPMap": {
+      
+    }
+  },
+  {
     "name": "level_10001",
     "width": 6,
     "height": 6,
