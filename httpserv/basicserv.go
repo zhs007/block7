@@ -430,6 +430,13 @@ func (serv *BasicServ) MissionData(params *MissionDataParams) (*MissionDataResul
 
 		curScene = MissionDataParams2Scene(scene, params)
 	} else {
+		if len(params.InitArr) == 0 || len(params.InitArr[0]) == 0 || len(params.InitArr[0][0]) == 0 {
+			goutils.Error("BasicServ.MissionData:InitArr",
+				zap.Error(ErrInvalidInitArr))
+
+			return nil, ErrInvalidInitArr
+		}
+
 		curScene = MissionDataParams2SceneEx(params)
 	}
 
