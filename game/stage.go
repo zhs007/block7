@@ -192,9 +192,14 @@ func (stage *Stage) Analyze2(name string) (*MapState, error) {
 		areaBlockNums[k-1] = v
 	}
 
-	si := 31001
-	for _, v := range areaBlockNums {
+	si := 11001
+	for i, v := range areaBlockNums {
 		if v%3 != 0 {
+			goutils.Warn("Stage.Analyze2",
+				zap.Int("nums", v),
+				zap.Int("area", i+1),
+				zap.Error(ErrInvalidBlockNumber))
+
 			return nil, ErrInvalidBlockNumber
 		}
 
