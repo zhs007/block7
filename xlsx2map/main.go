@@ -53,6 +53,7 @@ func main() {
 			ms, err := stage.Analyze2(fn)
 			if err != nil {
 				goutils.Error("stage.Analyze2",
+					zap.String("fn", fn),
 					zap.Error(err))
 
 				return nil
