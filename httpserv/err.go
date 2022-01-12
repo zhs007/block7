@@ -17,4 +17,6 @@ var (
 	ErrInvalidUserID = errors.New("invalid userID")
 	// ErrInvalidABVersion - invalid ABVersion
 	ErrInvalidABVersion = errors.New("invalid ABVersion")
+	// ErrInvalidInitArr - invalid InitArr
+	ErrInvalidInitArr = errors.New("invalid InitArr")
 )
