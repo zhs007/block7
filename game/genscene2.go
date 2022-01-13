@@ -278,6 +278,13 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 		}
 	}
 
+	err := scene.resetInitLayerArr(stage)
+	if err != nil {
+		goutils.Warn("NewScene2:resetInitLayerArr",
+			zap.Error(err))
+
+		return nil, err
+	}
 	// err = MgrSpecial.OnFixScene(rng, ld2, scene)
 	// if err != nil {
 	// 	goutils.Warn("NewScene:OnFixScene",

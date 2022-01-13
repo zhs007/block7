@@ -47,9 +47,10 @@ type Scene struct {
 	BackTimes         int             `json:"back"`
 	BombTimes         int             `json:"bomb"`
 	RebirthTimes      int             `json:"rebirth"`
-	MapType           int             `json:"mapTypes"`    // 地图类型，0是老版本方式，1是新版本
-	SpecialType       string          `json:"specialType"` // level.json 文件内容
-	LayerLevel        []int           `json:"layerlevel"`  // 分章节，[1,1,1,0,0]，就是5层分2个章节，最上面2层全部消除完才允许操作下面3层
+	MapType           int             `json:"mapTypes"`     // 地图类型，0是老版本方式，1是新版本
+	SpecialType       string          `json:"specialType"`  // level.json 文件内容
+	LayerLevel        []int           `json:"layerlevel"`   // 分章节，[1,1,1,0,0]，就是5层分2个章节，最上面2层全部消除完才允许操作下面3层
+	InitLayerArr      [][][]int       `json:"initlayerarr"` // 前端用数据，区域数组，0,1,2,3,4,5这样
 }
 
 // LoadScene - load a scene
@@ -1375,6 +1376,26 @@ func (scene *Scene) AddSpecialLayers(spl *SpecialLayer) error {
 	}
 
 	scene.SpecialLayers = append(scene.SpecialLayers, spl)
+
+	return nil
+}
+
+func (scene *Scene) resetInitLayerArr(stage *Stage) error {
+	scene.InitLayerArr = [][][]int{}
+
+	for z, arr0 := range stage.Layer {
+		scene.InitLayerArr = append(scene.InitLayerArr, [][]int{})
+
+		for y, arr1 := range arr0 {
+			scene.InitLayerArr[z] = append(scene.InitLayerArr[z], []int{})
+
+			for _, v := range arr1 {
+				area := getBlockArea(v)
+
+				scene.InitLayerArr[z][y] = append(scene.InitLayerArr[z][y], area)
+			}
+		}
+	}
 
 	return nil
 }
