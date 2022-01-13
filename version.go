@@ -1,4 +1,4 @@
 package block7
 
 // Version -
-const Version = "v0.3.241"
+const Version = "v0.3.242"
