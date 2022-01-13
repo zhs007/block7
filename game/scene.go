@@ -1391,8 +1391,13 @@ func (scene *Scene) resetInitLayerArr(stage *Stage) error {
 
 			for _, v := range arr1 {
 				area := getBlockArea(v)
+				block := getBlockSpecialBlock(v)
 
-				scene.InitLayerArr[z][y] = append(scene.InitLayerArr[z][y], area)
+				if block > 0 {
+					scene.InitLayerArr[z][y] = append(scene.InitLayerArr[z][y], 0)
+				} else {
+					scene.InitLayerArr[z][y] = append(scene.InitLayerArr[z][y], area)
+				}
 			}
 		}
 	}
