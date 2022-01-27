@@ -54,6 +54,16 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "env": {"PLUGIN":"basic"}
+        },        
+        {
+            "name": "servtest",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/servtest/main.go",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {"PLUGIN":"basic"}
         }
     ]
 }

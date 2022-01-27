@@ -11,7 +11,8 @@ func main() {
 	goutils.InitLogger("block7serv.client", block7.Version,
 		"info", true, "./logs")
 
-	ret, buf, err := block7http.HTTPGet("http://127.0.0.1:3723/v1/games/login?game=block7&platform=web&abVersion=b&userHash=5090LVE4VuAcMazw", nil)
+	ret, buf, err := block7http.HTTPGet("http://127.0.0.1:3723/v1/games/login?game=block7&platform=web&abVersion=a&userHash=DuvHsjX4cBj3ayOh", nil)
+	// ret, buf, err := block7http.HTTPGet("http://127.0.0.1:3723/v1/games/login?game=block7&platform=web&abVersion=a", nil)
 	if err != nil {
 		goutils.Error("HTTPGet",
 			zap.Error(err))
@@ -36,7 +37,7 @@ func main() {
 	// 	zap.Int("ret", ret),
 	// 	zap.String("buf", string(buf)))
 
-	ret, buf, err = block7http.HTTPGet("http://127.0.0.1:3723/v1/games/mission?userHash=5090LVE4VuAcMazw&missionid=16", nil)
+	ret, buf, err = block7http.HTTPGet("http://127.0.0.1:3723/v1/games/mission?userHash=DuvHsjX4cBj3ayOh&missionid=26", nil)
 	if err != nil {
 		goutils.Error("HTTPGet",
 			zap.Error(err))

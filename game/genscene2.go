@@ -272,7 +272,13 @@ func NewScene2(rng IRng, stage *Stage, symbols []int, blockNums int, ld2 *LevelD
 					c := getBlockSpecialLayer(v)
 					d := getBlockSpecialBlock(v)
 
-					MgrSpecial.Gen2(scene, x, y, z, c, d)
+					err := MgrSpecial.Gen2(scene, x, y, z, c, d)
+					if err != nil {
+						goutils.Warn("NewScene:MgrSpecial.Gen2",
+							zap.Error(err))
+
+						return nil, err
+					}
 				}
 			}
 		}

@@ -1,6 +1,9 @@
 package block7game
 
-import goutils "github.com/zhs007/goutils"
+import (
+	goutils "github.com/zhs007/goutils"
+	"go.uber.org/zap"
+)
 
 // SpecialCake - cake
 type SpecialCake struct {
@@ -90,6 +93,16 @@ func (cake *SpecialCake) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (cake *SpecialCake) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	if scene.InitArr[z][y][x] > 0 {
+		goutils.Error("SpecialCake:OnGen2",
+			zap.Int("x", x),
+			zap.Int("y", y),
+			zap.Int("z", z),
+			zap.Error(ErrRecoveBlock))
+
+		return nil, ErrRecoveBlock
+	}
+
 	scene.InitArr[z][y][x] = cake.cakeID
 
 	return nil, nil

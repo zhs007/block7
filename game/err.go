@@ -43,4 +43,6 @@ var (
 	ErrInvalidMapExcelWidthHeight = errors.New("invalid MapExcel Width Height")
 	// ErrInvalidBlockNumber - invalid block number
 	ErrInvalidBlockNumber = errors.New("invalid block number")
+	// ErrRecoveBlock - invalid recove block
+	ErrRecoveBlock = errors.New("invalid recove block")
 )
