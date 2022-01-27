@@ -1,5 +1,10 @@
 package block7game
 
+import (
+	goutils "github.com/zhs007/goutils"
+	"go.uber.org/zap"
+)
+
 // SpecialBomb2 - bomb
 type SpecialBomb2 struct {
 	specialID int
@@ -48,6 +53,16 @@ func (bomb *SpecialBomb2) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (bomb *SpecialBomb2) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	if scene.InitArr[z][y][x] > 0 {
+		goutils.Error("SpecialBomb2:OnGen2",
+			zap.Int("x", x),
+			zap.Int("y", y),
+			zap.Int("z", z),
+			zap.Error(ErrRecoveBlock))
+
+		return nil, ErrRecoveBlock
+	}
+
 	scene.InitArr[z][y][x] = bomb.bombID
 
 	return nil, nil

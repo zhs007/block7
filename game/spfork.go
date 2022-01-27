@@ -1,5 +1,10 @@
 package block7game
 
+import (
+	"github.com/zhs007/goutils"
+	"go.uber.org/zap"
+)
+
 // SpecialFork - fork
 type SpecialFork struct {
 	specialID int
@@ -44,6 +49,16 @@ func (fork *SpecialFork) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (fork *SpecialFork) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	if scene.InitArr[z][y][x] > 0 {
+		goutils.Error("SpecialFork:OnGen2",
+			zap.Int("x", x),
+			zap.Int("y", y),
+			zap.Int("z", z),
+			zap.Error(ErrRecoveBlock))
+
+		return nil, ErrRecoveBlock
+	}
+
 	scene.InitArr[z][y][x] = fork.forkID
 
 	return nil, nil

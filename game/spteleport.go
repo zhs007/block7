@@ -1,5 +1,10 @@
 package block7game
 
+import (
+	goutils "github.com/zhs007/goutils"
+	"go.uber.org/zap"
+)
+
 // SpecialTeleport - teleport
 type SpecialTeleport struct {
 	specialID  int
@@ -48,6 +53,16 @@ func (teleport *SpecialTeleport) GetSpecialLayerType() int {
 
 // OnGen2 - OnGen2
 func (teleport *SpecialTeleport) OnGen2(scene *Scene, x, y, z int) (*SpecialLayer, error) {
+	if scene.InitArr[z][y][x] > 0 {
+		goutils.Error("SpecialTeleport:OnGen2",
+			zap.Int("x", x),
+			zap.Int("y", y),
+			zap.Int("z", z),
+			zap.Error(ErrRecoveBlock))
+
+		return nil, ErrRecoveBlock
+	}
+
 	scene.InitArr[z][y][x] = teleport.teleportID
 
 	return nil, nil
