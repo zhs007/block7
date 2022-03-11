@@ -253,7 +253,7 @@ func (db *StatsDB) onTimer() {
 	}
 
 	// firstuserid := int64(0)
-	dayfirstuid := int64(0)
+	// dayfirstuid := int64(0)
 
 	goutils.Info("StatsDB.onTimer",
 		zap.String("first", time.Unix(firstts, 0).Format("2006-01-02_15:04:05")),
@@ -262,57 +262,57 @@ func (db *StatsDB) onTimer() {
 	)
 
 	for range db.ticker.C {
-		nt := time.Now()
-		curts := goutils.FormatUTCDayTs(nt)
-		cdt := time.Unix(curts, 0)
+		// nt := time.Now()
+		// curts := goutils.FormatUTCDayTs(nt)
+		// cdt := time.Unix(curts, 0)
 
-		// new day
-		if curts != latestdayts {
-			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, dayfirstuid)
-			if err != nil {
-				goutils.Warn("StatsDB.onTimer:findTodayFirstUserID:newday",
-					zap.Error(err))
-			}
+		// // new day
+		// if curts != latestdayts {
+		// 	uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, dayfirstuid)
+		// 	if err != nil {
+		// 		goutils.Warn("StatsDB.onTimer:findTodayFirstUserID:newday",
+		// 			zap.Error(err))
+		// 	}
 
-			dayfirstuid = uid
+		// 	dayfirstuid = uid
 
-			latestdayts = curts
-		}
+		// 	latestdayts = curts
+		// }
 
-		if dayfirstuid == 0 {
-			uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, 0)
-			if err != nil {
-				goutils.Warn("StatsDB.onTimer:findTodayFirstUserID",
-					zap.Error(err))
-			}
+		// if dayfirstuid == 0 {
+		// 	uid, err := db.userDB.findTodayFirstUserID(context.Background(), cdt, 0)
+		// 	if err != nil {
+		// 		goutils.Warn("StatsDB.onTimer:findTodayFirstUserID",
+		// 			zap.Error(err))
+		// 	}
 
-			dayfirstuid = uid
-		}
+		// 	dayfirstuid = uid
+		// }
 
-		dsd, err := db.genDayStats(context.Background(), cdt, dayfirstuid)
-		if err != nil {
-			goutils.Warn("StatsDB.onTimer:GenDayStats",
-				zap.Error(err))
-		}
+		// dsd, err := db.genDayStats(context.Background(), cdt, dayfirstuid)
+		// if err != nil {
+		// 	goutils.Warn("StatsDB.onTimer:GenDayStats",
+		// 		zap.Error(err))
+		// }
 
-		dsd.Ts = nt.Unix()
+		// dsd.Ts = nt.Unix()
 
-		err = db.UpdDayStats(context.Background(), dsd)
-		if err != nil {
-			goutils.Warn("StatsDB.onTimer:UpdDayStats",
-				zap.Error(err))
-		}
+		// err = db.UpdDayStats(context.Background(), dsd)
+		// if err != nil {
+		// 	goutils.Warn("StatsDB.onTimer:UpdDayStats",
+		// 		zap.Error(err))
+		// }
 
-		if firstts == 0 {
-			firstts = nt.Unix()
-			db.setFirstStatsTs(context.Background(), firstts)
-		}
+		// if firstts == 0 {
+		// 	firstts = nt.Unix()
+		// 	db.setFirstStatsTs(context.Background(), firstts)
+		// }
 
-		latestts = nt.Unix()
-		db.setLatestStatsTs(context.Background(), latestts)
+		// latestts = nt.Unix()
+		// db.setLatestStatsTs(context.Background(), latestts)
 
-		goutils.Info("StatsDB.onTimer:end",
-			zap.Duration("cost", time.Duration(time.Now().UnixNano()-nt.UnixNano())))
+		// goutils.Info("StatsDB.onTimer:end",
+		// 	zap.Duration("cost", time.Duration(time.Now().UnixNano()-nt.UnixNano())))
 	}
 }
 
