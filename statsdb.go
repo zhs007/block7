@@ -311,8 +311,8 @@ func (db *StatsDB) onTimer() {
 		// latestts = nt.Unix()
 		// db.setLatestStatsTs(context.Background(), latestts)
 
-		goutils.Info("StatsDB.onTimer:end",
-			zap.Duration("cost", time.Duration(time.Now().UnixNano()-nt.UnixNano())))
+		// goutils.Info("StatsDB.onTimer:end",
+		// 	zap.Duration("cost", time.Duration(time.Now().UnixNano()-nt.UnixNano())))
 	}
 }
 
