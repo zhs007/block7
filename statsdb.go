@@ -253,7 +253,7 @@ func (db *StatsDB) onTimer() {
 	}
 
 	// firstuserid := int64(0)
-	dayfirstuid := int64(0)
+	// dayfirstuid := int64(0)
 
 	goutils.Info("StatsDB.onTimer",
 		zap.String("first", time.Unix(firstts, 0).Format("2006-01-02_15:04:05")),
