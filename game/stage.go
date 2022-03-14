@@ -3,6 +3,7 @@ package block7game
 import (
 	"fmt"
 	"io/ioutil"
+	"strings"
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/xuri/excelize/v2"
@@ -189,6 +190,14 @@ func (stage *Stage) Analyze2(name string) (*MapState, error) {
 
 	areaBlockNums := make([]int, len(ms.AreaBlockNums))
 	for k, v := range ms.AreaBlockNums {
+		if k <= 0 {
+			goutils.Warn("Stage.Analyze2",
+				zap.Int("area", k),
+				zap.Error(ErrInvalidMapExcelArea))
+
+			return nil, ErrInvalidMapExcelArea
+		}
+
 		areaBlockNums[k-1] = v
 	}
 
@@ -249,6 +258,44 @@ func LoadExcel(fn string) (*Stage, error) {
 	}
 
 	for _, sheet := range lstname {
+		if sheet == "base" {
+			rows, err := f.GetRows(sheet)
+			if err != nil {
+				goutils.Error("loadExcel:GetRows",
+					zap.String("fn", fn),
+					zap.Error(err))
+
+				return nil, err
+			}
+
+			h := len(rows)
+			w := len(rows[0])
+
+			if h > 0 && w >= 2 {
+				for _, yarr := range rows {
+					if yarr[0] == "layerlevel" {
+						stage.LayerLevel = nil
+
+						arr := strings.Split(yarr[1], ",")
+						for _, v := range arr {
+							ci, err := goutils.String2Int64(v)
+							if err != nil {
+								goutils.Error("loadExcel:layerlevel:String2Int64",
+									zap.String("fn", fn),
+									zap.Error(err))
+
+								return nil, err
+							}
+
+							stage.LayerLevel = append(stage.LayerLevel, int(ci))
+						}
+					}
+				}
+			}
+
+			continue
+		}
+
 		rows, err := f.GetRows(sheet)
 		if err != nil {
 			goutils.Error("loadExcel:GetRows",
@@ -306,6 +353,18 @@ func LoadExcel(fn string) (*Stage, error) {
 	}
 
 	stage.IconNums = stage.CountSymbols()
+
+	if len(stage.LayerLevel) > 0 {
+		if len(stage.LayerLevel) != len(stage.Layer) {
+			goutils.Error("loadExcel:checkWeightHeight",
+				zap.String("fn", fn),
+				zap.Int("layerlevel.len", len(stage.LayerLevel)),
+				zap.Int("layer.len", len(stage.Layer)),
+				zap.Error(ErrInvalidMapExcelLayerLevelLength))
+
+			return nil, ErrInvalidMapExcelLayerLevelLength
+		}
+	}
 
 	return stage, nil
 }

@@ -45,4 +45,8 @@ var (
 	ErrInvalidBlockNumber = errors.New("invalid block number")
 	// ErrRecoveBlock - invalid recove block
 	ErrRecoveBlock = errors.New("invalid recove block")
+	// ErrInvalidMapExcelLayerLevelLength - invalid MapExcel layerlevel length
+	ErrInvalidMapExcelLayerLevelLength = errors.New("invalid MapExcel layerlevel length")
+	// ErrInvalidMapExcelArea - invalid MapExcel area
+	ErrInvalidMapExcelArea = errors.New("invalid MapExcel area")
 )
