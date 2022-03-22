@@ -1,0 +1,12 @@
+[{"id":"1","name":"大礼包","title":"Super Offer","type":"1","color":"1","reward":"1001,3000,20001,40,20002,40,20003,35,20007,35","price":"4999","iapid":"019","iapid2":""},
+{"id":"2","name":"小礼包","title":"Big Offer","type":"2","color":"2","reward":"1001,1200,20001,12,20002,12,20003,12,20007,12","price":"1999","iapid":"018","iapid2":""},
+{"id":"3","name":"道具组合","title":"Props Gift","type":"3","color":"2","reward":"20001,6,20002,6,20003,6,20007,6","price":"599","iapid":"014","iapid2":""},
+{"id":"4","name":"镜子","title":"","type":"4","color":"1","reward":"20007,10","price":"399","iapid":"011","iapid2":""},
+{"id":"5","name":"炸弹","title":"","type":"4","color":"1","reward":"20003,10","price":"299","iapid":"005","iapid2":""},
+{"id":"6","name":"刷新","title":"","type":"4","color":"1","reward":"20002,20","price":"199","iapid":"012","iapid2":""},
+{"id":"7","name":"回退","title":"","type":"4","color":"1","reward":"20001,12","price":"199","iapid":"013","iapid2":""},
+{"id":"8","name":"1200金币","title":"","type":"4","color":"1","reward":"1001,1200","price":"999","iapid":"003","iapid2":""},
+{"id":"9","name":"500金币","title":"","type":"4","color":"1","reward":"1001,500","price":"499","iapid":"002","iapid2":""},
+{"id":"10","name":"100金币","title":"","type":"4","color":"1","reward":"1001,100","price":"99","iapid":"001","iapid2":""},
+{"id":"11","name":"订阅","title":"","type":"4","color":"1","reward":"1001,100","price":"599","iapid":"010","iapid2":"dingyue"},
+{"id":"12","name":"新手礼包","title":"Novice gift pack","type":"5","color":"3","reward":"1001,500,20001,5,20002,5,20003,5,20007,5","price":"499","iapid":"023","iapid2":"xinshou"}]

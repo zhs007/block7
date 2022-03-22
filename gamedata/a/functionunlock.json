@@ -1,11 +1,12 @@
-[{"id":"20000001","levelnum":"25","posname":"homeview","unlock name":"广告礼包"},
-{"id":"20000002","levelnum":"7","posname":"gameview","unlockname":"刷新道具"},
-{"id":"20000003","levelnum":"27","posname":"gameview","unlockname":"炸弹道具"},
-{"id":"20000004","levelnum":"4","posname":"gameview","unlockname":"回退道具"},
+[{"id":"20000001","levelnum":"11","posname":"homeview","unlock name":"广告礼包"},
+{"id":"20000002","levelnum":"9","posname":"gameview","unlockname":"刷新道具"},
+{"id":"20000003","levelnum":"14","posname":"gameview","unlockname":"炸弹道具"},
+{"id":"20000004","levelnum":"3","posname":"gameview","unlockname":"回退道具"},
 {"id":"20000005","levelnum":"375","posname":"gameview","unlockname":"开格子"},
-{"id":"20000006","levelnum":"20","posname":"homeview","unlockname":"七日礼包"},
+{"id":"20000006","levelnum":"6","posname":"homeview","unlockname":"七日礼包"},
 {"id":"20000007","levelnum":"375","posname":"buffview","unlockname":"糖罐"},
 {"id":"20000008","levelnum":"375","posname":"buffview","unlockname":"钥匙"},
 {"id":"20000009","levelnum":"375","posname":"buffview","unlockname":"老虎机"},
 {"id":"20000010","levelnum":"15","posname":"homeview","unlockname":"任务系统"},
-{"id":"20000011","levelnum":"30","posname":"homeview","unlockname":"订阅系统"}]
+{"id":"20000011","levelnum":"31","posname":"homeview","unlockname":"订阅系统"},
+{"id":"20000012","levelnum":"20","posname":"gameview","unlockname":"超级返回"}]

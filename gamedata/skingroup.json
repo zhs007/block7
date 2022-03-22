@@ -1,0 +1,306 @@
+[
+    {
+        "info": "NewSkinRoom",
+        "code": "1",
+        "default": "50850,21141",
+        "items": "50801,50802,50803,50804,50805,50806,50807,50808,50821,50822,50823,50824,50825,50826,50827,50828,50829,50830,50850,50851,50852,50853,50854,50855,50856,50857,50858,50859,50860,50861,50862,50863,21141,21144,21145",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_diannao",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6,7,8",
+                "prefab": "skin_new_person_diannao",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "diannao1",
+                    "triggerAni": "diannao2"
+                }
+            },
+            {
+                "parts": "9,10,11,12,13,14,15,16,17,18,19,20,21,22",
+                "prefab": "skin_new_background_diannao",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ]
+    },
+    {
+        "info": "NewSkinRoom",
+        "code": "2",
+        "default": "50150,50151,50152,21231",
+        "items": "50101,50102,50103,50104,50105,50106,50107,50108,50121,50122,50123,50124,50125,50126,50150,50151,50152,50153,50154,50155,50156,50157,50158,21231,21234,21235",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_huwai",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6",
+                "prefab": "skin_new_person_huwai",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "huang1",
+                    "triggerAni": "huang2"
+                }
+            },
+            {
+                "parts": "7,8,9,10,11,12,13,14,15",
+                "prefab": "skin_new_background_huwai",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ]
+    },
+    {
+        "info": "NewSkinRoom",
+        "code": "3",
+        "default": "50250,21121",
+        "items": "50201,50202,50203,50204,50205,50206,50207,50208,50221,50222,50223,50224,50225,50226,50227,50228,50229,50230,50250,50251,50252,50253,50254,50255,50256,50257,50258,50259,50260,21121,21124,21125",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_haibian",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6,7,8",
+                "prefab": "skin_new_person_haibian",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "bai1",
+                    "triggerAni": "bai2"
+                }
+            },
+            {
+                "parts": "9,10,11,12,13,14,15,16,17,18,19",
+                "prefab": "skin_new_background_haibian",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ] 
+    },
+    {
+        "info": "NewSkinRoom",
+        "code": "4",
+        "default": "50350,50356,21211",
+        "items": "50301,50302,50303,50304,50305,50306,50307,50308,50321,50322,50323,50324,50325,50326,50327,50328,50329,50330,50331,50332,50350,50351,50352,50353,50354,50355,50356,50357,50358,50359,50360,21211,21214,21215",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_sltl",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6,7,8,9",
+                "prefab": "skin_new_person_sltl",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "silaitelin1",
+                    "triggerAni": "silaitelin2"
+                }
+            },
+            {
+                "parts": "10,11,12,13,14,15,16,17,18,19,20",
+                "prefab": "skin_new_background_sltl",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ]
+    },
+    {
+        "info": "NewSkinRoom",
+        "code": "5",
+        "default": "50450,21221",
+        "items": "50401,50402,50403,50404,50405,50406,50407,50408,50421,50422,50423,50424,50425,50426,50427,50428,50429,50430,50431,50432,50450,50451,50452,50453,50454,50455,50456,21221,21224,21225",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_bosi",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6,7,8,9",
+                "prefab": "skin_new_person_bosi",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "moli1",
+                    "triggerAni": "moli2"
+                }
+            },
+            {
+                "parts": "10,11,12,13,14,15,16",
+                "prefab": "skin_new_background_bosi",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ]
+    },
+    {
+        "info": "NewSkinRoom",
+        "code": "6",
+        "default": "50550,21131",
+        "items": "50501,50502,50503,50504,50505,50506,50507,50508,50521,50522,50523,50524,50525,50526,50527,50528,50529,50530,50550,50551,50552,50553,50554,50555,50556,50557,50558,50559,21131,21134,21135",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_lifu",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6,7,8",
+                "prefab": "skin_new_person_lifu",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "lifu1",
+                    "triggerAni": "lifu2"
+                }
+            },
+            {
+                "parts": "9,10,11,12,13,14,15,16,17,18",
+                "prefab": "skin_new_background_lifu",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ]
+    },
+    {
+        "info": "NewSkinRoom",
+        "code": "7",
+        "default": "50650,21241",
+        "items": "50601,50602,50603,50604,50605,50606,50607,50608,50621,50622,50623,50624,50625,50626,50627,50628,50629,50630,50631,50632,50650,50651,50652,50653,50654,50655,50656,50657,21241,21244,21245",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_gongzhu",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6,7,8,9",
+                "prefab": "skin_new_person_gongzhu",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "gongzhu1",
+                    "triggerAni": "gongzhu2"
+                }
+            },
+            {
+                "parts": "10,11,12,13,14,15,16,17",
+                "prefab": "skin_new_background_gongzhu",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ]
+    },
+    {
+        "info": "NewSkinRoom",
+        "code": "8",
+        "default": "50750,21191",
+        "items": "50701,50702,50703,50704,50705,50706,50707,50708,50721,50722,50723,50724,50725,50726,50750,50751,50752,50753,50754,50755,50756,50757,50758,50759,50760,50761,21191,21194,21195",
+        "parts": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
+		"rewards":"1001,50,20001,2,20002,2,20003,2,20007,2",
+        "screen": "block_unlock_bg_zhifu",
+        "prefabs": [
+            {
+                "parts": "",
+                "prefab": "skin_new_person_shuiyi",
+                "pos": "default",
+                "ani": {
+                    "normalAni": "shuiyi1",
+                    "triggerAni": "shuiyi2"
+                }
+            },
+            {
+                "parts": "1,2,3,4,5,6",
+                "prefab": "skin_new_person_zhifu",
+                "pos": "person",
+                "ani": {
+                    "normalAni": "zi1",
+                    "triggerAni": "zi2"
+                }
+            },
+            {
+                "parts": "7,8,9,10,11,12,13,14,15,16,17,18",
+                "prefab": "skin_new_background_zhifu",
+                "pos": "background",
+                "ani": {
+                    "normalAni": "001",
+                    "triggerAni": "000"
+                }
+            }
+        ]
+    }
+]
