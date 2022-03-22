@@ -1,0 +1,12 @@
+[
+{"id":"30001","difficult":"5","map":"190","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30002","difficult":"5","map":"105","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30003","difficult":"5","map":"107","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30004","difficult":"5","map":"113","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30005","difficult":"5","map":"124","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30006","difficult":"5","map":"126","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30007","difficult":"5","map":"134","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30008","difficult":"5","map":"144","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30009","difficult":"5","map":"158","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"},
+{"id":"30010","difficult":"5","map":"174","minType":"11","maxType":"11","specialType":"0","iconType":"11001,11002,11003,11004,11005,11006,11007,11008,11009,11010","reward":"1001,20","disnums":"3","addtype":"3","addvalue":"4","addnums":"1"}
+]

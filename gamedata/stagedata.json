@@ -1,0 +1,17 @@
+[
+{"stage":"1","starnum":"0","theme":"moren"},
+{"stage":"2","starnum":"25","theme":"lan"},
+{"stage":"3","starnum":"50","theme":"lv"},
+{"stage":"4","starnum":"75","theme":"senlin"},
+{"stage":"5","starnum":"100","theme":"moren"},
+{"stage":"6","starnum":"125","theme":"lan"},
+{"stage":"7","starnum":"150","theme":"lv"},
+{"stage":"8","starnum":"175","theme":"senlin"},
+{"stage":"9","starnum":"200","theme":"moren"},
+{"stage":"10","starnum":"225","theme":"lan"},
+{"stage":"11","starnum":"250","theme":"lv"},
+{"stage":"12","starnum":"275","theme":"senlin"},
+{"stage":"13","starnum":"300","theme":"moren"},
+{"stage":"14","starnum":"325","theme":"lan"},
+{"stage":"15","starnum":"350","theme":"lv"}
+]

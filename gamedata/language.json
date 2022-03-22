@@ -1,0 +1,22 @@
+{
+	"TEST_VERSION": {
+		"EN": "Test Version",
+		"TC": "測試版本",
+		"SC": "测试版本"
+	},
+	"SERVER_IS_DISCONNTECTED_LOGIN_IN_AGAIN": {
+		"EN": "The Server is Disconnected, Please Log In Again!",
+		"TC": "服務器已斷開鏈接，請重新登錄!",
+		"SC": "服务器已断开连接，请重新登录!"
+	},
+	"DAILY_TASK": {
+		"EN": "Daily Quest",
+		"TC": "每日任務!",
+		"SC": "每日任务!"
+	},
+	"OCCUPIED": {
+		"EN": "Occupied",
+		"TC": "使用中",
+		"SC": "使用中"
+	}
+}

@@ -1,0 +1,14 @@
+[
+{"id":"0","type":"1","pic":"20001","rewards":"20001,1","price":"","iapid":""},
+{"id":"1","type":"1","pic":"20002","rewards":"20002,1","price":"","iapid":""},
+{"id":"2","type":"2","pic":"20001","rewards":"1001,100,20001,1,20007,1","price":"199","iapid":"021"},
+{"id":"3","type":"1","pic":"1005","rewards":"1005,10","price":"","iapid":""},
+{"id":"4","type":"1","pic":"20003","rewards":"20003,1","price":"","iapid":""},
+{"id":"5","type":"1","pic":"20007","rewards":"20007,1","price":"","iapid":""},
+{"id":"6","type":"2","pic":"20001","rewards":"1001,100,20002,2,20003,2","price":"199","iapid":"022"},
+{"id":"7","type":"1","pic":"20001","rewards":"20001,2","price":"","iapid":""},
+{"id":"8","type":"1","pic":"20002","rewards":"20002,2","price":"","iapid":""},
+{"id":"9","type":"1","pic":"1001","rewards":"1001,100","price":"","iapid":""},
+{"id":"10","type":"1","pic":"20003","rewards":"20003,2","price":"","iapid":""},
+{"id":"11","type":"1","pic":"20007","rewards":"20007,2","price":"","iapid":""}
+]

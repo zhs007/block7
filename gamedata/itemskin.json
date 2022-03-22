@@ -1,0 +1,2017 @@
+[{
+	"info": "户外人物-黄色长裙",
+	"code": "50101",
+	"part": "1,1",
+	"type": "Yellow dress",
+	"slots": "huang13,huang14,huang15,huang17,huang18,huang29,huang30,fen42",
+	"hideSlots": "",
+	"attachments": "huang13,huang14,huang15,huang17,huang18,huang29,huang30,huang16",
+	"ani": ""
+}, {
+	"info": "户外人物-粉色长裙",
+	"code": "50102",
+	"part": "1,2",
+	"type": "Pink dress",
+	"slots": "huang13,huang14,huang15,huang17,huang18,huang29,huang30,fen42",
+	"hideSlots": "",
+	"attachments": "fen13,fen14,fen15,fen17,fen18,fen29,fen30,fen16",
+	"ani": ""
+}, {
+	"info": "户外人物-脸部默认（眉毛,眼睛,眼妆）",
+	"code": "50103",
+	"part": "2,0",
+	"type": "Make up",
+	"slots": "lian,meimao1,meimao2,huang10,yanzhuang1,yanzhuang2",
+	"hideSlots": "",
+	"attachments": "moren_lian,huang37,huang38,moren_yanzhu,fen00,fen01",
+	"ani": ""
+}, {
+	"info": "户外人物-脸部1",
+	"code": "50104",
+	"part": "2,1",
+	"type": "Make up1",
+	"slots": "lian,meimao1,meimao2,huang10,yanzhuang1,yanzhuang2",
+	"hideSlots": "",
+	"attachments": "moren_lian,huang37,huang38,huang10,fen00,fen01",
+	"ani": ""
+}, {
+	"info": "户外人物-脸部2",
+	"code": "50105",
+	"part": "2,2",
+	"type": "Make up2",
+	"slots": "lian,meimao1,meimao2,huang10,yanzhuang1,yanzhuang2",
+	"hideSlots": "",
+	"attachments": "moren_lian,fen37,fen38,fen10,fen00,fen01",
+	"ani": ""
+}, {
+	"info": "户外人物-默认头发",
+	"code": "50106",
+	"part": "3,0",
+	"type": "Hair",
+	"slots": "moren_wanzi,moren_wanzi2",
+	"hideSlots": "toufa1,toufa2,toufa3,toufa4",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "户外人物-黄色长发",
+	"code": "50107",
+	"part": "3,1",
+	"type": "Yellow hair",
+	"slots": "toufa1,toufa2,toufa3,toufa4",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "huang36,huang35,huang12,huang32",
+	"ani": ""
+}, {
+	"info": "户外人物-粉色长发",
+	"code": "50108",
+	"part": "3,2",
+	"type": "Pink hair",
+	"slots": "toufa1,toufa2,toufa3,toufa4",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "fen36,fen35,fen12,fen32",
+	"ani": ""
+}, {
+	"info": "户外人物-发带1",
+	"code": "50121",
+	"part": "4,1",
+	"type": "Hair band1",
+	"slots": "fashi1,fashi2",
+	"hideSlots": "",
+	"attachments": "huang34,huang33",
+	"ani": ""
+}, {
+	"info": "户外人物-发带2",
+	"code": "50122",
+	"part": "4,2",
+	"type": "Hair band2",
+	"slots": "fashi1,fashi2",
+	"hideSlots": "",
+	"attachments": "fen34,fen33",
+	"ani": ""
+}, {
+	"info": "户外人物-耳环1",
+	"code": "50123",
+	"part": "5,1",
+	"type": "Blue earring",
+	"slots": "erhuan1,erhuan2,erhuan3,erhuan4,erhuan5",
+	"hideSlots": "",
+	"attachments": "huang04,huang06,huang07,huang08,huang09",
+	"ani": ""
+}, {
+	"info": "户外人物-耳环2",
+	"code": "50124",
+	"part": "5,2",
+	"type": "Yellow earring",
+	"slots": "erhuan1,erhuan2,erhuan3,erhuan4,erhuan5",
+	"hideSlots": "",
+	"attachments": "fen04,fen06,fen07,fen08,fen09",
+	"ani": ""
+}, {
+	"info": "户外人物-向日葵",
+	"code": "50125",
+	"part": "6,1",
+	"type": "Sunflower",
+	"slots": "xrk1,xrk2,xrk3,xrk4",
+	"hideSlots": "yjx1,yjx2,yjx3,yjx4",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "户外人物-郁金香",
+	"code": "50126",
+	"part": "6,2",
+	"type": "Tulips",
+	"slots": "yjx1,yjx2,yjx3,yjx4",
+	"hideSlots": "xrk1,xrk2,xrk3,xrk4",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "户外场景-空",
+	"code": "50150",
+	"part": "7",
+	"type": "Background",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "户外场景-帐篷地板",
+	"code": "50151",
+	"part": "8",
+	"type": "Background",
+	"slots": "huwai_zhangpeng1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhangpeng1,1"
+}, {
+	"info": "户外场景-帐篷",
+	"code": "50152",
+	"part": "9",
+	"type": "Background",
+	"slots": "huwai_zhangpeng2,huwai_zhangpeng3,huwai_zhangpeng4,huwai_diaozhui",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhangpeng2,2"
+}, {
+	"info": "户外场景-地毯",
+	"code": "50153",
+	"part": "10",
+	"type": "Carpet",
+	"slots": "huwai_ditan",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "ditan,2"
+}, {
+	"info": "户外场景-花坛",
+	"code": "50154",
+	"part": "11",
+	"type": "Flower bed",
+	"slots": "huwai_huatan",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "huatan,4"
+}, {
+	"info": "户外场景-床",
+	"code": "50155",
+	"part": "12",
+	"type": "Bed",
+	"slots": "huwai_chuang",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "chuang,3"
+}, {
+	"info": "户外场景-沙发",
+	"code": "50156",
+	"part": "13",
+	"type": "Sofa",
+	"slots": "huwai_shafa",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shafa,2"
+}, {
+	"info": "户外场景-桌子",
+	"code": "50157",
+	"part": "14",
+	"type": "Table",
+	"slots": "huwai_zhuozi",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuo,2"
+}, {
+	"info": "户外场景-椅子",
+	"code": "50158",
+	"part": "15",
+	"type": "Chair",
+	"slots": "huwai_yizi",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "yi,1"
+}, {
+	"info": "海边场景-裙子1",
+	"code": "50201",
+	"part": "1,1",
+	"type": "Pink dress",
+	"slots": "qunzi1,qunzi2,qunzi3,qunzi4",
+	"hideSlots": "",
+	"attachments": "bai23,bai22,bai27,bai21",
+	"ani": ""
+}, {
+	"info": "海边场景-裙子2",
+	"code": "50202",
+	"part": "1,2",
+	"type": "Blue dress",
+	"slots": "qunzi1,qunzi2,qunzi3,qunzi4",
+	"hideSlots": "",
+	"attachments": "lan23,lan22,lan27,lan21",
+	"ani": ""
+}, {
+	"info": "海边场景-脸部默认（眉毛,眼睛,嘴）",
+	"code": "50203",
+	"part": "2,0",
+	"type": "Make up",
+	"slots": "bai12,bai15,lian",
+	"hideSlots": "bai11",
+	"attachments": "moren_wanzi3,moren_yanzhu,moren_lian",
+	"ani": ""
+}, {
+	"info": "海边场景-脸部1",
+	"code": "50204",
+	"part": "2,1",
+	"type": "Make up1",
+	"slots": "bai12,bai15,bai11,lian",
+	"hideSlots": "",
+	"attachments": "bai12,bai15,bai11,bai13",
+	"ani": ""
+}, {
+	"info": "海边场景-脸部2",
+	"code": "50205",
+	"part": "2,2",
+	"type": "Make up2",
+	"slots": "bai12,bai15,bai11,lian",
+	"hideSlots": "",
+	"attachments": "lan12,lan15,lan11,bai13",
+	"ani": ""
+}, {
+	"info": "海边场景-默认头发",
+	"code": "50206",
+	"part": "3,0",
+	"type": "Hair",
+	"slots": "moren_wanzi,moren_wanzi2",
+	"hideSlots": "toufa1,toufa2",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "海边场景-头发1",
+	"code": "50207",
+	"part": "3,1",
+	"type": "Red hair",
+	"slots": "toufa1,toufa2",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "bai08,bai28",
+	"ani": ""
+}, {
+	"info": "海边场景-头发2",
+	"code": "50208",
+	"part": "3,2",
+	"type": "Brown hair",
+	"slots": "toufa1,toufa2",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "lan08,lan28",
+	"ani": ""
+}, {
+	"info": "海边场景-帽子1",
+	"code": "50221",
+	"part": "4,1",
+	"type": "Pink bow",
+	"slots": "maozi1,maozi2,maozi3,maozi4",
+	"hideSlots": "",
+	"attachments": "bai05,bai06,bai29,bai04",
+	"ani": ""
+}, {
+	"info": "海边场景-帽子2",
+	"code": "50222",
+	"part": "4,2",
+	"type": "Red bow",
+	"slots": "maozi1,maozi2,maozi3,maozi4",
+	"hideSlots": "",
+	"attachments": "lan05,lan06,lan29,lan04",
+	"ani": ""
+}, {
+	"info": "海边场景-耳环1",
+	"code": "50223",
+	"part": "5,1",
+	"type": "Shell earrings",
+	"slots": "erhuan1,erhuan2",
+	"hideSlots": "",
+	"attachments": "bai07,bai14",
+	"ani": ""
+}, {
+	"info": "海边场景-耳环2",
+	"code": "50224",
+	"part": "5,2",
+	"type": "Ribbon earrings",
+	"slots": "erhuan1,erhuan2",
+	"hideSlots": "",
+	"attachments": "lan07,lan14",
+	"ani": ""
+}, {
+	"info": "海边场景-项链1",
+	"code": "50225",
+	"part": "6,1",
+	"type": "Pearl necklace",
+	"slots": "bai20",
+	"hideSlots": "",
+	"attachments": "bai20",
+	"ani": ""
+}, {
+	"info": "海边场景-项链2",
+	"code": "50226",
+	"part": "6,2",
+	"type": "Sunflower necklace",
+	"slots": "bai20",
+	"hideSlots": "",
+	"attachments": "lan20",
+	"ani": ""
+}, {
+	"info": "海边场景-手镯1",
+	"code": "50227",
+	"part": "7,1",
+	"type": "Pearl bracelet",
+	"slots": "bai01,bai18,bai24",
+	"hideSlots": "",
+	"attachments": "bai01,bai18,bai24",
+	"ani": ""
+}, {
+	"info": "海边场景-手镯2",
+	"code": "50228",
+	"part": "7,2",
+	"type": "Ribbon bracelet",
+	"slots": "bai01,bai18,bai24",
+	"hideSlots": "",
+	"attachments": "lan01,lan18,lan24",
+	"ani": ""
+}, {
+	"info": "海边场景-饮品1",
+	"code": "50229",
+	"part": "8,1",
+	"type": "Blue drink",
+	"slots": "yp1,yp2,yp3",
+	"hideSlots": "",
+	"attachments": "bai30,bai03,lan02",
+	"ani": ""
+}, {
+	"info": "海边场景-饮品2",
+	"code": "50230",
+	"part": "8,2",
+	"type": "Orange drink",
+	"slots": "yp1,yp2,yp3",
+	"hideSlots": "",
+	"attachments": "lan30,lan03,lan02",
+	"ani": ""
+}, {
+	"info": "海边场景-空",
+	"code": "50250",
+	"part": "9",
+	"type": "Background",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "海边场景-吧台",
+	"code": "50251",
+	"part": "10",
+	"type": "Counterund",
+	"slots": "haibian_batai",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "batai,1"
+}, {
+	"info": "海边场景-吧椅",
+	"code": "50252",
+	"part": "11",
+	"type": "Bar chair",
+	"slots": "haibian_bayi1,haibian_bayi2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "bayi,2"
+}, {
+	"info": "海边场景-浆",
+	"code": "50253",
+	"part": "12",
+	"type": "Oar",
+	"slots": "haibian_jiang",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "jiang,1"
+}, {
+	"info": "海边场景-挂网",
+	"code": "50254",
+	"part": "13",
+	"type": "Net",
+	"slots": "haibian_guawang,haibian_guaqi,haibian_haixing,haibian_zhenzhu",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "guawang,1"
+}, {
+	"info": "海边场景-花",
+	"code": "50255",
+	"part": "14",
+	"type": "Flower",
+	"slots": "haibian_hua1,haibian_hua2,haibian_hua3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "hua,3"
+}, {
+	"info": "海边场景-冲浪板",
+	"code": "50256",
+	"part": "15",
+	"type": "Surf board",
+	"slots": "haibian_chonglangban",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "chonglangban,2"
+}, {
+	"info": "海边场景-游泳圈1",
+	"code": "50257",
+	"part": "16",
+	"type": "Swimming ring1",
+	"slots": "haibian_yongquan1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "youyongquan1,2"
+}, {
+	"info": "海边场景-游泳圈2",
+	"code": "50258",
+	"part": "17",
+	"type": "Swimming ring2",
+	"slots": "haibian_yongquan2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "youyongquan2,2"
+}, {
+	"info": "海边场景-脚蹼",
+	"code": "50259",
+	"part": "18",
+	"type": "Webbed feet",
+	"slots": "haibian_jiaopu",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "jiaopu,3"
+}, {
+	"info": "海边场景-食物",
+	"code": "50260",
+	"part": "19",
+	"type": "Food",
+	"slots": "haibian_haibao,haibian_jiu,haibian_shiwu1,haibian_shiwu2,haibian_lipai",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shiwu,3"
+}, {
+	"info": "斯莱特林人物-衣服1",
+	"code": "50301",
+	"part": "1,1",
+	"type": "Blue cloth",
+	"slots": "yifu01,yifu02,yifu03,yifu04,yifu05,yifu06,yifu07,yifu08,yifu09,yifu10,yifu11,yifu12,yifu13",
+	"hideSlots": "",
+	"attachments": "silaitelin1_19,silaitelin1_6,silaitelin1_8,silaitelin1_34,silaitelin1_33,silaitelin1_30,silaitelin1_25,silaitelin1_27,silaitelin1_21,silaitelin1_20,silaitelin1_7,silaitelin1_28,silaitelin1_22",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-衣服2",
+	"code": "50302",
+	"part": "1,2",
+	"type": "Brown cloth",
+	"slots": "yifu01,yifu02,yifu03,yifu04,yifu05,yifu06,yifu07,yifu08,yifu09,yifu10,yifu11,yifu12,yifu13",
+	"hideSlots": "",
+	"attachments": "silaitelin2_19,silaitelin2_6,silaitelin2_8,silaitelin2_34,silaitelin2_33,silaitelin2_30,silaitelin2_25,silaitelin2_27,silaitelin2_21,silaitelin2_20,silaitelin2_7,silaitelin2_28,silaitelin2_22",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-脸部默认（脸,眉毛,眼睛,嘴）",
+	"code": "50303",
+	"part": "2,0",
+	"type": "Make up",
+	"slots": "mei,silaitelin1_15,yanzhu,silaitelin1_17",
+	"hideSlots": "",
+	"attachments": "moren_mei,moren_lian,moren_yanzhu,silaitelin1_17",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-脸部1",
+	"code": "50304",
+	"part": "2,1",
+	"type": "Make up1",
+	"slots": "mei,silaitelin1_15,yanzhu,silaitelin1_17",
+	"hideSlots": "",
+	"attachments": "silaitelin1_14,silaitelin2_15,silaitelin1_16,silaitelin1_17",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-脸部2",
+	"code": "50305",
+	"part": "2,2",
+	"type": "Make up2",
+	"slots": "mei,silaitelin1_15,yanzhu,silaitelin1_17",
+	"hideSlots": "",
+	"attachments": "silaitelin2_14,silaitelin2_15,silaitelin2_16,silaitelin1_17",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-默认头发",
+	"code": "50306",
+	"part": "3,0",
+	"type": "Hair",
+	"slots": "moren_wanzi,moren_wanzi2",
+	"hideSlots": "toufa01,toufa02,toufa03",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-头发1",
+	"code": "50307",
+	"part": "3,1",
+	"type": "Blond Hair",
+	"slots": "toufa01,toufa02,toufa03",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "silaitelin1_5,silaitelin1_18,silaitelin1_29",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-头发2",
+	"code": "50308",
+	"part": "3,2",
+	"type": "Brown hair",
+	"slots": "toufa01,toufa02,toufa03",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "silaitelin2_5,silaitelin2_18,silaitelin2_29",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-耳环1",
+	"code": "50321",
+	"part": "4,1",
+	"type": "Emerald earrings",
+	"slots": "erhuan",
+	"hideSlots": "",
+	"attachments": "silaitelin1_2",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-耳环2",
+	"code": "50322",
+	"part": "4,2",
+	"type": "Ruby earrings",
+	"slots": "erhuan",
+	"hideSlots": "",
+	"attachments": "silaitelin2_2",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-饰物1",
+	"code": "50323",
+	"part": "5,1",
+	"type": "Emerald ring",
+	"slots": "shiwu01,shiwu02,shiwu03,shiwu04,jiezhi",
+	"hideSlots": "",
+	"attachments": "silaitelin2_40,silaitelin1_1,silaitelin2_39,silaitelin2_41,silaitelin1_36",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-饰物2",
+	"code": "50324",
+	"part": "5,2",
+	"type": "Ruby ring",
+	"slots": "shiwu01,shiwu02,shiwu03,shiwu04,jiezhi",
+	"hideSlots": "",
+	"attachments": "silaitelin2_40,silaitelin1_1,silaitelin2_39,silaitelin2_41,silaitelin2_36",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-法杖挂饰1",
+	"code": "50325",
+	"part": "6,1",
+	"type": "Rabbit staff",
+	"slots": "fazhang,guashi",
+	"hideSlots": "",
+	"attachments": "silaitelin1_24,silaitelin1_23",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-法杖挂饰2",
+	"code": "50326",
+	"part": "6,2",
+	"type": "Bear staff",
+	"slots": "fazhang,guashi",
+	"hideSlots": "",
+	"attachments": "silaitelin2_24,silaitelin2_23",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-领结1",
+	"code": "50327",
+	"part": "7,1",
+	"type": "Ribbon bow tie",
+	"slots": "lingjie",
+	"hideSlots": "",
+	"attachments": "silaitelin2_37",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-领结2",
+	"code": "50328",
+	"part": "7,2",
+	"type": "Green bow tie",
+	"slots": "lingdai",
+	"hideSlots": "",
+	"attachments": "silaitelin1_42",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-眼镜1",
+	"code": "50329",
+	"part": "8,1",
+	"type": "Glasses",
+	"slots": "yanjing",
+	"hideSlots": "",
+	"attachments": "silaitelin2_38",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-眼镜2",
+	"code": "50330",
+	"part": "8,2",
+	"type": "Glasses",
+	"slots": "yanjing",
+	"hideSlots": "",
+	"attachments": "silaitelin2_42",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-书1",
+	"code": "50331",
+	"part": "9,1",
+	"type": "Green book",
+	"slots": "shu,silaitelin1_4",
+	"hideSlots": "",
+	"attachments": "silaitelin1_3,silaitelin1_4",
+	"ani": ""
+}, {
+	"info": "斯莱特林人物-书2",
+	"code": "50332",
+	"part": "9,2",
+	"type": "Red book",
+	"slots": "shu,silaitelin1_4",
+	"hideSlots": "",
+	"attachments": "silaitelin2_3,silaitelin1_4",
+	"ani": ""
+}, {
+	"info": "斯莱特林场景-空",
+	"code": "50350",
+	"part": "10",
+	"type": "Background",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "斯莱特林场景-地毯",
+	"code": "50351",
+	"part": "11",
+	"type": "Carpet",
+	"slots": "sltl_ditan",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "ditan,1"
+}, {
+	"info": "斯莱特林场景-挂旗",
+	"code": "50352",
+	"part": "12",
+	"type": "Hanging flag",
+	"slots": "sltl_daoqi,sltl_daoqi2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "guaqi,1"
+}, {
+	"info": "斯莱特林场景-盆栽1",
+	"code": "50353",
+	"part": "13",
+	"type": "Plant1",
+	"slots": "sltl_huahua2,sltl_huahua3,sltl_huahua4,sltl_huahua5,sltl_huahua6,sltl_huahua7,sltl_huahua8",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "penzai1,3"
+}, {
+	"info": "斯莱特林场景-盆栽2",
+	"code": "50354",
+	"part": "14",
+	"type": "Plant2",
+	"slots": "sltl_huahua1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "penzai2,2"
+}, {
+	"info": "斯莱特林场景-盆栽3",
+	"code": "50355",
+	"part": "15",
+	"type": "Plant3",
+	"slots": "sltl_lvzhi2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "penzai3,3"
+}, {
+	"info": "斯莱特林场景-盆栽4",
+	"code": "50356",
+	"part": "16",
+	"type": "Plant4",
+	"slots": "sltl_lvzhi1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "斯莱特林场景-桌",
+	"code": "50357",
+	"part": "17",
+	"type": "Table",
+	"slots": "sltl_zhuo",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuo,4"
+}, {
+	"info": "斯莱特林场景-吊花",
+	"code": "50358",
+	"part": "18",
+	"type": "Hanging flower",
+	"slots": "sltl_diaohua",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "diaohua,1"
+}, {
+	"info": "斯莱特林场景-书",
+	"code": "50359",
+	"part": "19",
+	"type": "Book",
+	"slots": "sltl_shu,sltl_teng2,sltl_teng2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shu,5"
+}, {
+	"info": "斯莱特林场景-花架",
+	"code": "50360",
+	"part": "20",
+	"type": "Flower rack",
+	"slots": "sltl_zhi,sltl_teng1,sltl_huajia,sltl_huajia_hua1,sltl_huajia_hua2,sltl_huajia_hua3,sltl_huajia_hua4",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "huajia,6"
+}, {
+	"info": "波斯人物-衣服1",
+	"code": "50401",
+	"part": "1,1",
+	"type": "Cloth1",
+	"slots": "kuzi,kuzi01,kuzi02,kuzi03,kuzi04,kuzi05,kuzi06,shenti,zuojian,youjian01",
+	"hideSlots": "",
+	"attachments": "ml31,ml29,ml27,ml30,ml28,ml26,mlzi67,ml41,ml42,ml01",
+	"ani": ""
+}, {
+	"info": "波斯人物-衣服2",
+	"code": "50402",
+	"part": "1,2",
+	"type": "Cloth2",
+	"slots": "kuzi,kuzi01,kuzi02,kuzi03,kuzi04,kuzi05,kuzi06,shenti,zuojian,youjian01",
+	"hideSlots": "",
+	"attachments": "mlzi31,mlzi29,mlzi27,mlzi30,mlzi28,mlzi26,mlzi67,mlzi41,mlzi42,mlzi01",
+	"ani": ""
+}, {
+	"info": "波斯人物-脸部默认",
+	"code": "50403",
+	"part": "2,0",
+	"type": "Make up",
+	"slots": "lian,miansha01,miansha02,yanzhu,mei",
+	"hideSlots": "",
+	"attachments": "moren_lian,mlzi60,mlzi61,moren_yanzhu,moren_mei",
+	"ani": ""
+}, {
+	"info": "波斯人物-脸部1",
+	"code": "50404",
+	"part": "2,1",
+	"type": "Make up1",
+	"slots": "lian,miansha01,miansha02,yanzhu,mei",
+	"hideSlots": "",
+	"attachments": "ml18,mlzi60,mlzi61,ml19,ml17",
+	"ani": ""
+}, {
+	"info": "波斯人物-脸部2",
+	"code": "50405",
+	"part": "2,2",
+	"type": "Make up2",
+	"slots": "lian,miansha01,miansha02,yanzhu,mei",
+	"hideSlots": "",
+	"attachments": "mlzi18,mlzi60,mlzi61,mlzi19,mlzi17",
+	"ani": ""
+}, {
+	"info": "波斯人物-头发默认",
+	"code": "50406",
+	"part": "3,0",
+	"type": "Hair",
+	"slots": "moren_wanzi,moren_wanzi2",
+	"hideSlots": "fa01,fa02,fa03",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "波斯人物-头发1",
+	"code": "50407",
+	"part": "3,1",
+	"type": "Hair1",
+	"slots": "fa01,fa02,fa03",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "ml12,ml22,ml55",
+	"ani": ""
+}, {
+	"info": "波斯人物-头发2",
+	"code": "50408",
+	"part": "3,2",
+	"type": "hair2",
+	"slots": "fa01,fa02,fa03",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "mlzi12,mlzi22,mlzi55",
+	"ani": ""
+}, {
+	"info": "波斯人物-发饰1",
+	"code": "50421",
+	"part": "4,1",
+	"type": "",
+	"slots": "fashi,sha01,sha02,sha03",
+	"hideSlots": "",
+	"attachments": "ml10,ml57,ml11,ml56",
+	"ani": ""
+}, {
+	"info": "波斯人物-发饰2",
+	"code": "50422",
+	"part": "4,2",
+	"type": "",
+	"slots": "fashi,sha01,sha02,sha03",
+	"hideSlots": "",
+	"attachments": "mlzi10,mlzi57,mlzi11,mlzi56",
+	"ani": ""
+}, {
+	"info": "波斯人物-耳环1",
+	"code": "50423",
+	"part": "5,1",
+	"type": "",
+	"slots": "er01,er02",
+	"hideSlots": "",
+	"attachments": "ml13,ml21",
+	"ani": ""
+}, {
+	"info": "波斯人物-耳环2",
+	"code": "50424",
+	"part": "5,2",
+	"type": "",
+	"slots": "er01,er02",
+	"hideSlots": "",
+	"attachments": "mlzi13,mlzi21",
+	"ani": ""
+}, {
+	"info": "波斯人物-丝带1",
+	"code": "50425",
+	"part": "6,1",
+	"type": "",
+	"slots": "sha04,sha05,sha06,sha07,sha08,sha08yy",
+	"hideSlots": "",
+	"attachments": "ml54,ml49,ml45,ml46,ml04,ml05",
+	"ani": ""
+}, {
+	"info": "波斯人物-丝带2",
+	"code": "50426",
+	"part": "6,2",
+	"type": "",
+	"slots": "sha04,sha05,sha06,sha07,sha08,sha08yy",
+	"hideSlots": "",
+	"attachments": "mlzi54,mlzi49,mlzi45,mlzi46,mlzi04,mlzi05",
+	"ani": ""
+}, {
+	"info": "波斯人物-项链1",
+	"code": "50427",
+	"part": "7,1",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "ml40",
+	"ani": ""
+}, {
+	"info": "波斯人物-项链2",
+	"code": "50428",
+	"part": "7,2",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "mlzi69",
+	"ani": ""
+}, {
+	"info": "波斯人物-腰带1",
+	"code": "50429",
+	"part": "8,1",
+	"type": "",
+	"slots": "yaodai,yaodai01,yaodai02,yaodai03,yaodai04,yaodai05,yaodai06,yaodai07,yaodai08",
+	"hideSlots": "",
+	"attachments": "ml23,ml24,ml25,mlzi65,mlzi64,mlzi63,mlzi62,mlzi66,mlzi68",
+	"ani": ""
+}, {
+	"info": "波斯人物-腰带2",
+	"code": "50430",
+	"part": "8,2",
+	"type": "",
+	"slots": "yaodai,yaodai01,yaodai02,yaodai03,yaodai04,yaodai05,yaodai06,yaodai07,yaodai08",
+	"hideSlots": "",
+	"attachments": "mlzi23,mlzi24,mlzi25,mlzi65,mlzi64,mlzi63,mlzi62,mlzi66,mlzi68",
+	"ani": ""
+}, {
+	"info": "波斯人物-手镯1",
+	"code": "50431",
+	"part": "9,1",
+	"type": "",
+	"slots": "zhuo01,zhuo02,zhuo03,zhuo04,zhuo05,zhuo06,zhuo07,zhuo07yy,zhuo08",
+	"hideSlots": "",
+	"attachments": "ml02,ml07,ml03,ml08,ml47,ml52,ml48,ml50,ml53",
+	"ani": ""
+}, {
+	"info": "波斯人物-手镯2",
+	"code": "50432",
+	"part": "9,2",
+	"type": "",
+	"slots": "zhuo01,zhuo02,zhuo07,zhuo08",
+	"hideSlots": "zhuo03,zhuo04,zhuo05,zhuo06,zhuo7yy",
+	"attachments": "mlzi02,mlzi07,mlzi47,mlzi52",
+	"ani": ""
+}, {
+	"info": "波斯场景-空",
+	"code": "50450",
+	"part": "10",
+	"type": "",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "波斯场景-黄花",
+	"code": "50451",
+	"part": "11",
+	"type": "Flower1",
+	"slots": "bosi_huanghua,bosi_huanghua2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "huanhua,1"
+}, {
+	"info": "波斯场景-粉花",
+	"code": "50452",
+	"part": "12",
+	"type": "Flower2",
+	"slots": "bosi_fenhua1,bosi_fenhua2,bosi_fenhua3,bosi_fenhua4",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "fenhua,1"
+}, {
+	"info": "波斯场景-琴",
+	"code": "50453",
+	"part": "13",
+	"type": "Harp",
+	"slots": "bosi_qin",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "qin,1"
+}, {
+	"info": "波斯场景-蒲团",
+	"code": "50454",
+	"part": "14",
+	"type": "Futon",
+	"slots": "bosi_putuan",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "putuan,1"
+}, {
+	"info": "波斯场景-灯",
+	"code": "50455",
+	"part": "15",
+	"type": "Lamp",
+	"slots": "bosi_deng",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "deng,2"
+}, {
+	"info": "波斯场景-窗帘",
+	"code": "50456",
+	"part": "16",
+	"type": "Curtain",
+	"slots": "bosi_chuanglian1,bosi_chuanglian2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "chuanglian,3"
+}, {
+	"info": "礼服人物-衣服1",
+	"code": "50501",
+	"part": "1,1",
+	"type": "Cloth1",
+	"slots": "yifu,shoutao1,shoutao2,shoutao3",
+	"hideSlots": "",
+	"attachments": "lifu_bai18,lifu_bai16,lifu_bai22,lifu_bai14",
+	"ani": ""
+}, {
+	"info": "礼服人物-衣服2",
+	"code": "50502",
+	"part": "1,2",
+	"type": "Cloth2",
+	"slots": "yifu,shoutao1,shoutao2,shoutao3",
+	"hideSlots": "",
+	"attachments": "lifu_hei18,lifu_hei16,lifu_hei22,lifu_hei14",
+	"ani": ""
+}, {
+	"info": "礼服人物-脸部默认",
+	"code": "50503",
+	"part": "2,0",
+	"type": "Make up",
+	"slots": "lian,yanzhu",
+	"hideSlots": "",
+	"attachments": "moren_lian,moren_yanzhu",
+	"ani": ""
+}, {
+	"info": "礼服人物-脸部1",
+	"code": "50504",
+	"part": "2,1",
+	"type": "Make up1",
+	"slots": "lian,yanzhu,zui",
+	"hideSlots": "",
+	"attachments": "lifu_bai08,lifu_bai09,lifu_bai05",
+	"ani": ""
+}, {
+	"info": "礼服人物-脸部2",
+	"code": "50505",
+	"part": "2,2",
+	"type": "Make up2",
+	"slots": "lian,yanzhu,zui",
+	"hideSlots": "",
+	"attachments": "lifu_bai08,lifu_hei09,lifu_hei05",
+	"ani": ""
+}, {
+	"info": "礼服人物-头发默认",
+	"code": "50506",
+	"part": "3,0",
+	"type": "Hair",
+	"slots": "moren_wanzi1,moren_wanzi2",
+	"hideSlots": "toufa1,toufa2,toufa3,toufa4",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "礼服人物-头发1",
+	"code": "50507",
+	"part": "3,1",
+	"type": "Hair1",
+	"slots": "toufa1,toufa2,toufa3,toufa4",
+	"hideSlots": "moren_wanzi1,moren_wanzi2",
+	"attachments": "lifu_bai02,lifu_bai24,lifu_bai25,lifu_bai07",
+	"ani": ""
+}, {
+	"info": "礼服人物-头发2",
+	"code": "50508",
+	"part": "3,2",
+	"type": "hair2",
+	"slots": "toufa1,toufa2,toufa3,toufa4",
+	"hideSlots": "moren_wanzi1,moren_wanzi2",
+	"attachments": "lifu_hei02,lifu_hei24,lifu_hei25,lifu_bai07",
+	"ani": ""
+}, {
+	"info": "礼服人物-耳环1",
+	"code": "50521",
+	"part": "4,1",
+	"type": "",
+	"slots": "erhuan1,erhuan2",
+	"hideSlots": "",
+	"attachments": "lifu_bai01,lifu_bai11",
+	"ani": ""
+}, {
+	"info": "礼服人物-耳环2",
+	"code": "50522",
+	"part": "4,2",
+	"type": "",
+	"slots": "erhuan1,erhuan2",
+	"hideSlots": "",
+	"attachments": "lifu_hei01,lifu_hei11",
+	"ani": ""
+}, {
+	"info": "礼服人物-项链1",
+	"code": "50523",
+	"part": "5,1",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "lifu_bai12",
+	"ani": ""
+}, {
+	"info": "礼服人物-项链2",
+	"code": "50524",
+	"part": "5,2",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "lifu_hei12",
+	"ani": ""
+}, {
+	"info": "礼服人物-手链1",
+	"code": "50525",
+	"part": "6,1",
+	"type": "",
+	"slots": "shoulian1,zhoulian2",
+	"hideSlots": "",
+	"attachments": "lifu_bai15,lifu_bai26",
+	"ani": ""
+}, {
+	"info": "礼服人物-手链2",
+	"code": "50526",
+	"part": "6,2",
+	"type": "",
+	"slots": "shoulian1,zhoulian2",
+	"hideSlots": "",
+	"attachments": "lifu_hei15,lifu_hei26",
+	"ani": ""
+}, {
+	"info": "礼服人物-戒指1",
+	"code": "50527",
+	"part": "7,1",
+	"type": "",
+	"slots": "jiezhi",
+	"hideSlots": "",
+	"attachments": "lifu_bai13",
+	"ani": ""
+}, {
+	"info": "礼服人物-戒指2",
+	"code": "50528",
+	"part": "7,2",
+	"type": "",
+	"slots": "jiezhi",
+	"hideSlots": "",
+	"attachments": "lifu_hei13",
+	"ani": ""
+}, {
+	"info": "礼服人物-酒杯1",
+	"code": "50529",
+	"part": "8,1",
+	"type": "",
+	"slots": "jiu1,jiu2,jiu3",
+	"hideSlots": "",
+	"attachments": "lifu_bai19,lifu_bai20,lifu_bai21",
+	"ani": ""
+}, {
+	"info": "礼服人物-酒杯2",
+	"code": "50530",
+	"part": "8,2",
+	"type": "",
+	"slots": "jiu1,jiu2,jiu3",
+	"hideSlots": "",
+	"attachments": "lifu_hei19,lifu_hei20,lifu_hei21",
+	"ani": ""
+}, {
+	"info": "礼服场景-空",
+	"code": "50550",
+	"part": "9",
+	"type": "",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "礼服场景-灯",
+	"code": "50551",
+	"part": "10",
+	"type": "Lamp",
+	"slots": "party_deng1,party_deng5,party_deng6,party_deng7,party_deng8,party_deng9,party_deng10,party_deng11,party_deng12,party_deng13,party_deng14,party_deng15,party_deng16,party_dengyy1,party_dengyy2,party_dengyy3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "deng,1"
+}, {
+	"info": "礼服场景-气球1",
+	"code": "50552",
+	"part": "11",
+	"type": "Balloon1",
+	"slots": "party_qiqiu,party_qiqiuyy",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "qiqiu1,2"
+}, {
+	"info": "礼服场景-气球2",
+	"code": "50553",
+	"part": "12",
+	"type": "Balloon2",
+	"slots": "party_qiqiu2,party_qiqiu3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "qiqiu2,2"
+}, {
+	"info": "礼服场景-花3",
+	"code": "50554",
+	"part": "13",
+	"type": "Flower",
+	"slots": "party_hua7",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "hua3,1"
+}, {
+	"info": "礼服场景-桌",
+	"code": "50555",
+	"part": "14",
+	"type": "Table",
+	"slots": "party_zhuo2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuo,3"
+}, {
+	"info": "礼服场景-椅子",
+	"code": "50556",
+	"part": "15",
+	"type": "Chair",
+	"slots": "party_yi,party_yi2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "yizi,3"
+}, {
+	"info": "礼服场景-花1",
+	"code": "50557",
+	"part": "16",
+	"type": "Flower1",
+	"slots": "party_hua3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "hua1,4"
+}, {
+	"info": "礼服场景-花2",
+	"code": "50558",
+	"part": "17",
+	"type": "Flower2",
+	"slots": "party_hua4",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "hua2,4"
+}, {
+	"info": "礼服场景-食物",
+	"code": "50559",
+	"part": "18",
+	"type": "Food",
+	"slots": "party_cai,party_bei2,party_bei3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shiwu,4"
+}, {
+	"info": "公主人物-衣服1",
+	"code": "50601",
+	"part": "1,1",
+	"type": "Cloth1",
+	"slots": "yifu1,yifu2,yifu3,yifu4,yifu5,yifu6,yifu7",
+	"hideSlots": "",
+	"attachments": "gz1_24,gz1_26,gz1_03,gz1_01,gz1_30,gz1_29,gz1_02",
+	"ani": ""
+}, {
+	"info": "公主人物-衣服2",
+	"code": "50602",
+	"part": "1,2",
+	"type": "Cloth2",
+	"slots": "yifu1,yifu2,yifu3,yifu4,yifu5,yifu6,yifu7",
+	"hideSlots": "",
+	"attachments": "gz2_24,gz2_26,gz2_03,gz2_01,gz2_30,gz2_29,gz2_02",
+	"ani": ""
+}, {
+	"info": "公主人物-脸部默认",
+	"code": "50603",
+	"part": "2,0",
+	"type": "Make up",
+	"slots": "lian,meimao,yanzhu,yanying1,yanying2",
+	"hideSlots": "",
+	"attachments": "moren_lian,moren_mei,moren_yanzhu,gz1_11,gz1_10",
+	"ani": ""
+}, {
+	"info": "公主人物-脸部1",
+	"code": "50604",
+	"part": "2,1",
+	"type": "Make up1",
+	"slots": "lian,meimao,yanzhu,zui,yanying1,yanying2",
+	"hideSlots": "",
+	"attachments": "gz1_13,gz1_09,gz1_14,gz1_08,gz1_11,gz1_10",
+	"ani": ""
+}, {
+	"info": "公主人物-脸部2",
+	"code": "50605",
+	"part": "2,2",
+	"type": "Make up2",
+	"slots": "lian,meimao,yanzhu,zui,yanying1,yanying2",
+	"hideSlots": "",
+	"attachments": "gz1_13,gz2_09,gz2_14,gz2_08,gz2_11,gz1_10",
+	"ani": ""
+}, {
+	"info": "公主人物-头发默认",
+	"code": "50606",
+	"part": "3,0",
+	"type": "Hair",
+	"slots": "moren_wanzi1,moren_wanzi2",
+	"hideSlots": "toufa1,toufa2,toufa3,toufa5,toufa6,toufa7,toufa8",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "公主人物-头发1",
+	"code": "50607",
+	"part": "3,1",
+	"type": "Hair1",
+	"slots": "toufa1,toufa2,toufa3,toufa5,toufa6,toufa7,toufa8",
+	"hideSlots": "moren_wanzi1,moren_wanzi2",
+	"attachments": "gz1_04,gz1_06,gz1_20,gz1_19,gz1_18,gz1_27,gz1_12",
+	"ani": ""
+}, {
+	"info": "公主人物-头发2",
+	"code": "50608",
+	"part": "3,2",
+	"type": "hair2",
+	"slots": "toufa1,toufa2,toufa3,toufa5,toufa6,toufa7,toufa8",
+	"hideSlots": "moren_wanzi1,moren_wanzi2",
+	"attachments": "gz2_04,gz2_06,gz2_20,gz2_19,gz2_18,gz2_27,gz1_12",
+	"ani": ""
+}, {
+	"info": "公主人物-发饰1",
+	"code": "50621",
+	"part": "4,1",
+	"type": "",
+	"slots": "huangguan",
+	"hideSlots": "",
+	"attachments": "gz1_05",
+	"ani": ""
+}, {
+	"info": "公主人物-发饰2",
+	"code": "50622",
+	"part": "4,2",
+	"type": "",
+	"slots": "huangguan",
+	"hideSlots": "",
+	"attachments": "gz2_05",
+	"ani": ""
+}, {
+	"info": "公主人物-耳环1",
+	"code": "50623",
+	"part": "5,1",
+	"type": "",
+	"slots": "erhuan1,erhuan2",
+	"hideSlots": "",
+	"attachments": "gz1_07,gz1_16",
+	"ani": ""
+}, {
+	"info": "公主人物-耳环2",
+	"code": "50624",
+	"part": "5,2",
+	"type": "",
+	"slots": "erhuan1,erhuan2",
+	"hideSlots": "",
+	"attachments": "gz2_07,gz2_16",
+	"ani": ""
+}, {
+	"info": "公主人物-项链1",
+	"code": "50625",
+	"part": "6,1",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "gz1_21",
+	"ani": ""
+}, {
+	"info": "公主人物-项链2",
+	"code": "50626",
+	"part": "6,2",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "gz2_21",
+	"ani": ""
+}, {
+	"info": "公主人物-胸花1",
+	"code": "50627",
+	"part": "7,1",
+	"type": "",
+	"slots": "xionghua",
+	"hideSlots": "",
+	"attachments": "gz1_23",
+	"ani": ""
+}, {
+	"info": "公主人物-胸花2",
+	"code": "50628",
+	"part": "7,2",
+	"type": "",
+	"slots": "xionghua",
+	"hideSlots": "",
+	"attachments": "gz2_23",
+	"ani": ""
+}, {
+	"info": "公主人物-裙沙1",
+	"code": "50629",
+	"part": "8,1",
+	"type": "",
+	"slots": "yaohua,qunsha",
+	"hideSlots": "",
+	"attachments": "gz1_22,gz1_25",
+	"ani": ""
+}, {
+	"info": "公主人物-裙沙2",
+	"code": "50630",
+	"part": "8,2",
+	"type": "",
+	"slots": "yaohua,qunsha",
+	"hideSlots": "",
+	"attachments": "gz2_22,gz2_25",
+	"ani": ""
+}, {
+	"info": "公主人物-手镯1",
+	"code": "50631",
+	"part": "9,1",
+	"type": "",
+	"slots": "shouzhuo",
+	"hideSlots": "",
+	"attachments": "gz1_28",
+	"ani": ""
+}, {
+	"info": "公主人物-手镯2",
+	"code": "50632",
+	"part": "9,2",
+	"type": "",
+	"slots": "shouzhuo",
+	"hideSlots": "",
+	"attachments": "gz2_28",
+	"ani": ""
+}, {
+	"info": "公主场景-空",
+	"code": "50650",
+	"part": "10",
+	"type": "",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "公主场景-花团",
+	"code": "50651",
+	"part": "11",
+	"type": "Flower cluster",
+	"slots": "gongzhu_huatuan,gongzhu_huatuan2,gongzhu_huatuan3,gongzhu_huatuan4,gongzhu_sha1,gongzhu_sha2,gongzhu_sha3,gongzhu_sha4",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "huatuan,1"
+}, {
+	"info": "公主场景-花柱",
+	"code": "50652",
+	"part": "12",
+	"type": "stylus",
+	"slots": "gongzhu_huazhu1,gongzhu_huazhu2,gongzhu_huazhu3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "huazhu,3"
+}, {
+	"info": "公主场景-植物1",
+	"code": "50653",
+	"part": "13",
+	"type": "Plant1",
+	"slots": "gongzhu_zhiwu1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhiwu1,2"
+}, {
+	"info": "公主场景-植物2",
+	"code": "50654",
+	"part": "14",
+	"type": "Plant2",
+	"slots": "gongzhu_zhiwu2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhiwu2,2"
+}, {
+	"info": "公主场景-桌",
+	"code": "50655",
+	"part": "15",
+	"type": "Table",
+	"slots": "gongzhu_zhuo,gongzhu_shiwu",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuo,4"
+}, {
+	"info": "公主场景-椅",
+	"code": "50656",
+	"part": "16",
+	"type": "Chair",
+	"slots": "gongzhu_yizi1,gongzhu_yizi3,gongzhu_tanzi",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "yi,3"
+}, {
+	"info": "公主场景-窗帘",
+	"code": "50657",
+	"part": "17",
+	"type": "Curtain",
+	"slots": "gongzhu_chuanglian1,gongzhu_chuanglian2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "chuanglian,5"
+}, {
+	"info": "制服人物-衣服1",
+	"code": "50701",
+	"part": "1,1",
+	"type": "Cloth1",
+	"slots": "shenti,fenqun01,fenqun02,fenqun03,youxiu01,youxiu02,youxiu03,zuoxiu,waiqun,youshou01,yyinying01,yyinying02,zyinying01,zyinying02,lingjie,xianglian",
+	"hideSlots": "",
+	"attachments": "lv33,zi29,zi30,zi31,lv15,zi16,lv17,lv34,lv28,lv18,lv21,lv24,lv22,zi23,zi32,lv32",
+	"ani": ""
+}, {
+	"info": "制服人物-衣服2",
+	"code": "50702",
+	"part": "1,2",
+	"type": "Cloth2",
+	"slots": "shenti,fenqun01,fenqun02,fenqun03,youxiu01,youxiu02,youxiu03,zuoxiu,waiqun,youshou01,yyinying01,yyinying02,zyinying01,zyinying02,lingjie,xianglian",
+	"hideSlots": "",
+	"attachments": "zi33,zi29,zi30,zi31,zi15,zi16,zi17,zi34,zi28,zi18,zi21,zi24,zi22,zi23,zi32,lv32",
+	"ani": ""
+}, {
+	"info": "制服人物-脸部默认",
+	"code": "50703",
+	"part": "2,0",
+	"type": "Make up",
+	"slots": "tou,mei,yanzhu,yanying01,yanying02",
+	"hideSlots": "",
+	"attachments": "moren_lian,moren_mei,moren_yanzhu,zi08,zi09",
+	"ani": ""
+}, {
+	"info": "制服人物-脸部1",
+	"code": "50704",
+	"part": "2,1",
+	"type": "Make up1",
+	"slots": "tou,mei,yanzhu,yanying01,yanying02,zui01",
+	"hideSlots": "",
+	"attachments": "lv10,lv07,lv11,zi08,zi09,lv06",
+	"ani": ""
+}, {
+	"info": "制服人物-脸部2",
+	"code": "50705",
+	"part": "2,2",
+	"type": "Make up2",
+	"slots": "tou,mei,yanzhu,yanying01,yanying02,zui01",
+	"hideSlots": "",
+	"attachments": "zi10,zi07,zi11,zi08,zi09,zi06",
+	"ani": ""
+}, {
+	"info": "制服人物-头发默认",
+	"code": "50706",
+	"part": "3,0",
+	"type": "Hair",
+	"slots": "moren_wanzi,moren_wanzi2",
+	"hideSlots": "fa01,fa02,fa03,fa04,fa05,fa06,fa07",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "制服人物-头发1",
+	"code": "50707",
+	"part": "3,1",
+	"type": "Hair1",
+	"slots": "fa01,fa02,fa03,fa04,fa05,fa06,fa07",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "lv02,lv01,lv14,lv43,lv44,lv42,lv45",
+	"ani": ""
+}, {
+	"info": "制服人物-头发2",
+	"code": "50708",
+	"part": "3,2",
+	"type": "hair2",
+	"slots": "fa01,fa02,fa03,fa04,fa05,fa06,fa07",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "zi02,zi01,zi14,zi43,zi44,zi42,zi45",
+	"ani": ""
+}, {
+	"info": "制服人物-发饰1",
+	"code": "50721",
+	"part": "4,1",
+	"type": "",
+	"slots": "fashi01,fashi02",
+	"hideSlots": "",
+	"attachments": "lv40,lv41",
+	"ani": ""
+}, {
+	"info": "制服人物-发饰2",
+	"code": "50722",
+	"part": "4,2",
+	"type": "",
+	"slots": "fashi01,fashi02",
+	"hideSlots": "",
+	"attachments": "zi40,zi41",
+	"ani": ""
+}, {
+	"info": "制服人物-耳环1",
+	"code": "50723",
+	"part": "5,1",
+	"type": "",
+	"slots": "er01,er02",
+	"hideSlots": "",
+	"attachments": "lv03,lv13",
+	"ani": ""
+}, {
+	"info": "制服人物-耳环2",
+	"code": "50724",
+	"part": "5,2",
+	"type": "",
+	"slots": "er01,er02",
+	"hideSlots": "",
+	"attachments": "zi03,zi13",
+	"ani": ""
+}, {
+	"info": "制服人物-盒子1",
+	"code": "50725",
+	"part": "6,1",
+	"type": "",
+	"slots": "hezi",
+	"hideSlots": "",
+	"attachments": "lv25",
+	"ani": ""
+}, {
+	"info": "制服人物-盒子2",
+	"code": "50726",
+	"part": "6,2",
+	"type": "",
+	"slots": "hezi",
+	"hideSlots": "",
+	"attachments": "zi25",
+	"ani": ""
+}, {
+	"info": "制服场景-空",
+	"code": "50750",
+	"part": "7",
+	"type": "",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "制服场景-地毯",
+	"code": "50751",
+	"part": "8",
+	"type": "Carpet",
+	"slots": "zhifu_ditan1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "ditan,1"
+}, {
+	"info": "制服场景-桌子",
+	"code": "50752",
+	"part": "9",
+	"type": "Table",
+	"slots": "zhifu_zhuo1,zhifu_zhuo2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuozi,2"
+}, {
+	"info": "制服场景-箱子",
+	"code": "50753",
+	"part": "10",
+	"type": "Box",
+	"slots": "zhifu_xiangzi1,zhifu_xiangzi2,zhifu_xiangzi3,zhifu_xiangzi4",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "xiangzi,1"
+}, {
+	"info": "制服场景-柜子",
+	"code": "50754",
+	"part": "11",
+	"type": "Cabinet",
+	"slots": "zhifu_gui1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "guizi,2"
+}, {
+	"info": "制服场景-物件1",
+	"code": "50755",
+	"part": "12",
+	"type": "Thing1",
+	"slots": "zhifu_wujian1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "wujian1,3"
+}, {
+	"info": "制服场景-物件2",
+	"code": "50756",
+	"part": "13",
+	"type": "Thing2",
+	"slots": "zhifu_wujian2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "wujian2,3"
+}, {
+	"info": "制服场景-花",
+	"code": "50757",
+	"part": "14",
+	"type": "Flower",
+	"slots": "zhifu_hua",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "hua,4"
+}, {
+	"info": "制服场景-食物",
+	"code": "50758",
+	"part": "15",
+	"type": "Food",
+	"slots": "zhifu_candian,zhifu_shiwu",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shiwu,3"
+}, {
+	"info": "制服场景-书",
+	"code": "50759",
+	"part": "16",
+	"type": "Book",
+	"slots": "zhifu_shu",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shu,5"
+}, {
+	"info": "制服场景-桌布",
+	"code": "50760",
+	"part": "17",
+	"type": "Tablecloth",
+	"slots": "zhifu_zhuobu1,zhifu_zhuobu2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuobu,4"
+}, {
+	"info": "制服场景-地球仪",
+	"code": "50761",
+	"part": "18",
+	"type": "Globe",
+	"slots": "zhifu_diqiuyi",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "diqiuyi,5"
+}, {
+	"info": "室内人物-衣服1",
+	"code": "50801",
+	"part": "1,1",
+	"type": "",
+	"slots": "shenti,youbi,youbi1,jie,zuobi,zuobi1,zuobi2",
+	"hideSlots": "",
+	"attachments": "dn24,dn07,dn09,dn22,dn30,dn26,dn28",
+	"ani": ""
+}, {
+	"info": "室内人物-衣服2",
+	"code": "50802",
+	"part": "1,2",
+	"type": "",
+	"slots": "shenti,youbi,youbi1,jie,zuobi,zuobi1,zuobi2",
+	"hideSlots": "",
+	"attachments": "dnbai24,dnbai07,dnbai09,dnbai22,dnbai30,dnbai26,dnbai28",
+	"ani": ""
+}, {
+	"info": "室内人物-脸部默认",
+	"code": "50803",
+	"part": "2,0",
+	"type": "",
+	"slots": "mei,yanzhu,zui",
+	"hideSlots": "",
+	"attachments": "moren_mei,moren_yanzhu,dn16",
+	"ani": ""
+}, {
+	"info": "室内人物-脸部1",
+	"code": "50804",
+	"part": "2,1",
+	"type": "",
+	"slots": "mei,yanzhu,zui",
+	"hideSlots": "",
+	"attachments": "dn17,dn19,dn16",
+	"ani": ""
+}, {
+	"info": "室内人物-脸部2",
+	"code": "50805",
+	"part": "2,2",
+	"type": "",
+	"slots": "mei,yanzhu,zui",
+	"hideSlots": "",
+	"attachments": "dnbai17,dnbai19,dnbai16",
+	"ani": ""
+}, {
+	"info": "室内人物-头发默认",
+	"code": "50806",
+	"part": "3,0",
+	"type": "",
+	"slots": "moren_wanzi,moren_wanzi2",
+	"hideSlots": "toufa01,toufa02,toufa03",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "室内人物-头发1",
+	"code": "50807",
+	"part": "3,1",
+	"type": "",
+	"slots": "toufa01,toufa02,toufa03",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "dn12,dn15,dn25",
+	"ani": ""
+}, {
+	"info": "室内人物-头发2",
+	"code": "50808",
+	"part": "3,2",
+	"type": "",
+	"slots": "toufa01,toufa02,toufa03",
+	"hideSlots": "moren_wanzi,moren_wanzi2",
+	"attachments": "dnbai12,dnbai15,dnbai25",
+	"ani": ""
+}, {
+	"info": "室内人物-眼镜1",
+	"code": "50821",
+	"part": "4,1",
+	"type": "",
+	"slots": "yanjing,lianzi",
+	"hideSlots": "",
+	"attachments": "dn13,dn14",
+	"ani": ""
+}, {
+	"info": "室内人物-眼镜",
+	"code": "50822",
+	"part": "4,2",
+	"type": "",
+	"slots": "yanjing",
+	"hideSlots": "lianzi",
+	"attachments": "dnbai13",
+	"ani": ""
+}, {
+	"info": "室内人物-耳环1",
+	"code": "50823",
+	"part": "5,1",
+	"type": "",
+	"slots": "erhuan01,erhuan02",
+	"hideSlots": "",
+	"attachments": "dn11,dn21",
+	"ani": ""
+}, {
+	"info": "室内人物-耳环2",
+	"code": "50824",
+	"part": "5,2",
+	"type": "",
+	"slots": "erhuan01,erhuan02",
+	"hideSlots": "",
+	"attachments": "dnbai11,dnbai21",
+	"ani": ""
+}, {
+	"info": "室内人物-项链1",
+	"code": "50825",
+	"part": "6,1",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "dn23",
+	"ani": ""
+}, {
+	"info": "室内人物-项链2",
+	"code": "50826",
+	"part": "6,2",
+	"type": "",
+	"slots": "xianglian",
+	"hideSlots": "",
+	"attachments": "dnbai23",
+	"ani": ""
+}, {
+	"info": "室内人物-手镯1",
+	"code": "50827",
+	"part": "7,1",
+	"type": "",
+	"slots": "zhuo01,zhuo02,zhuo03,zhuoyy02,zhuoyy03",
+	"hideSlots": "",
+	"attachments": "dn06,dn01,dn02,dn03,dn04",
+	"ani": ""
+}, {
+	"info": "室内人物-手镯2",
+	"code": "50828",
+	"part": "7,2",
+	"type": "",
+	"slots": "zhuo01,zhuo03",
+	"hideSlots": "zhuo02,zhuoyy02,zhuoyy03",
+	"attachments": "dnbai06,dnbai01",
+	"ani": ""
+}, {
+	"info": "室内人物-电脑1",
+	"code": "50829",
+	"part": "8,1",
+	"type": "",
+	"slots": "diannao,diannaoyy",
+	"hideSlots": "",
+	"attachments": "dn10,dn31",
+	"ani": ""
+}, {
+	"info": "室内人物-电脑2",
+	"code": "50830",
+	"part": "8,2",
+	"type": "",
+	"slots": "diannao,diannaoyy",
+	"hideSlots": "",
+	"attachments": "dnbai10,dnbai31",
+	"ani": ""
+}, {
+	"info": "室内人物-空",
+	"code": "50850",
+	"part": "9",
+	"type": "",
+	"slots": "",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": ""
+}, {
+	"info": "室内人物-地毯",
+	"code": "50851",
+	"part": "10",
+	"type": "",
+	"slots": "shinei_ditan1,shinei_ditan2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "ditan,1"
+}, {
+	"info": "室内人物-窗帘",
+	"code": "50852",
+	"part": "11",
+	"type": "",
+	"slots": "shinei_lian1,shinei_lian2,shinei_lian3,shinei_lian4",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "chuanglian,2"
+}, {
+	"info": "室内人物-落地灯",
+	"code": "50853",
+	"part": "12",
+	"type": "",
+	"slots": "shinei_deng1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "luodideng,2"
+}, {
+	"info": "室内人物-绿植1",
+	"code": "50854",
+	"part": "13",
+	"type": "",
+	"slots": "shinei_zhiwu3,shinei_zhiwu4,shinei_zhiwu5",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "lvzhi1,3"
+}, {
+	"info": "室内人物-绿植2",
+	"code": "50855",
+	"part": "14",
+	"type": "",
+	"slots": "shinei_zhiwu1,shinei_zhiwu2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "lvzhi2,3"
+}, {
+	"info": "室内人物-沙发1",
+	"code": "50856",
+	"part": "15",
+	"type": "",
+	"slots": "shinei_shafa3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shafa1,4"
+}, {
+	"info": "室内人物-沙发2",
+	"code": "50857",
+	"part": "16",
+	"type": "",
+	"slots": "shinei_shafa1,shinei_shafa2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "shafa2,4"
+}, {
+	"info": "室内人物-抱枕",
+	"code": "50858",
+	"part": "17",
+	"type": "",
+	"slots": "shinei_baozhen1,shinei_baozhen2,shinei_baozhen3,shinei_baozhen4,shinei_tanzi",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "baozhen,5"
+}, {
+	"info": "室内人物-桌子",
+	"code": "50859",
+	"part": "18",
+	"type": "",
+	"slots": "shinei_zhuo1",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuozi,5"
+}, {
+	"info": "室内人物-桌面物",
+	"code": "50860",
+	"part": "19",
+	"type": "",
+	"slots": "shinei_zhuo_dianzi,shinei_zhuo_hua,shinei_zhuo_shu",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "zhuomianwu,6"
+}, {
+	"info": "室内人物-吊灯",
+	"code": "50861",
+	"part": "20",
+	"type": "",
+	"slots": "shinei_ding1,shinei_ding2,shinei_ding3",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "diaodeng,7"
+}, {
+	"info": "室内人物-咖啡",
+	"code": "50862",
+	"part": "21",
+	"type": "",
+	"slots": "shinei_kafei1,shinei_kafei2",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "kafei,7"
+}, {
+	"info": "室内人物-蒲团",
+	"code": "50863",
+	"part": "22",
+	"type": "",
+	"slots": "shinei_putuan",
+	"hideSlots": "",
+	"attachments": "",
+	"ani": "putuan,7"
+}]
